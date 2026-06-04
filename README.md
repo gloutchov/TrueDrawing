@@ -6,6 +6,8 @@ True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare 
 
 Il progetto e' in fase iniziale. La versione corrente e' `0.0.1` e contiene il bootstrap documentale, il piano milestone, le direttive di sviluppo, il modello di sicurezza iniziale, la mappa della struttura prevista e la configurazione applicativa iniziale.
 
+Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
+
 ### Funzionalita' previste
 
 - Canvas pulito per disegno libero.
@@ -35,6 +37,8 @@ True Drawing is a local desktop app for macOS and Windows designed for drawing w
 
 The project is at its initial stage. Current version is `0.0.1` and includes documentation bootstrap, milestone plan, development directives, initial security model, planned architecture map, and initial app configuration.
 
+Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
+
 ### Planned Features
 
 - Clean freehand drawing canvas.
@@ -57,4 +61,3 @@ The project is at its initial stage. Current version is `0.0.1` and includes doc
 - `INSTRUCTION.md`: user instructions in English.
 - `SECURITY_MODEL.md`: security model in Italian and English.
 - `config/app.config.json`: parameters editable by skilled users and developers.
-
