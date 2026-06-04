@@ -124,6 +124,7 @@ Attivita':
 - Creare repository GitHub privato.
 - Configurare `main` come branch protetto.
 - Aggiungere `.gitignore` per Node, Electron, build, log, cache e segreti.
+- Aggiungere CI minima per verificare documentazione, versione e configurazione.
 - Creare struttura documentale iniziale:
   - `README.md` in italiano e inglese;
   - `ISTRUZIONI.md`;
@@ -141,6 +142,7 @@ Criteri di accettazione:
 - Documentazione iniziale presente.
 - `MAP.md` presente con mappa ASCII iniziale della struttura pianificata.
 - `AGENTS.md` presente con direttive per architettura modulare, configurazione e aggiornamento documenti.
+- CI minima presente per controllare documenti richiesti, `VERSION` e `config/app.config.json`.
 - Nessun segreto o file locale sensibile tracciato.
 - Versione `0.0.1` taggata e rilasciata come release documentale.
 
@@ -148,6 +150,8 @@ Verifiche:
 
 - `git status` pulito prima del tag.
 - Controllo manuale dei file documentali.
+- Validazione JSON di `config/app.config.json`.
+- Esecuzione CI GitHub sul branch milestone e su `main`.
 - Verifica che il repository GitHub sia privato.
 
 Stato: in corso.

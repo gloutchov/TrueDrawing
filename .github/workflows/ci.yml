@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  bootstrap:
+    name: Bootstrap checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate configuration JSON
+        run: python -m json.tool config/app.config.json > /dev/null
+
+      - name: Verify required project documents
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            README.md
+            ISTRUZIONI.md
+            INSTRUCTION.md
+            SECURITY_MODEL.md
+            AGENTS.md
+            MAP.md
+            PLAN.md
+            VERSION
+            config/app.config.json
+          )
+          for file in "${required[@]}"; do
+            test -s "$file"
+          done
+
+      - name: Verify version
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(cat VERSION)" = "0.0.1"
+

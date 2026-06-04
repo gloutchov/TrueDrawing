@@ -96,7 +96,9 @@ truedrawing/
 +-- .github/
 |   |
 |   +-- workflows/
-|       CI, build, packaging e release.
+|       |
+|       +-- ci.yml
+|           CI iniziale: valida configurazione JSON, documenti obbligatori e versione.
 |
 +-- README.md
 |   Descrizione progetto in italiano e inglese.
