@@ -23,6 +23,10 @@ export type AppConfig = {
     backgroundColor: string;
     maxZoom: number;
     minZoom: number;
+    maxPixelRatio: number;
+    minPointDistance: number;
+    strokeSmoothing: number;
+    defaultPointerPressure: number;
   };
   tools: {
     defaultTool: string;
@@ -30,6 +34,8 @@ export type AppConfig = {
     defaultSize: number;
     defaultOpacity: number;
     defaultBrushHardness: number;
+    pressureMinSizeFactor: number;
+    pressureMaxSizeFactor: number;
   };
   layers: {
     defaultLayerName: string;
@@ -87,14 +93,20 @@ export function validateAppConfig(value: unknown): AppConfig {
       defaultHeight: expectPositiveNumber(canvas.defaultHeight, "canvas.defaultHeight"),
       backgroundColor: expectString(canvas.backgroundColor, "canvas.backgroundColor"),
       maxZoom: expectPositiveNumber(canvas.maxZoom, "canvas.maxZoom"),
-      minZoom: expectPositiveNumber(canvas.minZoom, "canvas.minZoom")
+      minZoom: expectPositiveNumber(canvas.minZoom, "canvas.minZoom"),
+      maxPixelRatio: expectPositiveNumber(canvas.maxPixelRatio, "canvas.maxPixelRatio"),
+      minPointDistance: expectPositiveNumber(canvas.minPointDistance, "canvas.minPointDistance"),
+      strokeSmoothing: expectUnitNumber(canvas.strokeSmoothing, "canvas.strokeSmoothing"),
+      defaultPointerPressure: expectUnitNumber(canvas.defaultPointerPressure, "canvas.defaultPointerPressure")
     },
     tools: {
       defaultTool: expectString(tools.defaultTool, "tools.defaultTool"),
       defaultColor: expectString(tools.defaultColor, "tools.defaultColor"),
       defaultSize: expectPositiveNumber(tools.defaultSize, "tools.defaultSize"),
       defaultOpacity: expectUnitNumber(tools.defaultOpacity, "tools.defaultOpacity"),
-      defaultBrushHardness: expectUnitNumber(tools.defaultBrushHardness, "tools.defaultBrushHardness")
+      defaultBrushHardness: expectUnitNumber(tools.defaultBrushHardness, "tools.defaultBrushHardness"),
+      pressureMinSizeFactor: expectPositiveNumber(tools.pressureMinSizeFactor, "tools.pressureMinSizeFactor"),
+      pressureMaxSizeFactor: expectPositiveNumber(tools.pressureMaxSizeFactor, "tools.pressureMaxSizeFactor")
     },
     layers: {
       defaultLayerName: expectString(layers.defaultLayerName, "layers.defaultLayerName"),

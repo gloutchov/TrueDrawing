@@ -17,6 +17,7 @@
     "src/renderer/**/*.ts",
     "src/renderer/**/*.tsx",
     "src/shared/config/appConfigSchema.ts",
+    "src/shared/drawing/**/*.ts",
     "src/shared/runtime/**/*.ts"
   ]
 }

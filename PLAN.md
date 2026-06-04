@@ -278,7 +278,35 @@ Verifiche:
 - Test di regressione su resize canvas.
 - Verifica che parametri canvas e input siano letti dalla configurazione.
 
-Stato: pianificata.
+Esito M2:
+
+- Branch usato: `milestone/02-canvas-input`.
+- Versione iniziale: `0.1.0`.
+- Versione finale: `0.2.0`.
+- Implementazione:
+  - canvas HTML reale al posto del placeholder;
+  - input tramite Pointer Events con `setPointerCapture`;
+  - supporto a mouse, penna/tavoletta e touch/trackpad quando esposti dal sistema operativo come pointer events;
+  - normalizzazione pressione e dimensione tratto sensibile alla pressione;
+  - distanza minima fra punti e smoothing configurabili;
+  - rendering locale dei tratti con curve quadratiche;
+  - modello stroke testabile in `src/shared/drawing`;
+  - parametri canvas/input aggiunti a `config/app.config.json`.
+- Test automatici:
+  - da verificare in CI.
+- Verifiche locali:
+  - validazione JSON di `config/app.config.json`;
+  - test/lint/build locali bloccati da `node_modules` non installato correttamente su questa macchina per errori npm `EPERM`; verifica completa demandata a GitHub Actions.
+- CI:
+  - branch milestone: da verificare;
+  - `main`: da verificare dopo merge;
+  - release: da verificare.
+- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.2.0`.
+- Rischi residui:
+  - test manuale con tavoletta Wacom fisica non eseguito in questa sessione;
+  - pan/zoom rimandato per non interferire con il tracciamento base.
+
+Stato: in corso.
 
 ### M3 - Strumenti di tratto, colore, gomma, undo e redo
 
@@ -621,6 +649,7 @@ Stato: pianificata.
 | 2026-06-04 | Pianificazione iniziale | n/a | n/a | In corso | Creato piano iniziale in `PLAN.md`; la cartella non risulta ancora inizializzata come repository Git. |
 | 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
+| 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | In corso | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI e release da verificare. |
 
 ## Checklist di chiusura milestone
 

@@ -70,7 +70,7 @@ truedrawing/
 |   |   |   Root React, layout e routing interno.
 |   |   |
 |   |   +-- canvas/
-|   |   |   Area canvas iniziale e futuro rendering tratti/input.
+|   |   |   Canvas interattivo, coordinate Pointer Events e rendering tratti.
 |   |   |
 |   |   +-- tools/
 |   |   |   Toolbar iniziale per matita, pennarello, pennello, gomma e azioni.
@@ -91,6 +91,9 @@ truedrawing/
 |   |       Stili globali renderer.
 |   |
 |   +-- shared/
+|   |   |
+|   |   +-- drawing/
+|   |   |   Tipi stroke, modello tratti, pressione, distanza minima e smoothing.
 |   |   |
 |   |   +-- document/
 |   |   |   Tipi e serializzazione del documento True Drawing.
@@ -158,9 +161,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.1.0`.
-- Milestone corrente: M1 - Skeleton app desktop.
+- Versione: `0.2.0`.
+- Milestone corrente: M2 - Canvas di disegno e input.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
-- UI iniziale modulare presente per canvas, strumenti, inspector, layer e settings.
+- Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
+- UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI e release Windows/macOS presenti.

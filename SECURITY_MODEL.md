@@ -2,9 +2,9 @@
 
 ## Italiano
 
-Versione: `0.1.0`
+Versione: `0.2.0`
 
-Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente e' presente lo skeleton desktop Electron con `contextIsolation` attivo, `nodeIntegration` disattivata nel renderer e preload dedicato per esporre solo API minime.
+Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente e' presente lo skeleton desktop Electron con `contextIsolation` attivo, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime e canvas renderer locale senza accesso diretto a filesystem o segreti.
 
 ### Principi
 
@@ -35,15 +35,16 @@ Le chiamate di rete devono essere limitate alla generazione dell'immagine realis
 - Skeleton Electron con renderer isolato: completato.
 - Preload con API minima `getAppConfig` e `getRuntimeInfo`: completato.
 - Caricamento configurazione centrale validata: completato.
+- Canvas interattivo locale tramite Pointer Events: completato.
 - Implementazione keychain: pianificata per milestone futura.
 - Hardening Electron completo: pianificato per milestone futura.
 - Test sicurezza: pianificati per milestone futura.
 
 ## English
 
-Version: `0.1.0`
+Version: `0.2.0`
 
-This document describes the planned security model for True Drawing. The current version includes the Electron desktop skeleton with `contextIsolation` enabled, `nodeIntegration` disabled in the renderer, and a dedicated preload exposing only minimal APIs.
+This document describes the planned security model for True Drawing. The current version includes the Electron desktop skeleton with `contextIsolation` enabled, `nodeIntegration` disabled in the renderer, a dedicated preload exposing only minimal APIs, and a local canvas renderer with no direct filesystem or secret access.
 
 ### Principles
 
@@ -74,6 +75,7 @@ Network calls must be limited to realistic image generation and must send only t
 - Electron skeleton with isolated renderer: complete.
 - Preload with minimal `getAppConfig` and `getRuntimeInfo` APIs: complete.
 - Validated central configuration loading: complete.
+- Local interactive canvas through Pointer Events: complete.
 - Keychain implementation: planned for a future milestone.
 - Full Electron hardening: planned for a future milestone.
 - Security tests: planned for a future milestone.
