@@ -154,7 +154,29 @@ Verifiche:
 - Esecuzione CI GitHub sul branch milestone e su `main`.
 - Verifica che il repository GitHub sia privato.
 
-Stato: in corso.
+Esito M0:
+
+- Branch usato: `milestone/00-bootstrap`.
+- Versione iniziale: n/a.
+- Versione finale: `0.0.1`.
+- Repository GitHub privato: `https://github.com/gloutchov/truedrawing`.
+- Test automatici locali:
+  - validazione JSON di `config/app.config.json`;
+  - verifica presenza documenti obbligatori;
+  - verifica `VERSION = 0.0.1`.
+- Verifiche manuali:
+  - controllo file documentali;
+  - controllo repository privato GitHub;
+  - controllo assenza segreti reali nei file tracciati.
+- CI:
+  - branch milestone: GitHub Actions run `26946718264`, successo;
+  - `main`: GitHub Actions run `26946749270`, successo.
+- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.0.1`.
+- Rischi residui:
+  - la release M0 e' documentale e non contiene build Windows/macOS perche' l'app desktop viene introdotta da M1;
+  - branch protection avanzata da completare quando il repository avra' workflow e PR stabili.
+
+Stato: completata.
 
 ### M1 - Skeleton app desktop
 
@@ -564,7 +586,7 @@ Stato: pianificata.
 | Data | Milestone | Versione | Branch | Stato | Note |
 | --- | --- | --- | --- | --- | --- |
 | 2026-06-04 | Pianificazione iniziale | n/a | n/a | In corso | Creato piano iniziale in `PLAN.md`; la cartella non risulta ancora inizializzata come repository Git. |
-| 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | da creare | In corso | Aggiunti documentazione iniziale, `VERSION`, `.gitignore`, `config/app.config.json`, `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `AGENTS.md`, `MAP.md` e `PLAN.md`. |
+| 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
 
 ## Checklist di chiusura milestone
 
