@@ -1,8 +1,8 @@
 # True Drawing - Istruzioni utente
 
-Versione: `0.1.0`
+Versione: `0.2.0`
 
-True Drawing e' in fase iniziale. In questa versione e' disponibile lo skeleton desktop: l'app Electron mostra la finestra principale, carica la configurazione centrale e presenta la struttura UI iniziale con canvas, strumenti, inspector e layer.
+True Drawing e' in fase iniziale. In questa versione e' disponibile lo skeleton desktop con canvas interattivo: l'app Electron mostra la finestra principale, carica la configurazione centrale e permette di tracciare linee sul canvas con input compatibili con Pointer Events.
 
 ## Uso previsto dell'app
 
@@ -28,6 +28,8 @@ Per un disegno chiamato `nome`, l'app usera':
 ## Configurazione prevista
 
 Il file `config/app.config.json` contiene parametri modificabili da utenti skilled, come autosave, dimensioni canvas, default strumenti, provider API e modello immagini.
+
+In questa versione sono configurabili anche parametri di input canvas come distanza minima fra punti, smoothing del tratto, pressione predefinita e fattori di dimensione legati alla pressione.
 
 La API key non deve essere inserita in quel file: sara' salvata nel keychain del sistema operativo tramite le impostazioni dell'app.
 

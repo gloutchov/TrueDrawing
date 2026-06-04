@@ -20,8 +20,26 @@ describe("app configuration", () => {
       app: { name: "True Drawing", defaultLocale: "it", autosaveIntervalMs: 30000, historyLimit: 100 },
       window: { width: 1280, height: 860, minWidth: 960, minHeight: 640 },
       layout: { topBarHeight: 46, toolRailWidth: 58, sidePanelWidth: 320, workspacePadding: 28 },
-      canvas: { defaultWidth: 2048, defaultHeight: 2048, backgroundColor: "#ffffff", maxZoom: 8, minZoom: 0.1 },
-      tools: { defaultTool: "pencil", defaultColor: "#111111", defaultSize: 8, defaultOpacity: 2, defaultBrushHardness: 0.85 },
+      canvas: {
+        defaultWidth: 2048,
+        defaultHeight: 2048,
+        backgroundColor: "#ffffff",
+        maxZoom: 8,
+        minZoom: 0.1,
+        maxPixelRatio: 2,
+        minPointDistance: 1.25,
+        strokeSmoothing: 0.55,
+        defaultPointerPressure: 0.5
+      },
+      tools: {
+        defaultTool: "pencil",
+        defaultColor: "#111111",
+        defaultSize: 8,
+        defaultOpacity: 2,
+        defaultBrushHardness: 0.85,
+        pressureMinSizeFactor: 0.65,
+        pressureMaxSizeFactor: 1.25
+      },
       layers: { defaultLayerName: "Layer 1", defaultOpacity: 1 },
       imageGeneration: { defaultProvider: "openai", defaultModel: "gpt-image-1.5", timeoutMs: 120000, defaultOutputFormat: "png" },
       files: { canvasSuffix: "_canvas", imageSuffix: "_image", projectExtension: ".tdraw", canvasExportExtension: ".png", imageExportExtension: ".png" }

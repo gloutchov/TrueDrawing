@@ -31,6 +31,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
   - test.
 - Le dipendenze fra moduli devono restare esplicite e direzionate. Evitare import circolari.
 - Il renderer non deve accedere direttamente a filesystem, segreti o API native: usare canali IPC controllati.
+- La logica canvas riutilizzabile, come stroke model, smoothing e pressione, deve restare in moduli testabili e non sepolta nei componenti React.
 
 ## Configurazione
 

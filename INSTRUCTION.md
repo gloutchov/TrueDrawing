@@ -1,8 +1,8 @@
 # True Drawing - User Instructions
 
-Version: `0.1.0`
+Version: `0.2.0`
 
-True Drawing is currently in an early stage. This version includes the desktop skeleton: the Electron app opens the main window, loads the central configuration, and presents the initial UI structure with canvas, tools, inspector, and layers.
+True Drawing is currently in an early stage. This version includes the desktop skeleton with an interactive canvas: the Electron app opens the main window, loads the central configuration, and lets users draw lines on the canvas with Pointer Events-compatible input.
 
 ## Intended App Usage
 
@@ -28,6 +28,8 @@ For a drawing named `name`, the app will use:
 ## Planned Configuration
 
 The `config/app.config.json` file contains parameters editable by skilled users, such as autosave, canvas dimensions, tool defaults, API provider, and image model.
+
+This version also exposes canvas input parameters such as minimum point distance, stroke smoothing, default pressure, and pressure-based size factors.
 
 The API key must not be placed in that file: it will be stored in the operating system keychain through the app settings.
 
