@@ -300,14 +300,23 @@ Esito M2:
   - test/lint/build locali bloccati da `node_modules` non installato correttamente su questa macchina per errori npm `EPERM`; verifica completa demandata a GitHub Actions.
 - CI:
   - branch milestone: successo;
-  - `main`: da verificare dopo merge;
-  - release: da verificare.
-- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.2.0`.
+  - `main`: GitHub Actions run `26956959005`, successo;
+  - release: GitHub Actions run `26957023417`, successo con build Windows, build macOS e pubblicazione asset.
+- Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.2.0`.
+- Artifact release verificati:
+  - `True-Drawing-0.2.0-Windows-x64.exe`;
+  - `True-Drawing-0.2.0-Windows-x64.exe.blockmap`;
+  - `True-Drawing-0.2.0-macOS-arm64.dmg`;
+  - `True-Drawing-0.2.0-macOS-arm64.dmg.blockmap`;
+  - `True-Drawing-0.2.0-macOS-arm64.zip`;
+  - `True-Drawing-0.2.0-macOS-arm64.zip.blockmap`;
+  - `latest.yml`;
+  - `latest-mac.yml`.
 - Rischi residui:
   - test manuale con tavoletta Wacom fisica non eseguito in questa sessione;
   - pan/zoom rimandato per non interferire con il tracciamento base.
 
-Stato: in chiusura.
+Stato: completata.
 
 ### M3 - Strumenti di tratto, colore, gomma, undo e redo
 
@@ -650,7 +659,7 @@ Stato: pianificata.
 | 2026-06-04 | Pianificazione iniziale | n/a | n/a | In corso | Creato piano iniziale in `PLAN.md`; la cartella non risulta ancora inizializzata come repository Git. |
 | 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
-| 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | In chiusura | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch milestone verde, merge e release da completare. |
+| 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
 
 ## Checklist di chiusura milestone
 
