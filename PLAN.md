@@ -658,6 +658,7 @@ Attivita':
 - Congelare funzionalita' per la release.
 - Revisionare sicurezza e gestione segreti.
 - Revisionare packaging e installazione.
+- Rivalutare le deprecazioni npm residue introdotte da dipendenze transitive di packaging, in particolare `electron-builder`, `@electron/asar`, `@electron/get`, `electron-winstaller`, `temp`, `rimraf`, `glob`, `inflight` e `boolean`.
 - Aggiornare tutti i documenti finali.
 - Creare release finale con changelog.
 
@@ -665,6 +666,7 @@ Criteri di accettazione:
 
 - CI verde.
 - Release Windows e macOS scaricabili.
+- `npm ci --no-audit --no-fund` non mostra warning deprecated risolvibili tramite aggiornamenti diretti o sostituzioni sicure dei tool di packaging.
 - Documentazione finale completa.
 - `PLAN.md` aggiornato con milestone completata e rischi residui.
 - Branch milestone eliminato dopo merge e release verificata.
