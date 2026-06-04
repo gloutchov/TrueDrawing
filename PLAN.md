@@ -377,14 +377,23 @@ Esito M3:
   - test/lint/build locali bloccati da `node_modules` non installato correttamente su questa macchina; verifica completa demandata a GitHub Actions.
 - CI:
   - branch milestone: successo;
-  - `main`: da verificare dopo merge;
-  - release: da verificare.
-- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.0`.
+  - `main`: GitHub Actions run `26958948854`, successo;
+  - release: GitHub Actions run `26959021229`, successo con build Windows, build macOS e pubblicazione asset.
+- Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.0`.
+- Artifact release verificati:
+  - `True-Drawing-0.3.0-Windows-x64.exe`;
+  - `True-Drawing-0.3.0-Windows-x64.exe.blockmap`;
+  - `True-Drawing-0.3.0-macOS-arm64.dmg`;
+  - `True-Drawing-0.3.0-macOS-arm64.dmg.blockmap`;
+  - `True-Drawing-0.3.0-macOS-arm64.zip`;
+  - `True-Drawing-0.3.0-macOS-arm64.zip.blockmap`;
+  - `latest.yml`;
+  - `latest-mac.yml`.
 - Rischi residui:
   - test manuale con tavoletta Wacom fisica non eseguito in questa sessione;
   - gomma implementata come stroke di compositing su canvas singolo; l'integrazione profonda con layer arrivera' in M4.
 
-Stato: in chiusura.
+Stato: completata.
 
 ### M4 - Layer
 
@@ -688,7 +697,7 @@ Stato: pianificata.
 | 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
 | 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
-| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | In chiusura | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch milestone verde, merge e release da completare. |
+| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde e release `v0.3.0` pubblicata con artifact Windows/macOS. |
 
 ## Checklist di chiusura milestone
 
