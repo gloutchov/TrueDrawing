@@ -86,4 +86,4 @@ jobs:
           if ! gh release view "$tag" --repo "$repository" >/dev/null 2>&1; then
             gh release create "$tag" --repo "$repository" --title "$tag" --notes "Automated release for $tag."
           fi
-          find artifacts -type f -print0 | xargs -0 gh release upload "$tag" --repo "$repository" --clobber
+          find artifacts -maxdepth 1 -type f -print0 | xargs -0 gh release upload "$tag" --repo "$repository" --clobber
