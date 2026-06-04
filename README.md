@@ -41,7 +41,7 @@ Requisiti:
 
 Comandi:
 
-- `npm install --no-audit --no-fund`
+- `npm ci --no-audit --no-fund`
 - `npm run dev`
 - `npm run lint`
 - `npm run test`
@@ -90,7 +90,7 @@ Requirements:
 
 Commands:
 
-- `npm install --no-audit --no-fund`
+- `npm ci --no-audit --no-fund`
 - `npm run dev`
 - `npm run lint`
 - `npm run test`

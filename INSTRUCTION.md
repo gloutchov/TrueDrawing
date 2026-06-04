@@ -36,7 +36,7 @@ The API key must not be placed in that file: it will be stored in the operating 
 To run the development version:
 
 - install Node.js 22;
-- run `npm install --no-audit --no-fund`;
+- run `npm ci --no-audit --no-fund`;
 - run `npm run dev`.
 
 To produce a local build:

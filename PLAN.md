@@ -212,7 +212,37 @@ Verifiche:
 - Build desktop.
 - CI verde su GitHub Actions.
 
-Stato: pianificata.
+Esito M1:
+
+- Branch usato: `milestone/01-desktop-skeleton`.
+- Versione iniziale: `0.0.1`.
+- Versione finale: `0.1.0`.
+- Implementazione:
+  - skeleton Electron + Vite + React + TypeScript;
+  - struttura modulare `main`, `preload`, `renderer`, `shared`, `config`, `tests`;
+  - configurazione centrale `config/app.config.json` caricata e validata;
+  - finestra principale con titolo configurato `True Drawing`;
+  - menu applicativo base;
+  - UI iniziale modulare per canvas, strumenti, inspector, layer e riepilogo settings;
+  - lint, test unitari, build e packaging config;
+  - workflow CI e workflow release Windows/macOS.
+- Test automatici:
+  - GitHub Actions run `26952108319`, successo con `npm ci`, lint, test e build.
+- Verifiche locali:
+  - validazione JSON di `config/app.config.json`;
+  - verifica `VERSION = 0.1.0`;
+  - verifica struttura file e documenti;
+  - installazione/esecuzione locale non completata per errore `EPERM` di npm su cache/node_modules nella macchina locale; la verifica equivalente e' passata su runner GitHub pulito.
+- CI:
+  - branch milestone: successo;
+  - `main`: da verificare dopo merge.
+- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.1.0`.
+- Rischi residui:
+  - la build macOS viene verificata su GitHub Actions macOS, non sulla macchina locale Windows;
+  - branch protection avanzata resta non disponibile sul repository privato senza GitHub Pro;
+  - GitHub Actions segnala deprecazione futura delle action basate su Node.js 20; da rivalutare in una milestone successiva aggiornando action o runtime quando disponibile.
+
+Stato: completata.
 
 ### M2 - Canvas di disegno e input
 
@@ -587,6 +617,7 @@ Stato: pianificata.
 | --- | --- | --- | --- | --- | --- |
 | 2026-06-04 | Pianificazione iniziale | n/a | n/a | In corso | Creato piano iniziale in `PLAN.md`; la cartella non risulta ancora inizializzata come repository Git. |
 | 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
+| 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
 
 ## Checklist di chiusura milestone
 
