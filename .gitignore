@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.npm/
+.pnpm-store/
+
+# Build outputs
+dist/
+dist-electron/
+out/
+release/
+build/
+coverage/
+
+# Runtime and caches
+.vite/
+.cache/
+*.log
+logs/
+crash-reports/
+autosave/
+tmp/
+temp/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Electron packaging
+*.dmg
+*.exe
+*.msi
+*.AppImage
+*.zip
+*.blockmap
+

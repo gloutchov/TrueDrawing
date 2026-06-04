@@ -1,0 +1,81 @@
+# True Drawing - Direttive per lo sviluppo
+
+Questo file definisce le regole operative da seguire durante lo sviluppo di True Drawing. Deve essere aggiornato alla conclusione di ogni milestone.
+
+## Regole generali
+
+- Sviluppare sempre su un branch dedicato alla milestone: `milestone/<numero>-<slug>`.
+- Non fare merge su `main` finche' implementazione, test, documentazione e CI non sono verificati.
+- Non eliminare il branch milestone prima che la release GitHub sia stata generata e controllata.
+- Aggiornare la versione alla chiusura di ogni milestone secondo `PLAN.md`.
+- Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
+
+## Architettura
+
+- Il programma non deve diventare monolitico.
+- Ogni funzionalita' importante deve avere moduli e file dedicati.
+- Separare chiaramente:
+  - processo main Electron;
+  - preload e canali IPC;
+  - renderer React;
+  - canvas;
+  - strumenti di disegno;
+  - layer;
+  - undo/redo;
+  - inspector realistico;
+  - generazione immagini;
+  - gestione segreti;
+  - salvataggi;
+  - export;
+  - configurazione;
+  - test.
+- Le dipendenze fra moduli devono restare esplicite e direzionate. Evitare import circolari.
+- Il renderer non deve accedere direttamente a filesystem, segreti o API native: usare canali IPC controllati.
+
+## Configurazione
+
+- I parametri modificabili devono stare in un file di configurazione centrale.
+- Evitare valori hardcoded per:
+  - provider API;
+  - modello immagini;
+  - intervallo autosave;
+  - dimensioni canvas;
+  - qualita' export;
+  - default strumenti;
+  - limiti history;
+  - timeout API;
+  - percorsi documenti;
+  - nomi file generati.
+- La configurazione deve essere validata all'avvio.
+- I fallback nel codice sono ammessi solo per proteggere l'app da configurazioni mancanti o corrotte, e devono essere documentati.
+- Provider immagini predefinito: OpenAI.
+- Modello immagini OpenAI predefinito: `gpt-image-1.5`.
+- L'utente deve poter modificare il modello immagini dalle impostazioni.
+
+## Sicurezza
+
+- Non salvare API key in chiaro nel repository, nei log, nei file di progetto o nei crash report.
+- Salvare la API key nel keychain del sistema operativo.
+- Il modello immagini scelto dall'utente e' una preferenza non segreta; la API key resta un segreto.
+- Sanitizzare errori e log prima di mostrarli o salvarli.
+- Limitare i dati inviati all'API al minimo necessario per generare l'immagine realistica.
+- Aggiornare `SECURITY_MODEL.md` quando cambia il comportamento relativo a segreti, rete, IPC, salvataggi o logging.
+
+## Documentazione della struttura
+
+- `MAP.md` deve contenere una mappa ASCII aggiornata della struttura del programma.
+- Ogni cartella o file rilevante deve avere una breve descrizione.
+- Quando una milestone aggiunge, rimuove o sposta moduli, aggiornare `MAP.md` nella stessa milestone.
+
+## Verifica
+
+Prima di chiudere una milestone:
+
+- eseguire test automatici;
+- fare verifica manuale delle funzionalita' implementate;
+- controllare che la configurazione non abbia parametri duplicati o hardcoded;
+- controllare che non ci siano segreti tracciati;
+- aggiornare documentazione e piano;
+- verificare CI;
+- generare e controllare release Windows e macOS quando previsto.
+
