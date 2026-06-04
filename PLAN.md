@@ -227,7 +227,9 @@ Esito M1:
   - lint, test unitari, build e packaging config;
   - workflow CI e workflow release Windows/macOS.
 - Test automatici:
-  - GitHub Actions run `26952108319`, successo con `npm ci`, lint, test e build.
+  - GitHub Actions branch milestone run `26953015235`, successo con `npm ci`, lint, test e build;
+  - GitHub Actions `main` run `26953078308`, successo con `npm ci`, lint, test e build;
+  - GitHub Actions release run `26953164204`, successo con build Windows, build macOS e upload asset.
 - Verifiche locali:
   - validazione JSON di `config/app.config.json`;
   - verifica `VERSION = 0.1.0`;
@@ -235,8 +237,9 @@ Esito M1:
   - installazione/esecuzione locale non completata per errore `EPERM` di npm su cache/node_modules nella macchina locale; la verifica equivalente e' passata su runner GitHub pulito.
 - CI:
   - branch milestone: successo;
-  - `main`: da verificare dopo merge.
-- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.1.0`.
+  - `main`: successo;
+  - release: successo.
+- Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.1.0`.
 - Rischi residui:
   - la build macOS viene verificata su GitHub Actions macOS, non sulla macchina locale Windows;
   - branch protection avanzata resta non disponibile sul repository privato senza GitHub Pro;
