@@ -162,7 +162,8 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.2.0`.
-- Milestone corrente: M2 - Canvas di disegno e input.
+- Ultima milestone implementata: M2 - Canvas di disegno e input.
+- Stato milestone: in chiusura, CI branch milestone verde.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
