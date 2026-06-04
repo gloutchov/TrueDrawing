@@ -13,6 +13,12 @@ describe("app configuration", () => {
     expect(config.app.name).toBe("True Drawing");
     expect(config.imageGeneration.defaultProvider).toBe("openai");
     expect(config.imageGeneration.defaultModel).toBe("gpt-image-1.5");
+    expect(config.tools.presets.map((preset) => preset.id)).toEqual([
+      "pencil",
+      "marker",
+      "brush",
+      "eraser"
+    ]);
   });
 
   it("rejects invalid opacity values", () => {
@@ -38,7 +44,16 @@ describe("app configuration", () => {
         defaultOpacity: 2,
         defaultBrushHardness: 0.85,
         pressureMinSizeFactor: 0.65,
-        pressureMaxSizeFactor: 1.25
+        pressureMaxSizeFactor: 1.25,
+        sizeRange: { min: 1, max: 96, step: 1 },
+        opacityRange: { min: 0.05, max: 1, step: 0.05 },
+        hardnessRange: { min: 0.1, max: 1, step: 0.05 },
+        presets: [
+          { id: "pencil", label: "Pencil", size: 4, opacity: 1, hardness: 0.95 },
+          { id: "marker", label: "Marker", size: 16, opacity: 0.45, hardness: 0.75 },
+          { id: "brush", label: "Brush", size: 22, opacity: 0.9, hardness: 0.35 },
+          { id: "eraser", label: "Eraser", size: 28, opacity: 1, hardness: 0.8 }
+        ]
       },
       layers: { defaultLayerName: "Layer 1", defaultOpacity: 1 },
       imageGeneration: { defaultProvider: "openai", defaultModel: "gpt-image-1.5", timeoutMs: 120000, defaultOutputFormat: "png" },

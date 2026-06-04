@@ -1,8 +1,8 @@
 # True Drawing - Istruzioni utente
 
-Versione: `0.2.0`
+Versione: `0.3.0`
 
-True Drawing e' in fase iniziale. In questa versione e' disponibile lo skeleton desktop con canvas interattivo: l'app Electron mostra la finestra principale, carica la configurazione centrale e permette di tracciare linee sul canvas con input compatibili con Pointer Events.
+True Drawing e' in fase iniziale. In questa versione e' disponibile lo skeleton desktop con canvas interattivo, strumenti di tratto e undo/redo: l'app Electron mostra la finestra principale, carica la configurazione centrale e permette di disegnare sul canvas con input compatibili con Pointer Events.
 
 ## Uso previsto dell'app
 
@@ -10,9 +10,10 @@ Quando le milestone applicative successive saranno implementate, l'utente potra'
 
 - creare un nuovo disegno e assegnargli un nome;
 - disegnare sul canvas con mouse, tavoletta o input compatibili;
-- scegliere strumento, colore, dimensione tratto e opacita';
+- scegliere matita, pennarello, pennello o gomma;
+- cambiare colore, dimensione tratto, opacita' e hardness;
+- annullare e ripristinare tratti con i pulsanti toolbar o con `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z` e `Ctrl/Cmd+Y`;
 - usare layer;
-- annullare e ripristinare azioni;
 - configurare API key, provider e modello immagini;
 - generare un'immagine realistica nell'inspector;
 - passare fra canvas e immagine realistica con doppio click sull'inspector;
@@ -29,7 +30,7 @@ Per un disegno chiamato `nome`, l'app usera':
 
 Il file `config/app.config.json` contiene parametri modificabili da utenti skilled, come autosave, dimensioni canvas, default strumenti, provider API e modello immagini.
 
-In questa versione sono configurabili anche parametri di input canvas come distanza minima fra punti, smoothing del tratto, pressione predefinita e fattori di dimensione legati alla pressione.
+In questa versione sono configurabili anche parametri di input canvas come distanza minima fra punti, smoothing del tratto, pressione predefinita, fattori di dimensione legati alla pressione, range dei controlli e preset degli strumenti.
 
 La API key non deve essere inserita in quel file: sara' salvata nel keychain del sistema operativo tramite le impostazioni dell'app.
 

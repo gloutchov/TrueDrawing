@@ -356,7 +356,35 @@ Verifiche:
 - Verifica UI responsive su dimensioni finestra ridotte.
 - Verifica che default strumenti, dimensioni, opacita' e colori siano configurabili.
 
-Stato: pianificata.
+Esito M3:
+
+- Branch usato: `milestone/03-tools-history`.
+- Versione iniziale: `0.2.0`.
+- Versione finale: `0.3.0`.
+- Implementazione:
+  - toolbar collegata allo stato reale degli strumenti;
+  - preset configurabili per matita, pennarello, pennello e gomma;
+  - controlli colore, dimensione, opacita' e hardness;
+  - rendering con hardness/softness e gomma tramite compositing canvas;
+  - modello undo/redo condiviso e testabile;
+  - shortcut `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z` e `Ctrl/Cmd+Y`;
+  - parametri tool e range controlli aggiunti a `config/app.config.json`.
+- Test automatici:
+  - da verificare in CI.
+- Verifiche locali:
+  - validazione JSON di `config/app.config.json`;
+  - verifica `VERSION = 0.3.0` e `package.json = 0.3.0`;
+  - test/lint/build locali bloccati da `node_modules` non installato correttamente su questa macchina; verifica completa demandata a GitHub Actions.
+- CI:
+  - branch milestone: da verificare;
+  - `main`: da verificare dopo merge;
+  - release: da verificare.
+- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.0`.
+- Rischi residui:
+  - test manuale con tavoletta Wacom fisica non eseguito in questa sessione;
+  - gomma implementata come stroke di compositing su canvas singolo; l'integrazione profonda con layer arrivera' in M4.
+
+Stato: in corso.
 
 ### M4 - Layer
 
@@ -660,6 +688,7 @@ Stato: pianificata.
 | 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
 | 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
+| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | In corso | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI e release da verificare. |
 
 ## Checklist di chiusura milestone
 

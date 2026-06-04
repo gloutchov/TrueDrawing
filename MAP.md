@@ -70,16 +70,16 @@ truedrawing/
 |   |   |   Root React, layout e routing interno.
 |   |   |
 |   |   +-- canvas/
-|   |   |   Canvas interattivo, coordinate Pointer Events e rendering tratti.
+|   |   |   Canvas interattivo, coordinate Pointer Events e rendering tratti con strumenti selezionati.
 |   |   |
 |   |   +-- tools/
-|   |   |   Toolbar iniziale per matita, pennarello, pennello, gomma e azioni.
+|   |   |   Toolbar, preset strumenti, controlli colore/size/opacita'/hardness e stato tool.
 |   |   |
 |   |   +-- layers/
 |   |   |   UI iniziale e futuro stato dei layer.
 |   |   |
 |   |   +-- history/
-|   |   |   Undo/redo e stack azioni futuri.
+|   |   |   Hook renderer per undo/redo dei tratti.
 |   |   |
 |   |   +-- inspector/
 |   |   |   Preview iniziale immagine realistica e metadati provider/modello.
@@ -93,7 +93,10 @@ truedrawing/
 |   +-- shared/
 |   |   |
 |   |   +-- drawing/
-|   |   |   Tipi stroke, modello tratti, pressione, distanza minima e smoothing.
+|   |   |   Tipi stroke, tipi strumenti, modello tratti, pressione, distanza minima e smoothing.
+|   |   |
+|   |   +-- history/
+|   |   |   Modello condiviso e testabile per stack undo/redo.
 |   |   |
 |   |   +-- document/
 |   |   |   Tipi e serializzazione del documento True Drawing.
@@ -161,11 +164,14 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.2.0`.
-- Ultima milestone implementata: M2 - Canvas di disegno e input.
-- Stato milestone: completata, CI branch/main verde e release `v0.2.0` pubblicata.
+- Versione: `0.3.0`.
+- Milestone corrente: M3 - Strumenti di tratto, colore, gomma, undo e redo.
+- Stato milestone: implementazione locale completata, CI/release da verificare.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
+- Strumenti matita, pennarello, pennello e gomma collegati al canvas.
+- Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.
+- Undo/redo dei tratti presente con modello history testabile.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI e release Windows/macOS presenti.
