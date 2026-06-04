@@ -165,8 +165,8 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.3.0`.
-- Milestone corrente: M3 - Strumenti di tratto, colore, gomma, undo e redo.
-- Stato milestone: in chiusura, CI branch milestone verde.
+- Ultima milestone implementata: M3 - Strumenti di tratto, colore, gomma, undo e redo.
+- Stato milestone: completata, CI branch/main verde e release `v0.3.0` pubblicata.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
