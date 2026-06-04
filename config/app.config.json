@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "True Drawing",
+    "defaultLocale": "it",
+    "autosaveIntervalMs": 30000,
+    "historyLimit": 100
+  },
+  "canvas": {
+    "defaultWidth": 2048,
+    "defaultHeight": 2048,
+    "backgroundColor": "#ffffff",
+    "maxZoom": 8,
+    "minZoom": 0.1
+  },
+  "tools": {
+    "defaultTool": "pencil",
+    "defaultColor": "#111111",
+    "defaultSize": 8,
+    "defaultOpacity": 1,
+    "defaultBrushHardness": 0.85
+  },
+  "layers": {
+    "defaultLayerName": "Layer 1",
+    "defaultOpacity": 1
+  },
+  "imageGeneration": {
+    "defaultProvider": "openai",
+    "defaultModel": "gpt-image-1.5",
+    "timeoutMs": 120000,
+    "defaultOutputFormat": "png"
+  },
+  "files": {
+    "canvasSuffix": "_canvas",
+    "imageSuffix": "_image",
+    "projectExtension": ".tdraw",
+    "canvasExportExtension": ".png",
+    "imageExportExtension": ".png"
+  }
+}
+
