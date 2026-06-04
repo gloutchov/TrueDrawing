@@ -5,7 +5,7 @@ type CanvasPointInput = {
   clientX: number;
   clientY: number;
   pressure: number;
-  timestamp: number;
+  timeStamp: number;
 };
 
 export function pointerEventToCanvasPoint(
@@ -21,6 +21,6 @@ export function pointerEventToCanvasPoint(
     x: (event.clientX - bounds.left) * scaleX,
     y: (event.clientY - bounds.top) * scaleY,
     pressure: normalizePressure(event.pressure, defaultPressure),
-    timestamp: event.timestamp
+    timestamp: event.timeStamp
   };
 }
