@@ -36,7 +36,7 @@ La API key non deve essere inserita in quel file: sara' salvata nel keychain del
 Per avviare la versione di sviluppo:
 
 - installare Node.js 22;
-- eseguire `npm install --no-audit --no-fund`;
+- eseguire `npm ci --no-audit --no-fund`;
 - eseguire `npm run dev`.
 
 Per produrre una build locale:
