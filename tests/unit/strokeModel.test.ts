@@ -23,6 +23,7 @@ describe("stroke model", () => {
       color: "#111111",
       size: 8,
       opacity: 1,
+      hardness: 0.9,
       point: firstPoint
     });
 
@@ -37,6 +38,7 @@ describe("stroke model", () => {
       color: "#111111",
       size: 8,
       opacity: 1,
+      hardness: 0.9,
       point: firstPoint
     });
 
@@ -56,6 +58,7 @@ describe("stroke model", () => {
       color: "#111111",
       size: 8,
       opacity: 1,
+      hardness: 0.9,
       point: firstPoint
     });
 

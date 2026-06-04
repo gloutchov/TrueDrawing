@@ -1,3 +1,6 @@
+import type { DrawingToolId, DrawingToolPreset } from "../drawing/toolTypes";
+import { isDrawingToolId } from "../drawing/toolTypes";
+
 export type AppConfig = {
   app: {
     name: string;
@@ -29,13 +32,17 @@ export type AppConfig = {
     defaultPointerPressure: number;
   };
   tools: {
-    defaultTool: string;
+    defaultTool: DrawingToolId;
     defaultColor: string;
     defaultSize: number;
     defaultOpacity: number;
     defaultBrushHardness: number;
     pressureMinSizeFactor: number;
     pressureMaxSizeFactor: number;
+    sizeRange: NumberRange;
+    opacityRange: NumberRange;
+    hardnessRange: NumberRange;
+    presets: DrawingToolPreset[];
   };
   layers: {
     defaultLayerName: string;
@@ -57,6 +64,11 @@ export type AppConfig = {
 };
 
 type ObjectRecord = Record<string, unknown>;
+type NumberRange = {
+  min: number;
+  max: number;
+  step: number;
+};
 
 export function validateAppConfig(value: unknown): AppConfig {
   const config = expectObject(value, "config");
@@ -100,13 +112,17 @@ export function validateAppConfig(value: unknown): AppConfig {
       defaultPointerPressure: expectUnitNumber(canvas.defaultPointerPressure, "canvas.defaultPointerPressure")
     },
     tools: {
-      defaultTool: expectString(tools.defaultTool, "tools.defaultTool"),
+      defaultTool: expectDrawingToolId(tools.defaultTool, "tools.defaultTool"),
       defaultColor: expectString(tools.defaultColor, "tools.defaultColor"),
       defaultSize: expectPositiveNumber(tools.defaultSize, "tools.defaultSize"),
       defaultOpacity: expectUnitNumber(tools.defaultOpacity, "tools.defaultOpacity"),
       defaultBrushHardness: expectUnitNumber(tools.defaultBrushHardness, "tools.defaultBrushHardness"),
       pressureMinSizeFactor: expectPositiveNumber(tools.pressureMinSizeFactor, "tools.pressureMinSizeFactor"),
-      pressureMaxSizeFactor: expectPositiveNumber(tools.pressureMaxSizeFactor, "tools.pressureMaxSizeFactor")
+      pressureMaxSizeFactor: expectPositiveNumber(tools.pressureMaxSizeFactor, "tools.pressureMaxSizeFactor"),
+      sizeRange: expectNumberRange(tools.sizeRange, "tools.sizeRange", false),
+      opacityRange: expectNumberRange(tools.opacityRange, "tools.opacityRange", true),
+      hardnessRange: expectNumberRange(tools.hardnessRange, "tools.hardnessRange", true),
+      presets: expectToolPresets(tools.presets, "tools.presets")
     },
     layers: {
       defaultLayerName: expectString(layers.defaultLayerName, "layers.defaultLayerName"),
@@ -144,6 +160,16 @@ function expectString(value: unknown, label: string): string {
   return value;
 }
 
+function expectDrawingToolId(value: unknown, label: string): DrawingToolId {
+  const tool = expectString(value, label);
+
+  if (!isDrawingToolId(tool)) {
+    throw new Error(`Invalid app configuration: ${label} must be a supported drawing tool.`);
+  }
+
+  return tool;
+}
+
 function expectPositiveNumber(value: unknown, label: string): number {
   if (typeof value !== "number" || !Number.isFinite(value) || value <= 0) {
     throw new Error(`Invalid app configuration: ${label} must be a positive number.`);
@@ -160,4 +186,40 @@ function expectUnitNumber(value: unknown, label: string): number {
   }
 
   return number;
+}
+
+function expectNumberRange(value: unknown, label: string, unitRange: boolean): NumberRange {
+  const range = expectObject(value, label);
+  const min = unitRange
+    ? expectUnitNumber(range.min, `${label}.min`)
+    : expectPositiveNumber(range.min, `${label}.min`);
+  const max = unitRange
+    ? expectUnitNumber(range.max, `${label}.max`)
+    : expectPositiveNumber(range.max, `${label}.max`);
+  const step = expectPositiveNumber(range.step, `${label}.step`);
+
+  if (max < min) {
+    throw new Error(`Invalid app configuration: ${label}.max must be greater than or equal to ${label}.min.`);
+  }
+
+  return { min, max, step };
+}
+
+function expectToolPresets(value: unknown, label: string): DrawingToolPreset[] {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new Error(`Invalid app configuration: ${label} must be a non-empty array.`);
+  }
+
+  return value.map((presetValue, index) => {
+    const presetLabel = `${label}[${index}]`;
+    const preset = expectObject(presetValue, presetLabel);
+
+    return {
+      id: expectDrawingToolId(preset.id, `${presetLabel}.id`),
+      label: expectString(preset.label, `${presetLabel}.label`),
+      size: expectPositiveNumber(preset.size, `${presetLabel}.size`),
+      opacity: expectUnitNumber(preset.opacity, `${presetLabel}.opacity`),
+      hardness: expectUnitNumber(preset.hardness, `${presetLabel}.hardness`)
+    };
+  });
 }

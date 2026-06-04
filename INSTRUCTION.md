@@ -1,8 +1,8 @@
 # True Drawing - User Instructions
 
-Version: `0.2.0`
+Version: `0.3.0`
 
-True Drawing is currently in an early stage. This version includes the desktop skeleton with an interactive canvas: the Electron app opens the main window, loads the central configuration, and lets users draw lines on the canvas with Pointer Events-compatible input.
+True Drawing is currently in an early stage. This version includes the desktop skeleton with an interactive canvas, stroke tools, and undo/redo: the Electron app opens the main window, loads the central configuration, and lets users draw on the canvas with Pointer Events-compatible input.
 
 ## Intended App Usage
 
@@ -10,9 +10,10 @@ Once the next application milestones are implemented, users will be able to:
 
 - create a new drawing and give it a name;
 - draw on the canvas with a mouse, tablet, or compatible input device;
-- choose tool, color, stroke size, and opacity;
+- choose pencil, marker, brush, or eraser;
+- change color, stroke size, opacity, and hardness;
+- undo and redo strokes with toolbar buttons or `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z`, and `Ctrl/Cmd+Y`;
 - use layers;
-- undo and redo actions;
 - configure API key, provider, and image model;
 - generate a realistic image in the inspector;
 - switch between canvas and realistic image by double clicking the inspector;
@@ -29,7 +30,7 @@ For a drawing named `name`, the app will use:
 
 The `config/app.config.json` file contains parameters editable by skilled users, such as autosave, canvas dimensions, tool defaults, API provider, and image model.
 
-This version also exposes canvas input parameters such as minimum point distance, stroke smoothing, default pressure, and pressure-based size factors.
+This version also exposes canvas input parameters such as minimum point distance, stroke smoothing, default pressure, pressure-based size factors, control ranges, and tool presets.
 
 The API key must not be placed in that file: it will be stored in the operating system keychain through the app settings.
 

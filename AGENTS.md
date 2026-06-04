@@ -32,6 +32,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Le dipendenze fra moduli devono restare esplicite e direzionate. Evitare import circolari.
 - Il renderer non deve accedere direttamente a filesystem, segreti o API native: usare canali IPC controllati.
 - La logica canvas riutilizzabile, come stroke model, smoothing e pressione, deve restare in moduli testabili e non sepolta nei componenti React.
+- La logica undo/redo deve restare in moduli testabili, separata dai componenti UI.
 
 ## Configurazione
 
@@ -43,6 +44,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
   - dimensioni canvas;
   - qualita' export;
   - default strumenti;
+  - preset strumenti;
+  - range dei controlli strumenti;
   - limiti history;
   - timeout API;
   - percorsi documenti;

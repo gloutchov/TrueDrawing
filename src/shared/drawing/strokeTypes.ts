@@ -1,3 +1,5 @@
+import type { DrawingToolId } from "./toolTypes";
+
 export type DrawingPoint = {
   x: number;
   y: number;
@@ -7,10 +9,11 @@ export type DrawingPoint = {
 
 export type DrawingStroke = {
   id: string;
-  tool: string;
+  tool: DrawingToolId;
   color: string;
   size: number;
   opacity: number;
+  hardness: number;
   points: DrawingPoint[];
 };
 

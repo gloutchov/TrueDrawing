@@ -1,26 +1,43 @@
-import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, type PointerEvent } from "react";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import { appendPointToStroke, createStroke } from "../../shared/drawing/strokeModel";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
+import type { DrawingToolSettings } from "../../shared/drawing/toolTypes";
 import { pointerEventToCanvasPoint } from "./canvasCoordinates";
 import { renderCanvas } from "./canvasRenderer";
 
 type CanvasStageProps = {
   config: AppConfig;
+  strokes: DrawingStroke[];
+  toolSettings: DrawingToolSettings;
+  onAppendStroke: (stroke: DrawingStroke) => void;
+  onUpdateStroke: (
+    strokeId: string,
+    updater: (stroke: DrawingStroke) => DrawingStroke
+  ) => void;
 };
 
-export function CanvasStage({ config }: CanvasStageProps): JSX.Element {
+export function CanvasStage({
+  config,
+  strokes,
+  toolSettings,
+  onAppendStroke,
+  onUpdateStroke
+}: CanvasStageProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const activePointerIdRef = useRef<number | null>(null);
   const activeStrokeIdRef = useRef<string | null>(null);
-  const [strokes, setStrokes] = useState<DrawingStroke[]>([]);
 
-  const renderOptions = {
+  const renderOptions = useMemo(() => ({
     backgroundColor: config.canvas.backgroundColor,
     pressureMinSizeFactor: config.tools.pressureMinSizeFactor,
     pressureMaxSizeFactor: config.tools.pressureMaxSizeFactor
-  };
+  }), [
+    config.canvas.backgroundColor,
+    config.tools.pressureMaxSizeFactor,
+    config.tools.pressureMinSizeFactor
+  ]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -58,10 +75,11 @@ export function CanvasStage({ config }: CanvasStageProps): JSX.Element {
     );
     const stroke = createStroke({
       id: crypto.randomUUID(),
-      tool: config.tools.defaultTool,
-      color: config.tools.defaultColor,
-      size: config.tools.defaultSize,
-      opacity: config.tools.defaultOpacity,
+      tool: toolSettings.tool,
+      color: toolSettings.color,
+      size: toolSettings.size,
+      opacity: toolSettings.opacity,
+      hardness: toolSettings.hardness,
       point
     });
 
@@ -69,13 +87,15 @@ export function CanvasStage({ config }: CanvasStageProps): JSX.Element {
     canvas.setPointerCapture(event.pointerId);
     activePointerIdRef.current = event.pointerId;
     activeStrokeIdRef.current = stroke.id;
-    setStrokes((currentStrokes) => [...currentStrokes, stroke]);
+    onAppendStroke(stroke);
   }, [
     config.canvas.defaultPointerPressure,
-    config.tools.defaultColor,
-    config.tools.defaultOpacity,
-    config.tools.defaultSize,
-    config.tools.defaultTool
+    onAppendStroke,
+    toolSettings.color,
+    toolSettings.hardness,
+    toolSettings.opacity,
+    toolSettings.size,
+    toolSettings.tool
   ]);
 
   const handlePointerMove = useCallback((event: PointerEvent<HTMLCanvasElement>) => {
@@ -91,21 +111,16 @@ export function CanvasStage({ config }: CanvasStageProps): JSX.Element {
     const activeStrokeId = activeStrokeIdRef.current;
 
     event.preventDefault();
-    setStrokes((currentStrokes) => currentStrokes.map((stroke) => {
-      if (stroke.id !== activeStrokeId) {
-        return stroke;
-      }
-
-      return appendPointToStroke(stroke, point, {
-        defaultPressure: config.canvas.defaultPointerPressure,
-        minPointDistance: config.canvas.minPointDistance,
-        smoothing: config.canvas.strokeSmoothing
-      });
+    onUpdateStroke(activeStrokeId, (stroke) => appendPointToStroke(stroke, point, {
+      defaultPressure: config.canvas.defaultPointerPressure,
+      minPointDistance: config.canvas.minPointDistance,
+      smoothing: config.canvas.strokeSmoothing
     }));
   }, [
     config.canvas.defaultPointerPressure,
     config.canvas.minPointDistance,
-    config.canvas.strokeSmoothing
+    config.canvas.strokeSmoothing,
+    onUpdateStroke
   ]);
 
   const endPointerStroke = useCallback((event: PointerEvent<HTMLCanvasElement>) => {

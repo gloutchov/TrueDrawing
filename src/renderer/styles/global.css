@@ -104,7 +104,7 @@ button {
   place-items: center;
   color: #2f393d;
   background: transparent;
-  cursor: default;
+  cursor: pointer;
 }
 
 .icon-button {
@@ -117,6 +117,18 @@ button {
 .mini-button:hover,
 .icon-button.is-active {
   background: #d3dcdf;
+}
+
+.icon-button:disabled,
+.mini-button:disabled {
+  color: #9aa4a8;
+  cursor: default;
+  opacity: 0.55;
+}
+
+.icon-button:disabled:hover,
+.mini-button:disabled:hover {
+  background: transparent;
 }
 
 .tool-separator {
@@ -135,11 +147,50 @@ button {
   margin-top: 2px;
 }
 
-.tool-readout span {
+.color-control {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+}
+
+.color-control input {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #88949a;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-control input:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.tool-slider {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  color: #5b666b;
+  font-size: 10px;
+}
+
+.tool-slider input {
+  width: 54px;
+  accent-color: #4f6972;
+}
+
+.tool-readout .tool-preview {
   width: 21px;
   height: 21px;
   border: 1px solid #88949a;
   border-radius: 50%;
+}
+
+.tool-readout small {
+  font-size: 10px;
 }
 
 .workspace {

@@ -4,13 +4,15 @@ import type {
   StrokeInputOptions,
   StrokeRenderOptions
 } from "./strokeTypes";
+import type { DrawingToolId } from "./toolTypes";
 
 type CreateStrokeInput = {
   id: string;
-  tool: string;
+  tool: DrawingToolId;
   color: string;
   size: number;
   opacity: number;
+  hardness: number;
   point: DrawingPoint;
 };
 
@@ -21,6 +23,7 @@ export function createStroke(input: CreateStrokeInput): DrawingStroke {
     color: input.color,
     size: input.size,
     opacity: input.opacity,
+    hardness: input.hardness,
     points: [input.point]
   };
 }

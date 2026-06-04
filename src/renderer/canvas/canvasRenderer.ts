@@ -32,15 +32,18 @@ function renderStroke(
 
   context.save();
   context.globalAlpha = stroke.opacity;
-  context.strokeStyle = stroke.color;
+  context.globalCompositeOperation = stroke.tool === "eraser" ? "destination-out" : "source-over";
+  context.strokeStyle = stroke.tool === "eraser" ? "#000000" : stroke.color;
   context.lineCap = "round";
   context.lineJoin = "round";
+  context.shadowColor = stroke.tool === "eraser" ? "#000000" : stroke.color;
+  context.shadowBlur = stroke.size * Math.max(0, 1 - stroke.hardness) * 0.8;
 
   if (stroke.points.length === 1) {
     const [point] = stroke.points;
     const radius = strokeWidthForPressure(stroke.size, point.pressure, options) / 2;
 
-    context.fillStyle = stroke.color;
+    context.fillStyle = stroke.tool === "eraser" ? "#000000" : stroke.color;
     context.beginPath();
     context.arc(point.x, point.y, radius, 0, Math.PI * 2);
     context.fill();
