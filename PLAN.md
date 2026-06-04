@@ -370,13 +370,13 @@ Esito M3:
   - shortcut `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z` e `Ctrl/Cmd+Y`;
   - parametri tool e range controlli aggiunti a `config/app.config.json`.
 - Test automatici:
-  - da verificare in CI.
+  - GitHub Actions branch milestone run `26958804881`, successo con `npm ci`, verifica documenti, verifica versione, lint, test e build.
 - Verifiche locali:
   - validazione JSON di `config/app.config.json`;
   - verifica `VERSION = 0.3.0` e `package.json = 0.3.0`;
   - test/lint/build locali bloccati da `node_modules` non installato correttamente su questa macchina; verifica completa demandata a GitHub Actions.
 - CI:
-  - branch milestone: da verificare;
+  - branch milestone: successo;
   - `main`: da verificare dopo merge;
   - release: da verificare.
 - Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.0`.
@@ -384,7 +384,7 @@ Esito M3:
   - test manuale con tavoletta Wacom fisica non eseguito in questa sessione;
   - gomma implementata come stroke di compositing su canvas singolo; l'integrazione profonda con layer arrivera' in M4.
 
-Stato: in corso.
+Stato: in chiusura.
 
 ### M4 - Layer
 
@@ -688,7 +688,7 @@ Stato: pianificata.
 | 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
 | 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
-| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | In corso | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI e release da verificare. |
+| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | In chiusura | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch milestone verde, merge e release da completare. |
 
 ## Checklist di chiusura milestone
 
