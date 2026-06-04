@@ -10,15 +10,20 @@ on:
 
 jobs:
   bootstrap:
-    name: Bootstrap checks
+    name: Build and test
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate configuration JSON
-        run: python -m json.tool config/app.config.json > /dev/null
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
 
       - name: Verify required project documents
         shell: bash
@@ -43,5 +48,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$(cat VERSION)" = "0.0.1"
+          test "$(cat VERSION)" = "0.1.0"
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build

@@ -1,0 +1,45 @@
+import { app, BrowserWindow } from "electron";
+
+import { loadDesktopAppConfig } from "./config/desktopConfig";
+import { registerIpc } from "./ipc/registerIpc";
+import { installAppMenu } from "./menu/appMenu";
+import { createMainWindow } from "./windows/mainWindow";
+import type { AppConfig } from "../shared/config/appConfigSchema";
+
+let appConfig: AppConfig | null = null;
+
+app.whenReady().then(() => {
+  appConfig = loadDesktopAppConfig();
+  installAppMenu(appConfig);
+  registerIpc({
+    getConfig: () => requireAppConfig(),
+    getRuntimeInfo: () => ({
+      appVersion: app.getVersion(),
+      platform: process.platform
+    })
+  });
+  createMainWindow(appConfig);
+
+  app.on("activate", () => {
+    if (appConfig && BrowserWindow.getAllWindows().length === 0) {
+      createMainWindow(appConfig);
+    }
+  });
+}).catch((error: unknown) => {
+  console.error("Failed to start True Drawing.", error);
+  app.quit();
+});
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+
+function requireAppConfig(): AppConfig {
+  if (!appConfig) {
+    throw new Error("App configuration is not loaded.");
+  }
+
+  return appConfig;
+}

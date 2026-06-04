@@ -1,0 +1,255 @@
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1f2528;
+  background: #d9dee1;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+button {
+  border: 0;
+  font: inherit;
+}
+
+.boot-state {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background: #eef1f2;
+}
+
+.boot-state--error {
+  align-content: center;
+  gap: 10px;
+  color: #8a1f1f;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-areas:
+    "top top top"
+    "tools work side";
+  grid-template-columns: var(--tool-rail-width) minmax(0, 1fr) var(--side-panel-width);
+  grid-template-rows: var(--top-bar-height) calc(100vh - var(--top-bar-height));
+  height: 100vh;
+  background: #d8dee1;
+}
+
+.top-bar {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #b9c2c7;
+  background: #f4f6f6;
+  padding: 0 14px;
+}
+
+.brand-lockup,
+.settings-summary,
+.panel-header,
+.panel-header span,
+.layer-row {
+  display: flex;
+  align-items: center;
+}
+
+.brand-lockup {
+  gap: 10px;
+}
+
+.brand-lockup strong {
+  font-size: 14px;
+}
+
+.brand-lockup span,
+.settings-summary,
+.inspector-meta,
+.layer-row small {
+  color: #5b666b;
+  font-size: 12px;
+}
+
+.settings-summary {
+  gap: 9px;
+}
+
+.tool-rail {
+  grid-area: tools;
+  border-right: 1px solid #aeb8bd;
+  background: #eef1f2;
+}
+
+.tool-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.icon-button,
+.mini-button {
+  display: inline-grid;
+  place-items: center;
+  color: #2f393d;
+  background: transparent;
+  cursor: default;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 7px;
+}
+
+.icon-button:hover,
+.mini-button:hover,
+.icon-button.is-active {
+  background: #d3dcdf;
+}
+
+.tool-separator {
+  width: 26px;
+  height: 1px;
+  background: #b8c2c7;
+  margin: 2px 0;
+}
+
+.tool-readout {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  color: #5b666b;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+.tool-readout span {
+  width: 21px;
+  height: 21px;
+  border: 1px solid #88949a;
+  border-radius: 50%;
+}
+
+.workspace {
+  grid-area: work;
+  min-width: 0;
+  min-height: 0;
+}
+
+.canvas-stage {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: var(--workspace-padding);
+  overflow: hidden;
+}
+
+.canvas-surface {
+  width: min(100%, calc(100vh - var(--top-bar-height) - (var(--workspace-padding) * 2)));
+  max-height: calc(100vh - var(--top-bar-height) - (var(--workspace-padding) * 2));
+  border: 1px solid #b4bdc2;
+  box-shadow: 0 18px 45px rgb(31 37 40 / 16%);
+}
+
+.right-panel {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-left: 1px solid #aeb8bd;
+  background: #e7ebed;
+  padding: 10px;
+}
+
+.panel {
+  border: 1px solid #c4ccd0;
+  border-radius: 8px;
+  background: #f4f6f6;
+  overflow: hidden;
+}
+
+.panel-header {
+  justify-content: space-between;
+  height: 38px;
+  border-bottom: 1px solid #d1d8db;
+  padding: 0 9px 0 11px;
+  color: #2f393d;
+  font-size: 13px;
+}
+
+.panel-header span {
+  gap: 7px;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.mini-button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.inspector-panel {
+  min-height: 292px;
+}
+
+.inspector-preview {
+  display: grid;
+  height: 184px;
+  place-items: center;
+  color: #8b969b;
+  background: #f9faf9;
+}
+
+.inspector-meta {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 10px 12px 12px;
+}
+
+.inspector-meta div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inspector-meta dt,
+.inspector-meta dd {
+  margin: 0;
+}
+
+.inspector-meta dd {
+  color: #2f393d;
+}
+
+.layer-row {
+  gap: 8px;
+  height: 38px;
+  padding: 0 11px;
+  font-size: 13px;
+}
+
+.layer-row.is-active {
+  background: #e0e7ea;
+}
+
+.layer-row span {
+  flex: 1;
+}
