@@ -1,12 +1,12 @@
 # True Drawing - User Instructions
 
-Version: `0.0.1`
+Version: `0.1.0`
 
-True Drawing is currently in bootstrap stage. This version does not yet include a runnable app: it provides the development plan, initial documentation, planned architecture map, and initial configuration.
+True Drawing is currently in an early stage. This version includes the desktop skeleton: the Electron app opens the main window, loads the central configuration, and presents the initial UI structure with canvas, tools, inspector, and layers.
 
 ## Intended App Usage
 
-Once the application milestones are implemented, users will be able to:
+Once the next application milestones are implemented, users will be able to:
 
 - create a new drawing and give it a name;
 - draw on the canvas with a mouse, tablet, or compatible input device;
@@ -31,3 +31,14 @@ The `config/app.config.json` file contains parameters editable by skilled users,
 
 The API key must not be placed in that file: it will be stored in the operating system keychain through the app settings.
 
+## Development Startup
+
+To run the development version:
+
+- install Node.js 22;
+- run `npm install --no-audit --no-fund`;
+- run `npm run dev`.
+
+To produce a local build:
+
+- run `npm run build`.

@@ -13,8 +13,26 @@ truedrawing/
 +-- package.json
 |   Dichiara script, versione, dipendenze e metadati dell'app.
 |
++-- tsconfig.json
+|   Configurazione TypeScript con riferimenti ai target Electron e renderer.
+|
++-- tsconfig.electron.json
+|   Compilazione TypeScript per main, preload e moduli condivisi.
+|
++-- tsconfig.renderer.json
+|   Type-check TypeScript/React del renderer.
+|
++-- vite.config.ts
+|   Configurazione Vite per build renderer.
+|
++-- eslint.config.mjs
+|   Regole lint TypeScript.
+|
 +-- electron-builder.yml
 |   Configurazione packaging Windows/macOS e artifact release.
+|
++-- index.html
+|   Entry HTML del renderer Vite.
 |
 +-- src/
 |   |
@@ -23,17 +41,23 @@ truedrawing/
 |   |   +-- appMain.ts
 |   |   |   Avvio processo main Electron e ciclo vita app.
 |   |   |
+|   |   +-- config/
+|   |   |   Caricamento configurazione centrale per il processo desktop.
+|   |   |
 |   |   +-- windows/
 |   |   |   Creazione e gestione finestre.
 |   |   |
 |   |   +-- ipc/
 |   |   |   Canali sicuri fra renderer e main process.
 |   |   |
+|   |   +-- menu/
+|   |   |   Menu applicativo base.
+|   |   |
 |   |   +-- secrets/
-|   |   |   Accesso a macOS Keychain e Windows Credential Manager.
+|   |   |   Accesso futuro a macOS Keychain e Windows Credential Manager.
 |   |   |
 |   |   +-- storage/
-|   |       Salvataggio, autosave, recupero ed export.
+|   |       Salvataggio, autosave, recupero ed export futuri.
 |   |
 |   +-- preload/
 |   |   |
@@ -46,22 +70,25 @@ truedrawing/
 |   |   |   Root React, layout e routing interno.
 |   |   |
 |   |   +-- canvas/
-|   |   |   Canvas, rendering tratti, input mouse/penna/touch.
+|   |   |   Area canvas iniziale e futuro rendering tratti/input.
 |   |   |
 |   |   +-- tools/
-|   |   |   Matita, pennarello, pennello, gomma e preset tratto.
+|   |   |   Toolbar iniziale per matita, pennarello, pennello, gomma e azioni.
 |   |   |
 |   |   +-- layers/
-|   |   |   UI e stato dei layer.
+|   |   |   UI iniziale e futuro stato dei layer.
 |   |   |
 |   |   +-- history/
-|   |   |   Undo/redo e stack azioni.
+|   |   |   Undo/redo e stack azioni futuri.
 |   |   |
 |   |   +-- inspector/
-|   |   |   Preview immagine realistica e doppio click canvas/inspector.
+|   |   |   Preview iniziale immagine realistica e metadati provider/modello.
 |   |   |
 |   |   +-- settings/
-|   |       UI impostazioni per API key, provider e modello immagini.
+|   |   |   Riepilogo impostazioni provider/modello.
+|   |   |
+|   |   +-- styles/
+|   |       Stili globali renderer.
 |   |
 |   +-- shared/
 |   |   |
@@ -72,13 +99,10 @@ truedrawing/
 |   |   |   Interfacce provider e adapter OpenAI.
 |   |   |
 |   |   +-- config/
-|   |   |   Configurazione centrale, default e validazione.
+|   |   |   Tipi, schema, validazione e caricamento file configurazione.
 |   |   |
-|   |   +-- errors/
-|   |       Errori applicativi sanitizzati.
-|   |
-|   +-- styles/
-|       Stili globali e variabili UI.
+|   |   +-- runtime/
+|   |       Tipi per informazioni runtime esposte al renderer.
 |
 +-- config/
 |   |
@@ -98,7 +122,10 @@ truedrawing/
 |   +-- workflows/
 |       |
 |       +-- ci.yml
-|           CI iniziale: valida configurazione JSON, documenti obbligatori e versione.
+|       |   CI: installazione dipendenze, documenti obbligatori, lint, test e build.
+|       |
+|       +-- release.yml
+|           Release: build Windows/macOS e upload asset sulla release GitHub.
 |
 +-- README.md
 |   Descrizione progetto in italiano e inglese.
@@ -131,7 +158,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.0.1`.
-- Milestone corrente: M0 - Bootstrap repository e governance.
-- Struttura applicativa Electron/React non ancora implementata.
-- Documentazione iniziale, configurazione iniziale e regole di sviluppo presenti.
+- Versione: `0.1.0`.
+- Milestone corrente: M1 - Skeleton app desktop.
+- Skeleton Electron/Vite/React implementato.
+- Configurazione centrale validata e caricata dal processo main.
+- UI iniziale modulare presente per canvas, strumenti, inspector, layer e settings.
+- Workflow CI e release Windows/macOS presenti.

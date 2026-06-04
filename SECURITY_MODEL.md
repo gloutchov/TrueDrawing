@@ -2,9 +2,9 @@
 
 ## Italiano
 
-Versione: `0.0.1`
+Versione: `0.1.0`
 
-Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente il progetto e' ancora in bootstrap documentale; le implementazioni applicative arriveranno nelle milestone successive.
+Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente e' presente lo skeleton desktop Electron con `contextIsolation` attivo, `nodeIntegration` disattivata nel renderer e preload dedicato per esporre solo API minime.
 
 ### Principi
 
@@ -32,15 +32,18 @@ Le chiamate di rete devono essere limitate alla generazione dell'immagine realis
 ### Stato attuale
 
 - Documentazione sicurezza iniziale: completata.
+- Skeleton Electron con renderer isolato: completato.
+- Preload con API minima `getAppConfig` e `getRuntimeInfo`: completato.
+- Caricamento configurazione centrale validata: completato.
 - Implementazione keychain: pianificata per milestone futura.
-- Hardening Electron: pianificato per milestone futura.
+- Hardening Electron completo: pianificato per milestone futura.
 - Test sicurezza: pianificati per milestone futura.
 
 ## English
 
-Version: `0.0.1`
+Version: `0.1.0`
 
-This document describes the planned security model for True Drawing. The current version is still a documentation bootstrap; application implementations will be delivered in later milestones.
+This document describes the planned security model for True Drawing. The current version includes the Electron desktop skeleton with `contextIsolation` enabled, `nodeIntegration` disabled in the renderer, and a dedicated preload exposing only minimal APIs.
 
 ### Principles
 
@@ -68,7 +71,9 @@ Network calls must be limited to realistic image generation and must send only t
 ### Current Status
 
 - Initial security documentation: complete.
+- Electron skeleton with isolated renderer: complete.
+- Preload with minimal `getAppConfig` and `getRuntimeInfo` APIs: complete.
+- Validated central configuration loading: complete.
 - Keychain implementation: planned for a future milestone.
-- Electron hardening: planned for a future milestone.
+- Full Electron hardening: planned for a future milestone.
 - Security tests: planned for a future milestone.
-

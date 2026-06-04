@@ -4,12 +4,13 @@
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione corrente e' `0.0.1` e contiene il bootstrap documentale, il piano milestone, le direttive di sviluppo, il modello di sicurezza iniziale, la mappa della struttura prevista e la configurazione applicativa iniziale.
+Il progetto e' in fase iniziale. La versione corrente e' `0.1.0` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, CI con lint/test/build e workflow release Windows/macOS.
 
 Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
 ### Funzionalita' previste
 
+- App desktop Electron avviabile con finestra principale True Drawing.
 - Canvas pulito per disegno libero.
 - Strumenti per matita, pennarello, pennello e gomma.
 - Controllo colore, dimensione tratto, opacita' e forma.
@@ -31,16 +32,34 @@ Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 - `SECURITY_MODEL.md`: modello di sicurezza in italiano e inglese.
 - `config/app.config.json`: parametri modificabili da utenti skilled e sviluppatori.
 
+### Sviluppo locale
+
+Requisiti:
+
+- Node.js 22.
+- npm.
+
+Comandi:
+
+- `npm install --no-audit --no-fund`
+- `npm run dev`
+- `npm run lint`
+- `npm run test`
+- `npm run build`
+- `npm run dist:win`
+- `npm run dist:mac`
+
 ## English
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Current version is `0.0.1` and includes documentation bootstrap, milestone plan, development directives, initial security model, planned architecture map, and initial app configuration.
+The project is at its initial stage. Current version is `0.1.0` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, CI with lint/test/build, and Windows/macOS release workflow.
 
 Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
 ### Planned Features
 
+- Runnable Electron desktop app with a True Drawing main window.
 - Clean freehand drawing canvas.
 - Pencil, marker, brush, and eraser tools.
 - Color, stroke size, opacity, and shape controls.
@@ -61,3 +80,20 @@ Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 - `INSTRUCTION.md`: user instructions in English.
 - `SECURITY_MODEL.md`: security model in Italian and English.
 - `config/app.config.json`: parameters editable by skilled users and developers.
+
+### Local Development
+
+Requirements:
+
+- Node.js 22.
+- npm.
+
+Commands:
+
+- `npm install --no-audit --no-fund`
+- `npm run dev`
+- `npm run lint`
+- `npm run test`
+- `npm run build`
+- `npm run dist:win`
+- `npm run dist:mac`

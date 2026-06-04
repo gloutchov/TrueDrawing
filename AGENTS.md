@@ -72,10 +72,10 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 Prima di chiudere una milestone:
 
 - eseguire test automatici;
+- eseguire `npm run lint`, `npm run test` e `npm run build` quando il progetto contiene codice Node/Electron;
 - fare verifica manuale delle funzionalita' implementate;
 - controllare che la configurazione non abbia parametri duplicati o hardcoded;
 - controllare che non ci siano segreti tracciati;
 - aggiornare documentazione e piano;
 - verificare CI;
 - generare e controllare release Windows e macOS quando previsto.
-

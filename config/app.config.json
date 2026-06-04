@@ -5,6 +5,18 @@
     "autosaveIntervalMs": 30000,
     "historyLimit": 100
   },
+  "window": {
+    "width": 1280,
+    "height": 860,
+    "minWidth": 960,
+    "minHeight": 640
+  },
+  "layout": {
+    "topBarHeight": 46,
+    "toolRailWidth": 58,
+    "sidePanelWidth": 320,
+    "workspacePadding": 28
+  },
   "canvas": {
     "defaultWidth": 2048,
     "defaultHeight": 2048,
@@ -37,4 +49,3 @@
     "imageExportExtension": ".png"
   }
 }
-
