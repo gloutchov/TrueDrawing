@@ -3,16 +3,22 @@ productName: True Drawing
 asar: true
 directories:
   output: release
+  buildResources: build
 files:
   - dist/**
   - dist-electron/**
   - config/**
   - package.json
+extraResources:
+  - from: build/icon.png
+    to: icon.png
 win:
+  icon: build/icon.ico
   target:
     - nsis
   artifactName: True-Drawing-${version}-Windows-${arch}.${ext}
 mac:
+  icon: build/icon.png
   target:
     - dmg
     - zip
@@ -21,4 +27,5 @@ nsis:
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
-
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico

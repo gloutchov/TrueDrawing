@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron";
 
+import { createAppIcon } from "./appIcon";
 import { loadDesktopAppConfig } from "./config/desktopConfig";
 import { registerIpc } from "./ipc/registerIpc";
 import { installAppMenu } from "./menu/appMenu";
@@ -10,6 +11,11 @@ let appConfig: AppConfig | null = null;
 
 app.whenReady().then(() => {
   appConfig = loadDesktopAppConfig();
+
+  if (process.platform === "darwin" && app.dock) {
+    app.dock.setIcon(createAppIcon());
+  }
+
   installAppMenu(appConfig);
   registerIpc({
     getConfig: () => requireAppConfig(),

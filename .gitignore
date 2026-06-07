@@ -10,7 +10,10 @@ dist/
 dist-electron/
 out/
 release/
-build/
+build/*
+!build/
+!build/icon.png
+!build/icon.ico
 coverage/
 
 # Runtime and caches
