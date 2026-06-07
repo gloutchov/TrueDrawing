@@ -1,12 +1,14 @@
 import { BrowserWindow } from "electron";
 import path from "node:path";
 
+import { getAppIconPath } from "../appIcon";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 
 export function createMainWindow(config: AppConfig): BrowserWindow {
   const appRoot = path.join(__dirname, "..", "..", "..");
   const window = new BrowserWindow({
     title: config.app.name,
+    icon: getAppIconPath(),
     width: config.window.width,
     height: config.window.height,
     minWidth: config.window.minWidth,
