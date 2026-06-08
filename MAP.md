@@ -31,12 +31,23 @@ truedrawing/
 +-- electron-builder.yml
 |   Configurazione packaging Windows/macOS e artifact release.
 |
++-- build/
+|   |
+|   +-- icon.ico
+|   |   Icona Windows dell'app.
+|   |
+|   +-- icon.png
+|       Icona macOS/Linux e sorgente immagine per packaging.
+|
 +-- index.html
 |   Entry HTML del renderer Vite.
 |
 +-- src/
 |   |
 |   +-- main/
+|   |   |
+|   |   +-- appIcon.ts
+|   |   |   Risoluzione dell'icona app per finestre e menu.
 |   |   |
 |   |   +-- appMain.ts
 |   |   |   Avvio processo main Electron e ciclo vita app.
@@ -76,10 +87,10 @@ truedrawing/
 |   |   |   Toolbar, preset strumenti, controlli colore/size/opacita'/hardness e stato tool.
 |   |   |
 |   |   +-- layers/
-|   |   |   UI iniziale e futuro stato dei layer.
+|   |   |   Pannello layer con creazione, rinomina, visibilita', opacita', riordino e cancellazione protetta.
 |   |   |
 |   |   +-- history/
-|   |   |   Hook renderer per undo/redo dei tratti.
+|   |   |   Hook renderer per undo/redo del documento di disegno.
 |   |   |
 |   |   +-- inspector/
 |   |   |   Preview iniziale immagine realistica e metadati provider/modello.
@@ -99,7 +110,7 @@ truedrawing/
 |   |   |   Modello condiviso e testabile per stack undo/redo.
 |   |   |
 |   |   +-- document/
-|   |   |   Tipi e serializzazione del documento True Drawing.
+|   |   |   Tipi e modello layer/documento True Drawing.
 |   |   |
 |   |   +-- image-generation/
 |   |   |   Interfacce provider e adapter OpenAI.
@@ -164,14 +175,15 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.3.0`.
-- Ultima milestone implementata: M3 - Strumenti di tratto, colore, gomma, undo e redo.
-- Stato milestone: completata, CI branch/main verde e release `v0.3.0` pubblicata.
+- Versione: `0.4.0`.
+- Ultima milestone implementata localmente: M4 - Layer.
+- Stato milestone: implementazione e verifiche locali completate su branch `milestone/04-layers`; CI/release ancora da eseguire.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
 - Strumenti matita, pennarello, pennello e gomma collegati al canvas.
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.
-- Undo/redo dei tratti presente con modello history testabile.
+- Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
+- Undo/redo del documento presente con modello history testabile.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI e release Windows/macOS presenti.

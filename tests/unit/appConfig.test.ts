@@ -55,7 +55,13 @@ describe("app configuration", () => {
           { id: "eraser", label: "Eraser", size: 28, opacity: 1, hardness: 0.8 }
         ]
       },
-      layers: { defaultLayerName: "Layer 1", defaultOpacity: 1 },
+      layers: {
+        defaultLayerName: "Layer 1",
+        newLayerNamePrefix: "Layer",
+        defaultOpacity: 1,
+        maxLayers: 32,
+        opacityRange: { min: 0.05, max: 1, step: 0.05 }
+      },
       imageGeneration: { defaultProvider: "openai", defaultModel: "gpt-image-1.5", timeoutMs: 120000, defaultOutputFormat: "png" },
       files: { canvasSuffix: "_canvas", imageSuffix: "_image", projectExtension: ".tdraw", canvasExportExtension: ".png", imageExportExtension: ".png" }
     })).toThrow(/tools\.defaultOpacity/);

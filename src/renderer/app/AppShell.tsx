@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
 import { CanvasStage } from "../canvas/CanvasStage";
-import { useStrokeHistory } from "../history/useStrokeHistory";
+import { useDrawingDocumentHistory } from "../history/useDrawingDocumentHistory";
 import { InspectorPanel } from "../inspector/InspectorPanel";
 import { LayerPanel } from "../layers/LayerPanel";
 import { SettingsSummary } from "../settings/SettingsSummary";
@@ -19,14 +19,21 @@ type AppShellProps = {
 
 export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const {
-    strokes,
+    document,
     canUndo,
     canRedo,
     appendStroke,
     updateStroke,
+    addLayer,
+    renameLayer,
+    deleteLayer,
+    selectLayer,
+    setLayerVisibility,
+    setLayerOpacity,
+    moveLayer,
     undo,
     redo
-  } = useStrokeHistory(config.app.historyLimit);
+  } = useDrawingDocumentHistory(config);
   const [toolSettings, setToolSettings] = useState<DrawingToolSettings>(() => (
     createInitialToolSettings(config)
   ));
@@ -105,7 +112,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       <main className="workspace">
         <CanvasStage
           config={config}
-          strokes={strokes}
+          document={document}
           toolSettings={toolSettings}
           onAppendStroke={appendStroke}
           onUpdateStroke={updateStroke}
@@ -113,7 +120,17 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       </main>
       <aside className="right-panel" aria-label="Document panels">
         <InspectorPanel config={config} />
-        <LayerPanel config={config} />
+        <LayerPanel
+          config={config}
+          document={document}
+          onAddLayer={addLayer}
+          onRenameLayer={renameLayer}
+          onDeleteLayer={deleteLayer}
+          onSelectLayer={selectLayer}
+          onSetLayerVisibility={setLayerVisibility}
+          onSetLayerOpacity={setLayerOpacity}
+          onMoveLayer={moveLayer}
+        />
       </aside>
     </div>
   );

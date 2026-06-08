@@ -380,6 +380,11 @@ Esito M3:
   - `main`: GitHub Actions run `26958948854`, successo;
   - release: GitHub Actions run `26959021229`, successo con build Windows, build macOS e pubblicazione asset.
 - Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.0`.
+- Patch successiva:
+  - versione `0.3.1`;
+  - commit `2514090` su `main`;
+  - release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.1`;
+  - contenuto: aggiunta icona personalizzata dell'app, integrazione icona in finestra/menu e finestra informazioni; nessuna nuova funzionalita' di disegno rispetto a M3.
 - Artifact release verificati:
   - `True-Drawing-0.3.0-Windows-x64.exe`;
   - `True-Drawing-0.3.0-Windows-x64.exe.blockmap`;
@@ -426,7 +431,34 @@ Verifiche:
 - Test manuale creazione/cancellazione/visibilita'/riordino.
 - Test di compositing canvas.
 
-Stato: pianificata.
+Esito locale M4:
+
+- Branch usato: `milestone/04-layers`.
+- Versione iniziale: `0.3.1`.
+- Versione finale prevista: `0.4.0`.
+- Implementazione:
+  - modello documento/layer condiviso e testabile in `src/shared/document`;
+  - history renderer spostata dal solo array di stroke al documento di disegno;
+  - canvas composito per layer con ordine bottom-to-top, visibilita' e opacita';
+  - strumenti di disegno applicati al layer attivo;
+  - pannello layer con creazione, rinomina, selezione, visibilita', opacita', riordino e cancellazione protetta dell'ultimo layer;
+  - finestra info corretta per evitare scrollbar verticale e menu Windows inutile;
+  - parametri layer aggiunti a `config/app.config.json` e validazione configurazione aggiornata.
+- Test automatici locali:
+  - `npm run test`, successo;
+  - `npm run lint`, successo;
+  - `npm run build`, successo.
+- Verifiche manuali:
+  - verifica manuale app Electron confermata dall'utente il 2026-06-08: layer funzionanti correttamente;
+  - verifica finestra info confermata dopo correzione scrollbar/menu.
+- CI:
+  - non ancora eseguita su GitHub per M4.
+- Release:
+  - non ancora pubblicata.
+- Rischi residui:
+  - opacita' layer aggiornata da slider crea uno step history per ogni modifica, da rivalutare se l'esperienza risulta troppo granulare.
+
+Stato: implementazione e verifica locale completate, in attesa di CI e release.
 
 ### M5 - Inspector realistico e generazione immagine
 
@@ -700,6 +732,8 @@ Stato: pianificata.
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
 | 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde e release `v0.3.0` pubblicata con artifact Windows/macOS. |
+| 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release `v0.3.1` pubblicata con artifact Windows/macOS. |
+| 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | In corso | Implementazione locale layer completata con modello documento, compositing, pannello layer, correzione finestra info e test; verifica manuale completata, restano CI e release. |
 
 ## Checklist di chiusura milestone
 

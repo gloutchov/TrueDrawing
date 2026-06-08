@@ -15,6 +15,7 @@ build/*
 !build/icon.png
 !build/icon.ico
 coverage/
+*.tsbuildinfo
 
 # Runtime and caches
 .vite/

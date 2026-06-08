@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, type PointerEvent } from "reac
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import { appendPointToStroke, createStroke } from "../../shared/drawing/strokeModel";
+import type { DrawingDocument } from "../../shared/document/documentTypes";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
 import type { DrawingToolSettings } from "../../shared/drawing/toolTypes";
 import { pointerEventToCanvasPoint } from "./canvasCoordinates";
@@ -9,7 +10,7 @@ import { renderCanvas } from "./canvasRenderer";
 
 type CanvasStageProps = {
   config: AppConfig;
-  strokes: DrawingStroke[];
+  document: DrawingDocument;
   toolSettings: DrawingToolSettings;
   onAppendStroke: (stroke: DrawingStroke) => void;
   onUpdateStroke: (
@@ -20,7 +21,7 @@ type CanvasStageProps = {
 
 export function CanvasStage({
   config,
-  strokes,
+  document,
   toolSettings,
   onAppendStroke,
   onUpdateStroke
@@ -57,13 +58,13 @@ export function CanvasStage({
     const context = canvas.getContext("2d");
 
     if (context) {
-      renderCanvas(context, strokes, renderOptions);
+      renderCanvas(context, document, renderOptions);
     }
   }, [
     config.canvas.defaultHeight,
     config.canvas.defaultWidth,
+    document,
     renderOptions,
-    strokes
   ]);
 
   const handlePointerDown = useCallback((event: PointerEvent<HTMLCanvasElement>) => {
