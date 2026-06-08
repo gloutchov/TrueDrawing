@@ -575,7 +575,37 @@ Verifiche:
 - Revisione manuale log.
 - Checklist sicurezza completata in `SECURITY_MODEL.md`.
 
-Stato: pianificata.
+Esito locale M6:
+
+- Branch usato: `milestone/06-security-secrets`.
+- Versione iniziale: `0.5.0`.
+- Versione finale prevista: `0.6.0`.
+- Implementazione:
+  - API key salvata tramite backend dedicato: Windows Credential Manager su Windows, macOS Keychain su macOS, fallback locale cifrato con `safeStorage` per ambienti non supportati;
+  - stato API key esteso con indicazione del backend senza esporre mai la chiave al renderer;
+  - preferenza modello immagini persistente e non segreta in `userData/preferences`;
+  - UI `File > API Key...` estesa per modificare sia API key sia modello immagini tramite campo testo con suggerimenti;
+  - lista modelli immagini suggeriti aggiunta a `config/app.config.json` e validata all'avvio;
+  - margine configurabile nell'export canvas inviato a OpenAI per ridurre il rischio di immagine tagliata sui bordi;
+  - validazione IPC rafforzata per generazione immagine, modello e PNG data URL;
+  - renderer sandbox attivo e Content Security Policy installata dalla sessione Electron;
+  - test unitari per credential store, preferenze modello e CSP.
+- Test automatici locali:
+  - `npm run test`, successo;
+  - `npm run lint`, successo;
+  - `npm run build`, successo.
+- Verifiche manuali:
+  - verifica manuale app Electron confermata dall'utente il 2026-06-08: editor visibile, API key salvata correttamente, modello immagine modificabile da campo testo e generazione senza taglio evidente in basso.
+- CI:
+  - non ancora eseguita su GitHub per M6.
+- Release:
+  - rinviata secondo policy manuale per risparmiare credito GitHub Actions.
+- Rischi residui:
+  - backend macOS Keychain non verificato manualmente in questa sessione Windows;
+  - fallback locale cifrato resta previsto solo per ambienti non supportati o di sviluppo;
+  - il comando macOS `security` riceve la password come argomento del processo; da rivalutare prima di una release macOS firmata se emerge un'alternativa nativa senza dipendenze.
+
+Stato: implementazione locale e verifica manuale completate, in attesa di CI, merge e tag.
 
 ### M7 - Salvataggio automatico, manuale, recupero ed export
 
@@ -780,6 +810,7 @@ Stato: pianificata.
 | 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release `v0.3.1` pubblicata con artifact Windows/macOS. |
 | 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | Completata | Layer completati con modello documento, compositing, pannello layer, correzione finestra info e workflow release diretto; CI main verde e release `v0.4.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | Completata | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati; generazione reale confermata dall'utente, PR #2 e CI main verdi. Release rinviata per risparmiare credito Actions. |
+| 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | In corso | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, restano CI, merge e tag. Release rinviata. |
 
 ## Checklist di chiusura milestone
 

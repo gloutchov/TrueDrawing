@@ -97,8 +97,14 @@
     "defaultProvider": "openai",
     "baseUrl": "https://api.openai.com/v1",
     "defaultModel": "gpt-image-1.5",
+    "availableModels": [
+      "gpt-image-1.5",
+      "gpt-image-1",
+      "gpt-image-1-mini"
+    ],
     "defaultSize": "1024x1024",
     "defaultQuality": "auto",
+    "canvasPaddingRatio": 0.08,
     "timeoutMs": 120000,
     "defaultOutputFormat": "png"
   },

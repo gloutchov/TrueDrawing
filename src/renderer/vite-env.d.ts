@@ -3,6 +3,7 @@
 import type { AppConfig } from "../shared/config/appConfigSchema";
 import type {
   ApiKeyStatus,
+  ImageGenerationPreferences,
   RealisticImageRequest,
   RealisticImageResult
 } from "../shared/image-generation/imageGenerationTypes";
@@ -16,6 +17,8 @@ declare global {
       getOpenAiApiKeyStatus: () => Promise<ApiKeyStatus>;
       setOpenAiApiKey: (apiKey: string) => Promise<ApiKeyStatus>;
       clearOpenAiApiKey: () => Promise<ApiKeyStatus>;
+      getImageGenerationPreferences: () => Promise<ImageGenerationPreferences>;
+      setImageGenerationModel: (model: string) => Promise<ImageGenerationPreferences>;
       generateRealisticImage: (request: RealisticImageRequest) => Promise<RealisticImageResult>;
       onOpenApiKeySettings: (callback: () => void) => () => void;
     };
