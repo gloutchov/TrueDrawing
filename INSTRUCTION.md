@@ -1,8 +1,8 @@
 # True Drawing - User Instructions
 
-Version: `0.5.0`
+Version: `0.6.0`
 
-True Drawing is currently in an early stage. This version includes the desktop skeleton with an interactive canvas, stroke tools, layers, realistic inspector, and undo/redo: the Electron app opens the main window, loads the central configuration, and lets users draw on the canvas with Pointer Events-compatible input.
+True Drawing is currently in an early stage. This version includes the interactive canvas, stroke tools, layers, realistic inspector, OpenAI generation, secure API key management, and image model preference.
 
 ## Intended App Usage
 
@@ -15,6 +15,7 @@ Once the next application milestones are implemented, users will be able to:
 - undo and redo strokes with toolbar buttons or `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z`, and `Ctrl/Cmd+Y`;
 - create, rename, select, hide, reorder, and adjust opacity for layers;
 - enter or remove the OpenAI API key from `File > API Key...`;
+- type the OpenAI image model from the same settings dialog;
 - generate a realistic image in the inspector from the current canvas;
 - switch between canvas and realistic image by double clicking the inspector;
 - automatically and manually save both canvas and image.
@@ -30,9 +31,9 @@ For a drawing named `name`, the app will use:
 
 The `config/app.config.json` file contains parameters editable by skilled users, such as autosave, canvas dimensions, tool defaults, API provider, and image model.
 
-This version also exposes canvas input parameters such as minimum point distance, stroke smoothing, default pressure, pressure-based size factors, control ranges, tool presets, default layer, layer name prefix, layer limit, and layer opacity range.
+This version also exposes canvas input parameters such as minimum point distance, stroke smoothing, default pressure, pressure-based size factors, control ranges, tool presets, default layer, layer name prefix, layer limit, layer opacity range, suggested image models, and the export padding sent to generation.
 
-The API key must not be placed in that file: it is entered from the app through `File > API Key...` and stored in encrypted local storage through the Electron main process.
+The API key must not be placed in that file: it is entered from the app through `File > API Key...` and stored by the Electron main process in Windows Credential Manager on Windows, macOS Keychain on macOS, or encrypted local fallback storage on unsupported environments.
 
 ## Development Startup
 

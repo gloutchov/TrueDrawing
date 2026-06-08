@@ -18,7 +18,7 @@ export function createMainWindow(config: AppConfig): BrowserWindow {
       contextIsolation: true,
       nodeIntegration: false,
       preload: path.join(appRoot, "dist-electron", "preload", "index.js"),
-      sandbox: false
+      sandbox: true
     }
   });
 

@@ -14,10 +14,20 @@ export function useAppBootstrap(): BootstrapState {
   useEffect(() => {
     let isMounted = true;
 
-    Promise.all([
-      window.trueDrawing.getAppConfig(),
-      window.trueDrawing.getRuntimeInfo()
-    ]).then(([config, runtime]) => {
+    const loadApp = async () => {
+      if (!window.trueDrawing) {
+        throw new Error("True Drawing preload API is not available.");
+      }
+
+      const [config, runtime] = await Promise.all([
+        window.trueDrawing.getAppConfig(),
+        window.trueDrawing.getRuntimeInfo()
+      ]);
+
+      return { config, runtime };
+    };
+
+    loadApp().then(({ config, runtime }) => {
       if (isMounted) {
         setState({ status: "ready", config, runtime });
       }
