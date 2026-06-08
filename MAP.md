@@ -179,8 +179,8 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.5.0`.
-- Ultima milestone implementata localmente: M5 - Inspector realistico e generazione immagine.
-- Stato milestone: implementazione e verifiche locali completate su branch `milestone/05-realistic-inspector`; CI ancora da eseguire, release GitHub rinviata per risparmiare credito Actions.
+- Ultima milestone completata: M5 - Inspector realistico e generazione immagine.
+- Stato milestone: M5 completata e mergiata su `main`; CI verde, release GitHub rinviata per risparmiare credito Actions.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
