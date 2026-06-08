@@ -1,92 +1,56 @@
 import { app, safeStorage } from "electron";
-import fs from "node:fs";
-import path from "node:path";
 
-type StoredSecret = {
-  version: 1;
-  encryptedApiKey: string;
-};
+import {
+  createCredentialStore,
+  type CredentialBackend,
+  type CredentialStore
+} from "./credentialStore";
 
-const secretDirectoryName = "secrets";
-const openAiSecretFileName = "openai-api-key.json";
+const openAiCredentialService = "True Drawing OpenAI API Key";
+const openAiCredentialAccount = "openai";
 
 export type ApiKeyStore = {
   hasOpenAiApiKey: () => boolean;
   getOpenAiApiKey: () => string | null;
   setOpenAiApiKey: (apiKey: string) => void;
   clearOpenAiApiKey: () => void;
+  getStorageBackend: () => CredentialBackend;
 };
 
-export function createApiKeyStore(): ApiKeyStore {
+export function createApiKeyStore(credentialStore = createCredentialStore({
+  platform: process.platform,
+  userDataPath: app.getPath("userData"),
+  safeStorage
+})): ApiKeyStore {
   return {
-    hasOpenAiApiKey,
-    getOpenAiApiKey,
-    setOpenAiApiKey,
-    clearOpenAiApiKey
+    hasOpenAiApiKey: () => hasOpenAiApiKey(credentialStore),
+    getOpenAiApiKey: () => getOpenAiApiKey(credentialStore),
+    setOpenAiApiKey: (apiKey) => setOpenAiApiKey(credentialStore, apiKey),
+    clearOpenAiApiKey: () => clearOpenAiApiKey(credentialStore),
+    getStorageBackend: () => credentialStore.backend
   };
 }
 
-function hasOpenAiApiKey(): boolean {
-  return getOpenAiApiKey() !== null;
+function hasOpenAiApiKey(credentialStore: CredentialStore): boolean {
+  return getOpenAiApiKey(credentialStore) !== null;
 }
 
-function getOpenAiApiKey(): string | null {
-  const secretPath = getOpenAiSecretPath();
-
-  if (!fs.existsSync(secretPath) || !safeStorage.isEncryptionAvailable()) {
-    return null;
-  }
-
-  try {
-    const storedSecret = JSON.parse(fs.readFileSync(secretPath, "utf8")) as Partial<StoredSecret>;
-
-    if (storedSecret.version !== 1 || typeof storedSecret.encryptedApiKey !== "string") {
-      return null;
-    }
-
-    return safeStorage.decryptString(Buffer.from(storedSecret.encryptedApiKey, "base64"));
-  } catch {
-    return null;
-  }
+function getOpenAiApiKey(credentialStore: CredentialStore): string | null {
+  return credentialStore.getPassword(openAiCredentialService, openAiCredentialAccount);
 }
 
-function setOpenAiApiKey(apiKey: string): void {
+function setOpenAiApiKey(credentialStore: CredentialStore, apiKey: string): void {
   const trimmedApiKey = apiKey.trim();
-
-  if (!safeStorage.isEncryptionAvailable()) {
-    throw new Error("Secure secret storage is not available on this system.");
-  }
 
   if (!isLikelyOpenAiApiKey(trimmedApiKey)) {
     throw new Error("The OpenAI API key format is not valid.");
   }
 
-  const secretDirectory = getSecretDirectory();
-  const secretPath = getOpenAiSecretPath();
-  const encryptedApiKey = safeStorage.encryptString(trimmedApiKey).toString("base64");
-  const storedSecret: StoredSecret = {
-    version: 1,
-    encryptedApiKey
-  };
-
-  fs.mkdirSync(secretDirectory, { recursive: true });
-  fs.writeFileSync(secretPath, JSON.stringify(storedSecret), { encoding: "utf8", mode: 0o600 });
+  credentialStore.setPassword(openAiCredentialService, openAiCredentialAccount, trimmedApiKey);
 }
 
-function clearOpenAiApiKey(): void {
-  const secretPath = getOpenAiSecretPath();
-
-  if (fs.existsSync(secretPath)) {
-    fs.rmSync(secretPath, { force: true });
-  }
-}
-
-function getSecretDirectory(): string {
-  return path.join(app.getPath("userData"), secretDirectoryName);
-}
-
-function getOpenAiSecretPath(): string {
-  return path.join(getSecretDirectory(), openAiSecretFileName);
+function clearOpenAiApiKey(credentialStore: CredentialStore): void {
+  credentialStore.deletePassword(openAiCredentialService, openAiCredentialAccount);
 }
 
 function isLikelyOpenAiApiKey(apiKey: string): boolean {

@@ -4,6 +4,8 @@ import { createAppIcon } from "./appIcon";
 import { loadDesktopAppConfig } from "./config/desktopConfig";
 import { registerIpc } from "./ipc/registerIpc";
 import { installAppMenu } from "./menu/appMenu";
+import { createImageGenerationPreferencesStore } from "./preferences/imageGenerationPreferencesStore";
+import { installContentSecurityPolicy } from "./security/contentSecurityPolicy";
 import { createApiKeyStore } from "./secret-store/apiKeyStore";
 import { createMainWindow } from "./windows/mainWindow";
 import type { AppConfig } from "../shared/config/appConfigSchema";
@@ -18,13 +20,18 @@ app.whenReady().then(() => {
   }
 
   installAppMenu(appConfig);
+  installContentSecurityPolicy(appConfig, Boolean(process.env.VITE_DEV_SERVER_URL));
   registerIpc({
     getConfig: () => requireAppConfig(),
     getRuntimeInfo: () => ({
       appVersion: app.getVersion(),
       platform: process.platform
     }),
-    apiKeyStore: createApiKeyStore()
+    apiKeyStore: createApiKeyStore(),
+    preferencesStore: createImageGenerationPreferencesStore(
+      app.getPath("userData"),
+      () => requireAppConfig()
+    )
   });
   createMainWindow(appConfig);
 

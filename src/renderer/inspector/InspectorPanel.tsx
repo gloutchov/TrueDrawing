@@ -8,6 +8,8 @@ type InspectorPanelProps = {
   config: AppConfig;
   document: DrawingDocument;
   apiKeyConfigured: boolean;
+  apiKeyBackend: string;
+  imageGenerationModel: string;
   isGenerating: boolean;
   errorMessage: string | null;
   onGenerateImage: () => void;
@@ -18,6 +20,8 @@ export function InspectorPanel({
   config,
   document,
   apiKeyConfigured,
+  apiKeyBackend,
+  imageGenerationModel,
   isGenerating,
   errorMessage,
   onGenerateImage,
@@ -61,11 +65,15 @@ export function InspectorPanel({
         </div>
         <div>
           <dt>Model</dt>
-          <dd>{realisticImage?.model ?? config.imageGeneration.defaultModel}</dd>
+          <dd>{realisticImage?.model ?? imageGenerationModel}</dd>
         </div>
         <div>
           <dt>API key</dt>
           <dd>{apiKeyConfigured ? "Configured" : "Missing"}</dd>
+        </div>
+        <div>
+          <dt>Storage</dt>
+          <dd>{formatBackend(apiKeyBackend)}</dd>
         </div>
         <div>
           <dt>Last image</dt>
@@ -74,6 +82,22 @@ export function InspectorPanel({
       </dl>
     </section>
   );
+}
+
+function formatBackend(backend: string): string {
+  if (backend === "windows-credential-manager") {
+    return "Windows Credential Manager";
+  }
+
+  if (backend === "macos-keychain") {
+    return "macOS Keychain";
+  }
+
+  if (backend === "encrypted-local-storage") {
+    return "Encrypted local";
+  }
+
+  return "Unknown";
 }
 
 type InspectorPreviewProps = {
