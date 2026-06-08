@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
+import { exportDocumentCanvasToPngDataUrl } from "../canvas/canvasExport";
 import { CanvasStage } from "../canvas/CanvasStage";
 import { useDrawingDocumentHistory } from "../history/useDrawingDocumentHistory";
 import { InspectorPanel } from "../inspector/InspectorPanel";
 import { LayerPanel } from "../layers/LayerPanel";
+import { ApiKeyDialog } from "../settings/ApiKeyDialog";
 import { SettingsSummary } from "../settings/SettingsSummary";
 import { ToolPanel } from "../tools/ToolPanel";
 import { createInitialToolSettings, settingsForSelectedTool } from "../tools/toolState";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { DrawingToolId, DrawingToolSettings } from "../../shared/drawing/toolTypes";
+import { buildRealisticImagePrompt } from "../../shared/image-generation/realisticPrompt";
 import type { RuntimeInfo } from "../../shared/runtime/runtimeInfo";
 
 type AppShellProps = {
@@ -31,12 +34,17 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     setLayerVisibility,
     setLayerOpacity,
     moveLayer,
+    setRealisticImage,
     undo,
     redo
   } = useDrawingDocumentHistory(config);
   const [toolSettings, setToolSettings] = useState<DrawingToolSettings>(() => (
     createInitialToolSettings(config)
   ));
+  const [apiKeyConfigured, setApiKeyConfigured] = useState(false);
+  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationErrorMessage, setGenerationErrorMessage] = useState<string | null>(null);
   const shellStyle = {
     "--top-bar-height": `${config.layout.topBarHeight}px`,
     "--tool-rail-width": `${config.layout.toolRailWidth}px`,
@@ -52,6 +60,54 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       ...settings
     }));
   }, []);
+  const openApiKeyDialog = useCallback(() => {
+    setApiKeyDialogOpen(true);
+  }, []);
+  const generateRealisticImage = useCallback(async () => {
+    setIsGenerating(true);
+    setGenerationErrorMessage(null);
+
+    try {
+      const canvasDataUrl = exportDocumentCanvasToPngDataUrl(document, config);
+      const result = await window.trueDrawing.generateRealisticImage({
+        canvasDataUrl,
+        model: config.imageGeneration.defaultModel,
+        prompt: buildRealisticImagePrompt(document)
+      });
+
+      setRealisticImage(result);
+    } catch (error: unknown) {
+      setGenerationErrorMessage(
+        error instanceof Error ? error.message : "Unable to generate image."
+      );
+    } finally {
+      setIsGenerating(false);
+    }
+  }, [
+    config,
+    document,
+    setRealisticImage
+  ]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    window.trueDrawing.getOpenAiApiKeyStatus().then((status) => {
+      if (isMounted) {
+        setApiKeyConfigured(status.configured);
+      }
+    }).catch(() => {
+      if (isMounted) {
+        setApiKeyConfigured(false);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => window.trueDrawing.onOpenApiKeySettings(openApiKeyDialog), [openApiKeyDialog]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -119,7 +175,15 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         />
       </main>
       <aside className="right-panel" aria-label="Document panels">
-        <InspectorPanel config={config} />
+        <InspectorPanel
+          config={config}
+          document={document}
+          apiKeyConfigured={apiKeyConfigured}
+          isGenerating={isGenerating}
+          errorMessage={generationErrorMessage}
+          onGenerateImage={generateRealisticImage}
+          onOpenApiKeySettings={openApiKeyDialog}
+        />
         <LayerPanel
           config={config}
           document={document}
@@ -132,6 +196,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onMoveLayer={moveLayer}
         />
       </aside>
+      <ApiKeyDialog
+        open={apiKeyDialogOpen}
+        onClose={() => setApiKeyDialogOpen(false)}
+        onStatusChange={setApiKeyConfigured}
+      />
     </div>
   );
 }

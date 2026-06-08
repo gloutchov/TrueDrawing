@@ -4,6 +4,7 @@ import { createAppIcon } from "./appIcon";
 import { loadDesktopAppConfig } from "./config/desktopConfig";
 import { registerIpc } from "./ipc/registerIpc";
 import { installAppMenu } from "./menu/appMenu";
+import { createApiKeyStore } from "./secret-store/apiKeyStore";
 import { createMainWindow } from "./windows/mainWindow";
 import type { AppConfig } from "../shared/config/appConfigSchema";
 
@@ -22,7 +23,8 @@ app.whenReady().then(() => {
     getRuntimeInfo: () => ({
       appVersion: app.getVersion(),
       platform: process.platform
-    })
+    }),
+    apiKeyStore: createApiKeyStore()
   });
   createMainWindow(appConfig);
 

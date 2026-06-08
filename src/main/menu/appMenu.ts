@@ -8,17 +8,35 @@ let infoWindow: BrowserWindow | null = null;
 export function installAppMenu(config: AppConfig): void {
   const template: MenuItemConstructorOptions[] = [
     {
-      label: config.app.name,
-      submenu: [
-        { role: "about" },
-        { type: "separator" },
-        { role: "quit" }
-      ]
-    },
-    {
       label: "File",
       submenu: [
-        { role: "close" }
+        {
+          label: "Nuovo",
+          enabled: false
+        },
+        {
+          label: "Apri",
+          enabled: false
+        },
+        {
+          label: "Chiudi",
+          role: "close"
+        },
+        { type: "separator" },
+        {
+          label: "API Key...",
+          accelerator: "CmdOrCtrl+,",
+          click: () => {
+            BrowserWindow.getAllWindows().forEach((window) => {
+              window.webContents.send("settings:open-api-key");
+            });
+          }
+        },
+        { type: "separator" },
+        {
+          label: "Exit",
+          role: "quit"
+        }
       ]
     },
     {

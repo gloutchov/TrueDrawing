@@ -95,7 +95,10 @@
   },
   "imageGeneration": {
     "defaultProvider": "openai",
+    "baseUrl": "https://api.openai.com/v1",
     "defaultModel": "gpt-image-1.5",
+    "defaultSize": "1024x1024",
+    "defaultQuality": "auto",
     "timeoutMs": 120000,
     "defaultOutputFormat": "png"
   },
