@@ -82,10 +82,12 @@ function showInfoWindow(config: AppConfig): void {
     title: "Info",
     width: 360,
     height: 300,
+    useContentSize: true,
     resizable: false,
     minimizable: false,
     maximizable: false,
     fullscreenable: false,
+    autoHideMenuBar: true,
     parent,
     modal: false,
     backgroundColor: "#fcf6ef",
@@ -96,6 +98,8 @@ function showInfoWindow(config: AppConfig): void {
       sandbox: true
     }
   });
+  infoWindow.setMenu(null);
+  infoWindow.setMenuBarVisibility(false);
 
   infoWindow.on("closed", () => {
     infoWindow = null;
@@ -124,8 +128,10 @@ function createInfoWindowUrl(config: AppConfig): string {
       body {
         box-sizing: border-box;
         display: grid;
+        height: 100vh;
         min-height: 100vh;
         margin: 0;
+        overflow: hidden;
         place-items: center;
       }
 
@@ -133,7 +139,7 @@ function createInfoWindowUrl(config: AppConfig): string {
         display: grid;
         justify-items: center;
         gap: 10px;
-        padding: 28px;
+        padding: 24px 28px;
         text-align: center;
       }
 

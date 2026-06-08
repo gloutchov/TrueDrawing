@@ -46,6 +46,9 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
   - default strumenti;
   - preset strumenti;
   - range dei controlli strumenti;
+  - default layer;
+  - range opacita' layer;
+  - limiti numero layer;
   - limiti history;
   - timeout API;
   - percorsi documenti;

@@ -84,7 +84,14 @@
   },
   "layers": {
     "defaultLayerName": "Layer 1",
-    "defaultOpacity": 1
+    "newLayerNamePrefix": "Layer",
+    "defaultOpacity": 1,
+    "maxLayers": 32,
+    "opacityRange": {
+      "min": 0.05,
+      "max": 1,
+      "step": 0.05
+    }
   },
   "imageGeneration": {
     "defaultProvider": "openai",

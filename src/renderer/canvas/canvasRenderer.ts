@@ -1,4 +1,5 @@
 import { strokeWidthForPressure } from "../../shared/drawing/strokeModel";
+import type { DrawingDocument, DrawingLayer } from "../../shared/document/documentTypes";
 import type { DrawingStroke, StrokeRenderOptions } from "../../shared/drawing/strokeTypes";
 
 type RenderCanvasOptions = StrokeRenderOptions & {
@@ -7,7 +8,7 @@ type RenderCanvasOptions = StrokeRenderOptions & {
 
 export function renderCanvas(
   context: CanvasRenderingContext2D,
-  strokes: DrawingStroke[],
+  document: DrawingDocument,
   options: RenderCanvasOptions
 ): void {
   const { canvas } = context;
@@ -16,9 +17,39 @@ export function renderCanvas(
   context.fillStyle = options.backgroundColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  for (const stroke of strokes) {
-    renderStroke(context, stroke, options);
+  for (const layer of document.layers) {
+    renderLayer(context, layer, options);
   }
+}
+
+function renderLayer(
+  context: CanvasRenderingContext2D,
+  layer: DrawingLayer,
+  options: StrokeRenderOptions
+): void {
+  if (!layer.visible || layer.opacity <= 0 || layer.strokes.length === 0) {
+    return;
+  }
+
+  const layerCanvas = document.createElement("canvas");
+
+  layerCanvas.width = context.canvas.width;
+  layerCanvas.height = context.canvas.height;
+
+  const layerContext = layerCanvas.getContext("2d");
+
+  if (!layerContext) {
+    return;
+  }
+
+  for (const stroke of layer.strokes) {
+    renderStroke(layerContext, stroke, options);
+  }
+
+  context.save();
+  context.globalAlpha = layer.opacity;
+  context.drawImage(layerCanvas, 0, 0);
+  context.restore();
 }
 
 function renderStroke(

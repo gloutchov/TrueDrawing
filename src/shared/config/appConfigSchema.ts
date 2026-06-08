@@ -46,7 +46,10 @@ export type AppConfig = {
   };
   layers: {
     defaultLayerName: string;
+    newLayerNamePrefix: string;
     defaultOpacity: number;
+    maxLayers: number;
+    opacityRange: NumberRange;
   };
   imageGeneration: {
     defaultProvider: string;
@@ -126,7 +129,10 @@ export function validateAppConfig(value: unknown): AppConfig {
     },
     layers: {
       defaultLayerName: expectString(layers.defaultLayerName, "layers.defaultLayerName"),
-      defaultOpacity: expectUnitNumber(layers.defaultOpacity, "layers.defaultOpacity")
+      newLayerNamePrefix: expectString(layers.newLayerNamePrefix, "layers.newLayerNamePrefix"),
+      defaultOpacity: expectUnitNumber(layers.defaultOpacity, "layers.defaultOpacity"),
+      maxLayers: expectPositiveInteger(layers.maxLayers, "layers.maxLayers"),
+      opacityRange: expectNumberRange(layers.opacityRange, "layers.opacityRange", true)
     },
     imageGeneration: {
       defaultProvider: expectString(imageGeneration.defaultProvider, "imageGeneration.defaultProvider"),
@@ -176,6 +182,16 @@ function expectPositiveNumber(value: unknown, label: string): number {
   }
 
   return value;
+}
+
+function expectPositiveInteger(value: unknown, label: string): number {
+  const number = expectPositiveNumber(value, label);
+
+  if (!Number.isInteger(number)) {
+    throw new Error(`Invalid app configuration: ${label} must be an integer.`);
+  }
+
+  return number;
 }
 
 function expectUnitNumber(value: unknown, label: string): number {

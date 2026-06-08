@@ -58,8 +58,7 @@ button {
 .brand-lockup,
 .settings-summary,
 .panel-header,
-.panel-header span,
-.layer-row {
+.panel-header span {
   display: flex;
   align-items: center;
 }
@@ -294,17 +293,56 @@ button {
   color: #2f393d;
 }
 
+.layer-list {
+  display: grid;
+  gap: 1px;
+  padding: 6px;
+}
+
 .layer-row {
-  gap: 8px;
-  height: 38px;
-  padding: 0 11px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 68px 38px 28px;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  border-radius: 6px;
+  padding: 4px 5px;
   font-size: 13px;
+  cursor: pointer;
 }
 
 .layer-row.is-active {
   background: #e0e7ea;
 }
 
-.layer-row span {
-  flex: 1;
+.layer-name-input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #2f393d;
+  background: transparent;
+  font: inherit;
+  padding: 4px 5px;
+}
+
+.layer-name-input:focus {
+  border-color: #9fb0b8;
+  background: #f9faf9;
+  outline: none;
+}
+
+.layer-opacity-input {
+  width: 68px;
+  accent-color: #4f6972;
+}
+
+.layer-order-controls {
+  display: grid;
+  gap: 2px;
+}
+
+.layer-order-controls .mini-button {
+  width: 26px;
+  height: 18px;
 }
