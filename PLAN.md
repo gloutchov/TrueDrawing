@@ -443,6 +443,7 @@ Esito locale M4:
   - strumenti di disegno applicati al layer attivo;
   - pannello layer con creazione, rinomina, selezione, visibilita', opacita', riordino e cancellazione protetta dell'ultimo layer;
   - finestra info corretta per evitare scrollbar verticale e menu Windows inutile;
+  - workflow release aggiornato per caricare gli asset direttamente sulla release GitHub evitando la quota GitHub Actions artifacts;
   - parametri layer aggiunti a `config/app.config.json` e validazione configurazione aggiornata.
 - Test automatici locali:
   - `npm run test`, successo;
@@ -457,6 +458,7 @@ Esito locale M4:
   - non ancora pubblicata.
 - Rischi residui:
   - opacita' layer aggiornata da slider crea uno step history per ogni modifica, da rivalutare se l'esperienza risulta troppo granulare.
+  - GitHub Actions segnala deprecazione futura delle action basate su Node.js 20, gia' presente nelle milestone precedenti.
 
 Stato: implementazione, verifica locale e CI PR completate, in attesa di merge e release.
 
