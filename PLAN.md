@@ -8,7 +8,7 @@ True Drawing e' un'app locale per macOS e Windows che permette di disegnare su u
 
 - L'app funziona in locale: i dati del disegno restano sul computer, salvo l'invio esplicito all'API per la generazione realistica.
 - Il canvas deve essere immediato, pulito e adatto al disegno, senza schermate introduttive o elementi decorativi inutili.
-- Ogni milestone vive su un branch dedicato e viene chiusa solo dopo verifica locale, aggiornamento documentazione, merge su `main`, verifica CI e generazione release macOS/Windows.
+- Ogni milestone vive su un branch dedicato e viene chiusa solo dopo verifica locale, aggiornamento documentazione, merge su `main` e verifica CI. Le release macOS/Windows vengono generate solo quando previste o richieste esplicitamente.
 - La versione aumenta alla chiusura di ogni milestone:
   - `+0.0.1` per ritocchi piccoli, correzioni o documentazione minore.
   - `+0.1.0` per funzionalita' utili o miglioramenti funzionali circoscritti.
@@ -25,7 +25,7 @@ True Drawing e' un'app locale per macOS e Windows che permette di disegnare su u
 - Segreti: OS keychain tramite modulo dedicato, con fallback controllato a storage cifrato locale se necessario.
 - Salvataggio locale: file di progetto piu' export PNG/WebP per canvas e immagine realistica.
 - Packaging: electron-builder con build Windows e macOS.
-- CI/CD: GitHub Actions su repository privato con test, build e release artifact per ogni tag.
+- CI/CD: GitHub Actions su repository privato con test e build su branch/PR/main; release artifact Windows/macOS tramite workflow manuale per risparmiare credito Actions nelle milestone intermedie.
 
 ## Architettura e configurazione
 
@@ -71,8 +71,8 @@ True Drawing e' un'app locale per macOS e Windows che permette di disegnare su u
   6. CI verde;
   7. merge su `main`;
   8. tag versione `vX.Y.Z`;
-  9. release GitHub con build Windows e macOS;
-  10. eliminazione branch milestone solo dopo release verificata.
+  9. release GitHub con build Windows e macOS solo quando prevista;
+  10. eliminazione branch milestone dopo release verificata, oppure dopo tag e CI verde quando la release e' rinviata.
 
 ### Verifica prima del merge
 
@@ -83,7 +83,7 @@ Ogni milestone deve documentare in `PLAN.md`:
 - test automatici eseguiti;
 - verifiche manuali eseguite;
 - stato CI;
-- link o riferimento alla release;
+- link o riferimento alla release, oppure nota esplicita di rinvio release;
 - aggiornamento `MAP.md`;
 - eventuali rischi residui.
 
@@ -507,7 +507,38 @@ Verifiche:
 - Test manuale errore con API key assente o non valida.
 - Verifica che non vengano loggati segreti.
 
-Stato: pianificata.
+Esito locale M5:
+
+- Branch usato: `milestone/05-realistic-inspector`.
+- Versione iniziale: `0.4.0`.
+- Versione finale prevista: `0.5.0`.
+- Implementazione:
+  - menu `File > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI;
+  - menu applicativo ripulito con gruppo `File` essenziale: Nuovo, Apri, Chiudi, API Key ed Exit;
+  - storage cifrato locale della chiave tramite Electron `safeStorage` nel processo main;
+  - canali IPC validati per stato chiave, salvataggio/rimozione chiave e generazione immagine;
+  - inspector realistico con preview, stato loading, errore, retry e metadati provider/modello;
+  - export PNG del canvas composito con layer, visibilita' e opacita';
+  - prompt tecnico costruito dal documento canvas;
+  - adapter OpenAI Images API con mock testabile, timeout configurato, formato output PNG e sanitizzazione errori;
+  - gestione robusta della risposta OpenAI sia con immagine `b64_json` sia con URL scaricabile;
+  - immagine realistica associata al documento in memoria.
+- Test automatici locali:
+  - `npm run test`, successo;
+  - `npm run lint`, successo;
+  - `npm run build`, successo.
+- Verifiche manuali:
+  - generazione immagine con API key reale verificata dall'utente il 2026-06-08 dopo la correzione dell'adapter OpenAI.
+- CI:
+  - non ancora eseguita su GitHub per M5.
+- Release:
+  - rinviata su richiesta dell'utente per risparmiare credito GitHub Actions; il workflow release Windows/macOS e' manuale.
+- Rischi residui:
+  - storage chiave implementato con `safeStorage` cifrato locale; M6 deve consolidare keychain esplicito macOS/Windows;
+  - la generazione reale e' stata verificata manualmente dall'utente, ma resta dipendente da quota, modello e disponibilita' del provider OpenAI;
+  - opacita' layer continua a creare uno step history per ogni modifica slider.
+
+Stato: implementazione locale e verifica manuale completate, in attesa di CI, merge e tag; release GitHub rinviata.
 
 ### M6 - Sicurezza, API key e modello dei segreti
 
@@ -638,7 +669,7 @@ Attivita':
 
 Criteri di accettazione:
 
-- Ogni tag `vX.Y.Z` genera release scaricabile.
+- Ogni tag `vX.Y.Z` puo' generare una release scaricabile tramite workflow manuale.
 - Artifact Windows e macOS sono presenti nella release.
 - CI fallisce se test o build falliscono.
 - La procedura e' documentata in `AGENTS.md` e `README.md`.
@@ -747,6 +778,7 @@ Stato: pianificata.
 | 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde e release `v0.3.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release `v0.3.1` pubblicata con artifact Windows/macOS. |
 | 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | Completata | Layer completati con modello documento, compositing, pannello layer, correzione finestra info e workflow release diretto; CI main verde e release `v0.4.0` pubblicata con artifact Windows/macOS. |
+| 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | In corso | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati localmente; verifica manuale generazione confermata, restano CI, merge e tag. Release rinviata. |
 
 ## Checklist di chiusura milestone
 
@@ -769,6 +801,6 @@ Da completare per ogni milestone prima della chiusura:
 - [ ] CI verde.
 - [ ] Merge su `main` completato.
 - [ ] Tag versione creato.
-- [ ] Release GitHub pubblicata con artifact Windows e macOS.
-- [ ] Artifact scaricati e verificati.
+- [ ] Release GitHub pubblicata con artifact Windows e macOS, quando prevista.
+- [ ] Artifact scaricati e verificati, quando la release e' prevista.
 - [ ] Branch milestone eliminato.

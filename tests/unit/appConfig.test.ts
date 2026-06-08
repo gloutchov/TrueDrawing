@@ -62,7 +62,15 @@ describe("app configuration", () => {
         maxLayers: 32,
         opacityRange: { min: 0.05, max: 1, step: 0.05 }
       },
-      imageGeneration: { defaultProvider: "openai", defaultModel: "gpt-image-1.5", timeoutMs: 120000, defaultOutputFormat: "png" },
+      imageGeneration: {
+        defaultProvider: "openai",
+        baseUrl: "https://api.openai.com/v1",
+        defaultModel: "gpt-image-1.5",
+        defaultSize: "1024x1024",
+        defaultQuality: "auto",
+        timeoutMs: 120000,
+        defaultOutputFormat: "png"
+      },
       files: { canvasSuffix: "_canvas", imageSuffix: "_image", projectExtension: ".tdraw", canvasExportExtension: ".png", imageExportExtension: ".png" }
     })).toThrow(/tools\.defaultOpacity/);
   });

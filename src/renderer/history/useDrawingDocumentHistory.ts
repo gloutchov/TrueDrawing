@@ -11,10 +11,12 @@ import {
   selectLayer,
   setLayerOpacity,
   setLayerVisibility,
+  setRealisticImage,
   updateStrokeInDocument
 } from "../../shared/document/layerModel";
 import type { DrawingDocument } from "../../shared/document/documentTypes";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
+import type { StoredRealisticImage } from "../../shared/image-generation/imageGenerationTypes";
 import {
   canRedo,
   canUndo,
@@ -119,6 +121,13 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     ));
   }, []);
 
+  const setDocumentRealisticImage = useCallback((realisticImage: StoredRealisticImage) => {
+    setHistory((currentHistory) => commitHistory(
+      currentHistory,
+      setRealisticImage(currentHistory.present, realisticImage)
+    ));
+  }, []);
+
   const undo = useCallback(() => {
     setHistory((currentHistory) => undoHistory(currentHistory));
   }, []);
@@ -141,6 +150,7 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     setLayerVisibility: setDocumentLayerVisibility,
     setLayerOpacity: setDocumentLayerOpacity,
     moveLayer: moveDocumentLayer,
+    setRealisticImage: setDocumentRealisticImage,
     undo,
     redo
   };

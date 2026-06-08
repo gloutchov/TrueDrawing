@@ -1,4 +1,5 @@
 import type { DrawingStroke } from "../drawing/strokeTypes";
+import type { StoredRealisticImage } from "../image-generation/imageGenerationTypes";
 
 export type DrawingLayer = {
   id: string;
@@ -11,6 +12,7 @@ export type DrawingLayer = {
 export type DrawingDocument = {
   layers: DrawingLayer[];
   activeLayerId: string;
+  realisticImage: StoredRealisticImage | null;
 };
 
 export type LayerCreateOptions = {

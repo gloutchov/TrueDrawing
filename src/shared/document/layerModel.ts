@@ -1,5 +1,6 @@
 import type { DrawingStroke } from "../drawing/strokeTypes";
 import type { DrawingDocument, DrawingLayer, LayerCreateOptions } from "./documentTypes";
+import type { StoredRealisticImage } from "../image-generation/imageGenerationTypes";
 
 export function createDrawingLayer(options: LayerCreateOptions): DrawingLayer {
   return {
@@ -16,7 +17,8 @@ export function createInitialDrawingDocument(options: LayerCreateOptions): Drawi
 
   return {
     layers: [layer],
-    activeLayerId: layer.id
+    activeLayerId: layer.id,
+    realisticImage: null
   };
 }
 
@@ -63,7 +65,8 @@ export function addLayer(
 
   return {
     layers: [...document.layers, layer],
-    activeLayerId: layer.id
+    activeLayerId: layer.id,
+    realisticImage: document.realisticImage
   };
 }
 
@@ -102,7 +105,8 @@ export function deleteLayer(document: DrawingDocument, layerId: string): Drawing
 
   return {
     layers,
-    activeLayerId
+    activeLayerId,
+    realisticImage: document.realisticImage
   };
 }
 
@@ -164,6 +168,16 @@ export function moveLayer(
   return {
     ...document,
     layers
+  };
+}
+
+export function setRealisticImage(
+  document: DrawingDocument,
+  realisticImage: StoredRealisticImage
+): DrawingDocument {
+  return {
+    ...document,
+    realisticImage
   };
 }
 
