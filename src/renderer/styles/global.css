@@ -425,7 +425,8 @@ button {
   font-size: 12px;
 }
 
-.field input {
+.field input,
+.field select {
   height: 34px;
   border: 1px solid #9fb0b8;
   border-radius: 6px;
@@ -435,9 +436,24 @@ button {
   padding: 0 9px;
 }
 
-.field input:focus {
+.field input:focus,
+.field select:focus {
   outline: 2px solid #b8cbd3;
   outline-offset: 0;
+}
+
+.settings-readout {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  color: #5b666b;
+  font-size: 12px;
+}
+
+.settings-readout strong {
+  color: #2f393d;
+  font-weight: 600;
+  text-align: right;
 }
 
 .form-message {

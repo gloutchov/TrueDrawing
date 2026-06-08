@@ -64,8 +64,14 @@ truedrawing/
 |   |   +-- menu/
 |   |   |   Menu applicativo, finestra info e apertura impostazioni API key.
 |   |   |
+|   |   +-- preferences/
+|   |   |   Preferenze non segrete dell'utente, incluso modello immagini selezionato.
+|   |   |
+|   |   +-- security/
+|   |   |   Installazione Content Security Policy per la sessione Electron.
+|   |   |
 |   |   +-- secret-store/
-|   |   |   Storage cifrato locale della API key OpenAI tramite main process.
+|   |   |   API key OpenAI in Windows Credential Manager, macOS Keychain o fallback cifrato.
 |   |   |
 |   |   +-- image-generation/
 |   |   |   Adapter OpenAI Images API e sanitizzazione errori.
@@ -121,6 +127,9 @@ truedrawing/
 |   |   +-- config/
 |   |   |   Tipi, schema, validazione e caricamento file configurazione.
 |   |   |
+|   |   +-- security/
+|   |   |   Builder CSP condiviso e testabile.
+|   |   |
 |   |   +-- runtime/
 |   |       Tipi per informazioni runtime esposte al renderer.
 |
@@ -132,7 +141,7 @@ truedrawing/
 +-- tests/
 |   |
 |   +-- unit/
-|   |   Test di modello, strumenti, layer, history, config e adapter.
+|   |   Test di modello, strumenti, layer, history, config, adapter, segreti, preferenze e CSP.
 |   |
 |   +-- e2e/
 |       Test end-to-end su flussi principali.
@@ -174,13 +183,14 @@ truedrawing/
 - `config/app.config.json` raccoglie i parametri modificabili.
 - Il provider immagini predefinito e' OpenAI.
 - Il modello immagini OpenAI predefinito e' `gpt-image-1.5`.
+- I modelli immagini in configurazione sono suggerimenti UI: l'utente puo' scrivere un nome modello futuro nelle impostazioni.
 - La API key non deve stare in `config/app.config.json`: viene salvata nel keychain del sistema operativo.
 
 ## Stato attuale
 
-- Versione: `0.5.0`.
-- Ultima milestone completata: M5 - Inspector realistico e generazione immagine.
-- Stato milestone: M5 completata e mergiata su `main`; CI verde, release GitHub rinviata per risparmiare credito Actions.
+- Versione: `0.6.0`.
+- Ultima milestone implementata localmente: M6 - Sicurezza, API key e modello dei segreti.
+- Stato milestone: implementazione e verifiche locali completate su branch `milestone/06-security-secrets`; CI/release non ancora eseguite.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
@@ -190,6 +200,8 @@ truedrawing/
 - Undo/redo del documento presente con modello history testabile.
 - Inspector realistico con generazione OpenAI dal canvas composito.
 - Menu `File > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI.
-- Storage cifrato locale della API key e chiamate OpenAI gestite dal main process.
+- Storage API key tramite Windows Credential Manager, macOS Keychain o fallback cifrato, con chiamate OpenAI gestite dal main process.
+- Preferenza modello immagini persistente e separata dalla API key.
+- CSP e sandbox renderer configurati.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI presente; workflow release Windows/macOS disponibile solo con avvio manuale.

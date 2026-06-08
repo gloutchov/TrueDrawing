@@ -42,6 +42,8 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     createInitialToolSettings(config)
   ));
   const [apiKeyConfigured, setApiKeyConfigured] = useState(false);
+  const [apiKeyBackend, setApiKeyBackend] = useState("unknown");
+  const [imageGenerationModel, setImageGenerationModel] = useState(config.imageGeneration.defaultModel);
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationErrorMessage, setGenerationErrorMessage] = useState<string | null>(null);
@@ -71,7 +73,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       const canvasDataUrl = exportDocumentCanvasToPngDataUrl(document, config);
       const result = await window.trueDrawing.generateRealisticImage({
         canvasDataUrl,
-        model: config.imageGeneration.defaultModel,
+        model: imageGenerationModel,
         prompt: buildRealisticImagePrompt(document)
       });
 
@@ -86,6 +88,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   }, [
     config,
     document,
+    imageGenerationModel,
     setRealisticImage
   ]);
 
@@ -95,6 +98,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     window.trueDrawing.getOpenAiApiKeyStatus().then((status) => {
       if (isMounted) {
         setApiKeyConfigured(status.configured);
+        setApiKeyBackend(status.backend);
       }
     }).catch(() => {
       if (isMounted) {
@@ -105,6 +109,29 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     return () => {
       isMounted = false;
     };
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    window.trueDrawing.getImageGenerationPreferences().then((preferences) => {
+      if (isMounted) {
+        setImageGenerationModel(preferences.model);
+      }
+    }).catch(() => {
+      if (isMounted) {
+        setImageGenerationModel(config.imageGeneration.defaultModel);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [config.imageGeneration.defaultModel]);
+
+  const updateApiKeyStatus = useCallback((configured: boolean, backend: string) => {
+    setApiKeyConfigured(configured);
+    setApiKeyBackend(backend);
   }, []);
 
   useEffect(() => window.trueDrawing.onOpenApiKeySettings(openApiKeyDialog), [openApiKeyDialog]);
@@ -151,7 +178,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           <strong>{config.app.name}</strong>
           <span>{runtime.appVersion}</span>
         </div>
-        <SettingsSummary config={config} />
+        <SettingsSummary config={config} imageGenerationModel={imageGenerationModel} />
       </header>
       <aside className="tool-rail" aria-label="Drawing tools">
         <ToolPanel
@@ -179,6 +206,8 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           config={config}
           document={document}
           apiKeyConfigured={apiKeyConfigured}
+          apiKeyBackend={apiKeyBackend}
+          imageGenerationModel={imageGenerationModel}
           isGenerating={isGenerating}
           errorMessage={generationErrorMessage}
           onGenerateImage={generateRealisticImage}
@@ -197,9 +226,13 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         />
       </aside>
       <ApiKeyDialog
+        config={config}
         open={apiKeyDialogOpen}
+        imageGenerationModel={imageGenerationModel}
+        apiKeyBackend={apiKeyBackend}
         onClose={() => setApiKeyDialogOpen(false)}
-        onStatusChange={setApiKeyConfigured}
+        onStatusChange={updateApiKeyStatus}
+        onModelChange={setImageGenerationModel}
       />
     </div>
   );

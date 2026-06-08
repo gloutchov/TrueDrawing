@@ -55,8 +55,10 @@ export type AppConfig = {
     defaultProvider: string;
     baseUrl: string;
     defaultModel: string;
+    availableModels: string[];
     defaultSize: string;
     defaultQuality: string;
+    canvasPaddingRatio: number;
     timeoutMs: number;
     defaultOutputFormat: string;
   };
@@ -85,7 +87,16 @@ export function validateAppConfig(value: unknown): AppConfig {
   const tools = expectObject(config.tools, "tools");
   const layers = expectObject(config.layers, "layers");
   const imageGeneration = expectObject(config.imageGeneration, "imageGeneration");
+  const defaultImageModel = expectString(imageGeneration.defaultModel, "imageGeneration.defaultModel");
+  const availableImageModels = expectStringArray(
+    imageGeneration.availableModels,
+    "imageGeneration.availableModels"
+  );
   const files = expectObject(config.files, "files");
+
+  if (!availableImageModels.includes(defaultImageModel)) {
+    throw new Error("Invalid app configuration: imageGeneration.defaultModel must be listed in imageGeneration.availableModels.");
+  }
 
   return {
     app: {
@@ -140,9 +151,11 @@ export function validateAppConfig(value: unknown): AppConfig {
     imageGeneration: {
       defaultProvider: expectString(imageGeneration.defaultProvider, "imageGeneration.defaultProvider"),
       baseUrl: expectString(imageGeneration.baseUrl, "imageGeneration.baseUrl"),
-      defaultModel: expectString(imageGeneration.defaultModel, "imageGeneration.defaultModel"),
+      defaultModel: defaultImageModel,
+      availableModels: availableImageModels,
       defaultSize: expectString(imageGeneration.defaultSize, "imageGeneration.defaultSize"),
       defaultQuality: expectString(imageGeneration.defaultQuality, "imageGeneration.defaultQuality"),
+      canvasPaddingRatio: expectUnitNumber(imageGeneration.canvasPaddingRatio, "imageGeneration.canvasPaddingRatio"),
       timeoutMs: expectPositiveNumber(imageGeneration.timeoutMs, "imageGeneration.timeoutMs"),
       defaultOutputFormat: expectString(imageGeneration.defaultOutputFormat, "imageGeneration.defaultOutputFormat")
     },
@@ -170,6 +183,14 @@ function expectString(value: unknown, label: string): string {
   }
 
   return value;
+}
+
+function expectStringArray(value: unknown, label: string): string[] {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new Error(`Invalid app configuration: ${label} must be a non-empty array.`);
+  }
+
+  return value.map((item, index) => expectString(item, `${label}[${index}]`));
 }
 
 function expectDrawingToolId(value: unknown, label: string): DrawingToolId {

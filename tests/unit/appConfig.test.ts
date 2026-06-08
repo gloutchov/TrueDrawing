@@ -13,6 +13,7 @@ describe("app configuration", () => {
     expect(config.app.name).toBe("True Drawing");
     expect(config.imageGeneration.defaultProvider).toBe("openai");
     expect(config.imageGeneration.defaultModel).toBe("gpt-image-1.5");
+    expect(config.imageGeneration.availableModels).toContain("gpt-image-1.5");
     expect(config.tools.presets.map((preset) => preset.id)).toEqual([
       "pencil",
       "marker",
@@ -66,8 +67,10 @@ describe("app configuration", () => {
         defaultProvider: "openai",
         baseUrl: "https://api.openai.com/v1",
         defaultModel: "gpt-image-1.5",
+        availableModels: ["gpt-image-1.5"],
         defaultSize: "1024x1024",
         defaultQuality: "auto",
+        canvasPaddingRatio: 0.08,
         timeoutMs: 120000,
         defaultOutputFormat: "png"
       },

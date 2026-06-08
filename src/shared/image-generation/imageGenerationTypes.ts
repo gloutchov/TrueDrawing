@@ -1,5 +1,10 @@
 export type ApiKeyStatus = {
   configured: boolean;
+  backend: string;
+};
+
+export type ImageGenerationPreferences = {
+  model: string;
 };
 
 export type RealisticImageRequest = {
