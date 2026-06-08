@@ -452,13 +452,13 @@ Esito locale M4:
   - verifica manuale app Electron confermata dall'utente il 2026-06-08: layer funzionanti correttamente;
   - verifica finestra info confermata dopo correzione scrollbar/menu.
 - CI:
-  - non ancora eseguita su GitHub per M4.
+  - PR `#1` verso `main`: GitHub Actions CI verde.
 - Release:
   - non ancora pubblicata.
 - Rischi residui:
   - opacita' layer aggiornata da slider crea uno step history per ogni modifica, da rivalutare se l'esperienza risulta troppo granulare.
 
-Stato: implementazione e verifica locale completate, in attesa di CI e release.
+Stato: implementazione, verifica locale e CI PR completate, in attesa di merge e release.
 
 ### M5 - Inspector realistico e generazione immagine
 
@@ -733,7 +733,7 @@ Stato: pianificata.
 | 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde e release `v0.3.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release `v0.3.1` pubblicata con artifact Windows/macOS. |
-| 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | In corso | Implementazione locale layer completata con modello documento, compositing, pannello layer, correzione finestra info e test; verifica manuale completata, restano CI e release. |
+| 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | In corso | Implementazione locale layer completata con modello documento, compositing, pannello layer, correzione finestra info e test; verifica manuale e CI PR completate, restano merge e release. |
 
 ## Checklist di chiusura milestone
 
