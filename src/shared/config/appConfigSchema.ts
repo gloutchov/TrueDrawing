@@ -53,7 +53,10 @@ export type AppConfig = {
   };
   imageGeneration: {
     defaultProvider: string;
+    baseUrl: string;
     defaultModel: string;
+    defaultSize: string;
+    defaultQuality: string;
     timeoutMs: number;
     defaultOutputFormat: string;
   };
@@ -136,7 +139,10 @@ export function validateAppConfig(value: unknown): AppConfig {
     },
     imageGeneration: {
       defaultProvider: expectString(imageGeneration.defaultProvider, "imageGeneration.defaultProvider"),
+      baseUrl: expectString(imageGeneration.baseUrl, "imageGeneration.baseUrl"),
       defaultModel: expectString(imageGeneration.defaultModel, "imageGeneration.defaultModel"),
+      defaultSize: expectString(imageGeneration.defaultSize, "imageGeneration.defaultSize"),
+      defaultQuality: expectString(imageGeneration.defaultQuality, "imageGeneration.defaultQuality"),
       timeoutMs: expectPositiveNumber(imageGeneration.timeoutMs, "imageGeneration.timeoutMs"),
       defaultOutputFormat: expectString(imageGeneration.defaultOutputFormat, "imageGeneration.defaultOutputFormat")
     },

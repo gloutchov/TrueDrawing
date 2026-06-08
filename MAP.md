@@ -59,13 +59,16 @@ truedrawing/
 |   |   |   Creazione e gestione finestre.
 |   |   |
 |   |   +-- ipc/
-|   |   |   Canali sicuri fra renderer e main process.
+|   |   |   Canali sicuri fra renderer e main process per config, runtime, segreti e generazione immagine.
 |   |   |
 |   |   +-- menu/
-|   |   |   Menu applicativo base.
+|   |   |   Menu applicativo, finestra info e apertura impostazioni API key.
 |   |   |
-|   |   +-- secrets/
-|   |   |   Accesso futuro a macOS Keychain e Windows Credential Manager.
+|   |   +-- secret-store/
+|   |   |   Storage cifrato locale della API key OpenAI tramite main process.
+|   |   |
+|   |   +-- image-generation/
+|   |   |   Adapter OpenAI Images API e sanitizzazione errori.
 |   |   |
 |   |   +-- storage/
 |   |       Salvataggio, autosave, recupero ed export futuri.
@@ -93,10 +96,10 @@ truedrawing/
 |   |   |   Hook renderer per undo/redo del documento di disegno.
 |   |   |
 |   |   +-- inspector/
-|   |   |   Preview iniziale immagine realistica e metadati provider/modello.
+|   |   |   Inspector realistico con preview immagine, stati generazione e metadati provider/modello.
 |   |   |
 |   |   +-- settings/
-|   |   |   Riepilogo impostazioni provider/modello.
+|   |   |   Riepilogo impostazioni provider/modello e dialog API key.
 |   |   |
 |   |   +-- styles/
 |   |       Stili globali renderer.
@@ -113,7 +116,7 @@ truedrawing/
 |   |   |   Tipi e modello layer/documento True Drawing.
 |   |   |
 |   |   +-- image-generation/
-|   |   |   Interfacce provider e adapter OpenAI.
+|   |   |   Tipi generazione immagine e prompt tecnico realistico.
 |   |   |
 |   |   +-- config/
 |   |   |   Tipi, schema, validazione e caricamento file configurazione.
@@ -142,7 +145,7 @@ truedrawing/
 |       |   CI: installazione dipendenze, documenti obbligatori, lint, test e build.
 |       |
 |       +-- release.yml
-|           Release: build Windows/macOS e upload diretto degli asset sulla release GitHub.
+|           Release manuale: build Windows/macOS e upload diretto degli asset sulla release GitHub quando richiesto.
 |
 +-- README.md
 |   Descrizione progetto in italiano e inglese.
@@ -175,9 +178,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.4.0`.
-- Ultima milestone implementata localmente: M4 - Layer.
-- Stato milestone: implementazione e verifiche locali completate su branch `milestone/04-layers`; CI/release ancora da eseguire.
+- Versione: `0.5.0`.
+- Ultima milestone implementata localmente: M5 - Inspector realistico e generazione immagine.
+- Stato milestone: implementazione e verifiche locali completate su branch `milestone/05-realistic-inspector`; CI ancora da eseguire, release GitHub rinviata per risparmiare credito Actions.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
@@ -185,5 +188,8 @@ truedrawing/
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.
 - Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
 - Undo/redo del documento presente con modello history testabile.
+- Inspector realistico con generazione OpenAI dal canvas composito.
+- Menu `File > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI.
+- Storage cifrato locale della API key e chiamate OpenAI gestite dal main process.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
-- Workflow CI e release Windows/macOS presenti.
+- Workflow CI presente; workflow release Windows/macOS disponibile solo con avvio manuale.
