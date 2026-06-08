@@ -142,7 +142,7 @@ truedrawing/
 |       |   CI: installazione dipendenze, documenti obbligatori, lint, test e build.
 |       |
 |       +-- release.yml
-|           Release: build Windows/macOS e upload asset sulla release GitHub.
+|           Release: build Windows/macOS e upload diretto degli asset sulla release GitHub.
 |
 +-- README.md
 |   Descrizione progetto in italiano e inglese.
