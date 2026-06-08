@@ -189,8 +189,8 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.6.0`.
-- Ultima milestone implementata localmente: M6 - Sicurezza, API key e modello dei segreti.
-- Stato milestone: implementazione e verifiche locali completate su branch `milestone/06-security-secrets`; CI/release non ancora eseguite.
+- Ultima milestone completata: M6 - Sicurezza, API key e modello dei segreti.
+- Stato milestone: completata e mergiata su `main`; PR #3 e CI main verdi; release GitHub rinviata.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
