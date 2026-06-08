@@ -2,9 +2,9 @@
 
 ## Italiano
 
-Versione: `0.4.0`
+Versione: `0.5.0`
 
-Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente e' presente lo skeleton desktop Electron con `contextIsolation` attivo, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime e canvas renderer locale con strumenti, layer e undo/redo senza accesso diretto a filesystem o segreti.
+Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente e' presente lo skeleton desktop Electron con `contextIsolation` attivo, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, canvas renderer locale con strumenti/layer/undo-redo e generazione immagine eseguita dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
 ### Principi
 
@@ -18,7 +18,9 @@ Questo documento descrive il modello di sicurezza previsto per True Drawing. Nel
 
 ### Segreti
 
-La API key sara' inserita dall'utente nelle impostazioni dell'app e salvata tramite:
+La API key viene inserita dall'utente dal menu `File > API Key...`.
+Nella versione corrente la chiave viene cifrata con `safeStorage` di Electron e salvata in `userData` dal processo main.
+Il completamento M6 dovra' consolidare il salvataggio nel keychain esplicito del sistema operativo:
 
 - macOS Keychain su macOS;
 - Windows Credential Manager su Windows.
@@ -37,15 +39,17 @@ Le chiamate di rete devono essere limitate alla generazione dell'immagine realis
 - Caricamento configurazione centrale validata: completato.
 - Canvas interattivo locale tramite Pointer Events: completato.
 - Strumenti tratto, layer e history undo/redo locali nel renderer: completato.
+- Menu API key, storage cifrato locale e adapter OpenAI nel main process: completato.
+- Inspector realistico con generazione immagine e preview: completato.
 - Implementazione keychain: pianificata per milestone futura.
 - Hardening Electron completo: pianificato per milestone futura.
 - Test sicurezza: pianificati per milestone futura.
 
 ## English
 
-Version: `0.4.0`
+Version: `0.5.0`
 
-This document describes the planned security model for True Drawing. The current version includes the Electron desktop skeleton with `contextIsolation` enabled, `nodeIntegration` disabled in the renderer, a dedicated preload exposing only minimal APIs, and local canvas tools, layers, and undo/redo with no direct filesystem or secret access.
+This document describes the planned security model for True Drawing. The current version includes the Electron desktop skeleton with `contextIsolation` enabled, `nodeIntegration` disabled in the renderer, a dedicated preload exposing only minimal APIs, local canvas tools/layers/undo-redo, and image generation handled by the main process with no direct renderer access to filesystem or secret storage.
 
 ### Principles
 
@@ -59,7 +63,9 @@ This document describes the planned security model for True Drawing. The current
 
 ### Secrets
 
-The API key will be entered by the user in the app settings and stored through:
+The API key is entered by the user through `File > API Key...`.
+In the current version, the key is encrypted with Electron `safeStorage` and saved under `userData` by the main process.
+M6 must consolidate storage in the explicit operating system keychain:
 
 - macOS Keychain on macOS;
 - Windows Credential Manager on Windows.
@@ -78,6 +84,8 @@ Network calls must be limited to realistic image generation and must send only t
 - Validated central configuration loading: complete.
 - Local interactive canvas through Pointer Events: complete.
 - Local stroke tools, layers, and undo/redo history in the renderer: complete.
+- API key menu, encrypted local storage, and OpenAI adapter in the main process: complete.
+- Realistic inspector with image generation and preview: complete.
 - Keychain implementation: planned for a future milestone.
 - Full Electron hardening: planned for a future milestone.
 - Security tests: planned for a future milestone.

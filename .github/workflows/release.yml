@@ -1,9 +1,12 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Tag to package and publish, for example v1.0.0-beta.1"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -16,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_tag }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -32,10 +37,11 @@ jobs:
       - name: Upload Windows release assets
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
         shell: bash
         run: |
           set -euo pipefail
-          tag="${GITHUB_REF_NAME}"
+          tag="${RELEASE_TAG}"
           repository="${GITHUB_REPOSITORY}"
           if ! gh release view "$tag" --repo "$repository" >/dev/null 2>&1; then
             gh release create "$tag" --repo "$repository" --title "$tag" --notes "Automated release for $tag." || gh release view "$tag" --repo "$repository" >/dev/null
@@ -51,6 +57,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.release_tag }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -67,10 +75,11 @@ jobs:
       - name: Upload macOS release assets
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
         shell: bash
         run: |
           set -euo pipefail
-          tag="${GITHUB_REF_NAME}"
+          tag="${RELEASE_TAG}"
           repository="${GITHUB_REPOSITORY}"
           if ! gh release view "$tag" --repo "$repository" >/dev/null 2>&1; then
             gh release create "$tag" --repo "$repository" --title "$tag" --notes "Automated release for $tag." || gh release view "$tag" --repo "$repository" >/dev/null

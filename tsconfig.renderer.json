@@ -20,6 +20,7 @@
     "src/shared/document/**/*.ts",
     "src/shared/drawing/**/*.ts",
     "src/shared/history/**/*.ts",
+    "src/shared/image-generation/**/*.ts",
     "src/shared/runtime/**/*.ts"
   ]
 }

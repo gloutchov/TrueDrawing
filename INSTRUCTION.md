@@ -1,8 +1,8 @@
 # True Drawing - User Instructions
 
-Version: `0.4.0`
+Version: `0.5.0`
 
-True Drawing is currently in an early stage. This version includes the desktop skeleton with an interactive canvas, stroke tools, layers, and undo/redo: the Electron app opens the main window, loads the central configuration, and lets users draw on the canvas with Pointer Events-compatible input.
+True Drawing is currently in an early stage. This version includes the desktop skeleton with an interactive canvas, stroke tools, layers, realistic inspector, and undo/redo: the Electron app opens the main window, loads the central configuration, and lets users draw on the canvas with Pointer Events-compatible input.
 
 ## Intended App Usage
 
@@ -14,8 +14,8 @@ Once the next application milestones are implemented, users will be able to:
 - change color, stroke size, opacity, and hardness;
 - undo and redo strokes with toolbar buttons or `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z`, and `Ctrl/Cmd+Y`;
 - create, rename, select, hide, reorder, and adjust opacity for layers;
-- configure API key, provider, and image model;
-- generate a realistic image in the inspector;
+- enter or remove the OpenAI API key from `File > API Key...`;
+- generate a realistic image in the inspector from the current canvas;
 - switch between canvas and realistic image by double clicking the inspector;
 - automatically and manually save both canvas and image.
 
@@ -32,7 +32,7 @@ The `config/app.config.json` file contains parameters editable by skilled users,
 
 This version also exposes canvas input parameters such as minimum point distance, stroke smoothing, default pressure, pressure-based size factors, control ranges, tool presets, default layer, layer name prefix, layer limit, and layer opacity range.
 
-The API key must not be placed in that file: it will be stored in the operating system keychain through the app settings.
+The API key must not be placed in that file: it is entered from the app through `File > API Key...` and stored in encrypted local storage through the Electron main process.
 
 ## Development Startup
 

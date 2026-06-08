@@ -6,7 +6,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Sviluppare sempre su un branch dedicato alla milestone: `milestone/<numero>-<slug>`.
 - Non fare merge su `main` finche' implementazione, test, documentazione e CI non sono verificati.
-- Non eliminare il branch milestone prima che la release GitHub sia stata generata e controllata.
+- Non eliminare il branch milestone prima che la release GitHub sia stata generata e controllata, quando la release e' prevista.
+- Per risparmiare credito GitHub Actions, non generare release GitHub automatiche per ogni milestone intermedia: produrre release Windows/macOS solo quando esplicitamente richiesto o quando il piano indica una versione beta/stabile quasi definitiva.
 - Aggiornare la versione alla chiusura di ogni milestone secondo `PLAN.md`.
 - Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
 
@@ -39,6 +40,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - I parametri modificabili devono stare in un file di configurazione centrale.
 - Evitare valori hardcoded per:
   - provider API;
+  - base URL API;
   - modello immagini;
   - intervallo autosave;
   - dimensioni canvas;
