@@ -530,7 +530,8 @@ Esito locale M5:
 - Verifiche manuali:
   - generazione immagine con API key reale verificata dall'utente il 2026-06-08 dopo la correzione dell'adapter OpenAI.
 - CI:
-  - non ancora eseguita su GitHub per M5.
+  - PR `#2` verso `main`: GitHub Actions CI run `27140031776`, successo;
+  - `main`: GitHub Actions CI run `27140098764`, successo.
 - Release:
   - rinviata su richiesta dell'utente per risparmiare credito GitHub Actions; il workflow release Windows/macOS e' manuale.
 - Rischi residui:
@@ -538,7 +539,7 @@ Esito locale M5:
   - la generazione reale e' stata verificata manualmente dall'utente, ma resta dipendente da quota, modello e disponibilita' del provider OpenAI;
   - opacita' layer continua a creare uno step history per ogni modifica slider.
 
-Stato: implementazione locale e verifica manuale completate, in attesa di CI, merge e tag; release GitHub rinviata.
+Stato: completata; release GitHub rinviata.
 
 ### M6 - Sicurezza, API key e modello dei segreti
 
@@ -778,7 +779,7 @@ Stato: pianificata.
 | 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde e release `v0.3.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release `v0.3.1` pubblicata con artifact Windows/macOS. |
 | 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | Completata | Layer completati con modello documento, compositing, pannello layer, correzione finestra info e workflow release diretto; CI main verde e release `v0.4.0` pubblicata con artifact Windows/macOS. |
-| 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | In corso | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati localmente; verifica manuale generazione confermata, restano CI, merge e tag. Release rinviata. |
+| 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | Completata | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati; generazione reale confermata dall'utente, PR #2 e CI main verdi. Release rinviata per risparmiare credito Actions. |
 
 ## Checklist di chiusura milestone
 
