@@ -44,6 +44,7 @@ describe("app configuration", () => {
         defaultSize: 8,
         defaultOpacity: 2,
         defaultBrushHardness: 0.85,
+        defaultStrokeStyle: "solid",
         pressureMinSizeFactor: 0.65,
         pressureMaxSizeFactor: 1.25,
         sizeRange: { min: 1, max: 96, step: 1 },
@@ -74,7 +75,17 @@ describe("app configuration", () => {
         timeoutMs: 120000,
         defaultOutputFormat: "png"
       },
-      files: { canvasSuffix: "_canvas", imageSuffix: "_image", projectExtension: ".tdraw", canvasExportExtension: ".png", imageExportExtension: ".png" }
+      files: {
+        defaultProjectName: "Untitled Drawing",
+        autosaveDirectoryName: "autosave",
+        autosaveExtension: ".autosave.tdraw",
+        canvasSuffix: "_canvas",
+        imageSuffix: "_image",
+        projectExtension: ".tdraw",
+        canvasExportExtension: ".png",
+        imageExportExtension: ".png",
+        webpExportExtension: ".webp"
+      }
     })).toThrow(/tools\.defaultOpacity/);
   });
 });

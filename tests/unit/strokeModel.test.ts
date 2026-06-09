@@ -24,6 +24,7 @@ describe("stroke model", () => {
       size: 8,
       opacity: 1,
       hardness: 0.9,
+      strokeStyle: "solid",
       point: firstPoint
     });
 
@@ -39,6 +40,7 @@ describe("stroke model", () => {
       size: 8,
       opacity: 1,
       hardness: 0.9,
+      strokeStyle: "solid",
       point: firstPoint
     });
 
@@ -59,6 +61,7 @@ describe("stroke model", () => {
       size: 8,
       opacity: 1,
       hardness: 0.9,
+      strokeStyle: "solid",
       point: firstPoint
     });
 

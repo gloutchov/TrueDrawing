@@ -76,8 +76,8 @@ truedrawing/
 |   |   +-- image-generation/
 |   |   |   Adapter OpenAI Images API e sanitizzazione errori.
 |   |   |
-|   |   +-- storage/
-|   |       Salvataggio, autosave, recupero ed export futuri.
+|   |   +-- project/
+|   |       Salvataggio `.tdraw`, sidecar canvas/immagine, autosave, recupero ed export tramite dialog nativi.
 |   |
 |   +-- preload/
 |   |   |
@@ -113,7 +113,7 @@ truedrawing/
 |   +-- shared/
 |   |   |
 |   |   +-- drawing/
-|   |   |   Tipi stroke, tipi strumenti, modello tratti, pressione, distanza minima e smoothing.
+|   |   |   Tipi stroke, strumenti tratto/linea/shape/fill, tipo tratto, pressione, distanza minima e smoothing.
 |   |   |
 |   |   +-- history/
 |   |   |   Modello condiviso e testabile per stack undo/redo.
@@ -123,6 +123,9 @@ truedrawing/
 |   |   |
 |   |   +-- image-generation/
 |   |   |   Tipi generazione immagine e prompt tecnico realistico.
+|   |   |
+|   |   +-- project/
+|   |   |   Formato progetto versionato, validazione, serializzazione e naming file.
 |   |   |
 |   |   +-- config/
 |   |   |   Tipi, schema, validazione e caricamento file configurazione.
@@ -141,7 +144,7 @@ truedrawing/
 +-- tests/
 |   |
 |   +-- unit/
-|   |   Test di modello, strumenti, layer, history, config, adapter, segreti, preferenze e CSP.
+|   |   Test di modello, strumenti, layer, history, config, adapter, segreti, preferenze, CSP e formato progetto.
 |   |
 |   +-- e2e/
 |       Test end-to-end su flussi principali.
@@ -188,13 +191,18 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.6.0`.
-- Ultima milestone completata: M6 - Sicurezza, API key e modello dei segreti.
-- Stato milestone: completata e mergiata su `main`; PR #3 e CI main verdi; release GitHub rinviata.
+- Versione: `0.7.0`.
+- Ultima milestone completata localmente: M7 - Salvataggio automatico, manuale, recupero ed export.
+- Stato milestone: chiusa localmente su `milestone/07-save-export`, pronta per push GitHub e CI; release GitHub rinviata secondo policy manuale.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
 - Strumenti matita, pennarello, pennello e gomma collegati al canvas.
+- Sottomenù tool per tratto, linea, shape, tipo tratto e strumento riempimento con flood fill delimitato.
+- Strumento selezione rettangolare per cut/copy/paste canvas, paste spostabile finche' selezionato e shortcut `Ctrl/Cmd+X/C/V`.
+- Menu Edit collegato alla history del disegno, alla selezione canvas e alla clipboard testo/immagine tramite IPC controllati.
+- Zoom canvas con pulsanti, rotella e comandi View dedicati.
+- Inspector realistico proporzionale al canvas di disegno.
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.
 - Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
 - Undo/redo del documento presente con modello history testabile.
@@ -202,6 +210,8 @@ truedrawing/
 - Menu `File > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI.
 - Storage API key tramite Windows Credential Manager, macOS Keychain o fallback cifrato, con chiamate OpenAI gestite dal main process.
 - Preferenza modello immagini persistente e separata dalla API key.
+- Salvataggio manuale `.tdraw` con sidecar `<nome>_canvas.png` e `<nome>_image.png`.
+- Autosave temporizzato in `userData`, recupero ultimo autosave disponibile ed export PNG/WebP.
 - CSP e sandbox renderer configurati.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI presente; workflow release Windows/macOS disponibile solo con avvio manuale.

@@ -1,5 +1,11 @@
 import type { AppConfig } from "../../shared/config/appConfigSchema";
-import type { DrawingToolId, DrawingToolPreset, DrawingToolSettings } from "../../shared/drawing/toolTypes";
+import type {
+  DrawingToolId,
+  DrawingToolPreset,
+  DrawingToolSettings,
+  StrokeToolId
+} from "../../shared/drawing/toolTypes";
+import { isStrokeToolId } from "../../shared/drawing/toolTypes";
 
 export function createInitialToolSettings(config: AppConfig): DrawingToolSettings {
   const preset = findToolPreset(config, config.tools.defaultTool);
@@ -9,7 +15,8 @@ export function createInitialToolSettings(config: AppConfig): DrawingToolSetting
     color: config.tools.defaultColor,
     size: config.tools.defaultSize,
     opacity: config.tools.defaultOpacity,
-    hardness: config.tools.defaultBrushHardness
+    hardness: config.tools.defaultBrushHardness,
+    strokeStyle: config.tools.defaultStrokeStyle
   };
 }
 
@@ -18,6 +25,13 @@ export function settingsForSelectedTool(
   currentSettings: DrawingToolSettings,
   tool: DrawingToolId
 ): DrawingToolSettings {
+  if (!isStrokeToolId(tool)) {
+    return {
+      ...currentSettings,
+      tool
+    };
+  }
+
   const preset = findToolPreset(config, tool);
 
   return {
@@ -36,5 +50,5 @@ function findToolPreset(config: AppConfig, tool: DrawingToolId): DrawingToolPres
     throw new Error("True Drawing requires at least one configured drawing tool preset.");
   }
 
-  return config.tools.presets.find((preset) => preset.id === tool) ?? fallbackPreset;
+  return config.tools.presets.find((preset) => preset.id === tool as StrokeToolId) ?? fallbackPreset;
 }

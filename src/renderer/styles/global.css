@@ -56,6 +56,7 @@ button {
 }
 
 .brand-lockup,
+.document-meta,
 .settings-summary,
 .panel-header,
 .panel-header span {
@@ -72,6 +73,7 @@ button {
 }
 
 .brand-lockup span,
+.document-meta span,
 .settings-summary,
 .inspector-meta,
 .layer-row small {
@@ -79,8 +81,48 @@ button {
   font-size: 12px;
 }
 
+.document-meta {
+  min-width: 0;
+  flex: 1;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 16px;
+}
+
+.project-name-input {
+  width: min(260px, 34vw);
+  min-width: 120px;
+  height: 30px;
+  border: 1px solid #c3ccd0;
+  border-radius: 6px;
+  color: #2f393d;
+  background: #ffffff;
+  font: inherit;
+  font-size: 13px;
+  padding: 0 9px;
+}
+
+.project-name-input:focus {
+  outline: 2px solid #b8cbd3;
+  outline-offset: 0;
+}
+
 .settings-summary {
   gap: 9px;
+}
+
+.fullscreen-exit-button {
+  min-height: 30px;
+  border-radius: 6px;
+  color: #ffffff;
+  background: #365c67;
+  cursor: pointer;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.fullscreen-exit-button:hover {
+  background: #2d505a;
 }
 
 .tool-rail {
@@ -97,6 +139,36 @@ button {
   padding: 10px 0;
 }
 
+.tool-menu {
+  position: relative;
+}
+
+.tool-menu-trigger::after {
+  position: absolute;
+  right: 5px;
+  bottom: 4px;
+  width: 5px;
+  height: 5px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.tool-popover {
+  position: absolute;
+  z-index: 8;
+  left: 44px;
+  top: 0;
+  display: flex;
+  gap: 4px;
+  border: 1px solid #aeb8bd;
+  border-radius: 7px;
+  background: #f4f6f6;
+  box-shadow: 0 10px 28px rgb(31 37 40 / 18%);
+  padding: 5px;
+}
+
 .icon-button,
 .mini-button {
   display: inline-grid;
@@ -107,6 +179,7 @@ button {
 }
 
 .icon-button {
+  position: relative;
   width: 38px;
   height: 38px;
   border-radius: 7px;
@@ -114,7 +187,8 @@ button {
 
 .icon-button:hover,
 .mini-button:hover,
-.icon-button.is-active {
+.icon-button.is-active,
+.mini-button.is-active {
   background: #d3dcdf;
 }
 
@@ -199,6 +273,7 @@ button {
 }
 
 .canvas-stage {
+  position: relative;
   display: grid;
   width: 100%;
   height: 100%;
@@ -207,15 +282,62 @@ button {
   overflow: hidden;
 }
 
-.canvas-surface {
+.canvas-viewport {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  overflow: hidden;
+}
+
+.canvas-transform {
+  position: relative;
   width: min(100%, calc(100vh - var(--top-bar-height) - (var(--workspace-padding) * 2)));
   max-height: calc(100vh - var(--top-bar-height) - (var(--workspace-padding) * 2));
+  transform-origin: center center;
+}
+
+.canvas-surface {
+  width: 100%;
+  height: 100%;
   border: 1px solid #b4bdc2;
   box-shadow: 0 18px 45px rgb(31 37 40 / 16%);
   cursor: crosshair;
   display: block;
   touch-action: none;
   user-select: none;
+}
+
+.canvas-selection {
+  position: absolute;
+  border: 1px solid #1f6feb;
+  background: rgb(31 111 235 / 12%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 75%) inset;
+  pointer-events: none;
+}
+
+.canvas-zoom-controls {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 4px;
+  border: 1px solid #aeb8bd;
+  border-radius: 7px;
+  background: #f4f6f6;
+  box-shadow: 0 10px 28px rgb(31 37 40 / 16%);
+  padding: 4px;
+}
+
+.canvas-zoom-controls .mini-button {
+  width: 30px;
+  height: 28px;
+}
+
+.canvas-zoom-controls .canvas-zoom-readout {
+  width: 54px;
+  color: #5b666b;
+  font-size: 11px;
 }
 
 .right-panel {
@@ -265,7 +387,7 @@ button {
 
 .inspector-preview {
   display: grid;
-  height: 184px;
+  width: 100%;
   place-items: center;
   color: #8b969b;
   background: #f9faf9;

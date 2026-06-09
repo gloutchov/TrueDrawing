@@ -54,7 +54,12 @@ export function InspectorPanel({
           </button>
         </div>
       </div>
-      <div className="inspector-preview">
+      <div
+        className="inspector-preview"
+        style={{
+          aspectRatio: `${config.canvas.defaultWidth} / ${config.canvas.defaultHeight}`
+        }}
+      >
         <InspectorPreview realisticImage={realisticImage} isGenerating={isGenerating} />
       </div>
       {errorMessage && <p className="inspector-error">{errorMessage}</p>}

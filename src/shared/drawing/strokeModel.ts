@@ -5,6 +5,7 @@ import type {
   StrokeRenderOptions
 } from "./strokeTypes";
 import type { DrawingToolId } from "./toolTypes";
+import type { StrokeStyleId } from "./toolTypes";
 
 type CreateStrokeInput = {
   id: string;
@@ -13,7 +14,9 @@ type CreateStrokeInput = {
   size: number;
   opacity: number;
   hardness: number;
+  strokeStyle: StrokeStyleId;
   point: DrawingPoint;
+  imageDataUrl?: string;
 };
 
 export function createStroke(input: CreateStrokeInput): DrawingStroke {
@@ -24,7 +27,23 @@ export function createStroke(input: CreateStrokeInput): DrawingStroke {
     size: input.size,
     opacity: input.opacity,
     hardness: input.hardness,
-    points: [input.point]
+    strokeStyle: input.strokeStyle,
+    points: [input.point],
+    imageDataUrl: input.imageDataUrl
+  };
+}
+
+export function replaceStrokeLastPoint(stroke: DrawingStroke, point: DrawingPoint): DrawingStroke {
+  if (stroke.points.length === 0) {
+    return { ...stroke, points: [point] };
+  }
+
+  return {
+    ...stroke,
+    points: [
+      ...stroke.points.slice(0, -1),
+      point
+    ]
   };
 }
 
