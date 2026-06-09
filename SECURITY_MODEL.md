@@ -2,9 +2,9 @@
 
 ## Italiano
 
-Versione: `0.6.0`
+Versione: `0.7.0`
 
-Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy e generazione immagine eseguita dal main process senza accesso diretto del renderer a filesystem o storage segreti.
+Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
 ### Principi
 
@@ -33,7 +33,7 @@ Il modello immagini scelto dall'utente viene salvato come preferenza non segreta
 
 ### IPC e hardening Electron
 
-I canali IPC disponibili sono limitati a configurazione, runtime, stato/scrittura/rimozione API key, preferenze immagine e generazione realistica. Gli input IPC vengono validati nel main process. Il renderer non ha `nodeIntegration`, non accede direttamente a filesystem o API native e riceve solo le API esposte dal preload.
+I canali IPC disponibili sono limitati a configurazione, runtime, stato/scrittura/rimozione API key, preferenze immagine, generazione realistica, salvataggio/apertura progetto, autosave, recupero autosave, export immagini, clipboard controllata per testo/immagini e fullscreen finestra. Gli input IPC vengono validati nel main process. Il renderer non ha `nodeIntegration`, non accede direttamente a filesystem o API native e riceve solo le API esposte dal preload.
 
 La Content Security Policy limita script, immagini, form, frame e connessioni remote. In produzione le connessioni remote ammesse dal renderer sono ristrette al base URL configurato per OpenAI; la chiamata effettiva all'API resta comunque nel main process.
 
@@ -54,13 +54,15 @@ Le chiamate di rete devono essere limitate alla generazione dell'immagine realis
 - Implementazione keychain/Credential Manager: completata.
 - Preferenza modello immagini separata dalla API key: completata.
 - CSP e sandbox renderer: completati.
+- Salvataggio `.tdraw`, sidecar canvas/immagine, autosave, recupero ed export tramite main process: completati.
+- Clipboard testo/immagine e fullscreen finestra tramite IPC controllati: completati.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ## English
 
-Version: `0.6.0`
+Version: `0.7.0`
 
-This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation handled by the main process with no direct renderer access to filesystem or secret storage.
+This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
 ### Principles
 
@@ -89,7 +91,7 @@ The user-selected image model is stored as a non-secret preference under `userDa
 
 ### IPC and Electron Hardening
 
-Available IPC channels are limited to configuration, runtime, API key status/write/removal, image preferences, and realistic generation. IPC inputs are validated in the main process. The renderer has no `nodeIntegration`, does not directly access filesystem or native APIs, and receives only preload-exposed APIs.
+Available IPC channels are limited to configuration, runtime, API key status/write/removal, image preferences, realistic generation, project save/open, autosave, autosave recovery, image export, controlled text/image clipboard, and window fullscreen. IPC inputs are validated in the main process. The renderer has no `nodeIntegration`, does not directly access filesystem or native APIs, and receives only preload-exposed APIs.
 
 The Content Security Policy limits scripts, images, forms, frames, and remote connections. In production, renderer remote connection sources are restricted to the configured OpenAI base URL; the actual API call still happens in the main process.
 
@@ -110,4 +112,6 @@ Network calls must be limited to realistic image generation and must send only t
 - Keychain/Credential Manager implementation: complete.
 - Image model preference separated from API key: complete.
 - CSP and renderer sandbox: complete.
+- `.tdraw` save, canvas/image sidecars, autosave, recovery, and export through the main process: complete.
+- Text/image clipboard and window fullscreen through controlled IPC: complete.
 - Security tests for credential store, preferences, and CSP: complete.

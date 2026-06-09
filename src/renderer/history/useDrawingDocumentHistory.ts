@@ -128,6 +128,10 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     ));
   }, []);
 
+  const replaceDocument = useCallback((nextDocument: DrawingDocument) => {
+    setHistory(createHistory(nextDocument, config.app.historyLimit));
+  }, [config.app.historyLimit]);
+
   const undo = useCallback(() => {
     setHistory((currentHistory) => undoHistory(currentHistory));
   }, []);
@@ -151,6 +155,7 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     setLayerOpacity: setDocumentLayerOpacity,
     moveLayer: moveDocumentLayer,
     setRealisticImage: setDocumentRealisticImage,
+    replaceDocument,
     undo,
     redo
   };

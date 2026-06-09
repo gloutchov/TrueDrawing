@@ -2,6 +2,13 @@
 
 Questo file definisce le regole operative da seguire durante lo sviluppo di True Drawing. Deve essere aggiornato alla conclusione di ogni milestone.
 
+## Stato corrente
+
+- Ultima milestone chiusa localmente: M7 - Salvataggio automatico, manuale, recupero ed export.
+- Versione corrente: `0.7.0`.
+- Branch milestone corrente: `milestone/07-save-export`.
+- Release GitHub M7: rinviata secondo policy manuale; `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS.
+
 ## Regole generali
 
 - Sviluppare sempre su un branch dedicato alla milestone: `milestone/<numero>-<slug>`.

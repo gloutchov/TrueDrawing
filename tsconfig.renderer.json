@@ -21,6 +21,7 @@
     "src/shared/drawing/**/*.ts",
     "src/shared/history/**/*.ts",
     "src/shared/image-generation/**/*.ts",
+    "src/shared/project/**/*.ts",
     "src/shared/runtime/**/*.ts"
   ]
 }

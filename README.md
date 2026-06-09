@@ -4,7 +4,7 @@
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione corrente e' `0.6.0` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti matita/pennarello/pennello/gomma, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenza modello immagine e hardening Electron con CSP.
+Il progetto e' in fase iniziale. La versione corrente e' `0.7.0` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenza modello immagine, hardening Electron con CSP, salvataggio manuale, autosave, recupero ed export PNG/WebP.
 
 Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
@@ -13,13 +13,20 @@ Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 - App desktop Electron avviabile con finestra principale True Drawing.
 - Canvas pulito per disegno libero con input mouse, penna e touch compatibile.
 - Strumenti per matita, pennarello, pennello e gomma.
+- Sottomenù per linea retta/curva, shape rettangolo/ellisse/triangolo/poligono e tipo tratto continuo/tratteggiato/a puntini.
+- Strumento riempimento delimitato dai confini gia' disegnati nel layer.
+- Strumento selezione rettangolare per cut/copy/paste sul canvas, anche con `Ctrl/Cmd+X/C/V`.
+- Oggetto incollato spostabile finche' resta selezionato.
 - Controllo colore, dimensione tratto, opacita' e hardness.
+- Zoom canvas con pulsanti `+`/`-`, reset e rotella del mouse.
+- Pulsante visibile per uscire dal fullscreen quando la finestra e' a schermo intero.
 - Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
 - Undo e redo per tratti disegnati e operazioni layer.
 - Inspector per generare e mostrare l'immagine realistica dal canvas.
 - Menu per inserire, sostituire o rimuovere la API key OpenAI e scrivere il modello immagini.
 - Doppio click sull'inspector per passare fra immagine realistica e canvas.
 - Autosave e salvataggio manuale di canvas e immagine.
+- Salvataggio progetto `.tdraw`, sidecar `<nome>_canvas` e `<nome>_image`, recupero autosave ed export PNG/WebP.
 - Gestione API key tramite Windows Credential Manager, macOS Keychain o fallback locale cifrato per ambienti non supportati.
 - Modello immagini configurabile dall'utente come testo libero, con default OpenAI `gpt-image-1.5`.
 
@@ -54,7 +61,7 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Current version is `0.6.0` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, pencil/marker/brush/eraser tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model preferences, and Electron hardening with CSP.
+The project is at its initial stage. Current version is `0.7.0` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model preferences, Electron hardening with CSP, manual save, autosave, recovery, and PNG/WebP export.
 
 Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
@@ -63,13 +70,20 @@ Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 - Runnable Electron desktop app with a True Drawing main window.
 - Clean freehand drawing canvas with mouse, pen, and compatible touch input.
 - Pencil, marker, brush, and eraser tools.
+- Submenus for straight/curved line, rectangle/ellipse/triangle/polygon shape, and solid/dashed/dotted stroke style.
+- Fill tool bounded by already drawn layer edges.
+- Rectangular selection tool for canvas cut/copy/paste, including `Ctrl/Cmd+X/C/V`.
+- Pasted object can be moved while it remains selected.
 - Color, stroke size, opacity, and hardness controls.
+- Canvas zoom with `+`/`-` buttons, reset, and mouse wheel.
+- Visible fullscreen exit button while the window is fullscreen.
 - Layer creation, renaming, protected deletion, visibility, opacity, and ordering.
 - Undo and redo for drawn strokes and layer operations.
 - Inspector for realistic image generation and preview from the canvas.
 - Menu entry to enter, replace, or remove the OpenAI API key and type the image model.
 - Double click on the inspector to switch between realistic image and drawing canvas.
 - Autosave and manual save for both canvas and generated image.
+- `.tdraw` project saving, `<name>_canvas` and `<name>_image` sidecars, autosave recovery, and PNG/WebP export.
 - API key management through Windows Credential Manager, macOS Keychain, or encrypted local fallback for unsupported environments.
 - User-configurable image model as free text, defaulting to OpenAI `gpt-image-1.5`.
 
