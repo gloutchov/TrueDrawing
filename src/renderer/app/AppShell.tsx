@@ -1,8 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
-import { exportDocumentCanvasToPngDataUrl } from "../canvas/canvasExport";
+import {
+  convertImageDataUrl,
+  exportDocumentCanvasToDataUrl,
+  exportDocumentCanvasToPngDataUrl,
+  exportDocumentSelectionToPngDataUrl
+} from "../canvas/canvasExport";
 import { CanvasStage } from "../canvas/CanvasStage";
+import { preloadCanvasImage } from "../canvas/canvasRenderer";
 import { useDrawingDocumentHistory } from "../history/useDrawingDocumentHistory";
 import { InspectorPanel } from "../inspector/InspectorPanel";
 import { LayerPanel } from "../layers/LayerPanel";
@@ -11,8 +17,23 @@ import { SettingsSummary } from "../settings/SettingsSummary";
 import { ToolPanel } from "../tools/ToolPanel";
 import { createInitialToolSettings, settingsForSelectedTool } from "../tools/toolState";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
+import { createInitialDrawingDocument } from "../../shared/document/layerModel";
+import type { CanvasSelection } from "../../shared/document/selectionTypes";
+import { normalizeCanvasSelection } from "../../shared/document/selectionTypes";
+import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
 import type { DrawingToolId, DrawingToolSettings } from "../../shared/drawing/toolTypes";
 import { buildRealisticImagePrompt } from "../../shared/image-generation/realisticPrompt";
+import {
+  createDrawingProjectFile,
+  normalizeProjectName
+} from "../../shared/project/projectModel";
+import type {
+  DrawingProjectFile,
+  ProjectAutosaveInfo,
+  ProjectExportFormat,
+  ProjectExportTarget,
+  ProjectSaveRequest
+} from "../../shared/project/projectTypes";
 import type { RuntimeInfo } from "../../shared/runtime/runtimeInfo";
 
 type AppShellProps = {
@@ -35,6 +56,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     setLayerOpacity,
     moveLayer,
     setRealisticImage,
+    replaceDocument,
     undo,
     redo
   } = useDrawingDocumentHistory(config);
@@ -47,6 +69,19 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationErrorMessage, setGenerationErrorMessage] = useState<string | null>(null);
+  const [projectName, setProjectName] = useState(config.files.defaultProjectName);
+  const [projectFilePath, setProjectFilePath] = useState<string | null>(null);
+  const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
+  const [isDirty, setIsDirty] = useState(false);
+  const [fileStatusMessage, setFileStatusMessage] = useState("Not saved");
+  const [recoveryAutosave, setRecoveryAutosave] = useState<ProjectAutosaveInfo | null>(null);
+  const [canvasZoom, setCanvasZoom] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [canvasSelection, setCanvasSelection] = useState<CanvasSelection | null>(null);
+  const [movablePastedStrokeId, setMovablePastedStrokeId] = useState<string | null>(null);
+  const initialDocumentSignatureRef = useRef<string | null>(null);
+  const lastSavedDocumentSignatureRef = useRef<string | null>(null);
+  const lastAutosavedDocumentSignatureRef = useRef<string | null>(null);
   const shellStyle = {
     "--top-bar-height": `${config.layout.topBarHeight}px`,
     "--tool-rail-width": `${config.layout.toolRailWidth}px`,
@@ -54,6 +89,10 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     "--workspace-padding": `${config.layout.workspacePadding}px`
   } as CSSProperties;
   const selectTool = useCallback((tool: DrawingToolId) => {
+    if (tool !== "selection") {
+      setMovablePastedStrokeId(null);
+    }
+
     setToolSettings((currentSettings) => settingsForSelectedTool(config, currentSettings, tool));
   }, [config]);
   const changeToolSettings = useCallback((settings: Partial<DrawingToolSettings>) => {
@@ -91,6 +130,334 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     imageGenerationModel,
     setRealisticImage
   ]);
+
+  const createProject = useCallback((savedAt?: string, nameOverride?: string): DrawingProjectFile => (
+    createDrawingProjectFile(document, {
+      appVersion: runtime.appVersion,
+      name: nameOverride ?? projectName,
+      fallbackName: config.files.defaultProjectName,
+      savedAt
+    })
+  ), [
+    config.files.defaultProjectName,
+    document,
+    projectName,
+    runtime.appVersion
+  ]);
+
+  const createSaveRequest = useCallback((
+    filePath: string | null,
+    nameOverride?: string
+  ): ProjectSaveRequest => ({
+    project: createProject(undefined, nameOverride),
+    filePath,
+    canvasDataUrl: exportDocumentCanvasToPngDataUrl(document, config),
+    imageDataUrl: document.realisticImage?.dataUrl ?? null
+  }), [config, createProject, document]);
+
+  const ensureNamedProject = useCallback((): string | null => {
+    const normalizedName = normalizeProjectName(projectName, config.files.defaultProjectName);
+
+    if (projectFilePath || normalizedName !== config.files.defaultProjectName) {
+      setProjectName(normalizedName);
+      return normalizedName;
+    }
+
+    const enteredName = window.prompt("Nome disegno", normalizedName);
+
+    if (enteredName === null) {
+      return null;
+    }
+
+    const nextName = normalizeProjectName(enteredName, config.files.defaultProjectName);
+
+    setProjectName(nextName);
+    return nextName;
+  }, [
+    config.files.defaultProjectName,
+    projectFilePath,
+    projectName
+  ]);
+
+  const saveProject = useCallback(async (forceSaveAs: boolean) => {
+    const nextName = ensureNamedProject();
+
+    if (!nextName) {
+      return;
+    }
+
+    try {
+      setFileStatusMessage("Saving...");
+      const request = createSaveRequest(forceSaveAs ? null : projectFilePath, nextName);
+      const result = forceSaveAs
+        ? await window.trueDrawing.saveProjectAs(request)
+        : await window.trueDrawing.saveProject(request);
+
+      if (result.canceled) {
+        setFileStatusMessage("Save canceled");
+        return;
+      }
+
+      setProjectName(result.name);
+      setProjectFilePath(result.filePath);
+      setLastSavedAt(result.savedAt);
+      lastSavedDocumentSignatureRef.current = JSON.stringify(document);
+      lastAutosavedDocumentSignatureRef.current = JSON.stringify(document);
+      setIsDirty(false);
+      setFileStatusMessage(`Saved ${formatTime(result.savedAt)}`);
+    } catch (error: unknown) {
+      setFileStatusMessage(error instanceof Error ? error.message : "Save failed");
+    }
+  }, [
+    createSaveRequest,
+    document,
+    ensureNamedProject,
+    projectFilePath
+  ]);
+
+  const openProject = useCallback(async () => {
+    if (isDirty && !window.confirm("Il disegno corrente contiene modifiche non salvate. Aprire un altro progetto?")) {
+      return;
+    }
+
+    try {
+      setFileStatusMessage("Opening...");
+      const result = await window.trueDrawing.openProject();
+
+      if (result.canceled || !result.project) {
+        setFileStatusMessage("Open canceled");
+        return;
+      }
+
+      replaceLoadedProject(result.project, result.filePath);
+      setFileStatusMessage(`Opened ${result.project.name}`);
+    } catch (error: unknown) {
+      setFileStatusMessage(error instanceof Error ? error.message : "Open failed");
+    }
+  }, [isDirty]);
+
+  const createNewProject = useCallback(() => {
+    if (isDirty && !window.confirm("Il disegno corrente contiene modifiche non salvate. Creare un nuovo progetto?")) {
+      return;
+    }
+
+    const nextDocument = createInitialDrawingDocument({
+      id: crypto.randomUUID(),
+      name: config.layers.defaultLayerName,
+      opacity: config.layers.defaultOpacity
+    });
+    const signature = JSON.stringify(nextDocument);
+
+    replaceDocument(nextDocument);
+    setCanvasSelection(null);
+    setMovablePastedStrokeId(null);
+    setProjectName(config.files.defaultProjectName);
+    setProjectFilePath(null);
+    setLastSavedAt(null);
+    setIsDirty(false);
+    setFileStatusMessage("New project");
+    initialDocumentSignatureRef.current = signature;
+    lastSavedDocumentSignatureRef.current = signature;
+    lastAutosavedDocumentSignatureRef.current = signature;
+  }, [
+    config.files.defaultProjectName,
+    config.layers.defaultLayerName,
+    config.layers.defaultOpacity,
+    isDirty,
+    replaceDocument
+  ]);
+
+  const exportProjectTarget = useCallback(async (
+    target: ProjectExportTarget,
+    format: ProjectExportFormat
+  ) => {
+    try {
+      const dataUrl = target === "canvas"
+        ? exportDocumentCanvasToDataUrl(
+          document,
+          config,
+          format === "webp" ? "image/webp" : "image/png"
+        )
+        : await exportRealisticImage(document.realisticImage?.dataUrl ?? null, format);
+
+      if (!dataUrl) {
+        setFileStatusMessage("No realistic image to export");
+        return;
+      }
+
+      const result = await window.trueDrawing.exportProjectImage({
+        name: normalizeProjectName(projectName, config.files.defaultProjectName),
+        target,
+        format,
+        dataUrl
+      });
+
+      setFileStatusMessage(result.canceled ? "Export canceled" : "Export completed");
+    } catch (error: unknown) {
+      setFileStatusMessage(error instanceof Error ? error.message : "Export failed");
+    }
+  }, [
+    config,
+    document,
+    projectName
+  ]);
+
+  const handleFileCommand = useCallback((command: string) => {
+    if (command === "new") {
+      createNewProject();
+      return;
+    }
+
+    if (command === "open") {
+      void openProject();
+      return;
+    }
+
+    if (command === "save") {
+      void saveProject(false);
+      return;
+    }
+
+    if (command === "save-as") {
+      void saveProject(true);
+      return;
+    }
+
+    if (command === "export-canvas-png") {
+      void exportProjectTarget("canvas", "png");
+      return;
+    }
+
+    if (command === "export-canvas-webp") {
+      void exportProjectTarget("canvas", "webp");
+      return;
+    }
+
+    if (command === "export-image-png") {
+      void exportProjectTarget("image", "png");
+      return;
+    }
+
+    if (command === "export-image-webp") {
+      void exportProjectTarget("image", "webp");
+    }
+  }, [
+    createNewProject,
+    exportProjectTarget,
+    openProject,
+    saveProject
+  ]);
+
+  const changeCanvasZoom = useCallback((direction: "in" | "out" | "reset") => {
+    setCanvasZoom((currentZoom) => {
+      if (direction === "reset") {
+        return 1;
+      }
+
+      const factor = direction === "in" ? 1.15 : 1 / 1.15;
+
+      return clampCanvasZoom(currentZoom * factor, config.canvas.minZoom, config.canvas.maxZoom);
+    });
+  }, [
+    config.canvas.maxZoom,
+    config.canvas.minZoom
+  ]);
+
+  const beginNewCanvasSelection = useCallback(() => {
+    setMovablePastedStrokeId(null);
+  }, []);
+
+  const moveSelectedCanvasObject = useCallback((selection: CanvasSelection) => {
+    if (!movablePastedStrokeId) {
+      return;
+    }
+
+    updateStroke(movablePastedStrokeId, (stroke) => (
+      stroke.tool === "image" ? updateStrokeBounds(stroke, selection) : stroke
+    ));
+  }, [
+    movablePastedStrokeId,
+    updateStroke
+  ]);
+
+  const handleEditCommand = useCallback((command: string) => {
+    void handleEditableCommand(command).then((handled) => {
+      if (handled) {
+        return;
+      }
+
+      if (command === "undo") {
+        setMovablePastedStrokeId(null);
+        undo();
+        return;
+      }
+
+      if (command === "redo") {
+        setMovablePastedStrokeId(null);
+        redo();
+        return;
+      }
+
+      if (command === "copy" || command === "cut") {
+        void copyCanvasSelectionToClipboard(
+          document,
+          config,
+          canvasSelection,
+          setFileStatusMessage
+        ).then((copied) => {
+          if (copied && command === "cut" && canvasSelection) {
+            setMovablePastedStrokeId(null);
+            appendStroke(createClearRectStroke(canvasSelection, toolSettings));
+            setCanvasSelection(null);
+          }
+        });
+        return;
+      }
+
+      if (command === "paste") {
+        void pasteClipboardImageToCanvas(
+          canvasSelection,
+          config,
+          toolSettings,
+          appendStroke,
+          setCanvasSelection,
+          setFileStatusMessage
+        ).then((pastedImage) => {
+          if (!pastedImage) {
+            return;
+          }
+
+          setMovablePastedStrokeId(pastedImage.strokeId);
+          selectTool("selection");
+        });
+      }
+    });
+  }, [
+    appendStroke,
+    canvasSelection,
+    config,
+    document,
+    redo,
+    selectTool,
+    toolSettings,
+    undo
+  ]);
+
+  const handleViewCommand = useCallback((command: string) => {
+    if (command === "canvas-zoom-in") {
+      changeCanvasZoom("in");
+      return;
+    }
+
+    if (command === "canvas-zoom-out") {
+      changeCanvasZoom("out");
+      return;
+    }
+
+    if (command === "canvas-zoom-reset") {
+      changeCanvasZoom("reset");
+    }
+  }, [changeCanvasZoom]);
 
   useEffect(() => {
     let isMounted = true;
@@ -136,8 +503,93 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
 
   useEffect(() => window.trueDrawing.onOpenApiKeySettings(openApiKeyDialog), [openApiKeyDialog]);
 
+  useEffect(() => window.trueDrawing.onFileCommand(handleFileCommand), [handleFileCommand]);
+
+  useEffect(() => window.trueDrawing.onEditCommand(handleEditCommand), [handleEditCommand]);
+
+  useEffect(() => window.trueDrawing.onViewCommand(handleViewCommand), [handleViewCommand]);
+
+  useEffect(() => {
+    const syncFullscreenState = () => {
+      window.trueDrawing.isWindowFullscreen().then(setIsFullscreen).catch(() => {
+        setIsFullscreen(false);
+      });
+    };
+
+    syncFullscreenState();
+    window.addEventListener("resize", syncFullscreenState);
+
+    return () => {
+      window.removeEventListener("resize", syncFullscreenState);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.trueDrawing.listAutosaves().then((autosaves) => {
+      if (autosaves.length > 0) {
+        setRecoveryAutosave(autosaves[0]);
+      }
+    }).catch(() => {
+      setRecoveryAutosave(null);
+    });
+  }, []);
+
+  useEffect(() => {
+    const signature = JSON.stringify(document);
+
+    if (initialDocumentSignatureRef.current === null) {
+      initialDocumentSignatureRef.current = signature;
+      lastSavedDocumentSignatureRef.current = signature;
+      lastAutosavedDocumentSignatureRef.current = signature;
+      return;
+    }
+
+    setIsDirty(signature !== lastSavedDocumentSignatureRef.current);
+  }, [document]);
+
+  useEffect(() => {
+    if (config.app.autosaveIntervalMs <= 0) {
+      return undefined;
+    }
+
+    const autosave = async () => {
+      const signature = JSON.stringify(document);
+
+      if (signature === lastAutosavedDocumentSignatureRef.current) {
+        return;
+      }
+
+      try {
+        const result = await window.trueDrawing.autosaveProject({
+          project: createProject(),
+          canvasDataUrl: exportDocumentCanvasToPngDataUrl(document, config),
+          imageDataUrl: document.realisticImage?.dataUrl ?? null
+        });
+
+        lastAutosavedDocumentSignatureRef.current = signature;
+        setFileStatusMessage(`Autosaved ${formatTime(result.savedAt)}`);
+      } catch {
+        setFileStatusMessage("Autosave failed");
+      }
+    };
+
+    const intervalId = window.setInterval(() => {
+      void autosave();
+    }, config.app.autosaveIntervalMs);
+
+    return () => window.clearInterval(intervalId);
+  }, [
+    config,
+    createProject,
+    document
+  ]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (isEditableElement(window.document.activeElement)) {
+        return;
+      }
+
       const usesCommandModifier = event.ctrlKey || event.metaKey;
 
       if (!usesCommandModifier) {
@@ -161,6 +613,42 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       if (key === "y") {
         event.preventDefault();
         redo();
+        return;
+      }
+
+      if (key === "x") {
+        event.preventDefault();
+        handleEditCommand("cut");
+        return;
+      }
+
+      if (key === "c") {
+        event.preventDefault();
+        handleEditCommand("copy");
+        return;
+      }
+
+      if (key === "v") {
+        event.preventDefault();
+        handleEditCommand("paste");
+        return;
+      }
+
+      if (key === "=" || key === "+") {
+        event.preventDefault();
+        changeCanvasZoom("in");
+        return;
+      }
+
+      if (key === "-") {
+        event.preventDefault();
+        changeCanvasZoom("out");
+        return;
+      }
+
+      if (key === "0") {
+        event.preventDefault();
+        changeCanvasZoom("reset");
       }
     };
 
@@ -169,7 +657,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [redo, undo]);
+  }, [
+    changeCanvasZoom,
+    handleEditCommand,
+    redo,
+    undo
+  ]);
 
   return (
     <div className="app-shell" style={shellStyle}>
@@ -178,6 +671,31 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           <strong>{config.app.name}</strong>
           <span>{runtime.appVersion}</span>
         </div>
+        <div className="document-meta">
+          <input
+            aria-label="Project name"
+            className="project-name-input"
+            value={projectName}
+            onChange={(event) => {
+              setProjectName(event.target.value);
+              setIsDirty(true);
+            }}
+          />
+          <span>{isDirty ? "Unsaved changes" : formatDocumentStatus(fileStatusMessage, lastSavedAt)}</span>
+        </div>
+        {isFullscreen && (
+          <button
+            className="fullscreen-exit-button"
+            type="button"
+            onClick={() => {
+              void window.trueDrawing.setWindowFullscreen(false).then(() => {
+                setIsFullscreen(false);
+              });
+            }}
+          >
+            Exit fullscreen
+          </button>
+        )}
         <SettingsSummary config={config} imageGenerationModel={imageGenerationModel} />
       </header>
       <aside className="tool-rail" aria-label="Drawing tools">
@@ -197,6 +715,20 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           config={config}
           document={document}
           toolSettings={toolSettings}
+          selection={canvasSelection}
+          movableSelection={movablePastedStrokeId !== null}
+          onSelectionChange={setCanvasSelection}
+          onBeginNewSelection={beginNewCanvasSelection}
+          onMoveSelectedObject={moveSelectedCanvasObject}
+          zoom={canvasZoom}
+          onZoomIn={() => changeCanvasZoom("in")}
+          onZoomOut={() => changeCanvasZoom("out")}
+          onZoomReset={() => changeCanvasZoom("reset")}
+          onWheelZoom={(delta) => {
+            setCanvasZoom((currentZoom) => (
+              clampCanvasZoom(currentZoom * delta, config.canvas.minZoom, config.canvas.maxZoom)
+            ));
+          }}
           onAppendStroke={appendStroke}
           onUpdateStroke={updateStroke}
         />
@@ -234,6 +766,343 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         onStatusChange={updateApiKeyStatus}
         onModelChange={setImageGenerationModel}
       />
+      {recoveryAutosave && (
+        <RecoveryDialog
+          autosave={recoveryAutosave}
+          onRestore={async () => {
+            try {
+              const result = await window.trueDrawing.loadAutosave(recoveryAutosave.id);
+
+              if (result.project) {
+                replaceLoadedProject(result.project, null);
+                setFileStatusMessage(`Recovered ${result.project.name}`);
+              }
+            } catch (error: unknown) {
+              setFileStatusMessage(error instanceof Error ? error.message : "Recovery failed");
+            } finally {
+              setRecoveryAutosave(null);
+            }
+          }}
+          onDiscard={async () => {
+            try {
+              await window.trueDrawing.clearAutosave(recoveryAutosave.id);
+            } catch {
+              setFileStatusMessage("Unable to clear autosave");
+            } finally {
+              setRecoveryAutosave(null);
+            }
+          }}
+        />
+      )}
     </div>
   );
+
+  function replaceLoadedProject(project: DrawingProjectFile, filePath: string | null): void {
+    const signature = JSON.stringify(project.document);
+
+    replaceDocument(project.document);
+    setCanvasSelection(null);
+    setMovablePastedStrokeId(null);
+    setProjectName(project.name);
+    setProjectFilePath(filePath);
+    setLastSavedAt(project.savedAt);
+    setIsDirty(false);
+    initialDocumentSignatureRef.current = signature;
+    lastSavedDocumentSignatureRef.current = signature;
+    lastAutosavedDocumentSignatureRef.current = signature;
+  }
+}
+
+type RecoveryDialogProps = {
+  autosave: ProjectAutosaveInfo;
+  onRestore: () => Promise<void>;
+  onDiscard: () => Promise<void>;
+};
+
+function RecoveryDialog({ autosave, onRestore, onDiscard }: RecoveryDialogProps): JSX.Element {
+  return (
+    <div className="modal-backdrop">
+      <section className="modal" role="dialog" aria-modal="true" aria-labelledby="recovery-title">
+        <div className="modal-header">
+          <span id="recovery-title">Autosave recovery</span>
+        </div>
+        <div className="modal-body">
+          <p className="form-message">
+            {autosave.name} - {formatTime(autosave.savedAt)}
+          </p>
+        </div>
+        <div className="modal-actions">
+          <button className="text-button" type="button" onClick={() => void onDiscard()}>
+            Ignore
+          </button>
+          <button className="text-button text-button--primary" type="button" onClick={() => void onRestore()}>
+            Restore
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+async function exportRealisticImage(
+  dataUrl: string | null,
+  format: ProjectExportFormat
+): Promise<string | null> {
+  if (!dataUrl) {
+    return null;
+  }
+
+  return format === "webp"
+    ? convertImageDataUrl(dataUrl, "image/webp")
+    : convertImageDataUrl(dataUrl, "image/png");
+}
+
+function formatTime(value: string | null): string {
+  if (!value) {
+    return "";
+  }
+
+  return new Date(value).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function formatDocumentStatus(message: string, lastSavedAt: string | null): string {
+  if (lastSavedAt && message === "Not saved") {
+    return `Saved ${formatTime(lastSavedAt)}`;
+  }
+
+  return message;
+}
+
+function clampCanvasZoom(value: number, minZoom: number, maxZoom: number): number {
+  return Math.min(maxZoom, Math.max(minZoom, value));
+}
+
+async function handleEditableCommand(command: string): Promise<boolean> {
+  const activeElement = window.document.activeElement;
+
+  if (!isEditableElement(activeElement)) {
+    return false;
+  }
+
+  if (command === "undo" || command === "redo") {
+    window.document.execCommand(command);
+    return true;
+  }
+
+  if (activeElement instanceof HTMLInputElement || activeElement instanceof HTMLTextAreaElement) {
+    await handleTextInputClipboardCommand(activeElement, command);
+    return true;
+  }
+
+  if (command === "cut" || command === "copy" || command === "paste") {
+    window.document.execCommand(command);
+    return true;
+  }
+
+  return false;
+}
+
+function isEditableElement(element: Element | null): element is HTMLElement {
+  return element instanceof HTMLInputElement
+    || element instanceof HTMLTextAreaElement
+    || element instanceof HTMLSelectElement
+    || (element instanceof HTMLElement && element.isContentEditable);
+}
+
+async function handleTextInputClipboardCommand(
+  element: HTMLInputElement | HTMLTextAreaElement,
+  command: string
+): Promise<void> {
+  const selectionStart = element.selectionStart ?? 0;
+  const selectionEnd = element.selectionEnd ?? selectionStart;
+  const selectedText = element.value.slice(selectionStart, selectionEnd);
+
+  if (command === "copy") {
+    await window.trueDrawing.writeClipboardText(selectedText);
+    return;
+  }
+
+  if (command === "cut") {
+    await window.trueDrawing.writeClipboardText(selectedText);
+    replaceInputSelection(element, "");
+    return;
+  }
+
+  if (command === "paste") {
+    replaceInputSelection(element, await window.trueDrawing.readClipboardText());
+  }
+}
+
+function replaceInputSelection(
+  element: HTMLInputElement | HTMLTextAreaElement,
+  replacement: string
+): void {
+  const selectionStart = element.selectionStart ?? element.value.length;
+  const selectionEnd = element.selectionEnd ?? selectionStart;
+  const nextValue = `${element.value.slice(0, selectionStart)}${replacement}${element.value.slice(selectionEnd)}`;
+  const nextCursorPosition = selectionStart + replacement.length;
+  const valueSetter = Object.getOwnPropertyDescriptor(element.constructor.prototype, "value")?.set;
+
+  if (valueSetter) {
+    valueSetter.call(element, nextValue);
+  } else {
+    element.value = nextValue;
+  }
+  element.setSelectionRange(nextCursorPosition, nextCursorPosition);
+  element.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+async function copyCanvasSelectionToClipboard(
+  document: DrawingProjectFile["document"],
+  config: AppConfig,
+  selection: CanvasSelection | null,
+  setStatus: (message: string) => void
+): Promise<boolean> {
+  if (!selection || selection.width <= 0 || selection.height <= 0) {
+    setStatus("No canvas selection");
+    return false;
+  }
+
+  try {
+    await window.trueDrawing.writeClipboardImage(
+      exportDocumentSelectionToPngDataUrl(document, config, selection)
+    );
+    setStatus("Selection copied");
+    return true;
+  } catch (error: unknown) {
+    setStatus(error instanceof Error ? error.message : "Copy failed");
+    return false;
+  }
+}
+
+async function pasteClipboardImageToCanvas(
+  selection: CanvasSelection | null,
+  config: AppConfig,
+  toolSettings: DrawingToolSettings,
+  appendStroke: (stroke: DrawingStroke) => void,
+  setSelection: (selection: CanvasSelection | null) => void,
+  setStatus: (message: string) => void
+): Promise<PastedCanvasImage | null> {
+  try {
+    const dataUrl = await window.trueDrawing.readClipboardImage();
+
+    if (!dataUrl) {
+      setStatus("Clipboard has no image");
+      return null;
+    }
+
+    const imageSize = await preloadCanvasImage(dataUrl);
+    const bounds = selection && selection.width > 0 && selection.height > 0
+      ? normalizeCanvasSelection(selection)
+      : centeredImageBounds(imageSize, config);
+    const stroke = createImageStroke(bounds, dataUrl, toolSettings);
+
+    appendStroke(stroke);
+    setSelection(bounds);
+    setStatus("Image pasted");
+    return {
+      bounds,
+      strokeId: stroke.id
+    };
+  } catch (error: unknown) {
+    setStatus(error instanceof Error ? error.message : "Paste failed");
+    return null;
+  }
+}
+
+type PastedCanvasImage = {
+  bounds: CanvasSelection;
+  strokeId: string;
+};
+
+function createClearRectStroke(
+  selection: CanvasSelection,
+  toolSettings: DrawingToolSettings
+): DrawingStroke {
+  const bounds = normalizeCanvasSelection(selection);
+  const timestamp = Date.now();
+
+  return {
+    id: crypto.randomUUID(),
+    tool: "clear-rect",
+    color: toolSettings.color,
+    size: toolSettings.size,
+    opacity: 1,
+    hardness: toolSettings.hardness,
+    strokeStyle: toolSettings.strokeStyle,
+    points: [
+      { x: bounds.x, y: bounds.y, pressure: 1, timestamp },
+      { x: bounds.x + bounds.width, y: bounds.y + bounds.height, pressure: 1, timestamp }
+    ]
+  };
+}
+
+function createImageStroke(
+  selection: CanvasSelection,
+  imageDataUrl: string,
+  toolSettings: DrawingToolSettings
+): DrawingStroke {
+  const bounds = normalizeCanvasSelection(selection);
+  const timestamp = Date.now();
+
+  return {
+    id: crypto.randomUUID(),
+    tool: "image",
+    color: toolSettings.color,
+    size: toolSettings.size,
+    opacity: 1,
+    hardness: toolSettings.hardness,
+    strokeStyle: toolSettings.strokeStyle,
+    points: [
+      { x: bounds.x, y: bounds.y, pressure: 1, timestamp },
+      { x: bounds.x + bounds.width, y: bounds.y + bounds.height, pressure: 1, timestamp }
+    ],
+    imageDataUrl
+  };
+}
+
+function updateStrokeBounds(stroke: DrawingStroke, selection: CanvasSelection): DrawingStroke {
+  const bounds = normalizeCanvasSelection(selection);
+  const firstPoint = stroke.points[0];
+  const lastPoint = stroke.points.at(-1);
+  const timestamp = Date.now();
+
+  return {
+    ...stroke,
+    points: [
+      {
+        x: bounds.x,
+        y: bounds.y,
+        pressure: firstPoint?.pressure ?? 1,
+        timestamp: firstPoint?.timestamp ?? timestamp
+      },
+      {
+        x: bounds.x + bounds.width,
+        y: bounds.y + bounds.height,
+        pressure: lastPoint?.pressure ?? 1,
+        timestamp
+      }
+    ]
+  };
+}
+
+function centeredImageBounds(
+  imageSize: { width: number; height: number },
+  config: AppConfig
+): CanvasSelection {
+  const maxWidth = config.canvas.defaultWidth * 0.5;
+  const maxHeight = config.canvas.defaultHeight * 0.5;
+  const scale = Math.min(1, maxWidth / imageSize.width, maxHeight / imageSize.height);
+  const width = Math.max(1, imageSize.width * scale);
+  const height = Math.max(1, imageSize.height * scale);
+
+  return {
+    x: (config.canvas.defaultWidth - width) / 2,
+    y: (config.canvas.defaultHeight - height) / 2,
+    width,
+    height
+  };
 }

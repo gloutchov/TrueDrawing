@@ -62,6 +62,7 @@ True Drawing e' un'app locale per macOS e Windows che permette di disegnare su u
 - Branch stabile: `main`.
 - Branch di milestone: `milestone/<numero>-<slug>`, per esempio `milestone/01-foundation`.
 - Branch temporanei per fix interni alla milestone: `fix/<slug>` solo se necessario.
+- Stato release GitHub al 2026-06-09: solo `v0.4.0` risulta pubblicata con artifact Windows/macOS; le altre versioni intermedie restano tag/versioni di avanzamento o release rinviate.
 - Ogni milestone termina con:
   1. test e verifica manuale locale;
   2. aggiornamento versione;
@@ -144,7 +145,7 @@ Criteri di accettazione:
 - `AGENTS.md` presente con direttive per architettura modulare, configurazione e aggiornamento documenti.
 - CI minima presente per controllare documenti richiesti, `VERSION` e `config/app.config.json`.
 - Nessun segreto o file locale sensibile tracciato.
-- Versione `0.0.1` taggata e rilasciata come release documentale.
+- Versione `0.0.1` taggata. La release GitHub documentale non e' attualmente pubblicata; le release intermedie vengono pubblicate solo quando previste o richieste esplicitamente.
 
 Verifiche:
 
@@ -171,7 +172,8 @@ Esito M0:
 - CI:
   - branch milestone: GitHub Actions run `26946718264`, successo;
   - `main`: GitHub Actions run `26946749270`, successo.
-- Release prevista: `https://github.com/gloutchov/truedrawing/releases/tag/v0.0.1`.
+- Release:
+  - non attualmente pubblicata su GitHub; milestone conservata come tag/versione documentale verificata.
 - Rischi residui:
   - la release M0 e' documentale e non contiene build Windows/macOS perche' l'app desktop viene introdotta da M1;
   - branch protection avanzata da completare quando il repository avra' workflow e PR stabili.
@@ -204,7 +206,7 @@ Criteri di accettazione:
 - Configurazione centrale caricata e validata all'avvio.
 - Nessun parametro di base hardcoded fuori dai file di configurazione ammessi.
 - CI esegue test e build.
-- Release GitHub contiene artifact Windows e macOS, anche se l'app e' ancora minima.
+- Release GitHub con artifact Windows e macOS solo se richiesta esplicitamente o prevista dal piano; per questa milestone la verifica di build e' sufficiente.
 
 Verifiche:
 
@@ -229,7 +231,7 @@ Esito M1:
 - Test automatici:
   - GitHub Actions branch milestone run `26953015235`, successo con `npm ci`, lint, test e build;
   - GitHub Actions `main` run `26953078308`, successo con `npm ci`, lint, test e build;
-  - GitHub Actions release run `26953164204`, successo con build Windows, build macOS e upload asset.
+  - GitHub Actions release run `26953164204`, eseguito storicamente con build Windows, build macOS e upload asset.
 - Verifiche locali:
   - validazione JSON di `config/app.config.json`;
   - verifica `VERSION = 0.1.0`;
@@ -238,8 +240,9 @@ Esito M1:
 - CI:
   - branch milestone: successo;
   - `main`: successo;
-  - release: successo.
-- Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.1.0`.
+  - release workflow: eseguito storicamente; release GitHub non attualmente pubblicata.
+- Release:
+  - non attualmente pubblicata su GitHub; milestone conservata come tag/versione verificata.
 - Rischi residui:
   - la build macOS viene verificata su GitHub Actions macOS, non sulla macchina locale Windows;
   - branch protection avanzata resta non disponibile sul repository privato senza GitHub Pro;
@@ -301,9 +304,10 @@ Esito M2:
 - CI:
   - branch milestone: successo;
   - `main`: GitHub Actions run `26956959005`, successo;
-  - release: GitHub Actions run `26957023417`, successo con build Windows, build macOS e pubblicazione asset.
-- Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.2.0`.
-- Artifact release verificati:
+  - release workflow: GitHub Actions run `26957023417`, eseguito storicamente con build Windows, build macOS e asset.
+- Release:
+  - non attualmente pubblicata su GitHub; milestone conservata come tag/versione verificata.
+- Artifact generati/verificati storicamente dal workflow:
   - `True-Drawing-0.2.0-Windows-x64.exe`;
   - `True-Drawing-0.2.0-Windows-x64.exe.blockmap`;
   - `True-Drawing-0.2.0-macOS-arm64.dmg`;
@@ -378,14 +382,15 @@ Esito M3:
 - CI:
   - branch milestone: successo;
   - `main`: GitHub Actions run `26958948854`, successo;
-  - release: GitHub Actions run `26959021229`, successo con build Windows, build macOS e pubblicazione asset.
-- Release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.0`.
+  - release workflow: GitHub Actions run `26959021229`, eseguito storicamente con build Windows, build macOS e asset.
+- Release:
+  - non attualmente pubblicata su GitHub; milestone conservata come tag/versione verificata.
 - Patch successiva:
   - versione `0.3.1`;
   - commit `2514090` su `main`;
-  - release pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.3.1`;
+  - release GitHub non attualmente pubblicata;
   - contenuto: aggiunta icona personalizzata dell'app, integrazione icona in finestra/menu e finestra informazioni; nessuna nuova funzionalita' di disegno rispetto a M3.
-- Artifact release verificati:
+- Artifact generati/verificati storicamente dal workflow:
   - `True-Drawing-0.3.0-Windows-x64.exe`;
   - `True-Drawing-0.3.0-Windows-x64.exe.blockmap`;
   - `True-Drawing-0.3.0-macOS-arm64.dmg`;
@@ -642,7 +647,50 @@ Verifiche:
 - Test manuale recupero.
 - Test manuale export.
 
-Stato: pianificata.
+Esito locale M7:
+
+- Branch usato: `milestone/07-save-export`.
+- Versione iniziale: `0.6.0`.
+- Versione finale prevista: `0.7.0`.
+- Implementazione:
+  - formato progetto `.tdraw` versionato con validazione e serializzazione in `src/shared/project`;
+  - salvataggio manuale e `Salva con nome...` tramite dialog nativi Electron;
+  - scrittura atomica del file progetto e sidecar configurati `<nome>_canvas.png` e `<nome>_image.png`;
+  - apertura progetto `.tdraw` con validazione nel main process;
+  - autosave temporizzato in `userData` con directory, estensione e nome default configurabili;
+  - recupero dell'ultimo autosave disponibile all'avvio renderer;
+  - export canvas e immagine realistica in PNG/WebP;
+  - menu File abilitato per Nuovo, Apri, Salva, Salva con nome ed export;
+  - inspector realistico proporzionale al canvas di disegno;
+  - toolbar compatta con sottomenù tratto, linea, shape e tipo tratto;
+  - strumenti linea retta/curva, rettangolo/ellisse/triangolo/poligono e riempimento flood fill delimitato dai confini del layer;
+  - tratto continuo, tratteggiato e a puntini salvati nel modello stroke;
+  - menu Edit collegato a undo/redo del documento e clipboard testo/immagine;
+  - strumento selezione rettangolare per cut/copy/paste canvas;
+  - cut della selezione come cancellazione rettangolare salvabile e paste come immagine raster nel layer attivo;
+  - paste selezionato automaticamente e spostabile finche' resta selezionato;
+  - shortcut `Ctrl/Cmd+X`, `Ctrl/Cmd+C` e `Ctrl/Cmd+V` instradati alla selezione canvas quando il focus non e' in un campo testo;
+  - menu View collegato allo zoom canvas invece dello zoom Electron;
+  - pulsanti canvas `+`/`-`/reset e zoom con rotella mouse;
+  - pulsante visibile per uscire dal fullscreen;
+  - canali IPC validati per salvataggio, apertura, autosave, recupero ed export;
+  - renderer ancora senza accesso diretto al filesystem.
+- Test automatici locali:
+  - `npm run test`, successo;
+  - `npm run lint`, successo;
+  - `npm run build`, successo.
+- Verifiche manuali:
+  - feedback funzionale dell'utente completato sulle correzioni canvas/menu richieste;
+  - resta da provare in app Electron interattiva il flusso completo con dialog reali prima del merge finale.
+- CI:
+  - da eseguire dopo push GitHub del branch milestone.
+- Release:
+  - rinviata secondo policy manuale; `v0.4.0` resta l'unica release GitHub pubblicata con artifact Windows/macOS.
+- Rischi residui:
+  - il flusso salvataggio/apertura/export deve ancora essere provato manualmente con dialog reali;
+  - il recupero autosave carica il progetto in memoria senza associarlo al percorso autosave, quindi l'utente deve salvarlo esplicitamente per conservarlo come progetto ordinario.
+
+Stato: chiusa localmente; pronta per push GitHub, CI e merge. Release rinviata.
 
 ### M8 - Esperienza utente completa e rifinitura app
 
@@ -804,14 +852,15 @@ Stato: pianificata.
 | Data | Milestone | Versione | Branch | Stato | Note |
 | --- | --- | --- | --- | --- | --- |
 | 2026-06-04 | Pianificazione iniziale | n/a | n/a | In corso | Creato piano iniziale in `PLAN.md`; la cartella non risulta ancora inizializzata come repository Git. |
-| 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`, release documentale `v0.0.1` preparata. |
+| 2026-06-04 | M0 - Bootstrap repository e governance | 0.0.1 | `milestone/00-bootstrap` | Completata | Repository privato creato, documentazione iniziale aggiunta, CI minima verde su branch milestone e `main`; tag/versione documentale preparata, release GitHub non attualmente pubblicata. |
 | 2026-06-04 | M1 - Skeleton app desktop | 0.1.0 | `milestone/01-desktop-skeleton` | Completata | Skeleton Electron/Vite/React modulare, config validata, lint/test/build in CI e workflow release Windows/macOS aggiunti. |
-| 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde e release `v0.2.0` pubblicata con artifact Windows/macOS. |
-| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde e release `v0.3.0` pubblicata con artifact Windows/macOS. |
-| 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release `v0.3.1` pubblicata con artifact Windows/macOS. |
+| 2026-06-04 | M2 - Canvas di disegno e input | 0.2.0 | `milestone/02-canvas-input` | Completata | Canvas interattivo con Pointer Events, pressione, smoothing, modello stroke e test unitari aggiunti; CI branch/main verde; release GitHub non attualmente pubblicata. |
+| 2026-06-04 | M3 - Strumenti di tratto, colore, gomma, undo e redo | 0.3.0 | `milestone/03-tools-history` | Completata | Tool reali, controlli tratto, gomma, modello history e shortcut undo/redo implementati; CI branch/main verde; release GitHub non attualmente pubblicata. |
+| 2026-06-07 | Patch icona app | 0.3.1 | `main` | Completata | Aggiunta icona personalizzata dell'app e integrazione in finestra/menu; release GitHub non attualmente pubblicata. |
 | 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | Completata | Layer completati con modello documento, compositing, pannello layer, correzione finestra info e workflow release diretto; CI main verde e release `v0.4.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | Completata | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati; generazione reale confermata dall'utente, PR #2 e CI main verdi. Release rinviata per risparmiare credito Actions. |
 | 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | Completata | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, PR #3 e CI main verdi. Release rinviata. |
+| 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Chiusa localmente | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; branch pronto per push GitHub e CI. |
 
 ## Checklist di chiusura milestone
 

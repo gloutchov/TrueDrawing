@@ -1,4 +1,4 @@
-import type { DrawingToolId } from "./toolTypes";
+import type { DrawingToolId, StrokeStyleId } from "./toolTypes";
 
 export type DrawingPoint = {
   x: number;
@@ -14,7 +14,9 @@ export type DrawingStroke = {
   size: number;
   opacity: number;
   hardness: number;
+  strokeStyle: StrokeStyleId;
   points: DrawingPoint[];
+  imageDataUrl?: string;
 };
 
 export type StrokeInputOptions = {

@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
+import type { IpcRendererEvent } from "electron";
 
 import type { AppConfig } from "../shared/config/appConfigSchema";
 import type {
@@ -8,6 +9,16 @@ import type {
   RealisticImageResult
 } from "../shared/image-generation/imageGenerationTypes";
 import type { RuntimeInfo } from "../shared/runtime/runtimeInfo";
+import type {
+  ProjectAutosaveInfo,
+  ProjectAutosaveRequest,
+  ProjectAutosaveResult,
+  ProjectExportRequest,
+  ProjectExportResult,
+  ProjectOpenResult,
+  ProjectSaveRequest,
+  ProjectSaveResult
+} from "../shared/project/projectTypes";
 
 const api = {
   getAppConfig: (): Promise<AppConfig> => ipcRenderer.invoke("config:get") as Promise<AppConfig>,
@@ -30,6 +41,48 @@ const api = {
   generateRealisticImage: (request: RealisticImageRequest): Promise<RealisticImageResult> => (
     ipcRenderer.invoke("image-generation:generate-realistic", request) as Promise<RealisticImageResult>
   ),
+  saveProject: (request: ProjectSaveRequest): Promise<ProjectSaveResult> => (
+    ipcRenderer.invoke("project:save", request) as Promise<ProjectSaveResult>
+  ),
+  saveProjectAs: (request: ProjectSaveRequest): Promise<ProjectSaveResult> => (
+    ipcRenderer.invoke("project:save-as", request) as Promise<ProjectSaveResult>
+  ),
+  openProject: (): Promise<ProjectOpenResult> => (
+    ipcRenderer.invoke("project:open") as Promise<ProjectOpenResult>
+  ),
+  autosaveProject: (request: ProjectAutosaveRequest): Promise<ProjectAutosaveResult> => (
+    ipcRenderer.invoke("project:autosave", request) as Promise<ProjectAutosaveResult>
+  ),
+  listAutosaves: (): Promise<ProjectAutosaveInfo[]> => (
+    ipcRenderer.invoke("project:autosaves:list") as Promise<ProjectAutosaveInfo[]>
+  ),
+  loadAutosave: (id: string): Promise<ProjectOpenResult> => (
+    ipcRenderer.invoke("project:autosave:load", id) as Promise<ProjectOpenResult>
+  ),
+  clearAutosave: (id: string): Promise<void> => (
+    ipcRenderer.invoke("project:autosave:clear", id) as Promise<void>
+  ),
+  exportProjectImage: (request: ProjectExportRequest): Promise<ProjectExportResult> => (
+    ipcRenderer.invoke("project:export", request) as Promise<ProjectExportResult>
+  ),
+  writeClipboardImage: (dataUrl: string): Promise<void> => (
+    ipcRenderer.invoke("clipboard:write-image", dataUrl) as Promise<void>
+  ),
+  readClipboardImage: (): Promise<string | null> => (
+    ipcRenderer.invoke("clipboard:read-image") as Promise<string | null>
+  ),
+  writeClipboardText: (text: string): Promise<void> => (
+    ipcRenderer.invoke("clipboard:write-text", text) as Promise<void>
+  ),
+  readClipboardText: (): Promise<string> => (
+    ipcRenderer.invoke("clipboard:read-text") as Promise<string>
+  ),
+  setWindowFullscreen: (fullscreen: boolean): Promise<void> => (
+    ipcRenderer.invoke("window:set-fullscreen", fullscreen) as Promise<void>
+  ),
+  isWindowFullscreen: (): Promise<boolean> => (
+    ipcRenderer.invoke("window:is-fullscreen") as Promise<boolean>
+  ),
   onOpenApiKeySettings: (callback: () => void): (() => void) => {
     const listener = () => callback();
 
@@ -37,6 +90,45 @@ const api = {
 
     return () => {
       ipcRenderer.off("settings:open-api-key", listener);
+    };
+  },
+  onFileCommand: (callback: (command: string) => void): (() => void) => {
+    const listener = (_event: IpcRendererEvent, command: unknown) => {
+      if (typeof command === "string") {
+        callback(command);
+      }
+    };
+
+    ipcRenderer.on("file:command", listener);
+
+    return () => {
+      ipcRenderer.off("file:command", listener);
+    };
+  },
+  onEditCommand: (callback: (command: string) => void): (() => void) => {
+    const listener = (_event: IpcRendererEvent, command: unknown) => {
+      if (typeof command === "string") {
+        callback(command);
+      }
+    };
+
+    ipcRenderer.on("edit:command", listener);
+
+    return () => {
+      ipcRenderer.off("edit:command", listener);
+    };
+  },
+  onViewCommand: (callback: (command: string) => void): (() => void) => {
+    const listener = (_event: IpcRendererEvent, command: unknown) => {
+      if (typeof command === "string") {
+        callback(command);
+      }
+    };
+
+    ipcRenderer.on("view:command", listener);
+
+    return () => {
+      ipcRenderer.off("view:command", listener);
     };
   }
 };
