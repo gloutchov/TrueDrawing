@@ -1,5 +1,5 @@
-import type { DrawingToolId, DrawingToolPreset } from "../drawing/toolTypes";
-import { isDrawingToolId } from "../drawing/toolTypes";
+import type { DrawingToolId, DrawingToolPreset, StrokeStyleId } from "../drawing/toolTypes";
+import { isDrawingToolId, isStrokeStyleId, isStrokeToolId } from "../drawing/toolTypes";
 
 export type AppConfig = {
   app: {
@@ -37,6 +37,7 @@ export type AppConfig = {
     defaultSize: number;
     defaultOpacity: number;
     defaultBrushHardness: number;
+    defaultStrokeStyle: StrokeStyleId;
     pressureMinSizeFactor: number;
     pressureMaxSizeFactor: number;
     sizeRange: NumberRange;
@@ -63,11 +64,15 @@ export type AppConfig = {
     defaultOutputFormat: string;
   };
   files: {
+    defaultProjectName: string;
+    autosaveDirectoryName: string;
+    autosaveExtension: string;
     canvasSuffix: string;
     imageSuffix: string;
     projectExtension: string;
     canvasExportExtension: string;
     imageExportExtension: string;
+    webpExportExtension: string;
   };
 };
 
@@ -134,6 +139,7 @@ export function validateAppConfig(value: unknown): AppConfig {
       defaultSize: expectPositiveNumber(tools.defaultSize, "tools.defaultSize"),
       defaultOpacity: expectUnitNumber(tools.defaultOpacity, "tools.defaultOpacity"),
       defaultBrushHardness: expectUnitNumber(tools.defaultBrushHardness, "tools.defaultBrushHardness"),
+      defaultStrokeStyle: expectStrokeStyleId(tools.defaultStrokeStyle, "tools.defaultStrokeStyle"),
       pressureMinSizeFactor: expectPositiveNumber(tools.pressureMinSizeFactor, "tools.pressureMinSizeFactor"),
       pressureMaxSizeFactor: expectPositiveNumber(tools.pressureMaxSizeFactor, "tools.pressureMaxSizeFactor"),
       sizeRange: expectNumberRange(tools.sizeRange, "tools.sizeRange", false),
@@ -160,11 +166,15 @@ export function validateAppConfig(value: unknown): AppConfig {
       defaultOutputFormat: expectString(imageGeneration.defaultOutputFormat, "imageGeneration.defaultOutputFormat")
     },
     files: {
+      defaultProjectName: expectString(files.defaultProjectName, "files.defaultProjectName"),
+      autosaveDirectoryName: expectString(files.autosaveDirectoryName, "files.autosaveDirectoryName"),
+      autosaveExtension: expectString(files.autosaveExtension, "files.autosaveExtension"),
       canvasSuffix: expectString(files.canvasSuffix, "files.canvasSuffix"),
       imageSuffix: expectString(files.imageSuffix, "files.imageSuffix"),
       projectExtension: expectString(files.projectExtension, "files.projectExtension"),
       canvasExportExtension: expectString(files.canvasExportExtension, "files.canvasExportExtension"),
-      imageExportExtension: expectString(files.imageExportExtension, "files.imageExportExtension")
+      imageExportExtension: expectString(files.imageExportExtension, "files.imageExportExtension"),
+      webpExportExtension: expectString(files.webpExportExtension, "files.webpExportExtension")
     }
   };
 }
@@ -201,6 +211,16 @@ function expectDrawingToolId(value: unknown, label: string): DrawingToolId {
   }
 
   return tool;
+}
+
+function expectStrokeStyleId(value: unknown, label: string): StrokeStyleId {
+  const strokeStyle = expectString(value, label);
+
+  if (!isStrokeStyleId(strokeStyle)) {
+    throw new Error(`Invalid app configuration: ${label} must be a supported stroke style.`);
+  }
+
+  return strokeStyle;
 }
 
 function expectPositiveNumber(value: unknown, label: string): number {
@@ -258,11 +278,21 @@ function expectToolPresets(value: unknown, label: string): DrawingToolPreset[] {
     const preset = expectObject(presetValue, presetLabel);
 
     return {
-      id: expectDrawingToolId(preset.id, `${presetLabel}.id`),
+      id: expectStrokeToolId(preset.id, `${presetLabel}.id`),
       label: expectString(preset.label, `${presetLabel}.label`),
       size: expectPositiveNumber(preset.size, `${presetLabel}.size`),
       opacity: expectUnitNumber(preset.opacity, `${presetLabel}.opacity`),
       hardness: expectUnitNumber(preset.hardness, `${presetLabel}.hardness`)
     };
   });
+}
+
+function expectStrokeToolId(value: unknown, label: string): DrawingToolPreset["id"] {
+  const tool = expectString(value, label);
+
+  if (!isStrokeToolId(tool)) {
+    throw new Error(`Invalid app configuration: ${label} must be a supported stroke tool.`);
+  }
+
+  return tool;
 }

@@ -5,6 +5,7 @@ import { loadDesktopAppConfig } from "./config/desktopConfig";
 import { registerIpc } from "./ipc/registerIpc";
 import { installAppMenu } from "./menu/appMenu";
 import { createImageGenerationPreferencesStore } from "./preferences/imageGenerationPreferencesStore";
+import { createDocumentStore } from "./project/documentStore";
 import { installContentSecurityPolicy } from "./security/contentSecurityPolicy";
 import { createApiKeyStore } from "./secret-store/apiKeyStore";
 import { createMainWindow } from "./windows/mainWindow";
@@ -31,7 +32,8 @@ app.whenReady().then(() => {
     preferencesStore: createImageGenerationPreferencesStore(
       app.getPath("userData"),
       () => requireAppConfig()
-    )
+    ),
+    documentStore: createDocumentStore(app.getPath("userData"), () => requireAppConfig())
   });
   createMainWindow(appConfig);
 

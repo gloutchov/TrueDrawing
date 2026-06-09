@@ -12,11 +12,40 @@ export function installAppMenu(config: AppConfig): void {
       submenu: [
         {
           label: "Nuovo",
-          enabled: false
+          accelerator: "CmdOrCtrl+N",
+          click: () => sendFileCommand("new")
         },
         {
           label: "Apri",
-          enabled: false
+          accelerator: "CmdOrCtrl+O",
+          click: () => sendFileCommand("open")
+        },
+        {
+          label: "Salva",
+          accelerator: "CmdOrCtrl+S",
+          click: () => sendFileCommand("save")
+        },
+        {
+          label: "Salva con nome...",
+          accelerator: "CmdOrCtrl+Shift+S",
+          click: () => sendFileCommand("save-as")
+        },
+        { type: "separator" },
+        {
+          label: "Esporta canvas PNG",
+          click: () => sendFileCommand("export-canvas-png")
+        },
+        {
+          label: "Esporta canvas WebP",
+          click: () => sendFileCommand("export-canvas-webp")
+        },
+        {
+          label: "Esporta immagine PNG",
+          click: () => sendFileCommand("export-image-png")
+        },
+        {
+          label: "Esporta immagine WebP",
+          click: () => sendFileCommand("export-image-webp")
         },
         {
           label: "Chiudi",
@@ -42,25 +71,64 @@ export function installAppMenu(config: AppConfig): void {
     {
       label: "Edit",
       submenu: [
-        { role: "undo" },
-        { role: "redo" },
+        {
+          label: "Undo",
+          accelerator: "CmdOrCtrl+Z",
+          click: () => sendEditCommand("undo")
+        },
+        {
+          label: "Redo",
+          accelerator: "CmdOrCtrl+Shift+Z",
+          click: () => sendEditCommand("redo")
+        },
         { type: "separator" },
-        { role: "cut" },
-        { role: "copy" },
-        { role: "paste" }
+        {
+          label: "Cut",
+          accelerator: "CmdOrCtrl+X",
+          click: () => sendEditCommand("cut")
+        },
+        {
+          label: "Copy",
+          accelerator: "CmdOrCtrl+C",
+          click: () => sendEditCommand("copy")
+        },
+        {
+          label: "Paste",
+          accelerator: "CmdOrCtrl+V",
+          click: () => sendEditCommand("paste")
+        }
       ]
     },
     {
       label: "View",
       submenu: [
-        { role: "reload" },
+        {
+          label: "Reload app",
+          role: "reload"
+        },
         { role: "toggleDevTools" },
         { type: "separator" },
-        { role: "resetZoom" },
-        { role: "zoomIn" },
-        { role: "zoomOut" },
+        {
+          label: "Reset canvas zoom",
+          accelerator: "CmdOrCtrl+0",
+          click: () => sendViewCommand("canvas-zoom-reset")
+        },
+        {
+          label: "Zoom canvas in",
+          accelerator: "CmdOrCtrl+=",
+          click: () => sendViewCommand("canvas-zoom-in")
+        },
+        {
+          label: "Zoom canvas out",
+          accelerator: "CmdOrCtrl+-",
+          click: () => sendViewCommand("canvas-zoom-out")
+        },
         { type: "separator" },
-        { role: "togglefullscreen" }
+        {
+          label: "Toggle fullscreen",
+          accelerator: process.platform === "darwin" ? "Ctrl+Command+F" : "F11",
+          click: () => toggleFocusedWindowFullscreen()
+        }
       ]
     },
     {
@@ -86,6 +154,34 @@ export function installAppMenu(config: AppConfig): void {
   }
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
+function sendFileCommand(command: string): void {
+  BrowserWindow.getAllWindows().forEach((window) => {
+    window.webContents.send("file:command", command);
+  });
+}
+
+function sendEditCommand(command: string): void {
+  BrowserWindow.getAllWindows().forEach((window) => {
+    window.webContents.send("edit:command", command);
+  });
+}
+
+function sendViewCommand(command: string): void {
+  BrowserWindow.getAllWindows().forEach((window) => {
+    window.webContents.send("view:command", command);
+  });
+}
+
+function toggleFocusedWindowFullscreen(): void {
+  const window = BrowserWindow.getFocusedWindow();
+
+  if (!window) {
+    return;
+  }
+
+  window.setFullScreen(!window.isFullScreen());
 }
 
 function showInfoWindow(config: AppConfig): void {

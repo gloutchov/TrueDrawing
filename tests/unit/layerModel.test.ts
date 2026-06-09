@@ -20,6 +20,7 @@ const stroke: DrawingStroke = {
   size: 8,
   opacity: 1,
   hardness: 0.9,
+  strokeStyle: "solid",
   points: [{ x: 1, y: 1, pressure: 0.5, timestamp: 1 }]
 };
 
