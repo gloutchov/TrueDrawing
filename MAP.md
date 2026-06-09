@@ -192,8 +192,8 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.7.0`.
-- Ultima milestone completata localmente: M7 - Salvataggio automatico, manuale, recupero ed export.
-- Stato milestone: chiusa localmente su `milestone/07-save-export`, pronta per push GitHub e CI; release GitHub rinviata secondo policy manuale.
+- Ultima milestone completata: M7 - Salvataggio automatico, manuale, recupero ed export.
+- Stato milestone: mergiata su `main` tramite PR #4, CI main verde; release GitHub rinviata secondo policy manuale.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
