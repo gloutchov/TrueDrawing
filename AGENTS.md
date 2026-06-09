@@ -4,9 +4,10 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone chiusa localmente: M7 - Salvataggio automatico, manuale, recupero ed export.
+- Ultima milestone completata: M7 - Salvataggio automatico, manuale, recupero ed export.
 - Versione corrente: `0.7.0`.
-- Branch milestone corrente: `milestone/07-save-export`.
+- Ultimo branch milestone: `milestone/07-save-export`, mergiato su `main` tramite PR #4.
+- CI M7: branch, PR e `main` verdi.
 - Release GitHub M7: rinviata secondo policy manuale; `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS.
 
 ## Regole generali

@@ -681,16 +681,22 @@ Esito locale M7:
   - `npm run build`, successo.
 - Verifiche manuali:
   - feedback funzionale dell'utente completato sulle correzioni canvas/menu richieste;
-  - resta da provare in app Electron interattiva il flusso completo con dialog reali prima del merge finale.
+  - resta utile provare in app Electron interattiva il flusso completo con dialog reali prima della prossima release pubblica.
 - CI:
-  - da eseguire dopo push GitHub del branch milestone.
+  - push branch `milestone/07-save-export`: GitHub Actions run `27214601475`, successo;
+  - PR #4: GitHub Actions run `27215067905`, successo dopo rerun del job cancellato;
+  - main dopo merge: GitHub Actions run `27216934994`, successo.
+- GitHub:
+  - branch `milestone/07-save-export` pushato;
+  - tag `v0.7.0` pushato;
+  - PR #4 mergiata su `main` con merge commit `a22d9e86571880aca98d7c6a0f9a40449f1de91e`.
 - Release:
   - rinviata secondo policy manuale; `v0.4.0` resta l'unica release GitHub pubblicata con artifact Windows/macOS.
 - Rischi residui:
   - il flusso salvataggio/apertura/export deve ancora essere provato manualmente con dialog reali;
   - il recupero autosave carica il progetto in memoria senza associarlo al percorso autosave, quindi l'utente deve salvarlo esplicitamente per conservarlo come progetto ordinario.
 
-Stato: chiusa localmente; pronta per push GitHub, CI e merge. Release rinviata.
+Stato: completata e mergiata su `main`; release GitHub rinviata.
 
 ### M8 - Esperienza utente completa e rifinitura app
 
@@ -860,7 +866,7 @@ Stato: pianificata.
 | 2026-06-08 | M4 - Layer | 0.4.0 | `milestone/04-layers` | Completata | Layer completati con modello documento, compositing, pannello layer, correzione finestra info e workflow release diretto; CI main verde e release `v0.4.0` pubblicata con artifact Windows/macOS. |
 | 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | Completata | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati; generazione reale confermata dall'utente, PR #2 e CI main verdi. Release rinviata per risparmiare credito Actions. |
 | 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | Completata | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, PR #3 e CI main verdi. Release rinviata. |
-| 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Chiusa localmente | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; branch pronto per push GitHub e CI. |
+| 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Completata | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; PR #4 e CI main verdi; tag `v0.7.0` pushato; release rinviata. |
 
 ## Checklist di chiusura milestone
 
