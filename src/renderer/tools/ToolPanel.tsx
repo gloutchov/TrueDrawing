@@ -18,6 +18,8 @@ import {
   type LucideProps
 } from "lucide-react";
 
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type {
   DrawingToolId,
@@ -28,6 +30,7 @@ import type {
 
 type ToolPanelProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   settings: DrawingToolSettings;
   canUndo: boolean;
   canRedo: boolean;
@@ -45,28 +48,6 @@ type MenuOption<T extends string> = {
 };
 
 const iconSize = 18;
-const strokeToolOptions: MenuOption<StrokeToolId>[] = [
-  { id: "pencil", label: "Pencil", Icon: Pencil },
-  { id: "marker", label: "Marker", Icon: Highlighter },
-  { id: "brush", label: "Brush", Icon: Brush },
-  { id: "eraser", label: "Eraser", Icon: Eraser }
-];
-const lineToolOptions: MenuOption<DrawingToolId>[] = [
-  { id: "straight-line", label: "Straight line", Icon: Slash },
-  { id: "curved-line", label: "Curved line", Icon: Spline }
-];
-const shapeToolOptions: MenuOption<DrawingToolId>[] = [
-  { id: "rectangle", label: "Rectangle", Icon: Square },
-  { id: "ellipse", label: "Ellipse", Icon: Circle },
-  { id: "triangle", label: "Triangle", Icon: Triangle },
-  { id: "polygon", label: "Polygon", Icon: Pentagon }
-];
-const strokeStyleOptions: MenuOption<StrokeStyleId>[] = [
-  { id: "solid", label: "Solid stroke", Icon: Minus },
-  { id: "dashed", label: "Dashed stroke", Icon: DashedStrokeIcon },
-  { id: "dotted", label: "Dotted stroke", Icon: DottedStrokeIcon }
-];
-
 function DashedStrokeIcon({ size = iconSize }: LucideProps): JSX.Element {
   return (
     <span
@@ -97,6 +78,7 @@ function DottedStrokeIcon({ size = iconSize }: LucideProps): JSX.Element {
 
 export function ToolPanel({
   config,
+  locale,
   settings,
   canUndo,
   canRedo,
@@ -105,6 +87,27 @@ export function ToolPanel({
   onUndo,
   onRedo
 }: ToolPanelProps): JSX.Element {
+  const strokeToolOptions: MenuOption<StrokeToolId>[] = [
+    { id: "pencil", label: "Pencil", Icon: Pencil },
+    { id: "marker", label: t(locale, "marker"), Icon: Highlighter },
+    { id: "brush", label: t(locale, "brush"), Icon: Brush },
+    { id: "eraser", label: "Eraser", Icon: Eraser }
+  ];
+  const lineToolOptions: MenuOption<DrawingToolId>[] = [
+    { id: "straight-line", label: t(locale, "straightLine"), Icon: Slash },
+    { id: "curved-line", label: t(locale, "curvedLine"), Icon: Spline }
+  ];
+  const shapeToolOptions: MenuOption<DrawingToolId>[] = [
+    { id: "rectangle", label: "Rectangle", Icon: Square },
+    { id: "ellipse", label: "Ellipse", Icon: Circle },
+    { id: "triangle", label: "Triangle", Icon: Triangle },
+    { id: "polygon", label: "Polygon", Icon: Pentagon }
+  ];
+  const strokeStyleOptions: MenuOption<StrokeStyleId>[] = [
+    { id: "solid", label: "Solid stroke", Icon: Minus },
+    { id: "dashed", label: "Dashed stroke", Icon: DashedStrokeIcon },
+    { id: "dotted", label: "Dotted stroke", Icon: DottedStrokeIcon }
+  ];
   const [lastStrokeTool, setLastStrokeTool] = useState<StrokeToolId>("pencil");
   const [lastLineTool, setLastLineTool] = useState<DrawingToolId>("straight-line");
   const [lastShapeTool, setLastShapeTool] = useState<DrawingToolId>("rectangle");
@@ -129,15 +132,15 @@ export function ToolPanel({
     <div className="tool-panel">
       <button
         className={`icon-button${settings.tool === "selection" ? " is-active" : ""}`}
-        title="Selection"
-        aria-label="Selection"
+        title={t(locale, "selection")}
+        aria-label={t(locale, "selection")}
         aria-pressed={settings.tool === "selection"}
         onClick={() => onSelectTool("selection")}
       >
         <SquareDashedMousePointer size={iconSize} />
       </button>
       <ToolMenu
-        label="Stroke tools"
+        label={t(locale, "strokeTools")}
         active={strokeToolOptions.some((option) => option.id === settings.tool)}
         selected={selectedStrokeTool}
         options={strokeToolOptions}
@@ -147,7 +150,7 @@ export function ToolPanel({
         }}
       />
       <ToolMenu
-        label="Line tools"
+        label={t(locale, "lineTools")}
         active={lineToolOptions.some((option) => option.id === settings.tool)}
         selected={selectedLineTool}
         options={lineToolOptions}
@@ -157,7 +160,7 @@ export function ToolPanel({
         }}
       />
       <ToolMenu
-        label="Shape tools"
+        label={t(locale, "shapeTools")}
         active={shapeToolOptions.some((option) => option.id === settings.tool)}
         selected={selectedShapeTool}
         options={shapeToolOptions}
@@ -168,15 +171,15 @@ export function ToolPanel({
       />
       <button
         className={`icon-button${settings.tool === "fill" ? " is-active" : ""}`}
-        title="Fill"
-        aria-label="Fill"
+        title={t(locale, "fill")}
+        aria-label={t(locale, "fill")}
         aria-pressed={settings.tool === "fill"}
         onClick={() => onSelectTool("fill")}
       >
         <PaintBucket size={iconSize} />
       </button>
       <ToolMenu
-        label="Stroke style"
+        label={t(locale, "strokeStyle")}
         active={false}
         selected={selectedStrokeStyle}
         options={strokeStyleOptions}
@@ -202,7 +205,7 @@ export function ToolPanel({
         <Redo2 size={iconSize} />
       </button>
       <div className="tool-separator" />
-      <label className="color-control" title="Stroke color" aria-label="Stroke color">
+      <label className="color-control" title={t(locale, "strokeColor")} aria-label={t(locale, "strokeColor")}>
         <input
           type="color"
           value={settings.color}
@@ -210,7 +213,7 @@ export function ToolPanel({
           onChange={(event) => onChangeSettings({ color: event.currentTarget.value })}
         />
       </label>
-      <label className="tool-slider" title="Stroke size">
+      <label className="tool-slider" title={t(locale, "strokeSize")}>
         <span>S</span>
         <input
           type="range"
@@ -221,7 +224,7 @@ export function ToolPanel({
           onChange={(event) => onChangeSettings({ size: event.currentTarget.valueAsNumber })}
         />
       </label>
-      <label className="tool-slider" title="Opacity">
+      <label className="tool-slider" title={t(locale, "opacity")}>
         <span>O</span>
         <input
           type="range"
@@ -243,7 +246,7 @@ export function ToolPanel({
           onChange={(event) => onChangeSettings({ hardness: event.currentTarget.valueAsNumber })}
         />
       </label>
-      <div className="tool-readout" aria-label="Tool defaults">
+      <div className="tool-readout" aria-label={t(locale, "toolDefaults")}>
         <span
           className="tool-preview"
           style={{

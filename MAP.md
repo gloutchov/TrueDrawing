@@ -87,7 +87,7 @@ truedrawing/
 |   +-- renderer/
 |   |   |
 |   |   +-- app/
-|   |   |   Root React, layout, status bar, recovery dialog e routing interno.
+|   |   |   Root React, layout, preferenze UI non segrete, status bar, recovery dialog e routing interno.
 |   |   |
 |   |   +-- canvas/
 |   |   |   Canvas interattivo, coordinate Pointer Events e rendering tratti con strumenti selezionati.
@@ -105,7 +105,10 @@ truedrawing/
 |   |   |   Inspector realistico con preview immagine, stati vuoti/errore/generazione e metadati provider/modello.
 |   |   |
 |   |   +-- settings/
-|   |   |   Riepilogo impostazioni provider/modello/stile, dialog API key, stile immagine e redraw automatico.
+|   |   |   Riepilogo impostazioni provider/modello/stile, dialog API key, stile immagine, redraw automatico e interfaccia.
+|   |   |
+|   |   +-- i18n/
+|   |   |   Dizionario italiano/inglese per menu e controlli principali del renderer.
 |   |   |
 |   |   +-- styles/
 |   |       Stili globali renderer, focus visibile e layout responsive desktop.
@@ -191,7 +194,7 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.8.0`.
+- Versione: `0.8.1`.
 - Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app.
 - Stato milestone: mergiata su `main` tramite PR #5 con CI PR verde; tag `v0.8.0` pushato; release GitHub rinviata secondo policy manuale.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
@@ -211,10 +214,11 @@ truedrawing/
 - Conferme per eliminazione layer, rimozione API key, scarto autosave e chiusura con modifiche non salvate.
 - Undo/redo del documento presente con modello history testabile.
 - Inspector realistico con generazione OpenAI dal canvas composito e stati chiari per API key mancante, immagine assente, generazione ed errore.
-- Menu `File > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI.
+- Menu `File > Impostazioni > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI.
 - Storage API key tramite Windows Credential Manager, macOS Keychain o fallback cifrato, con chiamate OpenAI gestite dal main process.
 - Preferenze modello immagini, stile immagine e redraw automatico persistenti e separate dalla API key.
-- Menu `File > Stile...` e `File > Redraw automatico...` per controllare prompt e rigenerazione inspector.
+- Preferenze lingua interfaccia e tema chiaro/scuro persistenti in `localStorage`, con default di sistema.
+- Menu `File > Impostazioni > Stile...`, `File > Impostazioni > Redraw automatico...` e `File > Impostazioni > Interfaccia...` per controllare prompt, rigenerazione inspector, lingua e tema.
 - Salvataggio manuale `.tdraw` con sidecar `<nome>_canvas.png` e `<nome>_image.png`.
 - Salvataggio rapido vincolato ai percorsi progetto selezionati dall'utente nella sessione main.
 - Limiti payload IPC per immagini/prompt/clipboard e limite dimensione file progetto in apertura.

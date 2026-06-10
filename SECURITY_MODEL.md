@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione: `0.8.0`
+Versione: `0.8.1`
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -19,7 +19,7 @@ Questo documento descrive il modello di sicurezza previsto per True Drawing. Nel
 
 ### Segreti
 
-La API key viene inserita dall'utente dal menu `File > API Key...`.
+La API key viene inserita dall'utente dal menu `File > Impostazioni > API Key...`.
 Nella versione corrente la chiave viene salvata dal processo main nel backend piu' sicuro disponibile:
 
 - Windows Credential Manager su Windows;
@@ -32,7 +32,7 @@ Il renderer puo' interrogare solo lo stato della chiave e il nome del backend, n
 
 Il modello immagini, lo stile immagine e le impostazioni di redraw automatico scelti dall'utente vengono salvati come preferenze non segrete in `userData/preferences`. La preferenza modello viene validata come nome modello non vuoto con caratteri sicuri, ma non viene limitata alla lista dei modelli suggeriti, cosi' l'utente puo' inserire modelli OpenAI futuri. Lo stile puo' essere scelto dai preset configurati o scritto come testo personalizzato non segreto.
 
-Le preferenze UI non segrete, come lo zoom canvas persistente, vengono salvate dal renderer in `localStorage` usando una chiave configurata in `config/app.config.json`. Queste preferenze non contengono API key, percorsi progetto o contenuto del disegno.
+Le preferenze UI non segrete, come zoom canvas persistente, lingua interfaccia e tema chiaro/scuro, vengono salvate dal renderer in `localStorage` usando una chiave configurata in `config/app.config.json`. Queste preferenze non contengono API key, percorsi progetto o contenuto del disegno.
 
 ### IPC e hardening Electron
 
@@ -67,12 +67,12 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Allowlist dei percorsi progetto scelti dall'utente e limiti payload IPC/file progetto: completati.
 - Sanitizzazione nomi file generati con protezione da caratteri non validi, nomi riservati Windows e finali problematici: completata.
 - Clipboard testo/immagine e fullscreen finestra tramite IPC controllati: completati.
-- Preferenze UI non segrete tramite `localStorage` configurato: completate.
+- Preferenze UI non segrete tramite `localStorage` configurato, incluse zoom, lingua e tema: completate.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ## English
 
-Version: `0.8.0`
+Version: `0.8.1`
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -89,7 +89,7 @@ This document describes the planned security model for True Drawing. The current
 
 ### Secrets
 
-The API key is entered by the user through `File > API Key...`.
+The API key is entered by the user through `File > Settings > API Key...`.
 In the current version, the key is stored by the main process in the safest available backend:
 
 - Windows Credential Manager on Windows;
@@ -102,7 +102,7 @@ The renderer can query only key status and backend name; it cannot read the key.
 
 The user-selected image model, image style, and auto-redraw settings are stored as non-secret preferences under `userData/preferences`. The model preference is validated as a non-empty model name with safe characters, but it is not limited to the suggested model list, so users can enter future OpenAI models. The style may be selected from configured presets or entered as custom non-secret text.
 
-Non-secret UI preferences, such as persistent canvas zoom, are stored by the renderer in `localStorage` using a key configured in `config/app.config.json`. These preferences do not contain API keys, project paths, or drawing content.
+Non-secret UI preferences, such as persistent canvas zoom, interface language, and light/dark theme, are stored by the renderer in `localStorage` using a key configured in `config/app.config.json`. These preferences do not contain API keys, project paths, or drawing content.
 
 ### IPC and Electron Hardening
 
@@ -137,5 +137,5 @@ The project currently has no certificates or credentials for Windows code signin
 - User-selected project path allowlist and IPC/project-file payload limits: complete.
 - Generated filename sanitization covering invalid characters, Windows reserved names, and problematic trailing characters: complete.
 - Text/image clipboard and window fullscreen through controlled IPC: complete.
-- Non-secret UI preferences through configured `localStorage`: complete.
+- Non-secret UI preferences through configured `localStorage`, including zoom, language, and theme: complete.
 - Security tests for credential store, preferences, and CSP: complete.

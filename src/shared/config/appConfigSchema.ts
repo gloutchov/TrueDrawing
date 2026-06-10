@@ -24,6 +24,10 @@ export type AppConfig = {
   ui: {
     preferencesStorageKey: string;
     statusMessageDurationMs: number;
+    defaultLocaleMode: string;
+    availableLocaleModes: string[];
+    defaultThemeMode: string;
+    availableThemeModes: string[];
   };
   canvas: {
     defaultWidth: number;
@@ -99,6 +103,10 @@ export function validateAppConfig(value: unknown): AppConfig {
   const windowConfig = expectObject(config.window, "window");
   const layout = expectObject(config.layout, "layout");
   const ui = expectObject(config.ui, "ui");
+  const defaultLocaleMode = expectString(ui.defaultLocaleMode, "ui.defaultLocaleMode");
+  const availableLocaleModes = expectStringArray(ui.availableLocaleModes, "ui.availableLocaleModes");
+  const defaultThemeMode = expectString(ui.defaultThemeMode, "ui.defaultThemeMode");
+  const availableThemeModes = expectStringArray(ui.availableThemeModes, "ui.availableThemeModes");
   const canvas = expectObject(config.canvas, "canvas");
   const tools = expectObject(config.tools, "tools");
   const layers = expectObject(config.layers, "layers");
@@ -123,6 +131,14 @@ export function validateAppConfig(value: unknown): AppConfig {
     false
   );
   const files = expectObject(config.files, "files");
+
+  if (!availableLocaleModes.includes(defaultLocaleMode)) {
+    throw new Error("Invalid app configuration: ui.defaultLocaleMode must be listed in ui.availableLocaleModes.");
+  }
+
+  if (!availableThemeModes.includes(defaultThemeMode)) {
+    throw new Error("Invalid app configuration: ui.defaultThemeMode must be listed in ui.availableThemeModes.");
+  }
 
   if (!availableImageModels.includes(defaultImageModel)) {
     throw new Error("Invalid app configuration: imageGeneration.defaultModel must be listed in imageGeneration.availableModels.");
@@ -161,7 +177,11 @@ export function validateAppConfig(value: unknown): AppConfig {
     },
     ui: {
       preferencesStorageKey: expectString(ui.preferencesStorageKey, "ui.preferencesStorageKey"),
-      statusMessageDurationMs: expectPositiveNumber(ui.statusMessageDurationMs, "ui.statusMessageDurationMs")
+      statusMessageDurationMs: expectPositiveNumber(ui.statusMessageDurationMs, "ui.statusMessageDurationMs"),
+      defaultLocaleMode,
+      availableLocaleModes,
+      defaultThemeMode,
+      availableThemeModes
     },
     canvas: {
       defaultWidth: expectPositiveNumber(canvas.defaultWidth, "canvas.defaultWidth"),

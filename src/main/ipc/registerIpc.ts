@@ -21,6 +21,7 @@ const maxClipboardTextLength = 1024 * 1024;
 type RegisterIpcOptions = {
   getConfig: () => AppConfig;
   getRuntimeInfo: () => RuntimeInfo;
+  onUiLocaleChange: (locale: "it" | "en") => void;
   apiKeyStore: ApiKeyStore;
   preferencesStore: ImageGenerationPreferencesStore;
   documentStore: DocumentStore;
@@ -29,12 +30,20 @@ type RegisterIpcOptions = {
 export function registerIpc({
   getConfig,
   getRuntimeInfo,
+  onUiLocaleChange,
   apiKeyStore,
   preferencesStore,
   documentStore
 }: RegisterIpcOptions): void {
   ipcMain.handle("config:get", () => getConfig());
   ipcMain.handle("runtime:get", () => getRuntimeInfo());
+  ipcMain.handle("settings:ui-menu-locale:set", (_event, locale: unknown) => {
+    if (locale !== "it" && locale !== "en") {
+      throw new Error("Invalid UI locale.");
+    }
+
+    onUiLocaleChange(locale);
+  });
   ipcMain.handle("secrets:openai-key-status", () => ({
     configured: apiKeyStore.hasOpenAiApiKey(),
     backend: apiKeyStore.getStorageBackend()

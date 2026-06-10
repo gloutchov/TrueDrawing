@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, type PointerEvent } from "react";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { CanvasSelection } from "../../shared/document/selectionTypes";
 import { normalizeCanvasSelection } from "../../shared/document/selectionTypes";
 import {
@@ -16,6 +18,7 @@ import { renderCanvas } from "./canvasRenderer";
 
 type CanvasStageProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   document: DrawingDocument;
   toolSettings: DrawingToolSettings;
   selection: CanvasSelection | null;
@@ -37,6 +40,7 @@ type CanvasStageProps = {
 
 export function CanvasStage({
   config,
+  locale,
   document,
   toolSettings,
   selection,
@@ -254,7 +258,7 @@ export function CanvasStage({
   const normalizedSelection = selection ? normalizeCanvasSelection(selection) : null;
 
   return (
-    <section className="canvas-stage" aria-label="Drawing canvas">
+    <section className="canvas-stage" aria-label={t(locale, "drawingCanvas")}>
       <div className="canvas-viewport">
         <div
           className="canvas-transform"
@@ -295,14 +299,14 @@ export function CanvasStage({
           )}
         </div>
       </div>
-      <div className="canvas-zoom-controls" aria-label="Canvas zoom controls">
-        <button className="mini-button" type="button" title="Zoom out" aria-label="Zoom out" onClick={onZoomOut}>
+      <div className="canvas-zoom-controls" aria-label={t(locale, "zoomControls")}>
+        <button className="mini-button" type="button" title={t(locale, "zoomOut")} aria-label={t(locale, "zoomOut")} onClick={onZoomOut}>
           -
         </button>
-        <button className="mini-button canvas-zoom-readout" type="button" title="Reset zoom" onClick={onZoomReset}>
+        <button className="mini-button canvas-zoom-readout" type="button" title={t(locale, "resetZoom")} onClick={onZoomReset}>
           {Math.round(zoom * 100)}%
         </button>
-        <button className="mini-button" type="button" title="Zoom in" aria-label="Zoom in" onClick={onZoomIn}>
+        <button className="mini-button" type="button" title={t(locale, "zoomIn")} aria-label={t(locale, "zoomIn")} onClick={onZoomIn}>
           +
         </button>
       </div>
