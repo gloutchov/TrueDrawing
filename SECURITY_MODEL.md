@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione: `0.8.1`
+Versione: `0.8.2`
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -72,7 +72,7 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 
 ## English
 
-Version: `0.8.1`
+Version: `0.8.2`
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 

@@ -773,9 +773,9 @@ Esito locale M8:
 
 Stato: completata e mergiata su `main`; release GitHub rinviata.
 
-### Patch 0.8.1 - Preferenze lingua e tema interfaccia
+### Patch 0.8.2 - Preferenze lingua e tema interfaccia
 
-- Versione finale prevista: `0.8.1`.
+- Versione finale prevista: `0.8.2`.
 - Branch: `feature/ui-language-theme-preferences`.
 - Tipo incremento: `+0.0.1`.
 - Obiettivo: aggiungere preferenze UI per lingua e tema prima di procedere con packaging e beta.
@@ -943,7 +943,7 @@ Stato: pianificata.
 | 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | Completata | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, PR #3 e CI main verdi. Release rinviata. |
 | 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Completata | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; PR #4 e CI main verdi; tag `v0.7.0` pushato; release rinviata. |
 | 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; PR #5 e CI verdi; tag `v0.8.0` pushato; release rinviata. |
-| 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.1 | `feature/ui-language-theme-preferences` | In sviluppo | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`. |
+| 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Pronta per merge | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio. |
 
 ## Checklist di chiusura milestone
 
