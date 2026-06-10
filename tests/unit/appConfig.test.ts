@@ -23,6 +23,10 @@ describe("app configuration", () => {
       "surreale"
     ]);
     expect(config.ui.preferencesStorageKey).toBe("true-drawing-ui-preferences");
+    expect(config.ui.defaultLocaleMode).toBe("system");
+    expect(config.ui.availableLocaleModes).toEqual(["system", "it", "en"]);
+    expect(config.ui.defaultThemeMode).toBe("system");
+    expect(config.ui.availableThemeModes).toEqual(["system", "light", "dark"]);
     expect(config.tools.presets.map((preset) => preset.id)).toEqual([
       "pencil",
       "marker",
@@ -36,7 +40,14 @@ describe("app configuration", () => {
       app: { name: "True Drawing", defaultLocale: "it", autosaveIntervalMs: 30000, historyLimit: 100 },
       window: { width: 1280, height: 860, minWidth: 960, minHeight: 640 },
       layout: { topBarHeight: 46, statusBarHeight: 28, toolRailWidth: 58, sidePanelWidth: 320, workspacePadding: 28 },
-      ui: { preferencesStorageKey: "true-drawing-ui-preferences", statusMessageDurationMs: 6000 },
+      ui: {
+        preferencesStorageKey: "true-drawing-ui-preferences",
+        statusMessageDurationMs: 6000,
+        defaultLocaleMode: "system",
+        availableLocaleModes: ["system", "it", "en"],
+        defaultThemeMode: "system",
+        availableThemeModes: ["system", "light", "dark"]
+      },
       canvas: {
         defaultWidth: 2048,
         defaultHeight: 2048,

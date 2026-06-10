@@ -1,0 +1,162 @@
+import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPreferences";
+
+const translations = {
+  it: {
+    addLayer: "Aggiungi layer",
+    apiKey: "API Key",
+    apiKeyConfigured: "Configurata",
+    apiKeyMissing: "Mancante",
+    apiKeySettings: "Impostazioni OpenAI",
+    apiKeyStorage: "Storage segreto",
+    appSettings: "Impostazioni interfaccia",
+    autoRedraw: "Redraw automatico",
+    autoRedrawDelay: "Attesa prima del redraw, in secondi",
+    autoRedrawDescription: "Ridisegna automaticamente l'inspector quando il canvas resta fermo",
+    brush: "Pennello",
+    cancel: "Annulla",
+    close: "Chiudi",
+    curvedLine: "Linea curva",
+    dark: "Scuro",
+    deleteActiveLayer: "Elimina layer attivo",
+    drawingCanvas: "Canvas di disegno",
+    drawingTools: "Strumenti di disegno",
+    effectiveValue: "Valore applicato",
+    english: "Inglese",
+    exitFullscreen: "Esci da schermo intero",
+    fill: "Riempimento",
+    generateImage: "Genera immagine",
+    generating: "Generazione",
+    imageModel: "Modello immagine",
+    imageStyle: "Stile immagine",
+    inspector: "Inspector",
+    interfaceLanguage: "Lingua interfaccia",
+    interfaceTheme: "Tema interfaccia",
+    italian: "Italiano",
+    language: "Lingua",
+    layerName: "Nome layer",
+    layerOpacity: "Opacita' layer",
+    layers: "Layer",
+    light: "Chiaro",
+    lineTools: "Linee",
+    marker: "Pennarello",
+    modified: "Modificato",
+    model: "Modello",
+    noActiveLayer: "Nessun layer attivo",
+    noImageYet: "Nessuna immagine",
+    openApiKeySettings: "Apri impostazioni API key",
+    opacity: "Opacita'",
+    provider: "Provider",
+    remove: "Rimuovi",
+    save: "Salva",
+    saveModel: "Salva modello",
+    savedStateClean: "Salvato",
+    selection: "Selezione",
+    shapeTools: "Shape",
+    straightLine: "Linea retta",
+    storage: "Storage",
+    strokeColor: "Colore tratto",
+    strokeStyle: "Tipo tratto",
+    strokeTools: "Tratto",
+    strokeSize: "Dimensione tratto",
+    strokes: "tratti",
+    style: "Stile",
+    systemDefault: "Default di sistema",
+    theme: "Tema",
+    toolDefaults: "Default strumento",
+    visibleLayers: "layer visibili",
+    zoomControls: "Controlli zoom canvas",
+    zoomIn: "Aumenta zoom",
+    zoomOut: "Riduci zoom",
+    resetZoom: "Reset zoom"
+  },
+  en: {
+    addLayer: "Add layer",
+    apiKey: "API key",
+    apiKeyConfigured: "Configured",
+    apiKeyMissing: "Missing",
+    apiKeySettings: "OpenAI Settings",
+    apiKeyStorage: "Secret storage",
+    appSettings: "Interface settings",
+    autoRedraw: "Auto redraw",
+    autoRedrawDelay: "Delay before redraw, in seconds",
+    autoRedrawDescription: "Automatically redraw the inspector after the canvas stays idle",
+    brush: "Brush",
+    cancel: "Cancel",
+    close: "Close",
+    curvedLine: "Curved line",
+    dark: "Dark",
+    deleteActiveLayer: "Delete active layer",
+    drawingCanvas: "Drawing canvas",
+    drawingTools: "Drawing tools",
+    effectiveValue: "Applied value",
+    english: "English",
+    exitFullscreen: "Exit fullscreen",
+    fill: "Fill",
+    generateImage: "Generate image",
+    generating: "Generating",
+    imageModel: "Image model",
+    imageStyle: "Image style",
+    inspector: "Inspector",
+    interfaceLanguage: "Interface language",
+    interfaceTheme: "Interface theme",
+    italian: "Italian",
+    language: "Language",
+    layerName: "Layer name",
+    layerOpacity: "Layer opacity",
+    layers: "Layers",
+    light: "Light",
+    lineTools: "Line tools",
+    marker: "Marker",
+    modified: "Modified",
+    model: "Model",
+    noActiveLayer: "No active layer",
+    noImageYet: "No image yet",
+    openApiKeySettings: "Open API key settings",
+    opacity: "Opacity",
+    provider: "Provider",
+    remove: "Remove",
+    save: "Save",
+    saveModel: "Save model",
+    savedStateClean: "Saved state clean",
+    selection: "Selection",
+    shapeTools: "Shape tools",
+    straightLine: "Straight line",
+    storage: "Storage",
+    strokeColor: "Stroke color",
+    strokeStyle: "Stroke style",
+    strokeTools: "Stroke tools",
+    strokeSize: "Stroke size",
+    strokes: "strokes",
+    style: "Style",
+    systemDefault: "System default",
+    theme: "Theme",
+    toolDefaults: "Tool defaults",
+    visibleLayers: "layers visible",
+    zoomControls: "Canvas zoom controls",
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+    resetZoom: "Reset zoom"
+  }
+} as const;
+
+export type TranslationKey = keyof typeof translations.en;
+
+export function t(locale: EffectiveLocale, key: TranslationKey): string {
+  return translations[locale][key];
+}
+
+export function formatLocaleMode(locale: EffectiveLocale, mode: UiLocaleMode): string {
+  if (mode === "system") {
+    return t(locale, "systemDefault");
+  }
+
+  return mode === "it" ? t(locale, "italian") : t(locale, "english");
+}
+
+export function formatThemeMode(locale: EffectiveLocale, mode: UiThemeMode): string {
+  if (mode === "system") {
+    return t(locale, "systemDefault");
+  }
+
+  return mode === "light" ? t(locale, "light") : t(locale, "dark");
+}

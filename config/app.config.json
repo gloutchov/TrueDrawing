@@ -20,7 +20,19 @@
   },
   "ui": {
     "preferencesStorageKey": "true-drawing-ui-preferences",
-    "statusMessageDurationMs": 6000
+    "statusMessageDurationMs": 6000,
+    "defaultLocaleMode": "system",
+    "availableLocaleModes": [
+      "system",
+      "it",
+      "en"
+    ],
+    "defaultThemeMode": "system",
+    "availableThemeModes": [
+      "system",
+      "light",
+      "dark"
+    ]
   },
   "canvas": {
     "defaultWidth": 2048,

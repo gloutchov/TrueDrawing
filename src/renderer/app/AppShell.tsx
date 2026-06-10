@@ -15,9 +15,18 @@ import { LayerPanel } from "../layers/LayerPanel";
 import { ApiKeyDialog } from "../settings/ApiKeyDialog";
 import { AutoRedrawDialog } from "../settings/AutoRedrawDialog";
 import { ImageStyleDialog } from "../settings/ImageStyleDialog";
+import { InterfacePreferencesDialog } from "../settings/InterfacePreferencesDialog";
 import { SettingsSummary } from "../settings/SettingsSummary";
 import { ToolPanel } from "../tools/ToolPanel";
 import { createInitialToolSettings, settingsForSelectedTool } from "../tools/toolState";
+import {
+  readUiPreferences,
+  resolveEffectiveLocale,
+  resolveEffectiveTheme,
+  writeUiPreferences,
+  type UiPreferences
+} from "./uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import { createInitialDrawingDocument } from "../../shared/document/layerModel";
 import type { CanvasSelection } from "../../shared/document/selectionTypes";
@@ -75,9 +84,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [autoRedrawDelaySeconds, setAutoRedrawDelaySeconds] = useState(
     config.imageGeneration.autoRedrawDefaultDelaySeconds
   );
+  const [uiPreferences, setUiPreferences] = useState<UiPreferences>(() => readUiPreferences(config));
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [imageStyleDialogOpen, setImageStyleDialogOpen] = useState(false);
   const [autoRedrawDialogOpen, setAutoRedrawDialogOpen] = useState(false);
+  const [interfacePreferencesDialogOpen, setInterfacePreferencesDialogOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationErrorMessage, setGenerationErrorMessage] = useState<string | null>(null);
   const [projectName, setProjectName] = useState(config.files.defaultProjectName);
@@ -101,6 +112,8 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     "--side-panel-width": `${config.layout.sidePanelWidth}px`,
     "--workspace-padding": `${config.layout.workspacePadding}px`
   } as CSSProperties;
+  const effectiveLocale = resolveEffectiveLocale(uiPreferences.localeMode);
+  const effectiveTheme = resolveEffectiveTheme(uiPreferences.themeMode);
   const selectTool = useCallback((tool: DrawingToolId) => {
     if (tool !== "selection") {
       setMovablePastedStrokeId(null);
@@ -122,6 +135,9 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   }, []);
   const openAutoRedrawDialog = useCallback(() => {
     setAutoRedrawDialogOpen(true);
+  }, []);
+  const openInterfacePreferencesDialog = useCallback(() => {
+    setInterfacePreferencesDialogOpen(true);
   }, []);
   const generateRealisticImage = useCallback(async () => {
     setIsGenerating(true);
@@ -578,6 +594,34 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     window.trueDrawing.onOpenAutoRedrawSettings(openAutoRedrawDialog)
   ), [openAutoRedrawDialog]);
 
+  useEffect(() => (
+    window.trueDrawing.onSettingsCommand((command) => {
+      if (command === "interface") {
+        openInterfacePreferencesDialog();
+        return;
+      }
+
+      if (command === "api-key") {
+        openApiKeyDialog();
+        return;
+      }
+
+      if (command === "image-style") {
+        openImageStyleDialog();
+        return;
+      }
+
+      if (command === "auto-redraw") {
+        openAutoRedrawDialog();
+      }
+    })
+  ), [
+    openApiKeyDialog,
+    openAutoRedrawDialog,
+    openImageStyleDialog,
+    openInterfacePreferencesDialog
+  ]);
+
   useEffect(() => window.trueDrawing.onFileCommand(handleFileCommand), [handleFileCommand]);
 
   useEffect(() => window.trueDrawing.onEditCommand(handleEditCommand), [handleEditCommand]);
@@ -610,10 +654,25 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   }, []);
 
   useEffect(() => {
-    writeCanvasZoomPreference(config, canvasZoom);
+    const nextPreferences = {
+      ...uiPreferences,
+      canvasZoom
+    };
+
+    writeUiPreferences(config, nextPreferences);
   }, [
     canvasZoom,
-    config
+    config,
+    uiPreferences
+  ]);
+
+  useEffect(() => {
+    window.document.documentElement.lang = effectiveLocale;
+    window.document.documentElement.dataset.theme = effectiveTheme;
+    void window.trueDrawing.setUiMenuLocale(effectiveLocale);
+  }, [
+    effectiveLocale,
+    effectiveTheme
   ]);
 
   useEffect(() => {
@@ -815,11 +874,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
 
   const totalStrokeCount = countDocumentStrokes(document);
   const visibleLayerCount = document.layers.filter((layer) => layer.visible).length;
-  const activeToolLabel = formatToolLabel(toolSettings.tool);
-  const activeLayerName = activeLayer?.name ?? "No active layer";
+  const activeToolLabel = formatToolLabel(toolSettings.tool, effectiveLocale);
+  const activeLayerName = activeLayer?.name ?? t(effectiveLocale, "noActiveLayer");
 
   return (
-    <div className="app-shell" style={shellStyle}>
+    <div className="app-shell" data-theme={effectiveTheme} style={shellStyle}>
       <header className="top-bar">
         <div className="brand-lockup">
           <strong>{config.app.name}</strong>
@@ -847,18 +906,20 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
               });
             }}
           >
-            Exit fullscreen
+            {t(effectiveLocale, "exitFullscreen")}
           </button>
         )}
         <SettingsSummary
           config={config}
+          locale={effectiveLocale}
           imageGenerationModel={imageGenerationModel}
           imageGenerationStyle={imageGenerationStyle}
         />
       </header>
-      <aside className="tool-rail" aria-label="Drawing tools">
+      <aside className="tool-rail" aria-label={t(effectiveLocale, "drawingTools")}>
         <ToolPanel
           config={config}
+          locale={effectiveLocale}
           settings={toolSettings}
           canUndo={canUndo}
           canRedo={canRedo}
@@ -871,6 +932,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       <main className="workspace">
         <CanvasStage
           config={config}
+          locale={effectiveLocale}
           document={document}
           toolSettings={toolSettings}
           selection={canvasSelection}
@@ -894,6 +956,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       <aside className="right-panel" aria-label="Document panels">
         <InspectorPanel
           config={config}
+          locale={effectiveLocale}
           document={document}
           apiKeyConfigured={apiKeyConfigured}
           apiKeyBackend={apiKeyBackend}
@@ -908,6 +971,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         />
         <LayerPanel
           config={config}
+          locale={effectiveLocale}
           document={document}
           onAddLayer={addLayer}
           onRenameLayer={renameLayer}
@@ -920,15 +984,16 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       </aside>
       <footer className="status-bar" aria-live="polite">
         <span>{formatWorkspaceStatus(fileStatusMessage, isDirty, lastSavedAt)}</span>
-        <span>{isDirty ? "Modified" : "Saved state clean"}</span>
+        <span>{isDirty ? t(effectiveLocale, "modified") : t(effectiveLocale, "savedStateClean")}</span>
         <span>{activeToolLabel}</span>
         <span>{activeLayerName}</span>
-        <span>{visibleLayerCount}/{document.layers.length} layers visible</span>
-        <span>{totalStrokeCount} strokes</span>
+        <span>{visibleLayerCount}/{document.layers.length} {t(effectiveLocale, "visibleLayers")}</span>
+        <span>{totalStrokeCount} {t(effectiveLocale, "strokes")}</span>
         <span>{Math.round(canvasZoom * 100)}%</span>
       </footer>
       <ApiKeyDialog
         config={config}
+        locale={effectiveLocale}
         open={apiKeyDialogOpen}
         imageGenerationModel={imageGenerationModel}
         apiKeyBackend={apiKeyBackend}
@@ -938,6 +1003,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       />
       <ImageStyleDialog
         config={config}
+        locale={effectiveLocale}
         open={imageStyleDialogOpen}
         imageGenerationStyle={imageGenerationStyle}
         onClose={() => setImageStyleDialogOpen(false)}
@@ -945,6 +1011,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       />
       <AutoRedrawDialog
         config={config}
+        locale={effectiveLocale}
         open={autoRedrawDialogOpen}
         enabled={autoRedrawEnabled}
         delaySeconds={autoRedrawDelaySeconds}
@@ -953,6 +1020,17 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           setAutoRedrawEnabled(enabled);
           setAutoRedrawDelaySeconds(delaySeconds);
           lastAutoRedrawCanvasSignatureRef.current = null;
+        }}
+      />
+      <InterfacePreferencesDialog
+        config={config}
+        open={interfacePreferencesDialogOpen}
+        locale={effectiveLocale}
+        preferences={uiPreferences}
+        onClose={() => setInterfacePreferencesDialogOpen(false)}
+        onPreferencesChange={(preferences) => {
+          setUiPreferences(preferences);
+          writeUiPreferences(config, preferences);
         }}
       />
       {recoveryAutosave && (
@@ -1108,13 +1186,21 @@ function createCanvasGenerationSignature(document: DrawingProjectFile["document"
   });
 }
 
-function formatToolLabel(tool: DrawingToolId): string {
+function formatToolLabel(tool: DrawingToolId, locale: ReturnType<typeof resolveEffectiveLocale>): string {
+  if (tool === "selection") {
+    return t(locale, "selection");
+  }
+
+  if (tool === "fill") {
+    return t(locale, "fill");
+  }
+
   if (tool === "straight-line") {
-    return "Straight line";
+    return t(locale, "straightLine");
   }
 
   if (tool === "curved-line") {
-    return "Curved line";
+    return t(locale, "curvedLine");
   }
 
   if (tool === "clear-rect") {
@@ -1126,40 +1212,14 @@ function formatToolLabel(tool: DrawingToolId): string {
   )).join(" ");
 }
 
-type UiPreferences = {
-  canvasZoom?: number;
-};
-
 function readCanvasZoomPreference(config: AppConfig): number {
-  try {
-    const storedPreferences = JSON.parse(
-      window.localStorage.getItem(config.ui.preferencesStorageKey) ?? "{}"
-    ) as UiPreferences;
+  const storedPreferences = readUiPreferences(config);
 
-    if (typeof storedPreferences.canvasZoom !== "number") {
-      return 1;
-    }
-
-    return clampCanvasZoom(storedPreferences.canvasZoom, config.canvas.minZoom, config.canvas.maxZoom);
-  } catch {
+  if (typeof storedPreferences.canvasZoom !== "number") {
     return 1;
   }
-}
 
-function writeCanvasZoomPreference(config: AppConfig, canvasZoom: number): void {
-  try {
-    const storedPreferences = JSON.parse(
-      window.localStorage.getItem(config.ui.preferencesStorageKey) ?? "{}"
-    ) as UiPreferences;
-    const nextPreferences: UiPreferences = {
-      ...storedPreferences,
-      canvasZoom: clampCanvasZoom(canvasZoom, config.canvas.minZoom, config.canvas.maxZoom)
-    };
-
-    window.localStorage.setItem(config.ui.preferencesStorageKey, JSON.stringify(nextPreferences));
-  } catch {
-    // UI preferences are intentionally best-effort.
-  }
+  return clampCanvasZoom(storedPreferences.canvasZoom, config.canvas.minZoom, config.canvas.maxZoom);
 }
 
 async function handleEditableCommand(command: string): Promise<boolean> {
