@@ -77,7 +77,7 @@ truedrawing/
 |   |   |   Adapter OpenAI Images API e sanitizzazione errori.
 |   |   |
 |   |   +-- project/
-|   |       Salvataggio `.tdraw`, sidecar canvas/immagine, autosave, recupero ed export tramite dialog nativi.
+|   |       Salvataggio `.tdraw`, sidecar canvas/immagine, autosave, recupero, export tramite dialog nativi e allowlist percorsi scelti dall'utente.
 |   |
 |   +-- preload/
 |   |   |
@@ -87,13 +87,13 @@ truedrawing/
 |   +-- renderer/
 |   |   |
 |   |   +-- app/
-|   |   |   Root React, layout e routing interno.
+|   |   |   Root React, layout, status bar, recovery dialog e routing interno.
 |   |   |
 |   |   +-- canvas/
 |   |   |   Canvas interattivo, coordinate Pointer Events e rendering tratti con strumenti selezionati.
 |   |   |
 |   |   +-- tools/
-|   |   |   Toolbar, preset strumenti, controlli colore/size/opacita'/hardness e stato tool.
+|   |   |   Toolbar, menu strumenti, preset, controlli colore/size/opacita'/hardness e stato tool.
 |   |   |
 |   |   +-- layers/
 |   |   |   Pannello layer con creazione, rinomina, visibilita', opacita', riordino e cancellazione protetta.
@@ -102,13 +102,13 @@ truedrawing/
 |   |   |   Hook renderer per undo/redo del documento di disegno.
 |   |   |
 |   |   +-- inspector/
-|   |   |   Inspector realistico con preview immagine, stati generazione e metadati provider/modello.
+|   |   |   Inspector realistico con preview immagine, stati vuoti/errore/generazione e metadati provider/modello.
 |   |   |
 |   |   +-- settings/
-|   |   |   Riepilogo impostazioni provider/modello e dialog API key.
+|   |   |   Riepilogo impostazioni provider/modello/stile, dialog API key, stile immagine e redraw automatico.
 |   |   |
 |   |   +-- styles/
-|   |       Stili globali renderer.
+|   |       Stili globali renderer, focus visibile e layout responsive desktop.
 |   |
 |   +-- shared/
 |   |   |
@@ -139,7 +139,7 @@ truedrawing/
 +-- config/
 |   |
 |   +-- app.config.json
-|       Parametri modificabili da utenti skilled e sviluppatori. Non contiene segreti.
+|       Parametri modificabili da utenti skilled e sviluppatori, inclusi default UI non segreti. Non contiene segreti.
 |
 +-- tests/
 |   |
@@ -157,7 +157,7 @@ truedrawing/
 |       |   CI: installazione dipendenze, documenti obbligatori, lint, test e build.
 |       |
 |       +-- release.yml
-|           Release manuale: build Windows/macOS e upload diretto degli asset sulla release GitHub quando richiesto.
+|           Release manuale: build Windows/macOS e upload diretto degli asset non firmati sulla release GitHub quando richiesto.
 |
 +-- README.md
 |   Descrizione progetto in italiano e inglese.
@@ -191,9 +191,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.7.0`.
-- Ultima milestone completata: M7 - Salvataggio automatico, manuale, recupero ed export.
-- Stato milestone: mergiata su `main` tramite PR #4, CI main verde; release GitHub rinviata secondo policy manuale.
+- Versione: `0.8.0`.
+- Ultima milestone completata localmente: M8 - Esperienza utente completa e rifinitura app.
+- Stato milestone: branch `milestone/08-ux-polish` in lavorazione; verifica locale lint/test/build verde; PR, CI GitHub, merge, tag e release non ancora completati.
+- Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
 - Canvas interattivo presente con Pointer Events, pressione normalizzata, smoothing e rendering locale.
@@ -202,15 +203,21 @@ truedrawing/
 - Strumento selezione rettangolare per cut/copy/paste canvas, paste spostabile finche' selezionato e shortcut `Ctrl/Cmd+X/C/V`.
 - Menu Edit collegato alla history del disegno, alla selezione canvas e alla clipboard testo/immagine tramite IPC controllati.
 - Zoom canvas con pulsanti, rotella e comandi View dedicati.
+- Zoom canvas persistente come preferenza UI non segreta in `localStorage`.
+- Status bar con stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom.
 - Inspector realistico proporzionale al canvas di disegno.
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.
 - Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
+- Conferme per eliminazione layer, rimozione API key, scarto autosave e chiusura con modifiche non salvate.
 - Undo/redo del documento presente con modello history testabile.
-- Inspector realistico con generazione OpenAI dal canvas composito.
+- Inspector realistico con generazione OpenAI dal canvas composito e stati chiari per API key mancante, immagine assente, generazione ed errore.
 - Menu `File > API Key...` per inserire, sostituire e rimuovere la chiave OpenAI.
 - Storage API key tramite Windows Credential Manager, macOS Keychain o fallback cifrato, con chiamate OpenAI gestite dal main process.
-- Preferenza modello immagini persistente e separata dalla API key.
+- Preferenze modello immagini, stile immagine e redraw automatico persistenti e separate dalla API key.
+- Menu `File > Stile...` e `File > Redraw automatico...` per controllare prompt e rigenerazione inspector.
 - Salvataggio manuale `.tdraw` con sidecar `<nome>_canvas.png` e `<nome>_image.png`.
+- Salvataggio rapido vincolato ai percorsi progetto selezionati dall'utente nella sessione main.
+- Limiti payload IPC per immagini/prompt/clipboard e limite dimensione file progetto in apertura.
 - Autosave temporizzato in `userData`, recupero ultimo autosave disponibile ed export PNG/WebP.
 - CSP e sandbox renderer configurati.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.

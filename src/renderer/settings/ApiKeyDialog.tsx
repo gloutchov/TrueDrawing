@@ -53,6 +53,7 @@ export function ApiKeyDialog({
       setApiKey("");
       onStatusChange(status.configured, status.backend);
       setSaveState({ status: "success", message: "API key saved." });
+      onClose();
     } catch (error: unknown) {
       setSaveState({
         status: "error",
@@ -62,6 +63,10 @@ export function ApiKeyDialog({
   };
 
   const clearApiKey = async () => {
+    if (!window.confirm("Remove the saved API key?")) {
+      return;
+    }
+
     setSaveState({ status: "saving" });
 
     try {
@@ -70,6 +75,7 @@ export function ApiKeyDialog({
       setApiKey("");
       onStatusChange(status.configured, status.backend);
       setSaveState({ status: "success", message: "API key removed." });
+      onClose();
     } catch (error: unknown) {
       setSaveState({
         status: "error",
@@ -86,6 +92,7 @@ export function ApiKeyDialog({
 
       onModelChange(preferences.model);
       setSaveState({ status: "success", message: "Image model saved." });
+      onClose();
     } catch (error: unknown) {
       setSaveState({
         status: "error",

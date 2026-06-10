@@ -22,6 +22,7 @@ describe("realistic image prompt", () => {
               size: 4,
               opacity: 1,
               hardness: 1,
+              strokeStyle: "solid",
               points: [{ x: 1, y: 2, pressure: 0.5, timestamp: 1 }]
             }
           ]
@@ -38,5 +39,8 @@ describe("realistic image prompt", () => {
 
     expect(buildRealisticImagePrompt(document)).toContain("Visible layers: 1. Total strokes: 1.");
     expect(buildRealisticImagePrompt(document)).toContain("Do not add text");
+    expect(buildRealisticImagePrompt(document, { imageStyle: "cartoon" })).toContain(
+      "Use this visual style: cartoon."
+    );
   });
 });
