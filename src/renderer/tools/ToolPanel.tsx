@@ -1,8 +1,7 @@
-import { useState, type ComponentType } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import {
   Brush,
   Circle,
-  Ellipsis,
   Eraser,
   Highlighter,
   Minus,
@@ -64,9 +63,37 @@ const shapeToolOptions: MenuOption<DrawingToolId>[] = [
 ];
 const strokeStyleOptions: MenuOption<StrokeStyleId>[] = [
   { id: "solid", label: "Solid stroke", Icon: Minus },
-  { id: "dashed", label: "Dashed stroke", Icon: Ellipsis },
-  { id: "dotted", label: "Dotted stroke", Icon: Circle }
+  { id: "dashed", label: "Dashed stroke", Icon: DashedStrokeIcon },
+  { id: "dotted", label: "Dotted stroke", Icon: DottedStrokeIcon }
 ];
+
+function DashedStrokeIcon({ size = iconSize }: LucideProps): JSX.Element {
+  return (
+    <span
+      className="stroke-style-icon stroke-style-icon--dashed"
+      aria-hidden="true"
+      style={{ width: size, height: size }}
+    >
+      <span />
+      <span />
+      <span />
+    </span>
+  );
+}
+
+function DottedStrokeIcon({ size = iconSize }: LucideProps): JSX.Element {
+  return (
+    <span
+      className="stroke-style-icon stroke-style-icon--dotted"
+      aria-hidden="true"
+      style={{ width: size, height: size }}
+    >
+      <span />
+      <span />
+      <span />
+    </span>
+  );
+}
 
 export function ToolPanel({
   config,
@@ -248,10 +275,38 @@ function ToolMenu<T extends string>({
   onSelect
 }: ToolMenuProps<T>): JSX.Element {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const SelectedIcon = selected.Icon;
 
+  useEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
+    const closeOnOutsidePointer = (event: PointerEvent) => {
+      if (menuRef.current?.contains(event.target as Node)) {
+        return;
+      }
+
+      setOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("pointerdown", closeOnOutsidePointer);
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      window.removeEventListener("pointerdown", closeOnOutsidePointer);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
   return (
-    <div className="tool-menu">
+    <div className="tool-menu" ref={menuRef}>
       <button
         className={`icon-button tool-menu-trigger${active ? " is-active" : ""}`}
         title={label}

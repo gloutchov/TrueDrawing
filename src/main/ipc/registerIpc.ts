@@ -14,6 +14,10 @@ import type {
   ProjectSaveRequest
 } from "../../shared/project/projectTypes";
 
+const maxImageDataUrlLength = 32 * 1024 * 1024;
+const maxPromptLength = 8000;
+const maxClipboardTextLength = 1024 * 1024;
+
 type RegisterIpcOptions = {
   getConfig: () => AppConfig;
   getRuntimeInfo: () => RuntimeInfo;
@@ -62,6 +66,29 @@ export function registerIpc({
     }
 
     return preferencesStore.setModel(model);
+  });
+  ipcMain.handle("preferences:image-generation:set-style", (_event, style: unknown) => {
+    if (typeof style !== "string") {
+      throw new Error("Invalid image style input.");
+    }
+
+    return preferencesStore.setStyle(style);
+  });
+  ipcMain.handle("preferences:image-generation:set-auto-redraw", (_event, options: unknown) => {
+    if (!options || typeof options !== "object") {
+      throw new Error("Invalid auto redraw preferences.");
+    }
+
+    const preferences = options as Partial<{
+      enabled: unknown;
+      delaySeconds: unknown;
+    }>;
+
+    if (typeof preferences.enabled !== "boolean" || typeof preferences.delaySeconds !== "number") {
+      throw new Error("Invalid auto redraw preferences.");
+    }
+
+    return preferencesStore.setAutoRedraw(preferences.enabled, preferences.delaySeconds);
   });
   ipcMain.handle("image-generation:generate-realistic", async (_event, request: unknown) => {
     const realisticImageRequest = validateRealisticImageRequest(request);
@@ -113,7 +140,7 @@ export function registerIpc({
     )
   ));
   ipcMain.handle("clipboard:write-image", (_event, dataUrl: unknown) => {
-    if (typeof dataUrl !== "string" || !isImageDataUrl(dataUrl)) {
+    if (typeof dataUrl !== "string" || !isImageDataUrl(dataUrl) || dataUrl.length > maxImageDataUrlLength) {
       throw new Error("Invalid clipboard image.");
     }
 
@@ -122,10 +149,20 @@ export function registerIpc({
   ipcMain.handle("clipboard:read-image", () => {
     const image = clipboard.readImage();
 
-    return image.isEmpty() ? null : image.toDataURL();
+    if (image.isEmpty()) {
+      return null;
+    }
+
+    const dataUrl = image.toDataURL();
+
+    if (dataUrl.length > maxImageDataUrlLength) {
+      throw new Error("Clipboard image is too large.");
+    }
+
+    return dataUrl;
   });
   ipcMain.handle("clipboard:write-text", (_event, text: unknown) => {
-    if (typeof text !== "string") {
+    if (typeof text !== "string" || text.length > maxClipboardTextLength) {
       throw new Error("Invalid clipboard text.");
     }
 
@@ -159,7 +196,11 @@ function validateRealisticImageRequest(value: unknown): RealisticImageRequest {
     throw new Error("Invalid image generation model.");
   }
 
-  if (typeof request.prompt !== "string" || request.prompt.trim().length === 0) {
+  if (
+    typeof request.prompt !== "string" ||
+    request.prompt.trim().length === 0 ||
+    request.prompt.length > maxPromptLength
+  ) {
     throw new Error("Invalid image generation request.");
   }
 
@@ -246,7 +287,7 @@ function validateProjectExportRequest(value: unknown): ProjectExportRequest {
 }
 
 function expectImageDataUrl(value: unknown, label: string): string {
-  if (typeof value !== "string" || !isImageDataUrl(value)) {
+  if (typeof value !== "string" || !isImageDataUrl(value) || value.length > maxImageDataUrlLength) {
     throw new Error(`Invalid ${label}.`);
   }
 

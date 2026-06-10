@@ -24,6 +24,8 @@ import type {
   ProjectSaveResult
 } from "../../shared/project/projectTypes";
 
+const maxProjectFileBytes = 16 * 1024 * 1024;
+
 export type DocumentStore = {
   saveProject: (
     request: ProjectSaveRequest,
@@ -44,9 +46,11 @@ export function createDocumentStore(
   userDataPath: string,
   getConfig: () => AppConfig
 ): DocumentStore {
+  const trustedProjectPaths = new Set<string>();
+
   return {
-    saveProject: (request, options) => saveProject(request, options, getConfig()),
-    openProject: (parentWindow) => openProject(parentWindow, getConfig()),
+    saveProject: (request, options) => saveProject(request, options, getConfig(), trustedProjectPaths),
+    openProject: (parentWindow) => openProject(parentWindow, getConfig(), trustedProjectPaths),
     autosaveProject: (request) => autosaveProject(userDataPath, request, getConfig()),
     listAutosaves: () => listAutosaves(userDataPath, getConfig()),
     loadAutosave: (id) => loadAutosave(userDataPath, id, getConfig()),
@@ -58,13 +62,12 @@ export function createDocumentStore(
 async function saveProject(
   request: ProjectSaveRequest,
   options: { showSaveDialog: boolean; parentWindow?: BrowserWindow | null },
-  config: AppConfig
+  config: AppConfig,
+  trustedProjectPaths: Set<string>
 ): Promise<ProjectSaveResult> {
   const savedAt = new Date().toISOString();
   const project = { ...request.project, savedAt };
-  const filePath = options.showSaveDialog || !request.filePath
-    ? await chooseProjectSavePath(project.name, config, options.parentWindow)
-    : request.filePath;
+  const filePath = await resolveProjectSavePath(request, options, project, config, trustedProjectPaths);
 
   if (!filePath) {
     return {
@@ -78,6 +81,7 @@ async function saveProject(
   const normalizedFilePath = ensureExtension(filePath, config.files.projectExtension);
 
   await writeProjectBundle(normalizedFilePath, project, request, config);
+  trustedProjectPaths.add(path.resolve(normalizedFilePath));
 
   return {
     canceled: false,
@@ -89,7 +93,8 @@ async function saveProject(
 
 async function openProject(
   parentWindow: BrowserWindow | null | undefined,
-  config: AppConfig
+  config: AppConfig,
+  trustedProjectPaths: Set<string>
 ): Promise<ProjectOpenResult> {
   const dialogOptions: OpenDialogOptions = {
     title: "Open True Drawing project",
@@ -110,7 +115,32 @@ async function openProject(
     };
   }
 
-  return loadProjectFromPath(result.filePaths[0]);
+  const openResult = await loadProjectFromPath(result.filePaths[0]);
+
+  trustedProjectPaths.add(path.resolve(result.filePaths[0]));
+
+  return openResult;
+}
+
+async function resolveProjectSavePath(
+  request: ProjectSaveRequest,
+  options: { showSaveDialog: boolean; parentWindow?: BrowserWindow | null },
+  project: DrawingProjectFile,
+  config: AppConfig,
+  trustedProjectPaths: Set<string>
+): Promise<string | null> {
+  if (options.showSaveDialog || !request.filePath) {
+    return chooseProjectSavePath(project.name, config, options.parentWindow);
+  }
+
+  const normalizedFilePath = ensureExtension(request.filePath, config.files.projectExtension);
+  const resolvedFilePath = path.resolve(normalizedFilePath);
+
+  if (!trustedProjectPaths.has(resolvedFilePath)) {
+    throw new Error("Project path was not selected by the user in this session.");
+  }
+
+  return normalizedFilePath;
 }
 
 async function autosaveProject(
@@ -236,7 +266,7 @@ async function chooseProjectSavePath(
 ): Promise<string | null> {
   const dialogOptions: SaveDialogOptions = {
     title: "Save True Drawing project",
-    defaultPath: `${projectName}${config.files.projectExtension}`,
+    defaultPath: `${sanitizeFileBaseName(projectName, config.files.defaultProjectName)}${config.files.projectExtension}`,
     filters: [
       { name: "True Drawing Project", extensions: [extensionWithoutDot(config.files.projectExtension)] }
     ]
@@ -275,6 +305,12 @@ async function loadProjectFromPath(filePath: string): Promise<ProjectOpenResult>
 }
 
 async function readProjectFile(filePath: string): Promise<DrawingProjectFile> {
+  const fileStats = await fs.stat(filePath);
+
+  if (fileStats.size > maxProjectFileBytes) {
+    throw new Error("Project file is too large.");
+  }
+
   return parseDrawingProjectJson(await fs.readFile(filePath, "utf8"));
 }
 

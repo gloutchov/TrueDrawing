@@ -26,6 +26,7 @@ True Drawing e' un'app locale per macOS e Windows che permette di disegnare su u
 - Salvataggio locale: file di progetto piu' export PNG/WebP per canvas e immagine realistica.
 - Packaging: electron-builder con build Windows e macOS.
 - CI/CD: GitHub Actions su repository privato con test e build su branch/PR/main; release artifact Windows/macOS tramite workflow manuale per risparmiare credito Actions nelle milestone intermedie.
+- Distribuzione: non sono disponibili credenziali per firma codice Windows, firma macOS o notarizzazione Apple; gli artifact GitHub saranno distribuiti non firmati e la documentazione deve indicare i possibili avvisi SmartScreen/Gatekeeper.
 
 ## Architettura e configurazione
 
@@ -63,6 +64,7 @@ True Drawing e' un'app locale per macOS e Windows che permette di disegnare su u
 - Branch di milestone: `milestone/<numero>-<slug>`, per esempio `milestone/01-foundation`.
 - Branch temporanei per fix interni alla milestone: `fix/<slug>` solo se necessario.
 - Stato release GitHub al 2026-06-09: solo `v0.4.0` risulta pubblicata con artifact Windows/macOS; le altre versioni intermedie restano tag/versioni di avanzamento o release rinviate.
+- Stato firma release: nessuna credenziale disponibile per firma codice Windows, firma macOS o notarizzazione Apple; le release GitHub devono essere documentate come non firmate finche' questa condizione non cambia.
 - Ogni milestone termina con:
   1. test e verifica manuale locale;
   2. aggiornamento versione;
@@ -729,7 +731,42 @@ Verifiche:
 - Screenshot QA su dimensioni finestra desktop comuni.
 - Test performance con documento grande.
 
-Stato: pianificata.
+Esito locale M8:
+
+- Branch usato: `milestone/08-ux-polish`.
+- Versione iniziale: `0.7.0`.
+- Versione finale prevista: `0.8.0`.
+- Implementazione:
+  - layout applicazione esteso con status bar configurabile;
+  - status bar con stato salvataggio, modifiche, tool attivo, layer attivo, conteggio layer/tratti e zoom;
+  - zoom canvas persistente come preferenza UI non segreta in `localStorage`;
+  - conferma chiusura finestra con modifiche non salvate tramite `beforeunload`;
+  - conferme per eliminazione layer, rimozione API key e scarto autosave;
+  - inspector realistico con stati espliciti per API key mancante, immagine assente, generazione in corso ed errore;
+  - menu `File > Stile...` con stili immagine predefiniti in ordine alfabetico e input personalizzato;
+  - menu `File > Redraw automatico...` con attivazione e tempo di inattivita' configurabile;
+  - redraw automatico inspector dopo modifiche canvas e pausa dell'utente, senza loop sulla sola immagine generata;
+  - hardening IPC/filesystem con allowlist percorsi progetto selezionati dall'utente, limiti payload e sanitizzazione nomi file generati;
+  - menu strumenti richiudibili con Escape o click esterno;
+  - focus visibile uniforme, layout top/status bar piu' robusto e lista layer scrollabile;
+  - nuovi parametri UI in `config/app.config.json` con validazione.
+- Test automatici locali:
+  - `npm run lint`, successo;
+  - `npm run test`, successo con 10 file e 34 test;
+  - `npm run build`, successo.
+- Verifiche ancora da completare:
+  - verifica manuale end-to-end in app Electron;
+  - eventuale QA screenshot/performance su documento grande;
+  - PR verso `main`, CI GitHub, merge, tag `v0.8.0`.
+- Release:
+  - non prevista automaticamente; da rinviare salvo richiesta esplicita secondo policy manuale;
+  - policy distribuzione non firmata documentata in `AGENTS.md`, `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `MAP.md` e `PLAN.md`.
+- Rischi residui:
+  - lo zoom persistente e' una preferenza locale best-effort: se `localStorage` viene cancellato, torna al default;
+  - la conferma `beforeunload` dipende dal comportamento della finestra Electron/piattaforma;
+  - resta utile testare manualmente salvataggio/apertura/export con dialog reali insieme al nuovo stato UX.
+
+Stato: completata localmente; chiusura GitHub da completare.
 
 ### M9 - Packaging, CI/CD e release cross-platform
 
@@ -748,8 +785,8 @@ Attivita':
   - packaging macOS;
   - artifact upload;
   - release da tag.
-- Configurare firma codice se certificati disponibili.
-- Configurare notarizzazione macOS se credenziali disponibili.
+- Mantenere disattivate firma codice Windows, firma macOS e notarizzazione Apple finche' non saranno disponibili credenziali dedicate.
+- Documentare nelle release GitHub che gli artifact Windows/macOS sono non firmati e possono attivare SmartScreen/Gatekeeper.
 - Generare changelog release.
 - Verificare installazione pacchetti prodotti.
 
@@ -757,6 +794,7 @@ Criteri di accettazione:
 
 - Ogni tag `vX.Y.Z` puo' generare una release scaricabile tramite workflow manuale.
 - Artifact Windows e macOS sono presenti nella release.
+- Le note di release e la documentazione indicano chiaramente che gli artifact sono non firmati, salvo disponibilita' futura di credenziali.
 - CI fallisce se test o build falliscono.
 - La procedura e' documentata in `AGENTS.md` e `README.md`.
 - `MAP.md` descrive la struttura finale dei moduli e dei workflow di build/release.
@@ -820,6 +858,7 @@ Attivita':
 - Congelare funzionalita' per la release.
 - Revisionare sicurezza e gestione segreti.
 - Revisionare packaging e installazione.
+- Mantenere distribuzione non firmata via GitHub oppure aggiornare piano e documenti se saranno disponibili credenziali ufficiali di firma/notarizzazione.
 - Rivalutare le deprecazioni npm residue introdotte da dipendenze transitive di packaging, in particolare `electron-builder`, `@electron/asar`, `@electron/get`, `electron-winstaller`, `temp`, `rimraf`, `glob`, `inflight` e `boolean`.
 - Aggiornare tutti i documenti finali.
 - Creare release finale con changelog.
@@ -828,6 +867,7 @@ Criteri di accettazione:
 
 - CI verde.
 - Release Windows e macOS scaricabili.
+- Release documentata come non firmata, salvo disponibilita' futura di credenziali ufficiali.
 - `npm ci --no-audit --no-fund` non mostra warning deprecated risolvibili tramite aggiornamenti diretti o sostituzioni sicure dei tool di packaging.
 - Documentazione finale completa.
 - `PLAN.md` aggiornato con milestone completata e rischi residui.
@@ -867,6 +907,7 @@ Stato: pianificata.
 | 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | Completata | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati; generazione reale confermata dall'utente, PR #2 e CI main verdi. Release rinviata per risparmiare credito Actions. |
 | 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | Completata | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, PR #3 e CI main verdi. Release rinviata. |
 | 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Completata | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; PR #4 e CI main verdi; tag `v0.7.0` pushato; release rinviata. |
+| 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata localmente | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; verifica manuale, PR/CI/merge/tag ancora da completare. |
 
 ## Checklist di chiusura milestone
 

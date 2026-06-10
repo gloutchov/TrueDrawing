@@ -142,12 +142,15 @@ function renderStroke(
   for (let index = 1; index < stroke.points.length; index += 1) {
     const previousPoint = stroke.points[index - 1];
     const point = stroke.points[index];
+    const segmentStart = index === 1
+      ? previousPoint
+      : midpointBetween(stroke.points[index - 2], previousPoint);
     const midpointX = (previousPoint.x + point.x) / 2;
     const midpointY = (previousPoint.y + point.y) / 2;
 
     context.lineWidth = strokeWidthForPressure(stroke.size, point.pressure, options);
     context.beginPath();
-    context.moveTo(previousPoint.x, previousPoint.y);
+    context.moveTo(segmentStart.x, segmentStart.y);
     context.quadraticCurveTo(previousPoint.x, previousPoint.y, midpointX, midpointY);
     context.stroke();
   }
@@ -267,16 +270,25 @@ function renderImageStroke(context: CanvasRenderingContext2D, stroke: DrawingStr
 
 function applyStrokeStyle(context: CanvasRenderingContext2D, stroke: DrawingStroke): void {
   if (stroke.strokeStyle === "dashed") {
-    context.setLineDash([stroke.size * 2, stroke.size]);
+    context.setLineDash([stroke.size * 2.2, stroke.size * 2]);
     return;
   }
 
   if (stroke.strokeStyle === "dotted") {
-    context.setLineDash([1, Math.max(2, stroke.size * 1.4)]);
+    context.setLineDash([1, Math.max(4, stroke.size * 2.4)]);
     return;
   }
 
   context.setLineDash([]);
+}
+
+function midpointBetween(firstPoint: DrawingPoint, secondPoint: DrawingPoint): DrawingPoint {
+  return {
+    x: (firstPoint.x + secondPoint.x) / 2,
+    y: (firstPoint.y + secondPoint.y) / 2,
+    pressure: secondPoint.pressure,
+    timestamp: secondPoint.timestamp
+  };
 }
 
 function isGeometryTool(tool: DrawingStroke["tool"]): boolean {

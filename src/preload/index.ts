@@ -38,6 +38,18 @@ const api = {
   setImageGenerationModel: (model: string): Promise<ImageGenerationPreferences> => (
     ipcRenderer.invoke("preferences:image-generation:set-model", model) as Promise<ImageGenerationPreferences>
   ),
+  setImageGenerationStyle: (style: string): Promise<ImageGenerationPreferences> => (
+    ipcRenderer.invoke("preferences:image-generation:set-style", style) as Promise<ImageGenerationPreferences>
+  ),
+  setImageGenerationAutoRedraw: (
+    enabled: boolean,
+    delaySeconds: number
+  ): Promise<ImageGenerationPreferences> => (
+    ipcRenderer.invoke("preferences:image-generation:set-auto-redraw", {
+      enabled,
+      delaySeconds
+    }) as Promise<ImageGenerationPreferences>
+  ),
   generateRealisticImage: (request: RealisticImageRequest): Promise<RealisticImageResult> => (
     ipcRenderer.invoke("image-generation:generate-realistic", request) as Promise<RealisticImageResult>
   ),
@@ -90,6 +102,24 @@ const api = {
 
     return () => {
       ipcRenderer.off("settings:open-api-key", listener);
+    };
+  },
+  onOpenImageStyleSettings: (callback: () => void): (() => void) => {
+    const listener = () => callback();
+
+    ipcRenderer.on("settings:open-image-style", listener);
+
+    return () => {
+      ipcRenderer.off("settings:open-image-style", listener);
+    };
+  },
+  onOpenAutoRedrawSettings: (callback: () => void): (() => void) => {
+    const listener = () => callback();
+
+    ipcRenderer.on("settings:open-auto-redraw", listener);
+
+    return () => {
+      ipcRenderer.off("settings:open-auto-redraw", listener);
     };
   },
   onFileCommand: (callback: (command: string) => void): (() => void) => {

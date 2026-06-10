@@ -61,4 +61,15 @@ describe("project model", () => {
       imageFileName: "Bad-- Name_image.png"
     });
   });
+
+  it("falls back for reserved or empty generated file names", () => {
+    expect(createProjectSidecarFileNames("CON", config)).toEqual({
+      canvasFileName: "Untitled Drawing_canvas.png",
+      imageFileName: "Untitled Drawing_image.png"
+    });
+    expect(createProjectSidecarFileNames("... ", config)).toEqual({
+      canvasFileName: "Untitled Drawing_canvas.png",
+      imageFileName: "Untitled Drawing_image.png"
+    });
+  });
 });

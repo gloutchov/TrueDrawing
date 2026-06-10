@@ -70,13 +70,22 @@ export function sanitizeFileBaseName(value: string, fallbackName: string): strin
     .map((character) => (isUnsafeFileNameCharacter(character) ? "-" : character))
     .join("")
     .replace(/\s+/g, " ")
+    .replace(/[. ]+$/u, "")
     .trim();
 
-  return sanitized.length > 0 ? sanitized : fallbackName;
+  if (sanitized.length === 0 || isReservedWindowsFileName(sanitized)) {
+    return fallbackName;
+  }
+
+  return sanitized;
 }
 
 function isUnsafeFileNameCharacter(character: string): boolean {
   return character.charCodeAt(0) < 32 || '<>:"/\\|?*'.includes(character);
+}
+
+function isReservedWindowsFileName(fileName: string): boolean {
+  return /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\..*)?$/iu.test(fileName);
 }
 
 export function ensureExtension(filePath: string, extension: string): string {
