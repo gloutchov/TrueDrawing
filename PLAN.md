@@ -798,11 +798,37 @@ Criteri di accettazione:
 
 Verifiche:
 
-- Test automatici.
-- Lint e build.
-- Verifica manuale del dialog interfaccia e dei cambi tema/lingua.
+- `npm run lint`, successo.
+- `npm run test`, successo con 10 file e 34 test.
+- `npm run build`, successo.
+- `git diff --check`, successo.
+- Verifica manuale del dialog interfaccia, cambio lingua/tema, menu nativo, rimozione voce duplicata `Chiudi` e comportamento `npm run dev`.
 
-Stato: in sviluppo.
+Esito patch 0.8.2:
+
+- Branch usato: `feature/ui-language-theme-preferences`.
+- Versione iniziale: `0.8.0`.
+- Versione finale: `0.8.2`.
+- Implementazione:
+  - interfaccia bilingue italiano/inglese per controlli principali e menu nativo Electron;
+  - preferenza lingua fra default di sistema, italiano e inglese;
+  - preferenza tema fra default di sistema, chiaro e scuro;
+  - dialog `File > Impostazioni > Interfaccia...`;
+  - preferenze UI non segrete salvate in `localStorage`;
+  - documentazione utente aggiornata in italiano e inglese;
+  - rimozione della voce duplicata `Chiudi` dal menu File, mantenendo `Esci`;
+  - `npm run dev` aggiornato per ricompilare il main Electron prima dell'avvio.
+- CI:
+  - PR #7: GitHub Actions CI run `27283184712`, successo;
+  - `main`: GitHub Actions CI run `27283321985`, successo.
+- GitHub:
+  - PR #7 mergiata su `main` con merge commit `72c5dcbaba6d558f16436a7de20c8a67b0067c1d`;
+  - tag `v0.8.2` pushato;
+  - branch `feature/ui-language-theme-preferences` eliminato.
+- Release:
+  - rinviata secondo policy manuale; `v0.4.0` resta l'unica release GitHub pubblicata con artifact Windows/macOS.
+
+Stato: completata e mergiata su `main`; release GitHub rinviata.
 
 ### M9 - Packaging, CI/CD e release cross-platform
 
@@ -943,7 +969,7 @@ Stato: pianificata.
 | 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | Completata | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, PR #3 e CI main verdi. Release rinviata. |
 | 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Completata | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; PR #4 e CI main verdi; tag `v0.7.0` pushato; release rinviata. |
 | 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; PR #5 e CI verdi; tag `v0.8.0` pushato; release rinviata. |
-| 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Pronta per merge | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio. |
+| 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Completata | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio; PR #7 e CI verdi; tag `v0.8.2` pushato; branch eliminato; release rinviata. |
 
 ## Checklist di chiusura milestone
 
