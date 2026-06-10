@@ -194,7 +194,7 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.8.1`.
+- Versione: `0.8.2`.
 - Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app.
 - Stato milestone: mergiata su `main` tramite PR #5 con CI PR verde; tag `v0.8.0` pushato; release GitHub rinviata secondo policy manuale.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
