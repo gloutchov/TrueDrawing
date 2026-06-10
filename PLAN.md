@@ -754,10 +754,15 @@ Esito locale M8:
   - `npm run lint`, successo;
   - `npm run test`, successo con 10 file e 34 test;
   - `npm run build`, successo.
-- Verifiche ancora da completare:
-  - verifica manuale end-to-end in app Electron;
-  - eventuale QA screenshot/performance su documento grande;
-  - PR verso `main`, CI GitHub, merge, tag `v0.8.0`.
+- Verifiche manuali:
+  - feedback funzionale dell'utente completato sulle correzioni UX richieste durante M8;
+  - resta utile una prova end-to-end su build release prima della prossima release pubblica.
+- CI:
+  - PR #5: GitHub Actions CI run `27269984715`, successo.
+- GitHub:
+  - branch `milestone/08-ux-polish` pushato;
+  - PR #5 mergiata su `main` con merge commit `d55e18299144989e892f022dc20378dc5317aca7`;
+  - tag `v0.8.0` pushato.
 - Release:
   - non prevista automaticamente; da rinviare salvo richiesta esplicita secondo policy manuale;
   - policy distribuzione non firmata documentata in `AGENTS.md`, `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `MAP.md` e `PLAN.md`.
@@ -766,7 +771,7 @@ Esito locale M8:
   - la conferma `beforeunload` dipende dal comportamento della finestra Electron/piattaforma;
   - resta utile testare manualmente salvataggio/apertura/export con dialog reali insieme al nuovo stato UX.
 
-Stato: completata localmente; chiusura GitHub da completare.
+Stato: completata e mergiata su `main`; release GitHub rinviata.
 
 ### M9 - Packaging, CI/CD e release cross-platform
 
@@ -907,7 +912,7 @@ Stato: pianificata.
 | 2026-06-08 | M5 - Inspector realistico e generazione immagine | 0.5.0 | `milestone/05-realistic-inspector` | Completata | Inspector realistico, menu API key, storage cifrato locale, adapter OpenAI e test unitari verificati; generazione reale confermata dall'utente, PR #2 e CI main verdi. Release rinviata per risparmiare credito Actions. |
 | 2026-06-08 | M6 - Sicurezza, API key e modello dei segreti | 0.6.0 | `milestone/06-security-secrets` | Completata | Keychain/Credential Manager, preferenza modello immagini libera, CSP, sandbox renderer, padding export e test sicurezza verificati localmente; verifica manuale confermata, PR #3 e CI main verdi. Release rinviata. |
 | 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Completata | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; PR #4 e CI main verdi; tag `v0.7.0` pushato; release rinviata. |
-| 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata localmente | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; verifica manuale, PR/CI/merge/tag ancora da completare. |
+| 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; PR #5 e CI verdi; tag `v0.8.0` pushato; release rinviata. |
 
 ## Checklist di chiusura milestone
 
