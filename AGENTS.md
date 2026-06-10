@@ -4,10 +4,10 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata localmente: M8 - Esperienza utente completa e rifinitura app.
+- Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app.
 - Versione corrente: `0.8.0`.
-- Branch milestone corrente: `milestone/08-ux-polish`.
-- Verifica M8: `npm run lint`, `npm run test` e `npm run build` verdi in locale; CI GitHub non ancora verificata.
+- Ultimo branch milestone: `milestone/08-ux-polish`, mergiato su `main` tramite PR #5.
+- CI M8: PR #5 verde con GitHub Actions run `27269984715`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - Release GitHub M8: non prevista automaticamente; `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 

@@ -192,8 +192,8 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.8.0`.
-- Ultima milestone completata localmente: M8 - Esperienza utente completa e rifinitura app.
-- Stato milestone: branch `milestone/08-ux-polish` in lavorazione; verifica locale lint/test/build verde; PR, CI GitHub, merge, tag e release non ancora completati.
+- Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app.
+- Stato milestone: mergiata su `main` tramite PR #5 con CI PR verde; tag `v0.8.0` pushato; release GitHub rinviata secondo policy manuale.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
