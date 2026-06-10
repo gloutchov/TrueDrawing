@@ -13,9 +13,14 @@
   },
   "layout": {
     "topBarHeight": 46,
+    "statusBarHeight": 28,
     "toolRailWidth": 76,
     "sidePanelWidth": 320,
     "workspacePadding": 28
+  },
+  "ui": {
+    "preferencesStorageKey": "true-drawing-ui-preferences",
+    "statusMessageDurationMs": 6000
   },
   "canvas": {
     "defaultWidth": 2048,
@@ -103,6 +108,22 @@
       "gpt-image-1",
       "gpt-image-1-mini"
     ],
+    "defaultStyle": "realistica",
+    "availableStyles": [
+      "acquerello",
+      "cartoon",
+      "infantile",
+      "olio",
+      "realistica",
+      "surreale"
+    ],
+    "autoRedrawDefaultEnabled": false,
+    "autoRedrawDefaultDelaySeconds": 5,
+    "autoRedrawDelayRange": {
+      "min": 1,
+      "max": 120,
+      "step": 1
+    },
     "defaultSize": "1024x1024",
     "defaultQuality": "auto",
     "canvasPaddingRatio": 0.08,

@@ -13,6 +13,8 @@ import { useDrawingDocumentHistory } from "../history/useDrawingDocumentHistory"
 import { InspectorPanel } from "../inspector/InspectorPanel";
 import { LayerPanel } from "../layers/LayerPanel";
 import { ApiKeyDialog } from "../settings/ApiKeyDialog";
+import { AutoRedrawDialog } from "../settings/AutoRedrawDialog";
+import { ImageStyleDialog } from "../settings/ImageStyleDialog";
 import { SettingsSummary } from "../settings/SettingsSummary";
 import { ToolPanel } from "../tools/ToolPanel";
 import { createInitialToolSettings, settingsForSelectedTool } from "../tools/toolState";
@@ -44,6 +46,7 @@ type AppShellProps = {
 export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const {
     document,
+    activeLayer,
     canUndo,
     canRedo,
     appendStroke,
@@ -56,6 +59,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     setLayerOpacity,
     moveLayer,
     setRealisticImage,
+    commitDocumentUpdate,
     replaceDocument,
     undo,
     redo
@@ -66,7 +70,14 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [apiKeyConfigured, setApiKeyConfigured] = useState(false);
   const [apiKeyBackend, setApiKeyBackend] = useState("unknown");
   const [imageGenerationModel, setImageGenerationModel] = useState(config.imageGeneration.defaultModel);
+  const [imageGenerationStyle, setImageGenerationStyle] = useState(config.imageGeneration.defaultStyle);
+  const [autoRedrawEnabled, setAutoRedrawEnabled] = useState(config.imageGeneration.autoRedrawDefaultEnabled);
+  const [autoRedrawDelaySeconds, setAutoRedrawDelaySeconds] = useState(
+    config.imageGeneration.autoRedrawDefaultDelaySeconds
+  );
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
+  const [imageStyleDialogOpen, setImageStyleDialogOpen] = useState(false);
+  const [autoRedrawDialogOpen, setAutoRedrawDialogOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationErrorMessage, setGenerationErrorMessage] = useState<string | null>(null);
   const [projectName, setProjectName] = useState(config.files.defaultProjectName);
@@ -75,15 +86,17 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [isDirty, setIsDirty] = useState(false);
   const [fileStatusMessage, setFileStatusMessage] = useState("Not saved");
   const [recoveryAutosave, setRecoveryAutosave] = useState<ProjectAutosaveInfo | null>(null);
-  const [canvasZoom, setCanvasZoom] = useState(1);
+  const [canvasZoom, setCanvasZoom] = useState(() => readCanvasZoomPreference(config));
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [canvasSelection, setCanvasSelection] = useState<CanvasSelection | null>(null);
   const [movablePastedStrokeId, setMovablePastedStrokeId] = useState<string | null>(null);
   const initialDocumentSignatureRef = useRef<string | null>(null);
   const lastSavedDocumentSignatureRef = useRef<string | null>(null);
   const lastAutosavedDocumentSignatureRef = useRef<string | null>(null);
+  const lastAutoRedrawCanvasSignatureRef = useRef<string | null>(null);
   const shellStyle = {
     "--top-bar-height": `${config.layout.topBarHeight}px`,
+    "--status-bar-height": `${config.layout.statusBarHeight}px`,
     "--tool-rail-width": `${config.layout.toolRailWidth}px`,
     "--side-panel-width": `${config.layout.sidePanelWidth}px`,
     "--workspace-padding": `${config.layout.workspacePadding}px`
@@ -104,6 +117,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const openApiKeyDialog = useCallback(() => {
     setApiKeyDialogOpen(true);
   }, []);
+  const openImageStyleDialog = useCallback(() => {
+    setImageStyleDialogOpen(true);
+  }, []);
+  const openAutoRedrawDialog = useCallback(() => {
+    setAutoRedrawDialogOpen(true);
+  }, []);
   const generateRealisticImage = useCallback(async () => {
     setIsGenerating(true);
     setGenerationErrorMessage(null);
@@ -113,7 +132,9 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       const result = await window.trueDrawing.generateRealisticImage({
         canvasDataUrl,
         model: imageGenerationModel,
-        prompt: buildRealisticImagePrompt(document)
+        prompt: buildRealisticImagePrompt(document, {
+          imageStyle: imageGenerationStyle
+        })
       });
 
       setRealisticImage(result);
@@ -128,6 +149,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     config,
     document,
     imageGenerationModel,
+    imageGenerationStyle,
     setRealisticImage
   ]);
 
@@ -259,12 +281,32 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     initialDocumentSignatureRef.current = signature;
     lastSavedDocumentSignatureRef.current = signature;
     lastAutosavedDocumentSignatureRef.current = signature;
+    lastAutoRedrawCanvasSignatureRef.current = null;
   }, [
     config.files.defaultProjectName,
     config.layers.defaultLayerName,
     config.layers.defaultOpacity,
     isDirty,
     replaceDocument
+  ]);
+
+  const confirmDeleteLayer = useCallback((layerId: string) => {
+    const layer = document.layers.find((documentLayer) => documentLayer.id === layerId);
+
+    if (!layer) {
+      return;
+    }
+
+    if (!window.confirm(`Delete layer "${layer.name}"?`)) {
+      setFileStatusMessage("Layer delete canceled");
+      return;
+    }
+
+    deleteLayer(layerId);
+    setFileStatusMessage(`Deleted ${layer.name}`);
+  }, [
+    deleteLayer,
+    document.layers
   ]);
 
   const exportProjectTarget = useCallback(async (
@@ -430,11 +472,25 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           setMovablePastedStrokeId(pastedImage.strokeId);
           selectTool("selection");
         });
+        return;
+      }
+
+      if (command === "crop") {
+        cropCanvasToSelection(
+          canvasSelection,
+          config,
+          toolSettings,
+          commitDocumentUpdate,
+          setCanvasSelection,
+          setMovablePastedStrokeId,
+          setFileStatusMessage
+        );
       }
     });
   }, [
     appendStroke,
     canvasSelection,
+    commitDocumentUpdate,
     config,
     document,
     redo,
@@ -484,17 +540,28 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     window.trueDrawing.getImageGenerationPreferences().then((preferences) => {
       if (isMounted) {
         setImageGenerationModel(preferences.model);
+        setImageGenerationStyle(preferences.style);
+        setAutoRedrawEnabled(preferences.autoRedrawEnabled);
+        setAutoRedrawDelaySeconds(preferences.autoRedrawDelaySeconds);
       }
     }).catch(() => {
       if (isMounted) {
         setImageGenerationModel(config.imageGeneration.defaultModel);
+        setImageGenerationStyle(config.imageGeneration.defaultStyle);
+        setAutoRedrawEnabled(config.imageGeneration.autoRedrawDefaultEnabled);
+        setAutoRedrawDelaySeconds(config.imageGeneration.autoRedrawDefaultDelaySeconds);
       }
     });
 
     return () => {
       isMounted = false;
     };
-  }, [config.imageGeneration.defaultModel]);
+  }, [
+    config.imageGeneration.autoRedrawDefaultDelaySeconds,
+    config.imageGeneration.autoRedrawDefaultEnabled,
+    config.imageGeneration.defaultModel,
+    config.imageGeneration.defaultStyle
+  ]);
 
   const updateApiKeyStatus = useCallback((configured: boolean, backend: string) => {
     setApiKeyConfigured(configured);
@@ -502,6 +569,14 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   }, []);
 
   useEffect(() => window.trueDrawing.onOpenApiKeySettings(openApiKeyDialog), [openApiKeyDialog]);
+
+  useEffect(() => (
+    window.trueDrawing.onOpenImageStyleSettings(openImageStyleDialog)
+  ), [openImageStyleDialog]);
+
+  useEffect(() => (
+    window.trueDrawing.onOpenAutoRedrawSettings(openAutoRedrawDialog)
+  ), [openAutoRedrawDialog]);
 
   useEffect(() => window.trueDrawing.onFileCommand(handleFileCommand), [handleFileCommand]);
 
@@ -533,6 +608,47 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       setRecoveryAutosave(null);
     });
   }, []);
+
+  useEffect(() => {
+    writeCanvasZoomPreference(config, canvasZoom);
+  }, [
+    canvasZoom,
+    config
+  ]);
+
+  useEffect(() => {
+    if (!isTransientStatusMessage(fileStatusMessage)) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setFileStatusMessage(isDirty ? "Unsaved changes" : formatDocumentStatus("Not saved", lastSavedAt));
+    }, config.ui.statusMessageDurationMs);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [
+    config.ui.statusMessageDurationMs,
+    fileStatusMessage,
+    isDirty,
+    lastSavedAt
+  ]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!isDirty) {
+        return;
+      }
+
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isDirty]);
 
   useEffect(() => {
     const signature = JSON.stringify(document);
@@ -585,6 +701,33 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   ]);
 
   useEffect(() => {
+    if (!autoRedrawEnabled || !apiKeyConfigured || isGenerating) {
+      return undefined;
+    }
+
+    const canvasSignature = createCanvasGenerationSignature(document);
+
+    if (canvasSignature === lastAutoRedrawCanvasSignatureRef.current) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      lastAutoRedrawCanvasSignatureRef.current = canvasSignature;
+      setFileStatusMessage("Auto redraw started");
+      void generateRealisticImage();
+    }, autoRedrawDelaySeconds * 1000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [
+    apiKeyConfigured,
+    autoRedrawDelaySeconds,
+    autoRedrawEnabled,
+    document,
+    generateRealisticImage,
+    isGenerating
+  ]);
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (isEditableElement(window.document.activeElement)) {
         return;
@@ -613,6 +756,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       if (key === "y") {
         event.preventDefault();
         redo();
+        return;
+      }
+
+      if (key === "x" && event.shiftKey) {
+        event.preventDefault();
+        handleEditCommand("crop");
         return;
       }
 
@@ -664,6 +813,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     undo
   ]);
 
+  const totalStrokeCount = countDocumentStrokes(document);
+  const visibleLayerCount = document.layers.filter((layer) => layer.visible).length;
+  const activeToolLabel = formatToolLabel(toolSettings.tool);
+  const activeLayerName = activeLayer?.name ?? "No active layer";
+
   return (
     <div className="app-shell" style={shellStyle}>
       <header className="top-bar">
@@ -696,7 +850,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
             Exit fullscreen
           </button>
         )}
-        <SettingsSummary config={config} imageGenerationModel={imageGenerationModel} />
+        <SettingsSummary
+          config={config}
+          imageGenerationModel={imageGenerationModel}
+          imageGenerationStyle={imageGenerationStyle}
+        />
       </header>
       <aside className="tool-rail" aria-label="Drawing tools">
         <ToolPanel
@@ -740,6 +898,9 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           apiKeyConfigured={apiKeyConfigured}
           apiKeyBackend={apiKeyBackend}
           imageGenerationModel={imageGenerationModel}
+          imageGenerationStyle={imageGenerationStyle}
+          autoRedrawEnabled={autoRedrawEnabled}
+          autoRedrawDelaySeconds={autoRedrawDelaySeconds}
           isGenerating={isGenerating}
           errorMessage={generationErrorMessage}
           onGenerateImage={generateRealisticImage}
@@ -750,13 +911,22 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           document={document}
           onAddLayer={addLayer}
           onRenameLayer={renameLayer}
-          onDeleteLayer={deleteLayer}
+          onDeleteLayer={confirmDeleteLayer}
           onSelectLayer={selectLayer}
           onSetLayerVisibility={setLayerVisibility}
           onSetLayerOpacity={setLayerOpacity}
           onMoveLayer={moveLayer}
         />
       </aside>
+      <footer className="status-bar" aria-live="polite">
+        <span>{formatWorkspaceStatus(fileStatusMessage, isDirty, lastSavedAt)}</span>
+        <span>{isDirty ? "Modified" : "Saved state clean"}</span>
+        <span>{activeToolLabel}</span>
+        <span>{activeLayerName}</span>
+        <span>{visibleLayerCount}/{document.layers.length} layers visible</span>
+        <span>{totalStrokeCount} strokes</span>
+        <span>{Math.round(canvasZoom * 100)}%</span>
+      </footer>
       <ApiKeyDialog
         config={config}
         open={apiKeyDialogOpen}
@@ -765,6 +935,25 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         onClose={() => setApiKeyDialogOpen(false)}
         onStatusChange={updateApiKeyStatus}
         onModelChange={setImageGenerationModel}
+      />
+      <ImageStyleDialog
+        config={config}
+        open={imageStyleDialogOpen}
+        imageGenerationStyle={imageGenerationStyle}
+        onClose={() => setImageStyleDialogOpen(false)}
+        onStyleChange={setImageGenerationStyle}
+      />
+      <AutoRedrawDialog
+        config={config}
+        open={autoRedrawDialogOpen}
+        enabled={autoRedrawEnabled}
+        delaySeconds={autoRedrawDelaySeconds}
+        onClose={() => setAutoRedrawDialogOpen(false)}
+        onPreferencesChange={(enabled, delaySeconds) => {
+          setAutoRedrawEnabled(enabled);
+          setAutoRedrawDelaySeconds(delaySeconds);
+          lastAutoRedrawCanvasSignatureRef.current = null;
+        }}
       />
       {recoveryAutosave && (
         <RecoveryDialog
@@ -784,6 +973,10 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
             }
           }}
           onDiscard={async () => {
+            if (!window.confirm("Discard this autosave?")) {
+              return;
+            }
+
             try {
               await window.trueDrawing.clearAutosave(recoveryAutosave.id);
             } catch {
@@ -810,6 +1003,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     initialDocumentSignatureRef.current = signature;
     lastSavedDocumentSignatureRef.current = signature;
     lastAutosavedDocumentSignatureRef.current = signature;
+    lastAutoRedrawCanvasSignatureRef.current = null;
   }
 }
 
@@ -876,8 +1070,96 @@ function formatDocumentStatus(message: string, lastSavedAt: string | null): stri
   return message;
 }
 
+function formatWorkspaceStatus(message: string, isDirty: boolean, lastSavedAt: string | null): string {
+  if (isDirty && (message === "Not saved" || message.startsWith("Saved "))) {
+    return "Unsaved changes";
+  }
+
+  return formatDocumentStatus(message, lastSavedAt);
+}
+
+function isTransientStatusMessage(message: string): boolean {
+  return message === "Save canceled"
+    || message === "Open canceled"
+    || message === "Export canceled"
+    || message === "Export completed"
+    || message === "Selection copied"
+    || message === "Image pasted"
+    || message === "Layer delete canceled"
+    || message === "Crop canceled"
+    || message === "Canvas cropped"
+    || message === "Selection already fills canvas"
+    || message === "Auto redraw started"
+    || message.startsWith("Deleted ");
+}
+
 function clampCanvasZoom(value: number, minZoom: number, maxZoom: number): number {
   return Math.min(maxZoom, Math.max(minZoom, value));
+}
+
+function countDocumentStrokes(document: DrawingProjectFile["document"]): number {
+  return document.layers.reduce((count, layer) => count + layer.strokes.length, 0);
+}
+
+function createCanvasGenerationSignature(document: DrawingProjectFile["document"]): string {
+  return JSON.stringify({
+    activeLayerId: document.activeLayerId,
+    layers: document.layers
+  });
+}
+
+function formatToolLabel(tool: DrawingToolId): string {
+  if (tool === "straight-line") {
+    return "Straight line";
+  }
+
+  if (tool === "curved-line") {
+    return "Curved line";
+  }
+
+  if (tool === "clear-rect") {
+    return "Clear selection";
+  }
+
+  return tool.split("-").map((part) => (
+    `${part.charAt(0).toUpperCase()}${part.slice(1)}`
+  )).join(" ");
+}
+
+type UiPreferences = {
+  canvasZoom?: number;
+};
+
+function readCanvasZoomPreference(config: AppConfig): number {
+  try {
+    const storedPreferences = JSON.parse(
+      window.localStorage.getItem(config.ui.preferencesStorageKey) ?? "{}"
+    ) as UiPreferences;
+
+    if (typeof storedPreferences.canvasZoom !== "number") {
+      return 1;
+    }
+
+    return clampCanvasZoom(storedPreferences.canvasZoom, config.canvas.minZoom, config.canvas.maxZoom);
+  } catch {
+    return 1;
+  }
+}
+
+function writeCanvasZoomPreference(config: AppConfig, canvasZoom: number): void {
+  try {
+    const storedPreferences = JSON.parse(
+      window.localStorage.getItem(config.ui.preferencesStorageKey) ?? "{}"
+    ) as UiPreferences;
+    const nextPreferences: UiPreferences = {
+      ...storedPreferences,
+      canvasZoom: clampCanvasZoom(canvasZoom, config.canvas.minZoom, config.canvas.maxZoom)
+    };
+
+    window.localStorage.setItem(config.ui.preferencesStorageKey, JSON.stringify(nextPreferences));
+  } catch {
+    // UI preferences are intentionally best-effort.
+  }
 }
 
 async function handleEditableCommand(command: string): Promise<boolean> {
@@ -1011,6 +1293,98 @@ async function pasteClipboardImageToCanvas(
     setStatus(error instanceof Error ? error.message : "Paste failed");
     return null;
   }
+}
+
+function cropCanvasToSelection(
+  selection: CanvasSelection | null,
+  config: AppConfig,
+  toolSettings: DrawingToolSettings,
+  commitDocumentUpdate: (
+    updater: (document: DrawingProjectFile["document"]) => DrawingProjectFile["document"]
+  ) => void,
+  setSelection: (selection: CanvasSelection | null) => void,
+  setMovablePastedStrokeId: (strokeId: string | null) => void,
+  setStatus: (message: string) => void
+): void {
+  const cropBounds = selection
+    ? clampSelectionToCanvasBounds(selection, config.canvas.defaultWidth, config.canvas.defaultHeight)
+    : null;
+
+  if (!cropBounds) {
+    setStatus("No canvas selection");
+    return;
+  }
+
+  if (!window.confirm("Crop canvas to the current selection?")) {
+    setStatus("Crop canceled");
+    return;
+  }
+
+  const cropRectangles = createCropClearRectangles(
+    cropBounds,
+    config.canvas.defaultWidth,
+    config.canvas.defaultHeight
+  );
+
+  if (cropRectangles.length === 0) {
+    setStatus("Selection already fills canvas");
+    return;
+  }
+
+  commitDocumentUpdate((currentDocument) => ({
+    ...currentDocument,
+    layers: currentDocument.layers.map((layer) => ({
+      ...layer,
+      strokes: [
+        ...layer.strokes,
+        ...cropRectangles.map((rectangle) => createClearRectStroke(rectangle, toolSettings))
+      ]
+    }))
+  }));
+  setSelection(null);
+  setMovablePastedStrokeId(null);
+  setStatus("Canvas cropped");
+}
+
+function clampSelectionToCanvasBounds(
+  selection: CanvasSelection,
+  canvasWidth: number,
+  canvasHeight: number
+): CanvasSelection | null {
+  const normalizedSelection = normalizeCanvasSelection(selection);
+  const left = Math.min(canvasWidth, Math.max(0, normalizedSelection.x));
+  const top = Math.min(canvasHeight, Math.max(0, normalizedSelection.y));
+  const right = Math.min(canvasWidth, Math.max(left, normalizedSelection.x + normalizedSelection.width));
+  const bottom = Math.min(canvasHeight, Math.max(top, normalizedSelection.y + normalizedSelection.height));
+  const width = right - left;
+  const height = bottom - top;
+
+  if (width <= 0 || height <= 0) {
+    return null;
+  }
+
+  return {
+    x: left,
+    y: top,
+    width,
+    height
+  };
+}
+
+function createCropClearRectangles(
+  cropBounds: CanvasSelection,
+  canvasWidth: number,
+  canvasHeight: number
+): CanvasSelection[] {
+  const right = cropBounds.x + cropBounds.width;
+  const bottom = cropBounds.y + cropBounds.height;
+
+  return [
+    { x: 0, y: 0, width: canvasWidth, height: cropBounds.y },
+    { x: 0, y: bottom, width: canvasWidth, height: canvasHeight - bottom },
+    { x: 0, y: cropBounds.y, width: cropBounds.x, height: cropBounds.height },
+    { x: right, y: cropBounds.y, width: canvasWidth - right, height: cropBounds.height }
+  ].filter((rectangle) => rectangle.width > 0 && rectangle.height > 0);
 }
 
 type PastedCanvasImage = {

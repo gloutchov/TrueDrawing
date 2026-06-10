@@ -10,6 +10,9 @@ type InspectorPanelProps = {
   apiKeyConfigured: boolean;
   apiKeyBackend: string;
   imageGenerationModel: string;
+  imageGenerationStyle: string;
+  autoRedrawEnabled: boolean;
+  autoRedrawDelaySeconds: number;
   isGenerating: boolean;
   errorMessage: string | null;
   onGenerateImage: () => void;
@@ -22,6 +25,9 @@ export function InspectorPanel({
   apiKeyConfigured,
   apiKeyBackend,
   imageGenerationModel,
+  imageGenerationStyle,
+  autoRedrawEnabled,
+  autoRedrawDelaySeconds,
   isGenerating,
   errorMessage,
   onGenerateImage,
@@ -60,7 +66,11 @@ export function InspectorPanel({
           aspectRatio: `${config.canvas.defaultWidth} / ${config.canvas.defaultHeight}`
         }}
       >
-        <InspectorPreview realisticImage={realisticImage} isGenerating={isGenerating} />
+        <InspectorPreview
+          realisticImage={realisticImage}
+          isGenerating={isGenerating}
+          apiKeyConfigured={apiKeyConfigured}
+        />
       </div>
       {errorMessage && <p className="inspector-error">{errorMessage}</p>}
       <dl className="inspector-meta">
@@ -71,6 +81,14 @@ export function InspectorPanel({
         <div>
           <dt>Model</dt>
           <dd>{realisticImage?.model ?? imageGenerationModel}</dd>
+        </div>
+        <div>
+          <dt>Style</dt>
+          <dd>{imageGenerationStyle}</dd>
+        </div>
+        <div>
+          <dt>Auto redraw</dt>
+          <dd>{autoRedrawEnabled ? `${autoRedrawDelaySeconds}s` : "Off"}</dd>
         </div>
         <div>
           <dt>API key</dt>
@@ -108,18 +126,42 @@ function formatBackend(backend: string): string {
 type InspectorPreviewProps = {
   realisticImage: StoredRealisticImage | null;
   isGenerating: boolean;
+  apiKeyConfigured: boolean;
 };
 
-function InspectorPreview({ realisticImage, isGenerating }: InspectorPreviewProps): JSX.Element {
+function InspectorPreview({
+  realisticImage,
+  isGenerating,
+  apiKeyConfigured
+}: InspectorPreviewProps): JSX.Element {
   if (isGenerating) {
-    return <Loader2 className="spin-icon" size={34} />;
+    return (
+      <div className="inspector-empty">
+        <Loader2 className="spin-icon" size={34} />
+        <span>Generating</span>
+      </div>
+    );
   }
 
   if (realisticImage) {
     return <img src={realisticImage.dataUrl} alt="Generated realistic preview" />;
   }
 
-  return <Image size={34} />;
+  if (!apiKeyConfigured) {
+    return (
+      <div className="inspector-empty">
+        <KeyRound size={34} />
+        <span>API key missing</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="inspector-empty">
+      <Image size={34} />
+      <span>No image yet</span>
+    </div>
+  );
 }
 
 function formatGeneratedAt(generatedAt: string | undefined): string {

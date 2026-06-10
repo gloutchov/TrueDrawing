@@ -5,6 +5,9 @@ export type ApiKeyStatus = {
 
 export type ImageGenerationPreferences = {
   model: string;
+  style: string;
+  autoRedrawEnabled: boolean;
+  autoRedrawDelaySeconds: number;
 };
 
 export type RealisticImageRequest = {
@@ -22,7 +25,3 @@ export type RealisticImageResult = {
 };
 
 export type StoredRealisticImage = RealisticImageResult;
-
-export type ImageGenerationIpcError = {
-  message: string;
-};

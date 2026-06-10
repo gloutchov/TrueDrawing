@@ -61,6 +61,22 @@ export function installAppMenu(config: AppConfig): void {
             });
           }
         },
+        {
+          label: "Stile...",
+          click: () => {
+            BrowserWindow.getAllWindows().forEach((window) => {
+              window.webContents.send("settings:open-image-style");
+            });
+          }
+        },
+        {
+          label: "Redraw automatico...",
+          click: () => {
+            BrowserWindow.getAllWindows().forEach((window) => {
+              window.webContents.send("settings:open-auto-redraw");
+            });
+          }
+        },
         { type: "separator" },
         {
           label: "Exit",
@@ -96,18 +112,18 @@ export function installAppMenu(config: AppConfig): void {
           label: "Paste",
           accelerator: "CmdOrCtrl+V",
           click: () => sendEditCommand("paste")
+        },
+        { type: "separator" },
+        {
+          label: "Crop",
+          accelerator: "CmdOrCtrl+Shift+X",
+          click: () => sendEditCommand("crop")
         }
       ]
     },
     {
       label: "View",
       submenu: [
-        {
-          label: "Reload app",
-          role: "reload"
-        },
-        { role: "toggleDevTools" },
-        { type: "separator" },
         {
           label: "Reset canvas zoom",
           accelerator: "CmdOrCtrl+0",

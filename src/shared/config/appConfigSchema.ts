@@ -16,9 +16,14 @@ export type AppConfig = {
   };
   layout: {
     topBarHeight: number;
+    statusBarHeight: number;
     toolRailWidth: number;
     sidePanelWidth: number;
     workspacePadding: number;
+  };
+  ui: {
+    preferencesStorageKey: string;
+    statusMessageDurationMs: number;
   };
   canvas: {
     defaultWidth: number;
@@ -57,6 +62,11 @@ export type AppConfig = {
     baseUrl: string;
     defaultModel: string;
     availableModels: string[];
+    defaultStyle: string;
+    availableStyles: string[];
+    autoRedrawDefaultEnabled: boolean;
+    autoRedrawDefaultDelaySeconds: number;
+    autoRedrawDelayRange: NumberRange;
     defaultSize: string;
     defaultQuality: string;
     canvasPaddingRatio: number;
@@ -88,6 +98,7 @@ export function validateAppConfig(value: unknown): AppConfig {
   const app = expectObject(config.app, "app");
   const windowConfig = expectObject(config.window, "window");
   const layout = expectObject(config.layout, "layout");
+  const ui = expectObject(config.ui, "ui");
   const canvas = expectObject(config.canvas, "canvas");
   const tools = expectObject(config.tools, "tools");
   const layers = expectObject(config.layers, "layers");
@@ -97,10 +108,35 @@ export function validateAppConfig(value: unknown): AppConfig {
     imageGeneration.availableModels,
     "imageGeneration.availableModels"
   );
+  const defaultImageStyle = expectString(imageGeneration.defaultStyle, "imageGeneration.defaultStyle");
+  const availableImageStyles = expectStringArray(
+    imageGeneration.availableStyles,
+    "imageGeneration.availableStyles"
+  );
+  const autoRedrawDefaultDelaySeconds = expectPositiveNumber(
+    imageGeneration.autoRedrawDefaultDelaySeconds,
+    "imageGeneration.autoRedrawDefaultDelaySeconds"
+  );
+  const autoRedrawDelayRange = expectNumberRange(
+    imageGeneration.autoRedrawDelayRange,
+    "imageGeneration.autoRedrawDelayRange",
+    false
+  );
   const files = expectObject(config.files, "files");
 
   if (!availableImageModels.includes(defaultImageModel)) {
     throw new Error("Invalid app configuration: imageGeneration.defaultModel must be listed in imageGeneration.availableModels.");
+  }
+
+  if (!availableImageStyles.includes(defaultImageStyle)) {
+    throw new Error("Invalid app configuration: imageGeneration.defaultStyle must be listed in imageGeneration.availableStyles.");
+  }
+
+  if (
+    autoRedrawDefaultDelaySeconds < autoRedrawDelayRange.min ||
+    autoRedrawDefaultDelaySeconds > autoRedrawDelayRange.max
+  ) {
+    throw new Error("Invalid app configuration: imageGeneration.autoRedrawDefaultDelaySeconds must be within imageGeneration.autoRedrawDelayRange.");
   }
 
   return {
@@ -118,9 +154,14 @@ export function validateAppConfig(value: unknown): AppConfig {
     },
     layout: {
       topBarHeight: expectPositiveNumber(layout.topBarHeight, "layout.topBarHeight"),
+      statusBarHeight: expectPositiveNumber(layout.statusBarHeight, "layout.statusBarHeight"),
       toolRailWidth: expectPositiveNumber(layout.toolRailWidth, "layout.toolRailWidth"),
       sidePanelWidth: expectPositiveNumber(layout.sidePanelWidth, "layout.sidePanelWidth"),
       workspacePadding: expectPositiveNumber(layout.workspacePadding, "layout.workspacePadding")
+    },
+    ui: {
+      preferencesStorageKey: expectString(ui.preferencesStorageKey, "ui.preferencesStorageKey"),
+      statusMessageDurationMs: expectPositiveNumber(ui.statusMessageDurationMs, "ui.statusMessageDurationMs")
     },
     canvas: {
       defaultWidth: expectPositiveNumber(canvas.defaultWidth, "canvas.defaultWidth"),
@@ -159,6 +200,14 @@ export function validateAppConfig(value: unknown): AppConfig {
       baseUrl: expectString(imageGeneration.baseUrl, "imageGeneration.baseUrl"),
       defaultModel: defaultImageModel,
       availableModels: availableImageModels,
+      defaultStyle: defaultImageStyle,
+      availableStyles: availableImageStyles,
+      autoRedrawDefaultEnabled: expectBoolean(
+        imageGeneration.autoRedrawDefaultEnabled,
+        "imageGeneration.autoRedrawDefaultEnabled"
+      ),
+      autoRedrawDefaultDelaySeconds,
+      autoRedrawDelayRange,
       defaultSize: expectString(imageGeneration.defaultSize, "imageGeneration.defaultSize"),
       defaultQuality: expectString(imageGeneration.defaultQuality, "imageGeneration.defaultQuality"),
       canvasPaddingRatio: expectUnitNumber(imageGeneration.canvasPaddingRatio, "imageGeneration.canvasPaddingRatio"),
@@ -201,6 +250,14 @@ function expectStringArray(value: unknown, label: string): string[] {
   }
 
   return value.map((item, index) => expectString(item, `${label}[${index}]`));
+}
+
+function expectBoolean(value: unknown, label: string): boolean {
+  if (typeof value !== "boolean") {
+    throw new Error(`Invalid app configuration: ${label} must be a boolean.`);
+  }
+
+  return value;
 }
 
 function expectDrawingToolId(value: unknown, label: string): DrawingToolId {
