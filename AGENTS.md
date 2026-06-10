@@ -4,11 +4,12 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: M7 - Salvataggio automatico, manuale, recupero ed export.
-- Versione corrente: `0.7.0`.
-- Ultimo branch milestone: `milestone/07-save-export`, mergiato su `main` tramite PR #4.
-- CI M7: branch, PR e `main` verdi.
-- Release GitHub M7: rinviata secondo policy manuale; `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS.
+- Ultima milestone completata localmente: M8 - Esperienza utente completa e rifinitura app.
+- Versione corrente: `0.8.0`.
+- Branch milestone corrente: `milestone/08-ux-polish`.
+- Verifica M8: `npm run lint`, `npm run test` e `npm run build` verdi in locale; CI GitHub non ancora verificata.
+- Release GitHub M8: non prevista automaticamente; `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS.
+- Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
 
@@ -16,6 +17,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Non fare merge su `main` finche' implementazione, test, documentazione e CI non sono verificati.
 - Non eliminare il branch milestone prima che la release GitHub sia stata generata e controllata, quando la release e' prevista.
 - Per risparmiare credito GitHub Actions, non generare release GitHub automatiche per ogni milestone intermedia: produrre release Windows/macOS solo quando esplicitamente richiesto o quando il piano indica una versione beta/stabile quasi definitiva.
+- Non configurare firma codice Windows, firma macOS o notarizzazione finche' non saranno disponibili credenziali esplicite; produrre artifact non firmati e documentare SmartScreen/Gatekeeper nelle istruzioni utente.
 - Aggiornare la versione alla chiusura di ogni milestone secondo `PLAN.md`.
 - Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
 

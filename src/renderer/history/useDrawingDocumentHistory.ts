@@ -128,6 +128,13 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     ));
   }, []);
 
+  const commitDocumentUpdate = useCallback((updater: (document: DrawingDocument) => DrawingDocument) => {
+    setHistory((currentHistory) => commitHistory(
+      currentHistory,
+      updater(currentHistory.present)
+    ));
+  }, []);
+
   const replaceDocument = useCallback((nextDocument: DrawingDocument) => {
     setHistory(createHistory(nextDocument, config.app.historyLimit));
   }, [config.app.historyLimit]);
@@ -155,6 +162,7 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     setLayerOpacity: setDocumentLayerOpacity,
     moveLayer: moveDocumentLayer,
     setRealisticImage: setDocumentRealisticImage,
+    commitDocumentUpdate,
     replaceDocument,
     undo,
     redo

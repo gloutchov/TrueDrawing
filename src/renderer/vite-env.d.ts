@@ -29,6 +29,11 @@ declare global {
       clearOpenAiApiKey: () => Promise<ApiKeyStatus>;
       getImageGenerationPreferences: () => Promise<ImageGenerationPreferences>;
       setImageGenerationModel: (model: string) => Promise<ImageGenerationPreferences>;
+      setImageGenerationStyle: (style: string) => Promise<ImageGenerationPreferences>;
+      setImageGenerationAutoRedraw: (
+        enabled: boolean,
+        delaySeconds: number
+      ) => Promise<ImageGenerationPreferences>;
       generateRealisticImage: (request: RealisticImageRequest) => Promise<RealisticImageResult>;
       saveProject: (request: ProjectSaveRequest) => Promise<ProjectSaveResult>;
       saveProjectAs: (request: ProjectSaveRequest) => Promise<ProjectSaveResult>;
@@ -45,6 +50,8 @@ declare global {
       setWindowFullscreen: (fullscreen: boolean) => Promise<void>;
       isWindowFullscreen: () => Promise<boolean>;
       onOpenApiKeySettings: (callback: () => void) => () => void;
+      onOpenImageStyleSettings: (callback: () => void) => () => void;
+      onOpenAutoRedrawSettings: (callback: () => void) => () => void;
       onFileCommand: (callback: (command: string) => void) => () => void;
       onEditCommand: (callback: (command: string) => void) => () => void;
       onViewCommand: (callback: (command: string) => void) => () => void;

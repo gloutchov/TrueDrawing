@@ -9,7 +9,8 @@ import type { AppConfig } from "../../src/shared/config/appConfigSchema";
 const config: AppConfig = {
   app: { name: "True Drawing", defaultLocale: "it", autosaveIntervalMs: 30000, historyLimit: 100 },
   window: { width: 1280, height: 860, minWidth: 960, minHeight: 640 },
-  layout: { topBarHeight: 46, toolRailWidth: 76, sidePanelWidth: 320, workspacePadding: 28 },
+  layout: { topBarHeight: 46, statusBarHeight: 28, toolRailWidth: 76, sidePanelWidth: 320, workspacePadding: 28 },
+  ui: { preferencesStorageKey: "true-drawing-ui-preferences", statusMessageDurationMs: 6000 },
   canvas: {
     defaultWidth: 2048,
     defaultHeight: 2048,
@@ -47,6 +48,11 @@ const config: AppConfig = {
     baseUrl: "https://api.openai.com/v1",
     defaultModel: "gpt-image-1.5",
     availableModels: ["gpt-image-1.5", "gpt-image-1-mini"],
+    defaultStyle: "realistica",
+    availableStyles: ["acquerello", "cartoon", "infantile", "olio", "realistica", "surreale"],
+    autoRedrawDefaultEnabled: false,
+    autoRedrawDefaultDelaySeconds: 5,
+    autoRedrawDelayRange: { min: 1, max: 120, step: 1 },
     defaultSize: "1024x1024",
     defaultQuality: "auto",
     canvasPaddingRatio: 0.08,
@@ -71,15 +77,20 @@ describe("image generation preferences store", () => {
     const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
     const store = createImageGenerationPreferencesStore(userDataPath, () => config);
 
-    expect(store.getPreferences()).toEqual({ model: "gpt-image-1.5" });
+    expect(store.getPreferences()).toEqual({
+      model: "gpt-image-1.5",
+      style: "realistica",
+      autoRedrawEnabled: false,
+      autoRedrawDelaySeconds: 5
+    });
   });
 
   it("persists a custom future image model name", () => {
     const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
     const store = createImageGenerationPreferencesStore(userDataPath, () => config);
 
-    expect(store.setModel("gpt-image-2-future")).toEqual({ model: "gpt-image-2-future" });
-    expect(store.getPreferences()).toEqual({ model: "gpt-image-2-future" });
+    expect(store.setModel("gpt-image-2-future").model).toBe("gpt-image-2-future");
+    expect(store.getPreferences().model).toBe("gpt-image-2-future");
   });
 
   it("rejects invalid image model names", () => {
@@ -87,5 +98,29 @@ describe("image generation preferences store", () => {
     const store = createImageGenerationPreferencesStore(userDataPath, () => config);
 
     expect(() => store.setModel("bad model name")).toThrow(/not valid/);
+  });
+
+  it("persists image style and auto redraw preferences", () => {
+    const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
+    const store = createImageGenerationPreferencesStore(userDataPath, () => config);
+
+    expect(store.setStyle("surreale").style).toBe("surreale");
+    expect(store.setAutoRedraw(true, 8)).toMatchObject({
+      style: "surreale",
+      autoRedrawEnabled: true,
+      autoRedrawDelaySeconds: 8
+    });
+  });
+
+  it("recovers when the preferences directory path already exists as a file", () => {
+    const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
+
+    fs.writeFileSync(path.join(userDataPath, "preferences"), "legacy", "utf8");
+
+    const store = createImageGenerationPreferencesStore(userDataPath, () => config);
+
+    expect(store.setStyle("cartoon").style).toBe("cartoon");
+    expect(fs.statSync(path.join(userDataPath, "preferences")).isDirectory()).toBe(true);
+    expect(store.getPreferences().style).toBe("cartoon");
   });
 });

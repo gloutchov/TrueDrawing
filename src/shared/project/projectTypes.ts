@@ -12,12 +12,6 @@ export type DrawingProjectFile = {
   document: DrawingDocument;
 };
 
-export type ProjectFileReference = {
-  filePath: string;
-  name: string;
-  savedAt: string;
-};
-
 export type ProjectSaveRequest = {
   project: DrawingProjectFile;
   filePath: string | null;
