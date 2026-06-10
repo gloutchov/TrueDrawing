@@ -1,4 +1,67 @@
-# True Drawing
+<p align="center">
+  <img src="build/icon.png" alt="True Drawing icon" width="128" />
+</p>
+
+<h1 align="center">True Drawing</h1>
+
+<p align="center">
+  <strong>IT</strong> - App desktop locale per trasformare uno schizzo disegnato dall'utente in un'immagine generata con AI.<br />
+  <strong>EN</strong> - Local desktop app that turns a user-drawn sketch into an AI-generated image.
+</p>
+
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.8.1-blue" />
+  <img alt="Electron" src="https://img.shields.io/badge/Electron-42-47848f" />
+  <img alt="React" src="https://img.shields.io/badge/React-18-61dafb" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178c6" />
+  <img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-green" />
+</p>
+
+## Scheda rapida / Quick facts
+
+| IT | EN |
+| --- | --- |
+| Versione sorgente: `0.8.1` | Source version: `0.8.1` |
+| Stato: alpha funzionante | Status: working alpha |
+| Piattaforme: macOS e Windows | Platforms: macOS and Windows |
+| Runtime desktop: Electron | Desktop runtime: Electron |
+| UI: React, TypeScript, Vite | UI: React, TypeScript, Vite |
+| Canvas: HTML Canvas 2D con Pointer Events | Canvas: HTML Canvas 2D with Pointer Events |
+| AI: OpenAI Images API configurata dall'utente | AI: user-configured OpenAI Images API |
+| Segreti: Windows Credential Manager, macOS Keychain o fallback cifrato | Secrets: Windows Credential Manager, macOS Keychain, or encrypted fallback |
+| Packaging: electron-builder, NSIS Windows, DMG/ZIP macOS | Packaging: electron-builder, Windows NSIS, macOS DMG/ZIP |
+| Release: artifact GitHub non firmati | Releases: unsigned GitHub artifacts |
+| Licenza dichiarata: Apache 2.0 | Declared license: Apache 2.0 |
+
+## Riferimenti tecnici / Technical references
+
+- Repository: `https://github.com/gloutchov/truedrawing`
+- App ID: `com.truedrawing.app`
+- Package name: `truedrawing`
+- Entry point Electron: `dist-electron/main/appMain.js`
+- Configurazione app / app config: `config/app.config.json`
+- Packaging config: `electron-builder.yml`
+- Roadmap: `PLAN.md`
+- Architettura / architecture map: `MAP.md`
+- Sicurezza / security model: `SECURITY_MODEL.md`
+- Istruzioni utente IT: `ISTRUZIONI.md`
+- User instructions EN: `INSTRUCTIONS.md`
+
+## Comandi principali / Main commands
+
+```bash
+npm ci --no-audit --no-fund
+npm run dev
+npm run lint
+npm run test
+npm run build
+npm run dist:win
+npm run dist:mac
+```
+
+> IT: le build Windows/macOS pubblicate su GitHub non sono firmate perche' non sono disponibili certificati di firma o notarizzazione. Windows SmartScreen e macOS Gatekeeper possono mostrare avvisi al primo avvio.
+>
+> EN: Windows/macOS builds published on GitHub are unsigned because signing or notarization credentials are not available. Windows SmartScreen and macOS Gatekeeper may show warnings on first launch.
 
 ## Italiano
 

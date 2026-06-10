@@ -1,46 +1,100 @@
-# True Drawing - Istruzioni utente
+# Premessa
 
-Versione: `0.8.1`
+Non sono un esperto nella scrittura di codice. Per lo meno così mi vedo. Ma non sono neppure una persona che ha scoperto che chatGPT può fdare APP e subito ha avuto l'ambizione di fargli fare l'applicazione must have che tutti desiderano da una vita.
+True Drawing nasce da un gioco che facevo da piccolo:
+Lo sfidante fa un disegno, uno schizzo impreciso, al volo, in pochi minuti, e gli sfidati devono dire di che si tratta (Lo so, una volta ci divertivamo con poco!).
 
-True Drawing e' in fase iniziale. In questa versione sono disponibili canvas interattivo, strumenti di tratto, layer, inspector realistico, generazione OpenAI, gestione sicura della API key, preferenze del modello/stile immagini, redraw automatico, preferenze lingua/tema interfaccia, salvataggio manuale, autosave, recupero, export e rifiniture UX per stato applicazione, conferme e accessibilita' base.
+True Drawing fa proprio questo. L'utente fa uno schizzo, e l'app chiede alla AI di reinterpretare il disegno e creare una immagine 'bella da vedere'.
 
-## Uso previsto dell'app
+L'applicazione è stata interamente realizzata con assistenza AI. L'interfaccia è semplice, ha pochi tool di disegno, la gestione dei layer, undo e redo, e poche altre features. Funziona con mouse, tavolette grafiche, ogni tipo di sistema di puntamento. Più è impreciso, più è divertente il risultato.
 
-Quando le milestone applicative successive saranno implementate, l'utente potra':
 
-- creare un nuovo disegno e assegnargli un nome;
-- disegnare sul canvas con mouse, tavoletta o input compatibili;
-- scegliere matita, pennarello, pennello o gomma;
-- scegliere linea retta o linea curva;
-- disegnare rettangolo, ellisse, triangolo o poligono;
-- usare il riempimento per colorare un'area delimitata dai confini gia' disegnati nel layer;
-- selezionare un'area rettangolare del canvas per usare cut, copy e paste;
-- scegliere tratto continuo, tratteggiato o a puntini;
-- cambiare colore, dimensione tratto, opacita' e hardness;
-- usare `+`, `-`, reset o rotella del mouse per lo zoom del canvas;
-- mantenere lo zoom canvas persistente fra riavvii dell'app;
-- leggere nella status bar stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom;
-- uscire dal fullscreen con il pulsante visibile nella barra superiore;
-- usare `Edit > Undo/Redo` per la history del disegno quando il focus non e' in un campo testo;
-- usare `Edit > Copy/Cut/Paste` o `Ctrl/Cmd+X`, `Ctrl/Cmd+C`, `Ctrl/Cmd+V` sulla selezione canvas quando il focus non e' in un campo testo;
-- spostare l'immagine appena incollata finche' resta selezionata;
-- annullare e ripristinare tratti con i pulsanti toolbar o con `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z` e `Ctrl/Cmd+Y`;
-- creare, rinominare, selezionare, nascondere, riordinare e regolare l'opacita' dei layer;
-- ricevere conferme prima di eliminare un layer, rimuovere la API key o scartare un autosave;
-- inserire o rimuovere la API key OpenAI dal menu `File > Impostazioni > API Key...`;
-- scrivere il modello immagini OpenAI dalla stessa finestra impostazioni;
-- scegliere lo stile immagine dal menu `File > Impostazioni > Stile...`, usando gli stili predefiniti o un valore personalizzato;
-- attivare il redraw automatico dell'inspector dal menu `File > Impostazioni > Redraw automatico...`;
-- scegliere lingua interfaccia e tema dal menu `File > Impostazioni > Interfaccia...`, con opzione default di sistema;
-- generare un'immagine realistica nell'inspector dal canvas corrente;
-- vedere stati inspector chiari quando manca la API key, l'immagine non e' ancora generata, la generazione e' in corso o si verifica un errore;
-- passare fra canvas e immagine realistica con doppio click sull'inspector;
-- salvare manualmente il progetto `.tdraw`;
-- autosalvare il progetto, il canvas e l'immagine realistica;
-- recuperare l'ultimo autosave disponibile;
-- esportare canvas e immagine realistica in PNG o WebP.
+E' perfetta?
+Diciamo che funziona, e non mi pare abbia bug evidenti. Al momento il progetto viene mantenuto con build verificate localmente su macOS e Windows, così da allineare supporto dichiarato e supporto realmente verificato.
+Un Dev professionista potrebbe trovarci molti difetti, e qualche vulnerabilità che mi è scappata. Lascio a loro l'onere e l'onore di sistemare ciò che i miei occhi imberbi non hanno scovato.
+Rimane comunque, e sempre, una app realizzata in vibe-coding.
 
-## File di salvataggio
+# True Drawing - Manuale Utente (IT)
+
+> Questa app è stata realizzata in vibecoding con codex CLI. Attualmente è da intendersi come alpha funzionante. Potrebbe necessitare di ottimizzazione, pulizia di codice orfano, interventi di sicurezza, e molto altro ancora...
+
+## Sommario
+
+- Introduzione
+- Come iniziare
+- L'interfaccia
+- Licenza
+
+## Introduzione
+
+True Drawing è un progetto sperimentale basato su un vecchio gioco, senza alcuna ambizione particolare.
+Attualmente il progetto viene mantenuto e distribuito con pacchetti verificati localmente su macOS e su Windows.
+
+### Lingua interfaccia
+
+L'interfaccia di True Drawing è bilingue italiano/inglese. La lingua viene scelta automaticamente in base alle impostazioni di sistema (nel caso il computer sia impostato su una lingua differente dall'italiano, viene scelta automaticamente la lingua inglese). L'impostazione può essere svolta manualmente dalla finestra impostazioni.
+
+## Come iniziare
+
+### Download, firma e checksum
+
+True Drawing è nato come programma personale ed e poi stato pubblicato come progetto open source con licenza Apache 2.0. Le build pubblicate non sono firmate con certificati Apple o Windows.
+
+Questo significa che:
+
+- su macOS puo comparire un avviso di Gatekeeper al primo avvio;
+- su Windows puo comparire un avviso SmartScreen o "autore sconosciuto";
+- il codice sorgente resta ispezionabile nel repository, ma i pacchetti scaricati non hanno una firma commerciale del sistema operativo.
+
+E' quindi possibile che all'avvio il Sistema Operativo vi chieda il permesso a procedere nell'apertura dell'app.
+
+_Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. Nell'area Tech di questo documento trovate le istruzioni per verificare che i files non siano stati compromessi.
+
+### Avvio di True Drawing
+
+Sia su macOS. sia su Windows, è sufficiente fare doppioclick sull'icona del programma.
+
+### Inserimento credenziali AI
+
+Cliccare sul menù File.
+Selezionare API Key.
+Si apre una finestra in cui va inserita la API Key del modello AI (sono accettare API Key di OpenAI) e il modello di generazione di immagini che desiderate.
+Salvate le API Key.
+
+### Dare un nome al Disegno
+
+Sopra al Canvas di disegno, è presente un campo dove inserire il nome del disegno. Scrivere un nome indicativo prima di iniziare. Quel nome sarà utilizzato per tutti i salvataggi automatici di sicurezza, e per il salvataggio del disegno definitivo.
+
+### Creazione di un Disegno
+
+Sul lato sinistro dello schermo sono presenti i tool principali di disegno. Ovvero (dall'alto verso il basso):
+
+- Tool di selezione;
+- Tool di disegno al tratto (matita, pennarello, pennello, gomma);
+- Tool di disegno figure (quadrato/rettangolo, cerchio/ellisse, triangolo);
+- Tool di riempimento (secchiello)
+- Tipo di tratto (continuo, tratteggio, puntini).
+
+Ognuno di questi tool offre alcuni setup che permettono di personalizzare ulteriormente il tratto. Questi setup sono differenti da tool a tool, e appaiono sotto ai pulsanti dei tool stessi. I più comuni sono:
+
+- Colore di riempimento;
+- Spessore tratto;
+- Opacità tratto;
+- Dimensione tratto.
+
+L'attività di disegno è molto semplice. E' sufficiente selezionare il tool desiderato, e tracciare ciò che si vuole sul canvas bianco.
+
+Il Menù Edit offre alcune funzionalità aggiuntive utili:
+
+- Annulla/Ripeti;
+- Taglia/Copia/Incolla;
+- Ritaglia.
+
+Una volta disegnato lo schizzo, è sufficiente cliccare sul tastino con le frecce che si rincorrono per attivare la generazione dell'immagine da parte della AI.
+
+Per salvare il disegno, e l'immagine generata dalla AI, è sufficiente andare sul menù File e cliccare su Salva.
+
+### File di salvataggio
 
 Per un disegno chiamato `nome`, l'app usera':
 
@@ -48,26 +102,60 @@ Per un disegno chiamato `nome`, l'app usera':
 - `nome_canvas.png` per il canvas composito;
 - `nome_image.png` per l'immagine realistica generata, quando presente.
 
-## Installazione da GitHub
+## L'interfaccia
 
-Le build Windows e macOS pubblicate su GitHub sono non firmate: non sono disponibili certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Windows SmartScreen e macOS Gatekeeper possono mostrare avvisi di sicurezza quando l'app viene avviata per la prima volta.
+### Menù principale
 
-## Configurazione prevista
+Il menù principale offre quattro sottomenù:
 
-Il file `config/app.config.json` contiene parametri modificabili da utenti skilled, come autosave, dimensioni canvas, default strumenti, provider API e modello immagini.
+- File;
+- Modifica;
+- Vista;
+- Aiuto.
 
-In questa versione sono configurabili anche parametri di input canvas come distanza minima fra punti, smoothing del tratto, pressione predefinita, fattori di dimensione legati alla pressione, range dei controlli, preset degli strumenti, default layer, prefisso nomi layer, limite layer, range opacita' layer, modelli immagini suggeriti, stili immagine suggeriti, default/range redraw automatico, margine di export inviato alla generazione, nome progetto predefinito, directory autosave, suffissi file ed estensioni export.
+#### Menù File
 
-La API key non deve essere inserita in quel file: viene inserita dall'app tramite il menu `File > Impostazioni > API Key...` e salvata dal processo main nel Windows Credential Manager su Windows, nel macOS Keychain su macOS o in fallback locale cifrato negli ambienti non supportati.
+Il menù File ha le seguenti opzioni
 
-## Avvio in sviluppo
+- Nuovo;
+- Apri;
+- Salva;
+- Salva con Nome;
+- Export Canvas (png, webp);
+- Export immagine (png, webp);
+- Impostazioni;
+- Esci.
 
-Per avviare la versione di sviluppo:
+Il menù Impostazioni permette di modificare la lingua del programma, il suo aspetto, di inserire la chiave API della AI, di scegliere la tipologia di immagine in uscita (realistica, cartoon, etc), di impostare l'autogenerazione dell'immagine AI durante le pause dal disegno.
 
-- installare Node.js 22;
-- eseguire `npm ci --no-audit --no-fund`;
-- eseguire `npm run dev`.
+#### Menù Modifica
 
-Per produrre una build locale:
+Il menù Modifica offre le funzionalità già descritte in precedenza, ovvero:
 
-- eseguire `npm run build`.
+- Annulla/Ripeti;
+- Taglia/Copia/Incolla;
+- Ritaglia.
+
+#### Menù Vista
+
+Il menù vista permette di cambiare il fattore di zoom sul canvas (modificabile anche tramite pulsanti sul canvas stesso, o con la rotella del mouse), e di passare alla modalità a schermo intero.
+
+#### Menù Aiuto
+
+Il Menù aiuto contiene solamente l'opzione di visualizzare i dati fondamentali dell'applicazione.
+
+### Menù di Disegno
+
+Sul lato sinistro dello schermo è presente il menù contenente tutti i tool di disegno. Anche questo menù è già stato descritto nel capitolo precedente.
+
+### Inspector
+
+La finestra di inspector mostra un anteprima dell'immagine generata dalla AI. Al di sotto di quella immagine sono indicati tutti i parametri di configurazione della AI.
+
+### Layer
+
+La finestra Layer permette di costruire l'immagine su più livelli, di nascondere o mostrare ogni singolo livello, di cambiarlo di posizione, e di cambiarne l'opacità.
+
+## Licenza
+
+Questo progetto e distribuito sotto licenza Apache 2.0. Vedi [LICENSE](./LICENSE).
