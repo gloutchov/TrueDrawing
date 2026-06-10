@@ -23,6 +23,9 @@ import type {
 const api = {
   getAppConfig: (): Promise<AppConfig> => ipcRenderer.invoke("config:get") as Promise<AppConfig>,
   getRuntimeInfo: (): Promise<RuntimeInfo> => ipcRenderer.invoke("runtime:get") as Promise<RuntimeInfo>,
+  setUiMenuLocale: (locale: "it" | "en"): Promise<void> => (
+    ipcRenderer.invoke("settings:ui-menu-locale:set", locale) as Promise<void>
+  ),
   getOpenAiApiKeyStatus: (): Promise<ApiKeyStatus> => (
     ipcRenderer.invoke("secrets:openai-key-status") as Promise<ApiKeyStatus>
   ),
@@ -120,6 +123,19 @@ const api = {
 
     return () => {
       ipcRenderer.off("settings:open-auto-redraw", listener);
+    };
+  },
+  onSettingsCommand: (callback: (command: string) => void): (() => void) => {
+    const listener = (_event: IpcRendererEvent, command: unknown) => {
+      if (typeof command === "string") {
+        callback(command);
+      }
+    };
+
+    ipcRenderer.on("settings:command", listener);
+
+    return () => {
+      ipcRenderer.off("settings:command", listener);
     };
   },
   onFileCommand: (callback: (command: string) => void): (() => void) => {

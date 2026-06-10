@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { KeyRound, Trash2, X } from "lucide-react";
 
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 
 type ApiKeyDialogProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   open: boolean;
   imageGenerationModel: string;
   apiKeyBackend: string;
@@ -21,6 +24,7 @@ type SaveState =
 
 export function ApiKeyDialog({
   config,
+  locale,
   open,
   imageGenerationModel,
   apiKeyBackend,
@@ -103,16 +107,16 @@ export function ApiKeyDialog({
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section className="modal" role="dialog" aria-modal="true" aria-label="OpenAI settings">
+      <section className="modal" role="dialog" aria-modal="true" aria-label={t(locale, "apiKeySettings")}>
         <div className="modal-header">
-          <span><KeyRound size={17} /> OpenAI Settings</span>
-          <button className="mini-button" title="Close" aria-label="Close" onClick={onClose}>
+          <span><KeyRound size={17} /> {t(locale, "apiKeySettings")}</span>
+          <button className="mini-button" title={t(locale, "close")} aria-label={t(locale, "close")} onClick={onClose}>
             <X size={16} />
           </button>
         </div>
         <div className="modal-body">
           <label className="field">
-            <span>API key</span>
+            <span>{t(locale, "apiKey")}</span>
             <input
               autoFocus
               type="password"
@@ -122,7 +126,7 @@ export function ApiKeyDialog({
             />
           </label>
           <label className="field">
-            <span>Image model</span>
+            <span>{t(locale, "imageModel")}</span>
             <input
               type="text"
               value={selectedModel}
@@ -137,7 +141,7 @@ export function ApiKeyDialog({
             </datalist>
           </label>
           <div className="settings-readout">
-            <span>Secret storage</span>
+            <span>{t(locale, "apiKeyStorage")}</span>
             <strong>{formatBackend(apiKeyBackend)}</strong>
           </div>
           {saveState.status === "success" && (
@@ -154,7 +158,7 @@ export function ApiKeyDialog({
             onClick={clearApiKey}
           >
             <Trash2 size={15} />
-            Remove
+            {t(locale, "remove")}
           </button>
           <button
             className="text-button"
@@ -165,17 +169,17 @@ export function ApiKeyDialog({
             }
             onClick={saveModel}
           >
-            Save model
+            {t(locale, "saveModel")}
           </button>
           <button className="text-button" onClick={onClose}>
-            Cancel
+            {t(locale, "cancel")}
           </button>
           <button
             className="text-button text-button--primary"
             disabled={apiKey.trim().length === 0 || saveState.status === "saving"}
             onClick={saveApiKey}
           >
-            Save
+            {t(locale, "save")}
           </button>
         </div>
       </section>

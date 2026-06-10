@@ -1,8 +1,8 @@
 # True Drawing - Istruzioni utente
 
-Versione: `0.8.0`
+Versione: `0.8.1`
 
-True Drawing e' in fase iniziale. In questa versione sono disponibili canvas interattivo, strumenti di tratto, layer, inspector realistico, generazione OpenAI, gestione sicura della API key, preferenze del modello/stile immagini, redraw automatico, salvataggio manuale, autosave, recupero, export e rifiniture UX per stato applicazione, conferme e accessibilita' base.
+True Drawing e' in fase iniziale. In questa versione sono disponibili canvas interattivo, strumenti di tratto, layer, inspector realistico, generazione OpenAI, gestione sicura della API key, preferenze del modello/stile immagini, redraw automatico, preferenze lingua/tema interfaccia, salvataggio manuale, autosave, recupero, export e rifiniture UX per stato applicazione, conferme e accessibilita' base.
 
 ## Uso previsto dell'app
 
@@ -27,10 +27,11 @@ Quando le milestone applicative successive saranno implementate, l'utente potra'
 - annullare e ripristinare tratti con i pulsanti toolbar o con `Ctrl/Cmd+Z`, `Ctrl/Cmd+Shift+Z` e `Ctrl/Cmd+Y`;
 - creare, rinominare, selezionare, nascondere, riordinare e regolare l'opacita' dei layer;
 - ricevere conferme prima di eliminare un layer, rimuovere la API key o scartare un autosave;
-- inserire o rimuovere la API key OpenAI dal menu `File > API Key...`;
+- inserire o rimuovere la API key OpenAI dal menu `File > Impostazioni > API Key...`;
 - scrivere il modello immagini OpenAI dalla stessa finestra impostazioni;
-- scegliere lo stile immagine dal menu `File > Stile...`, usando gli stili predefiniti o un valore personalizzato;
-- attivare il redraw automatico dell'inspector dal menu `File > Redraw automatico...`;
+- scegliere lo stile immagine dal menu `File > Impostazioni > Stile...`, usando gli stili predefiniti o un valore personalizzato;
+- attivare il redraw automatico dell'inspector dal menu `File > Impostazioni > Redraw automatico...`;
+- scegliere lingua interfaccia e tema dal menu `File > Impostazioni > Interfaccia...`, con opzione default di sistema;
 - generare un'immagine realistica nell'inspector dal canvas corrente;
 - vedere stati inspector chiari quando manca la API key, l'immagine non e' ancora generata, la generazione e' in corso o si verifica un errore;
 - passare fra canvas e immagine realistica con doppio click sull'inspector;
@@ -57,7 +58,7 @@ Il file `config/app.config.json` contiene parametri modificabili da utenti skill
 
 In questa versione sono configurabili anche parametri di input canvas come distanza minima fra punti, smoothing del tratto, pressione predefinita, fattori di dimensione legati alla pressione, range dei controlli, preset degli strumenti, default layer, prefisso nomi layer, limite layer, range opacita' layer, modelli immagini suggeriti, stili immagine suggeriti, default/range redraw automatico, margine di export inviato alla generazione, nome progetto predefinito, directory autosave, suffissi file ed estensioni export.
 
-La API key non deve essere inserita in quel file: viene inserita dall'app tramite il menu `File > API Key...` e salvata dal processo main nel Windows Credential Manager su Windows, nel macOS Keychain su macOS o in fallback locale cifrato negli ambienti non supportati.
+La API key non deve essere inserita in quel file: viene inserita dall'app tramite il menu `File > Impostazioni > API Key...` e salvata dal processo main nel Windows Credential Manager su Windows, nel macOS Keychain su macOS o in fallback locale cifrato negli ambienti non supportati.
 
 ## Avvio in sviluppo
 

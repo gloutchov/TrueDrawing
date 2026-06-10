@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { Palette, X } from "lucide-react";
 
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 
 type ImageStyleDialogProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   open: boolean;
   imageGenerationStyle: string;
   onClose: () => void;
@@ -19,6 +22,7 @@ type SaveState =
 
 export function ImageStyleDialog({
   config,
+  locale,
   open,
   imageGenerationStyle,
   onClose,
@@ -61,16 +65,16 @@ export function ImageStyleDialog({
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section className="modal" role="dialog" aria-modal="true" aria-label="Image style settings">
+      <section className="modal" role="dialog" aria-modal="true" aria-label={t(locale, "imageStyle")}>
         <div className="modal-header">
-          <span><Palette size={17} /> Stile immagine</span>
-          <button className="mini-button" title="Close" aria-label="Close" onClick={onClose}>
+          <span><Palette size={17} /> {t(locale, "imageStyle")}</span>
+          <button className="mini-button" title={t(locale, "close")} aria-label={t(locale, "close")} onClick={onClose}>
             <X size={16} />
           </button>
         </div>
         <div className="modal-body">
           <div className="field">
-            <span>Stile predefinito</span>
+            <span>{t(locale, "imageStyle")}</span>
             <div className="style-picker">
               <button
                 className="style-picker-trigger"
@@ -82,7 +86,7 @@ export function ImageStyleDialog({
                 {selectedStyle || config.imageGeneration.defaultStyle}
               </button>
               {styleMenuOpen && (
-                <div className="style-picker-menu" role="listbox" aria-label="Stili immagine">
+                <div className="style-picker-menu" role="listbox" aria-label={t(locale, "imageStyle")}>
                   {config.imageGeneration.availableStyles.map((style) => (
                     <button
                       key={style}
@@ -103,7 +107,7 @@ export function ImageStyleDialog({
             </div>
           </div>
           <label className="field">
-            <span>Stile personalizzato</span>
+            <span>{t(locale, "imageStyle")}</span>
             <input
               autoFocus
               type="text"
@@ -115,7 +119,7 @@ export function ImageStyleDialog({
               }}
             />
           </label>
-          <div className="style-chip-list" aria-label="Stili disponibili">
+          <div className="style-chip-list" aria-label={t(locale, "imageStyle")}>
               {config.imageGeneration.availableStyles.map((style) => (
                 <button
                   key={style}
@@ -136,7 +140,7 @@ export function ImageStyleDialog({
         </div>
         <div className="modal-actions">
           <button className="text-button" type="button" onClick={onClose}>
-            Cancel
+            {t(locale, "cancel")}
           </button>
           <button
             className="text-button text-button--primary"
@@ -144,7 +148,7 @@ export function ImageStyleDialog({
             disabled={styleToSave.length < 2 || saveState.status === "saving"}
             onClick={() => void saveStyle()}
           >
-            Save
+            {t(locale, "save")}
           </button>
         </div>
       </section>

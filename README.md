@@ -4,7 +4,7 @@
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione corrente e' `0.8.0` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP e rifiniture UX con status bar, stati vuoti, conferme distruttive e zoom persistente.
+Il progetto e' in fase iniziale. La versione corrente e' `0.8.1` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP e rifiniture UX con status bar, stati vuoti, conferme distruttive e zoom persistente.
 
 Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
@@ -32,6 +32,7 @@ Le release GitHub per Windows e macOS sono distribuite senza firma codice e senz
 - Menu per inserire, sostituire o rimuovere la API key OpenAI e scrivere il modello immagini.
 - Menu per scegliere uno stile immagine predefinito o personalizzato.
 - Menu per attivare redraw automatico dell'inspector dopo un tempo di inattivita' configurabile.
+- Menu `File > Impostazioni > Interfaccia...` per scegliere lingua italiana/inglese e tema chiaro/scuro, con opzione default di sistema.
 - Doppio click sull'inspector per passare fra immagine realistica e canvas.
 - Autosave e salvataggio manuale di canvas e immagine.
 - Salvataggio progetto `.tdraw`, sidecar `<nome>_canvas` e `<nome>_image`, recupero autosave ed export PNG/WebP.
@@ -70,7 +71,7 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Current version is `0.8.0` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, and UX polish with a status bar, empty states, destructive-action confirmations, and persistent zoom.
+The project is at its initial stage. Current version is `0.8.1` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, and UX polish with a status bar, empty states, destructive-action confirmations, and persistent zoom.
 
 Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
@@ -98,6 +99,7 @@ GitHub releases for Windows and macOS are distributed without code signing and w
 - Menu entry to enter, replace, or remove the OpenAI API key and type the image model.
 - Menu entry to choose a predefined or custom image style.
 - Menu entry to enable inspector auto-redraw after a configurable idle delay.
+- `File > Settings > Interface...` menu entry to choose Italian/English and light/dark theme, including system-default options.
 - Double click on the inspector to switch between realistic image and drawing canvas.
 - Autosave and manual save for both canvas and generated image.
 - `.tdraw` project saving, `<name>_canvas` and `<name>_image` sidecars, autosave recovery, and PNG/WebP export.
