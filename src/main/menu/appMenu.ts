@@ -18,7 +18,6 @@ const menuText = {
     exportCanvasWebp: "Esporta canvas WebP",
     exportImagePng: "Esporta immagine PNG",
     exportImageWebp: "Esporta immagine WebP",
-    close: "Chiudi",
     settings: "Impostazioni",
     interface: "Interfaccia...",
     style: "Stile...",
@@ -49,7 +48,6 @@ const menuText = {
     exportCanvasWebp: "Export canvas WebP",
     exportImagePng: "Export image PNG",
     exportImageWebp: "Export image WebP",
-    close: "Close",
     settings: "Settings",
     interface: "Interface...",
     style: "Style...",
@@ -115,11 +113,6 @@ export function installAppMenu(config: AppConfig, locale: MenuLocale = resolveSy
           label: labels.exportImageWebp,
           click: () => sendFileCommand("export-image-webp")
         },
-        {
-          label: labels.close,
-          role: "close"
-        },
-        { type: "separator" },
         {
           label: labels.settings,
           submenu: [
