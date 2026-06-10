@@ -835,7 +835,7 @@ Stato: completata e mergiata su `main`; release GitHub rinviata.
 - Versione finale prevista: `0.9.0`.
 - Branch: `milestone/09-packaging-ci-release`.
 - Tipo incremento: `+0.1.0`.
-- Obiettivo: rendere ripetibile la produzione delle release macOS e Windows.
+- Obiettivo: rendere ripetibile la produzione delle release macOS e Windows e pubblicare `v0.9.0` come versione di rilascio.
 
 Attivita':
 
@@ -849,13 +849,13 @@ Attivita':
   - release da tag.
 - Mantenere disattivate firma codice Windows, firma macOS e notarizzazione Apple finche' non saranno disponibili credenziali dedicate.
 - Documentare nelle release GitHub che gli artifact Windows/macOS sono non firmati e possono attivare SmartScreen/Gatekeeper.
-- Generare changelog release.
+- Generare changelog e note di release per `v0.9.0`.
 - Verificare installazione pacchetti prodotti.
 
 Criteri di accettazione:
 
-- Ogni tag `vX.Y.Z` puo' generare una release scaricabile tramite workflow manuale.
-- Artifact Windows e macOS sono presenti nella release.
+- Il tag `v0.9.0` genera una release GitHub scaricabile tramite workflow manuale.
+- Artifact Windows e macOS sono presenti nella release `v0.9.0`.
 - Le note di release e la documentazione indicano chiaramente che gli artifact sono non firmati, salvo disponibilita' futura di credenziali.
 - CI fallisce se test o build falliscono.
 - La procedura e' documentata in `AGENTS.md` e `README.md`.
@@ -869,81 +869,60 @@ Verifiche:
 
 Stato: pianificata.
 
-### M10 - Beta privata
+### Validazione beta e stabilizzazione
 
-- Versione finale prevista: `1.0.0-beta.1` oppure `1.0.0` se la qualita' e' sufficiente.
-- Branch: `milestone/10-private-beta`.
-- Tipo incremento: `+0.1.0` o `+1.0.0` secondo esito verifica.
-- Obiettivo: validare l'app con uso reale prima della release stabile.
+Le attivita' originariamente previste come beta privata e release stabile sono considerate gia' completate manualmente prima di M9:
 
-Attivita':
+- l'utente ha eseguito diversi test reali dell'app il 2026-06-10;
+- i problemi emersi durante i test sono stati corretti nelle patch gia' mergiate;
+- la documentazione utente e tecnica e' stata aggiornata;
+- non risultano bug critici aperti prima della preparazione della release `v0.9.0`.
 
-- Preparare set di scenari di test utente.
-- Correggere bug bloccanti.
-- Verificare compatibilita' con mouse, penna/tavoletta e input disponibili.
-- Verificare qualita' immagini realistiche su schizzi di complessita' diversa.
-- Completare documentazione utente.
-- Finalizzare note di sicurezza.
+Queste attivita' non restano come milestone future separate: M9 diventa la milestone di rilascio.
 
-Criteri di accettazione:
+Stato: completata manualmente.
 
-- Flusso principale completabile senza interventi tecnici:
-  1. creare disegno;
-  2. disegnare con strumenti;
-  3. gestire layer;
-  4. generare immagine realistica;
-  5. passare inspector/canvas con doppio click;
-  6. salvare canvas e immagine;
-  7. riaprire o recuperare il lavoro.
-- Nessun bug critico aperto.
-- Documentazione completa in italiano e inglese.
+### M10 - Landing page del programma
 
-Verifiche:
-
-- Test end-to-end completo.
-- CI verde.
-- Release GitHub generata.
-- Review manuale documentazione.
-
-Stato: pianificata.
-
-### M11 - Release stabile
-
-- Versione finale prevista: `1.0.0`.
-- Branch: `milestone/11-stable-release`.
-- Tipo incremento: `+1.0.0` se non gia' applicato in M10.
-- Obiettivo: pubblicare la prima versione stabile di True Drawing.
+- Versione finale prevista: `0.10.0`.
+- Branch: `milestone/10-landing-page`.
+- Tipo incremento: `+0.1.0`.
+- Obiettivo: creare una landing page pubblica per True Drawing con link al repository e al download della release.
 
 Attivita':
 
-- Stabilizzare bug beta.
-- Congelare funzionalita' per la release.
-- Revisionare sicurezza e gestione segreti.
-- Revisionare packaging e installazione.
-- Mantenere distribuzione non firmata via GitHub oppure aggiornare piano e documenti se saranno disponibili credenziali ufficiali di firma/notarizzazione.
-- Rivalutare le deprecazioni npm residue introdotte da dipendenze transitive di packaging, in particolare `electron-builder`, `@electron/asar`, `@electron/get`, `electron-winstaller`, `temp`, `rimraf`, `glob`, `inflight` e `boolean`.
-- Aggiornare tutti i documenti finali.
-- Creare release finale con changelog.
+- Usare le immagini e la GIF gia' preparate in `docs/assets`.
+- Creare una landing page statica, pubblicabile dal repository.
+- Mostrare screenshot dell'app in italiano e inglese, con interfaccia chiara e scura.
+- Inserire link al repository GitHub.
+- Inserire link alla release/download piu' recente.
+- Rendere la landing page bilingue italiano/inglese.
+- Selezionare automaticamente italiano quando il sistema/browser e' impostato in italiano.
+- Usare inglese come lingua predefinita per tutte le altre lingue di sistema.
+- Aggiungere un selettore manuale per passare fra italiano e inglese.
+- Curare layout responsive, testi brevi, accessibilita' base e alt text per immagini/GIF.
+- Documentare come visualizzare e pubblicare la landing page.
 
 Criteri di accettazione:
 
-- CI verde.
-- Release Windows e macOS scaricabili.
-- Release documentata come non firmata, salvo disponibilita' futura di credenziali ufficiali.
-- `npm ci --no-audit --no-fund` non mostra warning deprecated risolvibili tramite aggiornamenti diretti o sostituzioni sicure dei tool di packaging.
-- Documentazione finale completa.
-- `PLAN.md` aggiornato con milestone completata e rischi residui.
-- Branch milestone eliminato dopo merge e release verificata.
+- La landing page si apre localmente senza backend.
+- La lingua iniziale segue il sistema/browser: italiano per `it`, inglese per tutto il resto.
+- Il selettore lingua cambia i testi senza ricaricare la pagina.
+- I link a repository e release/download sono visibili e funzionanti.
+- Le immagini e la GIF in `docs/assets` vengono usate senza duplicazioni inutili.
+- La pagina resta leggibile su desktop e mobile.
 
 Verifiche:
 
-- Test end-to-end su build release.
-- Verifica manuale artifact GitHub.
-- Controllo finale documenti.
+- Test locale della pagina statica.
+- Controllo manuale lingua italiana/inglese.
+- Controllo manuale link repository e download.
+- Verifica layout desktop/mobile.
+- Verifica che gli asset siano tracciati e richiamati con percorsi relativi corretti.
 
 Stato: pianificata.
 
-## Backlog post 1.0
+## Backlog post release
 
 - Supporto brush avanzati e texture personalizzate.
 - Import immagini di riferimento.
@@ -970,6 +949,7 @@ Stato: pianificata.
 | 2026-06-09 | M7 - Salvataggio automatico, manuale, recupero ed export | 0.7.0 | `milestone/07-save-export` | Completata | `.tdraw`, sidecar canvas/immagine, autosave, recupero, export PNG/WebP, inspector proporzionale, strumenti linea/shape/fill/tipo tratto/selezione, paste spostabile, menu Edit e shortcut corretti, zoom canvas e uscita fullscreen visibile implementati; lint/test/build locali verdi; PR #4 e CI main verdi; tag `v0.7.0` pushato; release rinviata. |
 | 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; PR #5 e CI verdi; tag `v0.8.0` pushato; release rinviata. |
 | 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Completata | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio; PR #7 e CI verdi; tag `v0.8.2` pushato; branch eliminato; release rinviata. |
+| 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
 
 ## Checklist di chiusura milestone
 
