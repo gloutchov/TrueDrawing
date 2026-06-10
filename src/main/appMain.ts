@@ -28,6 +28,7 @@ app.whenReady().then(() => {
       appVersion: app.getVersion(),
       platform: process.platform
     }),
+    onUiLocaleChange: (locale) => installAppMenu(requireAppConfig(), locale),
     apiKeyStore: createApiKeyStore(),
     preferencesStore: createImageGenerationPreferencesStore(
       app.getPath("userData"),

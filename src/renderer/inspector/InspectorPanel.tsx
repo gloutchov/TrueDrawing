@@ -1,11 +1,14 @@
 import { Image, KeyRound, Loader2, RefreshCw } from "lucide-react";
 
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { DrawingDocument } from "../../shared/document/documentTypes";
 import type { StoredRealisticImage } from "../../shared/image-generation/imageGenerationTypes";
 
 type InspectorPanelProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   document: DrawingDocument;
   apiKeyConfigured: boolean;
   apiKeyBackend: string;
@@ -21,6 +24,7 @@ type InspectorPanelProps = {
 
 export function InspectorPanel({
   config,
+  locale,
   document,
   apiKeyConfigured,
   apiKeyBackend,
@@ -37,22 +41,22 @@ export function InspectorPanel({
   const canGenerate = apiKeyConfigured && !isGenerating;
 
   return (
-    <section className="panel inspector-panel" aria-label="Realistic image inspector">
+    <section className="panel inspector-panel" aria-label={t(locale, "inspector")}>
       <div className="panel-header">
-        <span><Image size={16} /> Inspector</span>
+        <span><Image size={16} /> {t(locale, "inspector")}</span>
         <div className="panel-actions">
           <button
             className="mini-button"
-            title="Open API key settings"
-            aria-label="Open API key settings"
+            title={t(locale, "openApiKeySettings")}
+            aria-label={t(locale, "openApiKeySettings")}
             onClick={onOpenApiKeySettings}
           >
             <KeyRound size={15} />
           </button>
           <button
             className="mini-button"
-            title="Generate image"
-            aria-label="Generate image"
+            title={t(locale, "generateImage")}
+            aria-label={t(locale, "generateImage")}
             disabled={!canGenerate}
             onClick={onGenerateImage}
           >
@@ -67,6 +71,7 @@ export function InspectorPanel({
         }}
       >
         <InspectorPreview
+          locale={locale}
           realisticImage={realisticImage}
           isGenerating={isGenerating}
           apiKeyConfigured={apiKeyConfigured}
@@ -75,27 +80,27 @@ export function InspectorPanel({
       {errorMessage && <p className="inspector-error">{errorMessage}</p>}
       <dl className="inspector-meta">
         <div>
-          <dt>Provider</dt>
+          <dt>{t(locale, "provider")}</dt>
           <dd>{config.imageGeneration.defaultProvider}</dd>
         </div>
         <div>
-          <dt>Model</dt>
+          <dt>{t(locale, "model")}</dt>
           <dd>{realisticImage?.model ?? imageGenerationModel}</dd>
         </div>
         <div>
-          <dt>Style</dt>
+          <dt>{t(locale, "style")}</dt>
           <dd>{imageGenerationStyle}</dd>
         </div>
         <div>
-          <dt>Auto redraw</dt>
+          <dt>{t(locale, "autoRedraw")}</dt>
           <dd>{autoRedrawEnabled ? `${autoRedrawDelaySeconds}s` : "Off"}</dd>
         </div>
         <div>
-          <dt>API key</dt>
-          <dd>{apiKeyConfigured ? "Configured" : "Missing"}</dd>
+          <dt>{t(locale, "apiKey")}</dt>
+          <dd>{apiKeyConfigured ? t(locale, "apiKeyConfigured") : t(locale, "apiKeyMissing")}</dd>
         </div>
         <div>
-          <dt>Storage</dt>
+          <dt>{t(locale, "storage")}</dt>
           <dd>{formatBackend(apiKeyBackend)}</dd>
         </div>
         <div>
@@ -124,12 +129,14 @@ function formatBackend(backend: string): string {
 }
 
 type InspectorPreviewProps = {
+  locale: EffectiveLocale;
   realisticImage: StoredRealisticImage | null;
   isGenerating: boolean;
   apiKeyConfigured: boolean;
 };
 
 function InspectorPreview({
+  locale,
   realisticImage,
   isGenerating,
   apiKeyConfigured
@@ -138,7 +145,7 @@ function InspectorPreview({
     return (
       <div className="inspector-empty">
         <Loader2 className="spin-icon" size={34} />
-        <span>Generating</span>
+        <span>{t(locale, "generating")}</span>
       </div>
     );
   }
@@ -151,7 +158,7 @@ function InspectorPreview({
     return (
       <div className="inspector-empty">
         <KeyRound size={34} />
-        <span>API key missing</span>
+        <span>{t(locale, "apiKeyMissing")}</span>
       </div>
     );
   }
@@ -159,7 +166,7 @@ function InspectorPreview({
   return (
     <div className="inspector-empty">
       <Image size={34} />
-      <span>No image yet</span>
+      <span>{t(locale, "noImageYet")}</span>
     </div>
   );
 }

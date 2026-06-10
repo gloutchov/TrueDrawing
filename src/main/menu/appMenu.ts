@@ -5,153 +5,211 @@ import type { AppConfig } from "../../shared/config/appConfigSchema";
 
 let infoWindow: BrowserWindow | null = null;
 
-export function installAppMenu(config: AppConfig): void {
+type MenuLocale = "it" | "en";
+
+const menuText = {
+  it: {
+    file: "File",
+    new: "Nuovo",
+    open: "Apri",
+    save: "Salva",
+    saveAs: "Salva con nome...",
+    exportCanvasPng: "Esporta canvas PNG",
+    exportCanvasWebp: "Esporta canvas WebP",
+    exportImagePng: "Esporta immagine PNG",
+    exportImageWebp: "Esporta immagine WebP",
+    settings: "Impostazioni",
+    interface: "Interfaccia...",
+    style: "Stile...",
+    autoRedraw: "Redraw automatico...",
+    exit: "Esci",
+    edit: "Modifica",
+    undo: "Annulla",
+    redo: "Ripristina",
+    cut: "Taglia",
+    copy: "Copia",
+    paste: "Incolla",
+    crop: "Ritaglia",
+    view: "Vista",
+    resetZoom: "Reset zoom canvas",
+    zoomIn: "Aumenta zoom canvas",
+    zoomOut: "Riduci zoom canvas",
+    fullscreen: "Schermo intero",
+    help: "Aiuto",
+    info: "Info"
+  },
+  en: {
+    file: "File",
+    new: "New",
+    open: "Open",
+    save: "Save",
+    saveAs: "Save as...",
+    exportCanvasPng: "Export canvas PNG",
+    exportCanvasWebp: "Export canvas WebP",
+    exportImagePng: "Export image PNG",
+    exportImageWebp: "Export image WebP",
+    settings: "Settings",
+    interface: "Interface...",
+    style: "Style...",
+    autoRedraw: "Auto redraw...",
+    exit: "Exit",
+    edit: "Edit",
+    undo: "Undo",
+    redo: "Redo",
+    cut: "Cut",
+    copy: "Copy",
+    paste: "Paste",
+    crop: "Crop",
+    view: "View",
+    resetZoom: "Reset canvas zoom",
+    zoomIn: "Zoom canvas in",
+    zoomOut: "Zoom canvas out",
+    fullscreen: "Toggle fullscreen",
+    help: "Help",
+    info: "Info"
+  }
+} as const;
+
+export function installAppMenu(config: AppConfig, locale: MenuLocale = resolveSystemMenuLocale()): void {
+  const labels = menuText[locale];
   const template: MenuItemConstructorOptions[] = [
     {
-      label: "File",
+      label: labels.file,
       submenu: [
         {
-          label: "Nuovo",
+          label: labels.new,
           accelerator: "CmdOrCtrl+N",
           click: () => sendFileCommand("new")
         },
         {
-          label: "Apri",
+          label: labels.open,
           accelerator: "CmdOrCtrl+O",
           click: () => sendFileCommand("open")
         },
         {
-          label: "Salva",
+          label: labels.save,
           accelerator: "CmdOrCtrl+S",
           click: () => sendFileCommand("save")
         },
         {
-          label: "Salva con nome...",
+          label: labels.saveAs,
           accelerator: "CmdOrCtrl+Shift+S",
           click: () => sendFileCommand("save-as")
         },
         { type: "separator" },
         {
-          label: "Esporta canvas PNG",
+          label: labels.exportCanvasPng,
           click: () => sendFileCommand("export-canvas-png")
         },
         {
-          label: "Esporta canvas WebP",
+          label: labels.exportCanvasWebp,
           click: () => sendFileCommand("export-canvas-webp")
         },
         {
-          label: "Esporta immagine PNG",
+          label: labels.exportImagePng,
           click: () => sendFileCommand("export-image-png")
         },
         {
-          label: "Esporta immagine WebP",
+          label: labels.exportImageWebp,
           click: () => sendFileCommand("export-image-webp")
         },
         {
-          label: "Chiudi",
-          role: "close"
+          label: labels.settings,
+          submenu: [
+            {
+              label: labels.interface,
+              click: () => sendSettingsCommand("interface")
+            },
+            {
+              label: "API Key...",
+              accelerator: "CmdOrCtrl+,",
+              click: () => sendSettingsCommand("api-key")
+            },
+            {
+              label: labels.style,
+              click: () => sendSettingsCommand("image-style")
+            },
+            {
+              label: labels.autoRedraw,
+              click: () => sendSettingsCommand("auto-redraw")
+            }
+          ]
         },
         { type: "separator" },
         {
-          label: "API Key...",
-          accelerator: "CmdOrCtrl+,",
-          click: () => {
-            BrowserWindow.getAllWindows().forEach((window) => {
-              window.webContents.send("settings:open-api-key");
-            });
-          }
-        },
-        {
-          label: "Stile...",
-          click: () => {
-            BrowserWindow.getAllWindows().forEach((window) => {
-              window.webContents.send("settings:open-image-style");
-            });
-          }
-        },
-        {
-          label: "Redraw automatico...",
-          click: () => {
-            BrowserWindow.getAllWindows().forEach((window) => {
-              window.webContents.send("settings:open-auto-redraw");
-            });
-          }
-        },
-        { type: "separator" },
-        {
-          label: "Exit",
+          label: labels.exit,
           role: "quit"
         }
       ]
     },
     {
-      label: "Edit",
+      label: labels.edit,
       submenu: [
         {
-          label: "Undo",
+          label: labels.undo,
           accelerator: "CmdOrCtrl+Z",
           click: () => sendEditCommand("undo")
         },
         {
-          label: "Redo",
+          label: labels.redo,
           accelerator: "CmdOrCtrl+Shift+Z",
           click: () => sendEditCommand("redo")
         },
         { type: "separator" },
         {
-          label: "Cut",
+          label: labels.cut,
           accelerator: "CmdOrCtrl+X",
           click: () => sendEditCommand("cut")
         },
         {
-          label: "Copy",
+          label: labels.copy,
           accelerator: "CmdOrCtrl+C",
           click: () => sendEditCommand("copy")
         },
         {
-          label: "Paste",
+          label: labels.paste,
           accelerator: "CmdOrCtrl+V",
           click: () => sendEditCommand("paste")
         },
         { type: "separator" },
         {
-          label: "Crop",
+          label: labels.crop,
           accelerator: "CmdOrCtrl+Shift+X",
           click: () => sendEditCommand("crop")
         }
       ]
     },
     {
-      label: "View",
+      label: labels.view,
       submenu: [
         {
-          label: "Reset canvas zoom",
+          label: labels.resetZoom,
           accelerator: "CmdOrCtrl+0",
           click: () => sendViewCommand("canvas-zoom-reset")
         },
         {
-          label: "Zoom canvas in",
+          label: labels.zoomIn,
           accelerator: "CmdOrCtrl+=",
           click: () => sendViewCommand("canvas-zoom-in")
         },
         {
-          label: "Zoom canvas out",
+          label: labels.zoomOut,
           accelerator: "CmdOrCtrl+-",
           click: () => sendViewCommand("canvas-zoom-out")
         },
         { type: "separator" },
         {
-          label: "Toggle fullscreen",
+          label: labels.fullscreen,
           accelerator: process.platform === "darwin" ? "Ctrl+Command+F" : "F11",
           click: () => toggleFocusedWindowFullscreen()
         }
       ]
     },
     {
-      label: "Help",
+      label: labels.help,
       submenu: [
         {
-          label: "Info",
+          label: labels.info,
           click: () => {
             showInfoWindow(config);
           }
@@ -187,6 +245,16 @@ function sendEditCommand(command: string): void {
 function sendViewCommand(command: string): void {
   BrowserWindow.getAllWindows().forEach((window) => {
     window.webContents.send("view:command", command);
+  });
+}
+
+function resolveSystemMenuLocale(): MenuLocale {
+  return app.getLocale().toLowerCase().startsWith("it") ? "it" : "en";
+}
+
+function sendSettingsCommand(command: string): void {
+  BrowserWindow.getAllWindows().forEach((window) => {
+    window.webContents.send("settings:command", command);
   });
 }
 

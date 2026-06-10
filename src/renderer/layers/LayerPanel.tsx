@@ -1,10 +1,13 @@
 import { ChevronDown, ChevronUp, Eye, EyeOff, Layers, Plus, Trash2 } from "lucide-react";
 
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { DrawingDocument, DrawingLayer } from "../../shared/document/documentTypes";
 
 type LayerPanelProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   document: DrawingDocument;
   onAddLayer: () => void;
   onRenameLayer: (layerId: string, name: string) => void;
@@ -17,6 +20,7 @@ type LayerPanelProps = {
 
 export function LayerPanel({
   config,
+  locale,
   document,
   onAddLayer,
   onRenameLayer,
@@ -32,14 +36,14 @@ export function LayerPanel({
   const layerRows = [...document.layers].reverse();
 
   return (
-    <section className="panel" aria-label="Layers">
+    <section className="panel" aria-label={t(locale, "layers")}>
       <div className="panel-header">
-        <span><Layers size={16} /> Layers</span>
+        <span><Layers size={16} /> {t(locale, "layers")}</span>
         <div className="panel-actions">
           <button
             className="mini-button"
-            title="Add layer"
-            aria-label="Add layer"
+            title={t(locale, "addLayer")}
+            aria-label={t(locale, "addLayer")}
             disabled={!canAddLayer}
             onClick={onAddLayer}
           >
@@ -47,8 +51,8 @@ export function LayerPanel({
           </button>
           <button
             className="mini-button"
-            title="Delete active layer"
-            aria-label="Delete active layer"
+            title={t(locale, "deleteActiveLayer")}
+            aria-label={t(locale, "deleteActiveLayer")}
             disabled={!canDeleteLayer}
             onClick={() => activeLayer && onDeleteLayer(activeLayer.id)}
           >
@@ -65,6 +69,7 @@ export function LayerPanel({
             <LayerRow
               key={layer.id}
               config={config}
+              locale={locale}
               layer={layer}
               isActive={isActive}
               canMoveUp={sourceIndex < document.layers.length - 1}
@@ -84,6 +89,7 @@ export function LayerPanel({
 
 type LayerRowProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   layer: DrawingLayer;
   isActive: boolean;
   canMoveUp: boolean;
@@ -97,6 +103,7 @@ type LayerRowProps = {
 
 function LayerRow({
   config,
+  locale,
   layer,
   isActive,
   canMoveUp,
@@ -126,7 +133,7 @@ function LayerRow({
       </button>
       <input
         className="layer-name-input"
-        aria-label="Layer name"
+        aria-label={t(locale, "layerName")}
         value={layer.name}
         onClick={(event) => event.stopPropagation()}
         onFocus={() => onSelectLayer(layer.id)}
@@ -134,7 +141,7 @@ function LayerRow({
       />
       <input
         className="layer-opacity-input"
-        aria-label="Layer opacity"
+        aria-label={t(locale, "layerOpacity")}
         type="range"
         min={config.layers.opacityRange.min}
         max={config.layers.opacityRange.max}

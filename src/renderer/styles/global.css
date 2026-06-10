@@ -592,7 +592,8 @@ button {
   font-size: 12px;
 }
 
-.field input {
+.field input,
+.field select {
   height: 34px;
   border: 1px solid #9fb0b8;
   border-radius: 6px;
@@ -701,6 +702,7 @@ button {
 }
 
 .field input:focus,
+.field select:focus,
 .style-picker-trigger:focus {
   outline: 2px solid #b8cbd3;
   outline-offset: 0;
@@ -811,6 +813,129 @@ button {
 .status-bar span:first-child {
   flex: 1;
   color: #2f393d;
+}
+
+.app-shell[data-theme="dark"] {
+  color: #e8ecee;
+  background: #151a1d;
+}
+
+.app-shell[data-theme="dark"] .top-bar,
+.app-shell[data-theme="dark"] .status-bar,
+.app-shell[data-theme="dark"] .panel,
+.app-shell[data-theme="dark"] .tool-popover,
+.app-shell[data-theme="dark"] .canvas-zoom-controls,
+.app-shell[data-theme="dark"] .modal {
+  border-color: #3d484e;
+  background: #222a2f;
+}
+
+.app-shell[data-theme="dark"] .tool-rail {
+  border-color: #3d484e;
+  background: #1d2428;
+}
+
+.app-shell[data-theme="dark"] .right-panel {
+  border-color: #3d484e;
+  background: #1a2024;
+}
+
+.app-shell[data-theme="dark"] .panel-header,
+.app-shell[data-theme="dark"] .modal-header,
+.app-shell[data-theme="dark"] .modal-actions,
+.app-shell[data-theme="dark"] .status-bar {
+  border-color: #3d484e;
+}
+
+.app-shell[data-theme="dark"] .brand-lockup span,
+.app-shell[data-theme="dark"] .document-meta span,
+.app-shell[data-theme="dark"] .settings-summary,
+.app-shell[data-theme="dark"] .inspector-meta,
+.app-shell[data-theme="dark"] .layer-row small,
+.app-shell[data-theme="dark"] .field,
+.app-shell[data-theme="dark"] .settings-readout,
+.app-shell[data-theme="dark"] .status-bar,
+.app-shell[data-theme="dark"] .tool-readout,
+.app-shell[data-theme="dark"] .tool-slider {
+  color: #aeb9bf;
+}
+
+.app-shell[data-theme="dark"] .panel-header,
+.app-shell[data-theme="dark"] .panel-header span,
+.app-shell[data-theme="dark"] .modal-header span,
+.app-shell[data-theme="dark"] .icon-button,
+.app-shell[data-theme="dark"] .mini-button,
+.app-shell[data-theme="dark"] .text-button,
+.app-shell[data-theme="dark"] .layer-name-input,
+.app-shell[data-theme="dark"] .inspector-meta dd,
+.app-shell[data-theme="dark"] .settings-readout strong,
+.app-shell[data-theme="dark"] .status-bar span:first-child {
+  color: #e8ecee;
+}
+
+.app-shell[data-theme="dark"] .project-name-input,
+.app-shell[data-theme="dark"] .field input,
+.app-shell[data-theme="dark"] .field select,
+.app-shell[data-theme="dark"] .style-picker-trigger,
+.app-shell[data-theme="dark"] .style-picker-menu,
+.app-shell[data-theme="dark"] .form-message-textarea {
+  border-color: #55626a;
+  color: #e8ecee;
+  background: #11171a;
+}
+
+.app-shell[data-theme="dark"] .icon-button:hover,
+.app-shell[data-theme="dark"] .mini-button:hover,
+.app-shell[data-theme="dark"] .icon-button.is-active,
+.app-shell[data-theme="dark"] .mini-button.is-active,
+.app-shell[data-theme="dark"] .style-picker-option:hover,
+.app-shell[data-theme="dark"] .style-picker-option.is-active,
+.app-shell[data-theme="dark"] .layer-row.is-active,
+.app-shell[data-theme="dark"] .text-button,
+.app-shell[data-theme="dark"] .style-chip {
+  background: #344149;
+}
+
+.app-shell[data-theme="dark"] .text-button:hover,
+.app-shell[data-theme="dark"] .style-chip:hover,
+.app-shell[data-theme="dark"] .style-chip.is-active {
+  background: #426372;
+}
+
+.app-shell[data-theme="dark"] .text-button--primary,
+.app-shell[data-theme="dark"] .fullscreen-exit-button {
+  color: #ffffff;
+  background: #2f6f86;
+}
+
+.app-shell[data-theme="dark"] .text-button--primary:hover,
+.app-shell[data-theme="dark"] .fullscreen-exit-button:hover {
+  background: #367f99;
+}
+
+.app-shell[data-theme="dark"] .text-button--danger {
+  color: #ffd7d7;
+  background: #5b2a2a;
+}
+
+.app-shell[data-theme="dark"] .workspace {
+  background: #151a1d;
+}
+
+.app-shell[data-theme="dark"] .canvas-surface {
+  border-color: #465158;
+  box-shadow: 0 18px 45px rgb(0 0 0 / 34%);
+}
+
+.app-shell[data-theme="dark"] .inspector-preview {
+  color: #aeb9bf;
+  background: #11171a;
+}
+
+.app-shell[data-theme="dark"] .inspector-error {
+  border-color: #663838;
+  color: #ffd2d2;
+  background: #331919;
 }
 
 button:focus-visible,

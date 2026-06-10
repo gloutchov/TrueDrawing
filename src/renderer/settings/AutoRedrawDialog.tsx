@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { TimerReset, X } from "lucide-react";
 
+import type { EffectiveLocale } from "../app/uiPreferences";
+import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 
 type AutoRedrawDialogProps = {
   config: AppConfig;
+  locale: EffectiveLocale;
   open: boolean;
   enabled: boolean;
   delaySeconds: number;
@@ -20,6 +23,7 @@ type SaveState =
 
 export function AutoRedrawDialog({
   config,
+  locale,
   open,
   enabled,
   delaySeconds,
@@ -83,10 +87,10 @@ export function AutoRedrawDialog({
 
   return (
     <div className="modal-backdrop" role="presentation">
-      <section className="modal" role="dialog" aria-modal="true" aria-label="Auto redraw settings">
+      <section className="modal" role="dialog" aria-modal="true" aria-label={t(locale, "autoRedraw")}>
         <div className="modal-header">
-          <span><TimerReset size={17} /> Redraw automatico</span>
-          <button className="mini-button" title="Close" aria-label="Close" onClick={onClose}>
+          <span><TimerReset size={17} /> {t(locale, "autoRedraw")}</span>
+          <button className="mini-button" title={t(locale, "close")} aria-label={t(locale, "close")} onClick={onClose}>
             <X size={16} />
           </button>
         </div>
@@ -97,10 +101,10 @@ export function AutoRedrawDialog({
               checked={selectedEnabled}
               onChange={(event) => setSelectedEnabled(event.currentTarget.checked)}
             />
-            <span>Ridisegna automaticamente l'inspector quando il canvas resta fermo</span>
+            <span>{t(locale, "autoRedrawDescription")}</span>
           </label>
           <label className="field">
-            <span>Attesa prima del redraw, in secondi</span>
+            <span>{t(locale, "autoRedrawDelay")}</span>
             <input
               type="number"
               min={delayRange.min}
@@ -123,7 +127,7 @@ export function AutoRedrawDialog({
         </div>
         <div className="modal-actions">
           <button className="text-button" type="button" onClick={onClose}>
-            Cancel
+            {t(locale, "cancel")}
           </button>
           <button
             className="text-button text-button--primary"
@@ -131,7 +135,7 @@ export function AutoRedrawDialog({
             disabled={!delayIsValid || saveState.status === "saving"}
             onClick={() => void savePreferences()}
           >
-            Save
+            {t(locale, "save")}
           </button>
         </div>
       </section>

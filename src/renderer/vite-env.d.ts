@@ -24,6 +24,7 @@ declare global {
     trueDrawing: {
       getAppConfig: () => Promise<AppConfig>;
       getRuntimeInfo: () => Promise<RuntimeInfo>;
+      setUiMenuLocale: (locale: "it" | "en") => Promise<void>;
       getOpenAiApiKeyStatus: () => Promise<ApiKeyStatus>;
       setOpenAiApiKey: (apiKey: string) => Promise<ApiKeyStatus>;
       clearOpenAiApiKey: () => Promise<ApiKeyStatus>;
@@ -52,6 +53,7 @@ declare global {
       onOpenApiKeySettings: (callback: () => void) => () => void;
       onOpenImageStyleSettings: (callback: () => void) => () => void;
       onOpenAutoRedrawSettings: (callback: () => void) => () => void;
+      onSettingsCommand: (callback: (command: string) => void) => () => void;
       onFileCommand: (callback: (command: string) => void) => () => void;
       onEditCommand: (callback: (command: string) => void) => () => void;
       onViewCommand: (callback: (command: string) => void) => () => void;
