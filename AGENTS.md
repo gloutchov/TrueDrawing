@@ -11,6 +11,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Milestone corrente in sviluppo: M9 - Packaging, CI/CD e release cross-platform.
 - Ultimo branch milestone completato: `milestone/08-ux-polish`, mergiato su `main` tramite PR #5.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
+- CI M9 in corso: push branch `milestone/09-packaging-ci-release` verde con GitHub Actions run `27338790680`; PR M9 ancora da aprire/verificare.
 - Release GitHub corrente: `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS; M9 prepara `v0.9.0` con workflow manuale, note release, checksum e artifact Windows/macOS.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 

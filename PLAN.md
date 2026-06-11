@@ -889,7 +889,8 @@ Esito locale M9 in corso:
   - `npm run build`, successo;
   - `npm run dist:win`, build app completata ma packaging installer bloccato localmente dall'estrazione `winCodeSign` per privilegio Windows mancante sui symlink in `AppData`; riprovato fuori sandbox con stesso esito.
 - CI:
-  - da completare su PR M9.
+  - push branch `milestone/09-packaging-ci-release`: GitHub Actions run `27338790680`, successo.
+  - PR M9: da completare.
 - Release:
   - da completare dopo merge/tag `v0.9.0` tramite workflow manuale `Release`.
 
