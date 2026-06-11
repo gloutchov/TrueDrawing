@@ -1023,6 +1023,24 @@ Esito M10:
 
 Stato: completata e mergiata su `main`; release GitHub pubblicata.
 
+## Patch v1.0.1 - Fix avvio pacchetti installati
+
+- Data: 2026-06-11.
+- Versione: `1.0.1`.
+- Branch: `main`.
+- Obiettivo: correggere la finestra bianca all'avvio del programma installato su Windows.
+- Causa: la build Vite emetteva asset renderer con percorsi assoluti `/assets/...`; nei pacchetti Electron caricati via `file://` tali percorsi non puntavano a `dist/renderer/assets`, quindi JavaScript e CSS non venivano caricati.
+- Implementazione:
+  - configurato `base: "./"` in `vite.config.ts`;
+  - aggiunto test unitario `tests/unit/viteConfig.test.ts`;
+  - aggiornate versione, manuali, README, AGENTS, MAP, landing page e note release `docs/release-notes/v1.0.1.md`.
+- Verifica prevista:
+  - `npm run lint`;
+  - `npm run test`;
+  - `npm run build`;
+  - controllo che `dist/renderer/index.html` usi `./assets/...`;
+  - package Windows locale e smoke test avvio app.
+
 ## Backlog post release
 
 - Supporto brush avanzati e texture personalizzate.
@@ -1053,6 +1071,7 @@ Stato: completata e mergiata su `main`; release GitHub pubblicata.
 | 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
 | 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | Completata | Versione aggiornata, PR #8 mergiata, CI branch/PR/main verde, tag `v0.9.0` pushato, workflow release `27340285563` verde, release `v0.9.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
 | 2026-06-11 | M10 - Landing page del programma | 1.0.0 | `milestone/10-landing-page` | Completata | Versione portata a `1.0.0`, landing page statica bilingue in `docs/`, PR #9 mergiata, CI branch/PR/main verde, tag `v1.0.0` pushato, workflow release `27346106628` verde, release `v1.0.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
+| 2026-06-11 | Patch avvio pacchetti installati | 1.0.1 | `main` | In verifica | Corretto `base: "./"` in Vite per evitare finestra bianca nei pacchetti Electron installati; aggiunto test config e note release `v1.0.1`. |
 
 ## Checklist di chiusura milestone
 

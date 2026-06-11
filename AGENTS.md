@@ -6,14 +6,15 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: M10 - Landing page del programma.
 - Ultima patch completata: `0.8.2` - preferenze interfaccia bilingue e tema chiaro/scuro, mergiata su `main` tramite PR #7.
-- Versione corrente: `1.0.0`.
+- Versione corrente: `1.0.1`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
+- Patch corrente: `1.0.1` - fix caricamento asset renderer nei pacchetti Electron installati.
 - Ultimo branch milestone completato: `milestone/10-landing-page`, mergiato su `main` tramite PR #9.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
 - CI M10: PR #9 verde con GitHub Actions run `27345974695`; `main` verde con run `27346032900`; release workflow `27346106628` verde.
-- Release GitHub corrente: `v1.0.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.0.1` prevista come patch stabile per correggere la finestra bianca all'avvio dei pacchetti installati.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
