@@ -1,6 +1,6 @@
 {
   "name": "truedrawing",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "description": "True Drawing desktop app",
   "main": "dist-electron/main/appMain.js",
