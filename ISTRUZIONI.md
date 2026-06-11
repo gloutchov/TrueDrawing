@@ -52,12 +52,12 @@ _Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. 
 
 ### Verifica checksum SHA-256
 
-La release `v1.0.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
+La release `v1.0.1` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
 
 Su Windows, dalla cartella dove si trova l'installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.0.0-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.0.1-Windows-x64.exe -Algorithm SHA256
 ```
 
 Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
@@ -65,7 +65,7 @@ Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.t
 Su macOS, dalla cartella dove si trova il download:
 
 ```bash
-shasum -a 256 True-Drawing-1.0.0-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.0.1-macOS-arm64.dmg
 ```
 
 Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.

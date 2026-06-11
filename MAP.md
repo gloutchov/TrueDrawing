@@ -23,7 +23,7 @@ truedrawing/
 |   Type-check TypeScript/React del renderer.
 |
 +-- vite.config.ts
-|   Configurazione Vite per build renderer.
+|   Configurazione Vite per build renderer, con asset relativi per pacchetti Electron caricati da file.
 |
 +-- eslint.config.mjs
 |   Regole lint TypeScript.
@@ -164,7 +164,7 @@ truedrawing/
 +-- tests/
 |   |
 |   +-- unit/
-|   |   Test di modello, strumenti, layer, history, config, adapter, segreti, preferenze, CSP e formato progetto.
+|   |   Test di modello, strumenti, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto e configurazione Vite.
 |   |
 |   +-- e2e/
 |       Test end-to-end su flussi principali.
@@ -211,10 +211,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `1.0.0`.
+- Versione: `1.0.1`.
 - Ultima milestone completata: M10 - Landing page del programma.
 - Milestone corrente: nessuna.
-- Stato milestone: M10 mergiata su `main` tramite PR #9; tag `v1.0.0` pushato; release GitHub `v1.0.0` pubblicata con artifact Windows/macOS, note release e checksum SHA-256.
+- Stato milestone: M10 mergiata su `main` tramite PR #9; patch `v1.0.1` in preparazione per correggere il caricamento asset renderer nei pacchetti installati.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -245,3 +245,4 @@ truedrawing/
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI presente; workflow release Windows/macOS manuale consolidato con validazione tag/versione, note release, checksum e upload diretto asset.
 - Landing page statica in `docs/` completata con asset reali, lingua IT/EN e layout responsive.
+- Build renderer configurata con asset relativi, cosi' i pacchetti Electron installati caricano correttamente JavaScript e CSS da `file://`.
