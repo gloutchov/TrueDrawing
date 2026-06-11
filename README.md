@@ -76,7 +76,7 @@ Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
 Le release GitHub per Windows e macOS sono distribuite senza firma codice e senza notarizzazione perche' non sono disponibili certificati o credenziali di firma. Windows SmartScreen e macOS Gatekeeper possono quindi mostrare avvisi di sicurezza all'apertura dell'app scaricata.
 
-La release stabile prevista e' `v1.0.0`: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0`. Viene prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v1.0.0`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v1.0.0.md` e file checksum SHA-256.
+La release stabile `v1.0.0` e' pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0`. E' stata prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v1.0.0`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v1.0.0.md` e file checksum SHA-256.
 
 ### Landing page
 
@@ -149,7 +149,7 @@ Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
 GitHub releases for Windows and macOS are distributed without code signing and without notarization because signing certificates or credentials are not available. Windows SmartScreen and macOS Gatekeeper may therefore show security warnings when opening the downloaded app.
 
-The planned stable release is `v1.0.0`: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0`. It is produced with the manual GitHub Actions `Release` workflow, using tag `v1.0.0`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v1.0.0.md`, and SHA-256 checksum files.
+Stable release `v1.0.0` is published: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0`. It was produced with the manual GitHub Actions `Release` workflow, using tag `v1.0.0`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v1.0.0.md`, and SHA-256 checksum files.
 
 ### Landing Page
 

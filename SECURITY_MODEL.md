@@ -69,7 +69,7 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Clipboard testo/immagine e fullscreen finestra tramite IPC controllati: completati.
 - Preferenze UI non segrete tramite `localStorage` configurato, incluse zoom, lingua e tema: completate.
 - Workflow release manuale con validazione versione, note release e checksum SHA-256: completato.
-- Landing page statica in `docs/` senza gestione segreti, senza backend e con soli link pubblici a repository/release: in sviluppo.
+- Landing page statica in `docs/` senza gestione segreti, senza backend e con soli link pubblici a repository/release: completata.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ## English
@@ -141,5 +141,5 @@ The project currently has no certificates or credentials for Windows code signin
 - Text/image clipboard and window fullscreen through controlled IPC: complete.
 - Non-secret UI preferences through configured `localStorage`, including zoom, language, and theme: complete.
 - Manual release workflow with version validation, release notes, and SHA-256 checksums: complete.
-- Static landing page under `docs/` with no secret handling, no backend, and only public repository/release links: in progress.
+- Static landing page under `docs/` with no secret handling, no backend, and only public repository/release links: complete.
 - Security tests for credential store, preferences, and CSP: complete.
