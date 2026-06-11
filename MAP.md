@@ -185,7 +185,7 @@ truedrawing/
 +-- ISTRUZIONI.md
 |   Istruzioni utente in italiano.
 |
-+-- INSTRUCTION.md
++-- INSTRUCTIONS.md
 |   Istruzioni utente in inglese.
 |
 +-- SECURITY_MODEL.md
@@ -212,9 +212,9 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `1.0.1`.
-- Ultima milestone completata: M10 - Landing page del programma.
+- Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
 - Milestone corrente: nessuna.
-- Stato milestone: M10 mergiata su `main` tramite PR #9; patch `v1.0.1` pubblicata per correggere il caricamento asset renderer nei pacchetti installati.
+- Stato milestone: M11 completata come modifica documentale senza nuova release; M10 mergiata su `main` tramite PR #9 e patch `v1.0.1` pubblicata per correggere il caricamento asset renderer nei pacchetti installati.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.

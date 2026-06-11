@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: M10 - Landing page del programma.
+- Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
 - Ultima patch completata: `1.0.1` - fix caricamento asset renderer nei pacchetti Electron installati.
 - Versione corrente: `1.0.1`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/10-landing-page`, mergiato su `main` tramite PR #9.
+- Ultimo branch milestone completato: `milestone/11-post-release-roadmap`, merge diretto su `main` come modifica documentale.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
 - CI M10: PR #9 verde con GitHub Actions run `27345974695`; `main` verde con run `27346032900`; release workflow `27346106628` verde.
@@ -25,8 +25,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Non eliminare il branch milestone prima che la release GitHub sia stata generata e controllata, quando la release e' prevista.
 - Per risparmiare credito GitHub Actions, non generare release GitHub automatiche per ogni milestone intermedia: produrre release Windows/macOS solo quando esplicitamente richiesto o quando il piano indica una versione beta/stabile quasi definitiva.
 - Non configurare firma codice Windows, firma macOS o notarizzazione finche' non saranno disponibili credenziali esplicite; produrre artifact non firmati e documentare SmartScreen/Gatekeeper nelle istruzioni utente.
-- Aggiornare la versione alla chiusura di ogni milestone secondo `PLAN.md`.
-- Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTION.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
+- Aggiornare la versione alla chiusura di ogni milestone secondo `PLAN.md`; le milestone solo documentali possono restare sulla versione corrente se il piano non prevede una nuova release.
+- Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
 
 ## Architettura
 
