@@ -214,7 +214,7 @@ truedrawing/
 - Versione: `1.0.1`.
 - Ultima milestone completata: M10 - Landing page del programma.
 - Milestone corrente: nessuna.
-- Stato milestone: M10 mergiata su `main` tramite PR #9; patch `v1.0.1` in preparazione per correggere il caricamento asset renderer nei pacchetti installati.
+- Stato milestone: M10 mergiata su `main` tramite PR #9; patch `v1.0.1` pubblicata per correggere il caricamento asset renderer nei pacchetti installati.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.

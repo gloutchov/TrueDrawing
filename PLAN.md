@@ -1034,12 +1034,28 @@ Stato: completata e mergiata su `main`; release GitHub pubblicata.
   - configurato `base: "./"` in `vite.config.ts`;
   - aggiunto test unitario `tests/unit/viteConfig.test.ts`;
   - aggiornate versione, manuali, README, AGENTS, MAP, landing page e note release `docs/release-notes/v1.0.1.md`.
-- Verifica prevista:
+- Verifica:
   - `npm run lint`;
   - `npm run test`;
   - `npm run build`;
   - controllo che `dist/renderer/index.html` usi `./assets/...`;
-  - package Windows locale e smoke test avvio app.
+  - `npm run dist:win` locale ha prodotto `release/win-unpacked` ma si e' fermato nella fase NSIS per privilegio Windows mancante sui symlink della cache `winCodeSign`;
+  - workflow release GitHub `27353682972` completato con successo per validate, release, build Windows e build macOS.
+- GitHub:
+  - commit `66ca49e` pushato su `main`;
+  - tag `v1.0.1` pushato;
+  - release `v1.0.1` pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.1`.
+- Artifact release verificati:
+  - `True-Drawing-1.0.1-Windows-x64.exe`;
+  - `True-Drawing-1.0.1-Windows-x64.exe.blockmap`;
+  - `True-Drawing-1.0.1-macOS-arm64.dmg`;
+  - `True-Drawing-1.0.1-macOS-arm64.dmg.blockmap`;
+  - `True-Drawing-1.0.1-macOS-arm64.zip`;
+  - `True-Drawing-1.0.1-macOS-arm64.zip.blockmap`;
+  - `latest.yml`;
+  - `latest-mac.yml`;
+  - `SHA256SUMS-windows.txt`;
+  - `SHA256SUMS-macos.txt`.
 
 ## Backlog post release
 
@@ -1071,7 +1087,7 @@ Stato: completata e mergiata su `main`; release GitHub pubblicata.
 | 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
 | 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | Completata | Versione aggiornata, PR #8 mergiata, CI branch/PR/main verde, tag `v0.9.0` pushato, workflow release `27340285563` verde, release `v0.9.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
 | 2026-06-11 | M10 - Landing page del programma | 1.0.0 | `milestone/10-landing-page` | Completata | Versione portata a `1.0.0`, landing page statica bilingue in `docs/`, PR #9 mergiata, CI branch/PR/main verde, tag `v1.0.0` pushato, workflow release `27346106628` verde, release `v1.0.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
-| 2026-06-11 | Patch avvio pacchetti installati | 1.0.1 | `main` | In verifica | Corretto `base: "./"` in Vite per evitare finestra bianca nei pacchetti Electron installati; aggiunto test config e note release `v1.0.1`. |
+| 2026-06-11 | Patch avvio pacchetti installati | 1.0.1 | `main` | Completata | Corretto `base: "./"` in Vite per evitare finestra bianca nei pacchetti Electron installati; tag `v1.0.1` pushato, workflow release `27353682972` verde e release `v1.0.1` pubblicata. |
 
 ## Checklist di chiusura milestone
 
