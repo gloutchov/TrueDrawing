@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.8.2-blue" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.9.0-blue" />
   <img alt="Electron" src="https://img.shields.io/badge/Electron-42-47848f" />
   <img alt="React" src="https://img.shields.io/badge/React-18-61dafb" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178c6" />
@@ -21,8 +21,8 @@
 
 | IT | EN |
 | --- | --- |
-| Versione sorgente: `0.8.2` | Source version: `0.8.2` |
-| Stato: alpha funzionante | Status: working alpha |
+| Versione sorgente: `0.9.0` | Source version: `0.9.0` |
+| Stato: release cross-platform pronta per packaging | Status: cross-platform release ready for packaging |
 | Piattaforme: macOS e Windows | Platforms: macOS and Windows |
 | Runtime desktop: Electron | Desktop runtime: Electron |
 | UI: React, TypeScript, Vite | UI: React, TypeScript, Vite |
@@ -67,13 +67,15 @@ npm run dist:mac
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione corrente e' `0.8.2` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP e rifiniture UX con status bar, stati vuoti, conferme distruttive e zoom persistente.
+Il progetto e' in fase iniziale. La versione corrente e' `0.9.0` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente e workflow manuale di release cross-platform.
 
 Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
 ### Distribuzione
 
 Le release GitHub per Windows e macOS sono distribuite senza firma codice e senza notarizzazione perche' non sono disponibili certificati o credenziali di firma. Windows SmartScreen e macOS Gatekeeper possono quindi mostrare avvisi di sicurezza all'apertura dell'app scaricata.
+
+La release `v0.9.0` viene prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v0.9.0`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v0.9.0.md` e file checksum SHA-256.
 
 ### Funzionalita' previste
 
@@ -134,13 +136,15 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Current version is `0.8.2` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, and UX polish with a status bar, empty states, destructive-action confirmations, and persistent zoom.
+The project is at its initial stage. Current version is `0.9.0` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, and a manual cross-platform release workflow.
 
 Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
 ### Distribution
 
 GitHub releases for Windows and macOS are distributed without code signing and without notarization because signing certificates or credentials are not available. Windows SmartScreen and macOS Gatekeeper may therefore show security warnings when opening the downloaded app.
+
+Release `v0.9.0` is produced with the manual GitHub Actions `Release` workflow, using tag `v0.9.0`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v0.9.0.md`, and SHA-256 checksum files.
 
 ### Planned Features
 

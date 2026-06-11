@@ -50,6 +50,26 @@ E' quindi possibile che all'avvio il Sistema Operativo vi chieda il permesso a p
 
 _Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. Nell'area Tech di questo documento trovate le istruzioni per verificare che i files non siano stati compromessi.
 
+### Verifica checksum SHA-256
+
+La release `v0.9.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
+
+Su Windows, dalla cartella dove si trova l'installer:
+
+```powershell
+Get-FileHash .\True-Drawing-0.9.0-Windows-x64.exe -Algorithm SHA256
+```
+
+Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
+
+Su macOS, dalla cartella dove si trova il download:
+
+```bash
+shasum -a 256 True-Drawing-0.9.0-macOS-arm64.dmg
+```
+
+Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.
+
 ### Avvio di True Drawing
 
 Sia su macOS. sia su Windows, è sufficiente fare doppioclick sull'icona del programma.
