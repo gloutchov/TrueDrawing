@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="True Drawing is a local desktop app for turning quick sketches into AI-generated images."
+    />
+    <title>True Drawing</title>
+    <link rel="stylesheet" href="./landing.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="True Drawing">
+        <span>True Drawing</span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#gallery" data-i18n="navGallery">Gallery</a>
+        <a href="#download" data-i18n="navDownload">Download</a>
+        <a href="https://github.com/gloutchov/truedrawing" data-i18n="navRepo">Repository</a>
+      </nav>
+      <div class="language-switch" aria-label="Language">
+        <button type="button" data-lang="it">IT</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <picture>
+          <source media="(max-width: 760px)" srcset="./assets/interfaccia_en_black.png" />
+          <img
+            class="hero-image"
+            src="./assets/disegno_en_black.png"
+            alt="True Drawing interface with a sketch and generated image preview"
+          />
+        </picture>
+        <div class="hero-scrim" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="release-kicker" data-i18n="releaseKicker">Version 1.0.0 for Windows and macOS</p>
+          <h1 id="hero-title">True Drawing</h1>
+          <p class="hero-copy" data-i18n="heroCopy">
+            Draw a rough idea locally, then turn it into a polished image with your own OpenAI API key.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0" data-i18n="downloadCta">
+              Download v1.0.0
+            </a>
+            <a class="secondary-link" href="https://github.com/gloutchov/truedrawing" data-i18n="repoCta">
+              View source
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="intro-band" aria-label="Highlights">
+        <div class="intro-grid">
+          <p data-i18n="highlightLocal">Local sketch files, autosave, recovery, and export stay on your computer.</p>
+          <p data-i18n="highlightTools">Brushes, layers, fill, selection, undo/redo, and canvas zoom are ready to use.</p>
+          <p data-i18n="highlightRelease">Unsigned GitHub builds include SHA-256 checksums for verification.</p>
+        </div>
+      </section>
+
+      <section id="gallery" class="section" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="galleryEyebrow">Interface</p>
+          <h2 id="gallery-title" data-i18n="galleryTitle">A focused drawing workspace</h2>
+          <p data-i18n="galleryCopy">
+            The landing page uses the real application screenshots prepared for Italian and English, light and dark themes.
+          </p>
+        </div>
+        <div class="media-feature">
+          <img src="./assets/truedrawing.gif" alt="Animated preview of True Drawing transforming a sketch into an image" />
+        </div>
+        <div class="screenshot-grid">
+          <figure>
+            <img src="./assets/interfaccia_it_black.png" alt="True Drawing Italian interface in dark theme" />
+            <figcaption data-i18n="captionItDark">Italian interface, dark theme</figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/interfaccia_en_white.png" alt="True Drawing English interface in light theme" />
+            <figcaption data-i18n="captionEnLight">English interface, light theme</figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/disegno_it_white.png" alt="True Drawing Italian drawing view in light theme" />
+            <figcaption data-i18n="captionDrawingLight">Drawing and generated image, light theme</figcaption>
+          </figure>
+          <figure>
+            <img src="./assets/disegno_en_black.png" alt="True Drawing English drawing view in dark theme" />
+            <figcaption data-i18n="captionDrawingDark">Drawing and generated image, dark theme</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="download" class="download-band" aria-labelledby="download-title">
+        <div>
+          <p class="eyebrow" data-i18n="downloadEyebrow">Release</p>
+          <h2 id="download-title" data-i18n="downloadTitle">Download True Drawing v1.0.0</h2>
+          <p data-i18n="downloadCopy">
+            Builds are distributed through GitHub for Windows and macOS. They are not signed or notarized, so SmartScreen or Gatekeeper may warn on first launch.
+          </p>
+        </div>
+        <div class="download-actions">
+          <a class="primary-link" href="https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0" data-i18n="releaseCta">
+            Open release
+          </a>
+          <a class="secondary-link" href="https://github.com/gloutchov/truedrawing/releases/download/v1.0.0/SHA256SUMS-windows.txt" data-i18n="checksumWindowsCta">
+            Windows checksums
+          </a>
+          <a class="secondary-link" href="https://github.com/gloutchov/truedrawing/releases/download/v1.0.0/SHA256SUMS-macos.txt" data-i18n="checksumMacCta">
+            macOS checksums
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>True Drawing</span>
+      <a href="https://github.com/gloutchov/truedrawing" data-i18n="footerRepo">GitHub repository</a>
+    </footer>
+
+    <script src="./landing.js"></script>
+  </body>
+</html>
