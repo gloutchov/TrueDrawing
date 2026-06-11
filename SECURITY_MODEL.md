@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione: `0.8.2`
+Versione: `0.9.0`
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -48,7 +48,7 @@ Le chiamate di rete devono essere limitate alla generazione dell'immagine realis
 
 ### Distribuzione
 
-Il progetto non dispone attualmente di certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Gli artifact pubblicati via GitHub devono quindi essere considerati non firmati e la documentazione utente deve indicare che i sistemi operativi possono mostrare avvisi di sicurezza. Questa scelta non modifica la gestione dei segreti nell'app, ma resta un rischio di distribuzione da rivalutare se in futuro saranno disponibili credenziali ufficiali.
+Il progetto non dispone attualmente di certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Gli artifact pubblicati via GitHub devono quindi essere considerati non firmati e la documentazione utente deve indicare che i sistemi operativi possono mostrare avvisi di sicurezza. Il workflow release manuale crea note di release dedicate e file checksum SHA-256 per gli artifact Windows/macOS. Questa scelta non modifica la gestione dei segreti nell'app, ma resta un rischio di distribuzione da rivalutare se in futuro saranno disponibili credenziali ufficiali.
 
 ### Stato attuale
 
@@ -68,11 +68,12 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Sanitizzazione nomi file generati con protezione da caratteri non validi, nomi riservati Windows e finali problematici: completata.
 - Clipboard testo/immagine e fullscreen finestra tramite IPC controllati: completati.
 - Preferenze UI non segrete tramite `localStorage` configurato, incluse zoom, lingua e tema: completate.
+- Workflow release manuale con validazione versione, note release e checksum SHA-256: completato.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ## English
 
-Version: `0.8.2`
+Version: `0.9.0`
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -118,7 +119,7 @@ Network calls must be limited to realistic image generation and must send only t
 
 ### Distribution
 
-The project currently has no certificates or credentials for Windows code signing, macOS signing, or Apple notarization. Artifacts published through GitHub must therefore be treated as unsigned, and user documentation must state that operating systems may show security warnings. This does not change in-app secret handling, but it remains a distribution risk to reassess if official credentials become available.
+The project currently has no certificates or credentials for Windows code signing, macOS signing, or Apple notarization. Artifacts published through GitHub must therefore be treated as unsigned, and user documentation must state that operating systems may show security warnings. The manual release workflow creates dedicated release notes and SHA-256 checksum files for Windows/macOS artifacts. This does not change in-app secret handling, but it remains a distribution risk to reassess if official credentials become available.
 
 ### Current Status
 
@@ -138,4 +139,5 @@ The project currently has no certificates or credentials for Windows code signin
 - Generated filename sanitization covering invalid characters, Windows reserved names, and problematic trailing characters: complete.
 - Text/image clipboard and window fullscreen through controlled IPC: complete.
 - Non-secret UI preferences through configured `localStorage`, including zoom, language, and theme: complete.
+- Manual release workflow with version validation, release notes, and SHA-256 checksums: complete.
 - Security tests for credential store, preferences, and CSP: complete.

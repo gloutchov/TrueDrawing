@@ -843,8 +843,10 @@ Attivita':
   - lint;
   - test;
   - build;
+  - validazione tag/versione;
   - packaging Windows;
   - packaging macOS;
+  - checksum SHA-256;
   - artifact upload;
   - release da tag.
 - Mantenere disattivate firma codice Windows, firma macOS e notarizzazione Apple finche' non saranno disponibili credenziali dedicate.
@@ -856,6 +858,7 @@ Criteri di accettazione:
 
 - Il tag `v0.9.0` genera una release GitHub scaricabile tramite workflow manuale.
 - Artifact Windows e macOS sono presenti nella release `v0.9.0`.
+- I file checksum SHA-256 sono presenti nella release `v0.9.0`.
 - Le note di release e la documentazione indicano chiaramente che gli artifact sono non firmati, salvo disponibilita' futura di credenziali.
 - CI fallisce se test o build falliscono.
 - La procedura e' documentata in `AGENTS.md` e `README.md`.
@@ -867,7 +870,30 @@ Verifiche:
 - Download e avvio artifact su almeno una piattaforma disponibile.
 - Controllo manuale release GitHub.
 
-Stato: pianificata.
+Esito locale M9 in corso:
+
+- Branch usato: `milestone/09-packaging-ci-release`.
+- Versione iniziale: `0.8.2`.
+- Versione finale prevista: `0.9.0`.
+- Implementazione locale:
+  - versione sorgente aggiornata a `0.9.0`;
+  - workflow release manuale consolidato con job di validazione tag/versione, documenti obbligatori, lint, test e build;
+  - creazione o aggiornamento release GitHub con note da `docs/release-notes/v0.9.0.md`;
+  - upload diretto degli asset Windows/macOS non firmati sulla release GitHub;
+  - generazione e upload checksum `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`;
+  - documentazione aggiornata per procedura release, warning SmartScreen/Gatekeeper e verifica checksum.
+- Verifiche locali:
+  - `git diff --check`, successo;
+  - `npm run lint`, successo;
+  - `npm run test`, successo con 10 file e 34 test;
+  - `npm run build`, successo;
+  - `npm run dist:win`, build app completata ma packaging installer bloccato localmente dall'estrazione `winCodeSign` per privilegio Windows mancante sui symlink in `AppData`; riprovato fuori sandbox con stesso esito.
+- CI:
+  - da completare su PR M9.
+- Release:
+  - da completare dopo merge/tag `v0.9.0` tramite workflow manuale `Release`.
+
+Stato: in sviluppo.
 
 ### Validazione beta e stabilizzazione
 
@@ -950,6 +976,7 @@ Stato: pianificata.
 | 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; PR #5 e CI verdi; tag `v0.8.0` pushato; release rinviata. |
 | 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Completata | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio; PR #7 e CI verdi; tag `v0.8.2` pushato; branch eliminato; release rinviata. |
 | 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
+| 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | In sviluppo | Versione aggiornata, workflow release manuale consolidato con validazione tag/versione, note release `v0.9.0`, checksum SHA-256 e documentazione release/checksum aggiornata; verifiche locali, PR/CI e pubblicazione release ancora da completare. |
 
 ## Checklist di chiusura milestone
 
