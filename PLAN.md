@@ -870,7 +870,7 @@ Verifiche:
 - Download e avvio artifact su almeno una piattaforma disponibile.
 - Controllo manuale release GitHub.
 
-Esito locale M9 in corso:
+Esito M9:
 
 - Branch usato: `milestone/09-packaging-ci-release`.
 - Versione iniziale: `0.8.2`.
@@ -890,11 +890,32 @@ Esito locale M9 in corso:
   - `npm run dist:win`, build app completata ma packaging installer bloccato localmente dall'estrazione `winCodeSign` per privilegio Windows mancante sui symlink in `AppData`; riprovato fuori sandbox con stesso esito.
 - CI:
   - push branch `milestone/09-packaging-ci-release`: GitHub Actions run `27338790680`, successo.
-  - PR M9: da completare.
+  - push finale branch `milestone/09-packaging-ci-release`: GitHub Actions run `27338880412`, successo.
+  - PR #8: GitHub Actions run `27339171091`, successo.
+  - `main` dopo merge: GitHub Actions run `27339232172`, successo.
+  - workflow release `v0.9.0`: GitHub Actions run `27340285563`, successo con validazione, build Windows, build macOS, checksum e upload asset.
+- GitHub:
+  - PR #8 mergiata su `main`;
+  - tag `v0.9.0` pushato;
+  - release `v0.9.0` pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v0.9.0`.
 - Release:
-  - da completare dopo merge/tag `v0.9.0` tramite workflow manuale `Release`.
+  - pubblicata con artifact Windows/macOS non firmati e checksum SHA-256.
+- Artifact release verificati:
+  - `True-Drawing-0.9.0-Windows-x64.exe`;
+  - `True-Drawing-0.9.0-Windows-x64.exe.blockmap`;
+  - `True-Drawing-0.9.0-macOS-arm64.dmg`;
+  - `True-Drawing-0.9.0-macOS-arm64.dmg.blockmap`;
+  - `True-Drawing-0.9.0-macOS-arm64.zip`;
+  - `True-Drawing-0.9.0-macOS-arm64.zip.blockmap`;
+  - `latest.yml`;
+  - `latest-mac.yml`;
+  - `SHA256SUMS-windows.txt`;
+  - `SHA256SUMS-macos.txt`.
+- Rischi residui:
+  - artifact non firmati e non notarizzati: SmartScreen/Gatekeeper possono mostrare avvisi;
+  - GitHub Actions segnala deprecazione futura delle action basate su Node.js 20; da aggiornare in una prossima milestone.
 
-Stato: in sviluppo.
+Stato: completata e mergiata su `main`; release GitHub pubblicata.
 
 ### Validazione beta e stabilizzazione
 
@@ -977,7 +998,7 @@ Stato: pianificata.
 | 2026-06-10 | M8 - Esperienza utente completa e rifinitura app | 0.8.0 | `milestone/08-ux-polish` | Completata | Status bar, stati inspector, conferme distruttive, zoom persistente, menu strumenti richiudibili, stile immagine, redraw automatico, focus visibile, layout piu' stabile, configurazione UI validata e policy release non firmate documentata; lint/test/build locali verdi; PR #5 e CI verdi; tag `v0.8.0` pushato; release rinviata. |
 | 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Completata | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio; PR #7 e CI verdi; tag `v0.8.2` pushato; branch eliminato; release rinviata. |
 | 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
-| 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | In sviluppo | Versione aggiornata, workflow release manuale consolidato con validazione tag/versione, note release `v0.9.0`, checksum SHA-256 e documentazione release/checksum aggiornata; verifiche locali, PR/CI e pubblicazione release ancora da completare. |
+| 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | Completata | Versione aggiornata, PR #8 mergiata, CI branch/PR/main verde, tag `v0.9.0` pushato, workflow release `27340285563` verde, release `v0.9.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
 
 ## Checklist di chiusura milestone
 
