@@ -994,7 +994,8 @@ Esito locale M10 in corso:
   - browser in-app non disponibile nella sessione (`iab` non esposto);
   - tentativo Edge headless desktop bloccato localmente da permessi Crashpad/IPC prima del rendering, senza screenshot generato.
 - CI:
-  - da completare su PR M10.
+  - push branch `milestone/10-landing-page`: GitHub Actions run `27345829010`, successo.
+  - PR M10: da completare.
 - Release:
   - da completare dopo merge/tag `v1.0.0` tramite workflow manuale `Release`.
 
