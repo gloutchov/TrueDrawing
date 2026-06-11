@@ -4,15 +4,15 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app.
+- Ultima milestone completata: M9 - Packaging, CI/CD e release cross-platform.
 - Ultima patch completata: `0.8.2` - preferenze interfaccia bilingue e tema chiaro/scuro, mergiata su `main` tramite PR #7.
 - Versione corrente: `0.9.0`.
-- Branch corrente: `milestone/09-packaging-ci-release`.
-- Milestone corrente in sviluppo: M9 - Packaging, CI/CD e release cross-platform.
-- Ultimo branch milestone completato: `milestone/08-ux-polish`, mergiato su `main` tramite PR #5.
+- Branch corrente: `main`.
+- Milestone corrente in sviluppo: nessuna; prossima milestone pianificata M10 - Landing page del programma.
+- Ultimo branch milestone completato: `milestone/09-packaging-ci-release`, mergiato su `main` tramite PR #8.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
-- CI M9 in corso: push branch `milestone/09-packaging-ci-release` verde con GitHub Actions run `27338790680`; PR M9 ancora da aprire/verificare.
-- Release GitHub corrente: `v0.4.0` resta l'unica release pubblicata con artifact Windows/macOS; M9 prepara `v0.9.0` con workflow manuale, note release, checksum e artifact Windows/macOS.
+- CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
+- Release GitHub corrente: `v0.9.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali

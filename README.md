@@ -75,7 +75,7 @@ Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
 Le release GitHub per Windows e macOS sono distribuite senza firma codice e senza notarizzazione perche' non sono disponibili certificati o credenziali di firma. Windows SmartScreen e macOS Gatekeeper possono quindi mostrare avvisi di sicurezza all'apertura dell'app scaricata.
 
-La release `v0.9.0` viene prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v0.9.0`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v0.9.0.md` e file checksum SHA-256.
+La release `v0.9.0` e' pubblicata su GitHub: `https://github.com/gloutchov/truedrawing/releases/tag/v0.9.0`. E' stata prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v0.9.0`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v0.9.0.md` e file checksum SHA-256.
 
 ### Funzionalita' previste
 
@@ -144,7 +144,7 @@ Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
 GitHub releases for Windows and macOS are distributed without code signing and without notarization because signing certificates or credentials are not available. Windows SmartScreen and macOS Gatekeeper may therefore show security warnings when opening the downloaded app.
 
-Release `v0.9.0` is produced with the manual GitHub Actions `Release` workflow, using tag `v0.9.0`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v0.9.0.md`, and SHA-256 checksum files.
+Release `v0.9.0` is published on GitHub: `https://github.com/gloutchov/truedrawing/releases/tag/v0.9.0`. It was produced with the manual GitHub Actions `Release` workflow, using tag `v0.9.0`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v0.9.0.md`, and SHA-256 checksum files.
 
 ### Planned Features
 

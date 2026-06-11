@@ -203,9 +203,9 @@ truedrawing/
 ## Stato attuale
 
 - Versione: `0.9.0`.
-- Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app, seguita dalla patch `0.8.2` lingua/tema.
-- Milestone corrente: M9 - Packaging, CI/CD e release cross-platform.
-- Stato milestone: in sviluppo su `milestone/09-packaging-ci-release`; obiettivo pubblicare `v0.9.0` con workflow release manuale e artifact Windows/macOS.
+- Ultima milestone completata: M9 - Packaging, CI/CD e release cross-platform.
+- Milestone corrente: nessuna; prossima milestone pianificata M10 - Landing page del programma.
+- Stato milestone: M9 mergiata su `main` tramite PR #8; tag `v0.9.0` pushato; release GitHub `v0.9.0` pubblicata con artifact Windows/macOS, note release e checksum SHA-256.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
