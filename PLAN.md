@@ -972,7 +972,7 @@ Verifiche:
 - Verifica che gli asset siano tracciati e richiamati con percorsi relativi corretti.
 - Esecuzione CI completa e workflow release `v1.0.0` quando la milestone viene chiusa.
 
-Esito locale M10 in corso:
+Esito M10:
 
 - Branch usato: `milestone/10-landing-page`.
 - Versione iniziale: `0.9.0`.
@@ -995,11 +995,33 @@ Esito locale M10 in corso:
   - tentativo Edge headless desktop bloccato localmente da permessi Crashpad/IPC prima del rendering, senza screenshot generato.
 - CI:
   - push branch `milestone/10-landing-page`: GitHub Actions run `27345829010`, successo.
-  - PR M10: da completare.
+  - push finale branch `milestone/10-landing-page`: GitHub Actions run `27345907574`, successo.
+  - PR #9: GitHub Actions run `27345974695`, successo.
+  - `main` dopo merge: GitHub Actions run `27346032900`, successo.
+  - workflow release `v1.0.0`: GitHub Actions run `27346106628`, successo con validazione, build Windows, build macOS, checksum e upload asset.
+- GitHub:
+  - PR #9 mergiata su `main`;
+  - tag `v1.0.0` pushato;
+  - release `v1.0.0` pubblicata: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0`.
 - Release:
-  - da completare dopo merge/tag `v1.0.0` tramite workflow manuale `Release`.
+  - pubblicata con artifact Windows/macOS non firmati e checksum SHA-256.
+- Artifact release verificati:
+  - `True-Drawing-1.0.0-Windows-x64.exe`;
+  - `True-Drawing-1.0.0-Windows-x64.exe.blockmap`;
+  - `True-Drawing-1.0.0-macOS-arm64.dmg`;
+  - `True-Drawing-1.0.0-macOS-arm64.dmg.blockmap`;
+  - `True-Drawing-1.0.0-macOS-arm64.zip`;
+  - `True-Drawing-1.0.0-macOS-arm64.zip.blockmap`;
+  - `latest.yml`;
+  - `latest-mac.yml`;
+  - `SHA256SUMS-windows.txt`;
+  - `SHA256SUMS-macos.txt`.
+- Rischi residui:
+  - artifact non firmati e non notarizzati: SmartScreen/Gatekeeper possono mostrare avvisi;
+  - verifica browser visuale locale limitata per indisponibilita' browser in-app e blocco Edge headless su permessi Crashpad/IPC;
+  - GitHub Actions segnala deprecazione futura delle action basate su Node.js 20; da aggiornare in una prossima milestone.
 
-Stato: in sviluppo.
+Stato: completata e mergiata su `main`; release GitHub pubblicata.
 
 ## Backlog post release
 
@@ -1030,7 +1052,7 @@ Stato: in sviluppo.
 | 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Completata | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio; PR #7 e CI verdi; tag `v0.8.2` pushato; branch eliminato; release rinviata. |
 | 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
 | 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | Completata | Versione aggiornata, PR #8 mergiata, CI branch/PR/main verde, tag `v0.9.0` pushato, workflow release `27340285563` verde, release `v0.9.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
-| 2026-06-11 | M10 - Landing page del programma | 1.0.0 | `milestone/10-landing-page` | In sviluppo | Versione portata a `1.0.0`, landing page statica bilingue in `docs/`, note release `v1.0.0` e documentazione in aggiornamento; verifiche locali, PR/CI e release ancora da completare. |
+| 2026-06-11 | M10 - Landing page del programma | 1.0.0 | `milestone/10-landing-page` | Completata | Versione portata a `1.0.0`, landing page statica bilingue in `docs/`, PR #9 mergiata, CI branch/PR/main verde, tag `v1.0.0` pushato, workflow release `27346106628` verde, release `v1.0.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
 
 ## Checklist di chiusura milestone
 
