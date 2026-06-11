@@ -116,7 +116,7 @@ La landing page statica si trova in `docs/index.html` e usa asset relativi da `d
 - `AGENTS.md`: direttive operative per lo sviluppo.
 - `MAP.md`: mappa ASCII della struttura del programma.
 - `ISTRUZIONI.md`: istruzioni utente in italiano.
-- `INSTRUCTION.md`: istruzioni utente in inglese.
+- `INSTRUCTIONS.md`: istruzioni utente in inglese.
 - `SECURITY_MODEL.md`: modello di sicurezza in italiano e inglese.
 - `config/app.config.json`: parametri modificabili da utenti skilled e sviluppatori.
 
@@ -189,7 +189,7 @@ The static landing page lives at `docs/index.html` and uses relative assets from
 - `AGENTS.md`: development operating instructions.
 - `MAP.md`: ASCII map of the program structure.
 - `ISTRUZIONI.md`: user instructions in Italian.
-- `INSTRUCTION.md`: user instructions in English.
+- `INSTRUCTIONS.md`: user instructions in English.
 - `SECURITY_MODEL.md`: security model in Italian and English.
 - `config/app.config.json`: parameters editable by skilled users and developers.
 

@@ -2,9 +2,9 @@
 
 ## Italiano
 
-Versione: `1.0.0`
+Versione: `1.0.1`
 
-Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
+Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
 ### Principi
 
@@ -54,7 +54,7 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 
 - Documentazione sicurezza iniziale: completata.
 - Skeleton Electron con renderer isolato: completato.
-- Preload con API minima `getAppConfig` e `getRuntimeInfo`: completato.
+- Preload con API IPC controllate per configurazione, runtime, preferenze, segreti, generazione, salvataggi, export, clipboard e finestra: completato.
 - Caricamento configurazione centrale validata: completato.
 - Canvas interattivo locale tramite Pointer Events: completato.
 - Strumenti tratto, layer e history undo/redo locali nel renderer: completato.
@@ -70,13 +70,29 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Preferenze UI non segrete tramite `localStorage` configurato, incluse zoom, lingua e tema: completate.
 - Workflow release manuale con validazione versione, note release e checksum SHA-256: completato.
 - Landing page statica in `docs/` senza gestione segreti, senza backend e con soli link pubblici a repository/release: completata.
+- Patch `v1.0.1` per caricamento asset renderer nei pacchetti installati: completata.
 - Test sicurezza su credential store, preferenze e CSP: completati.
+
+### Miglioramenti pianificati
+
+La milestone `M12 - Security hardening post release` deve rafforzare il modello corrente prima di aggiungere nuove superfici come import immagini, provider AI multipli e modalita' offline completa.
+
+Correttivi previsti:
+
+- applicare un limite esplicito anche al PNG inviato a `image-generation:generate-realistic`;
+- rafforzare il download dell'immagine restituita dal provider, accettando solo URL `https`, bloccando host locali/privati, applicando timeout e limite byte, e preferendo risposte base64 quando disponibili;
+- aggiungere validazione comune dell'origine/sender IPC;
+- restringere la CSP di produzione dove possibile, in particolare `connect-src`, `frame-src` e `worker-src`;
+- centralizzare la sanitizzazione degli errori IPC mostrati al renderer;
+- rendere esplicito in UI e documentazione quando viene usato il fallback cifrato `safeStorage`;
+- aggiungere controlli automatici per evitare API key in configurazione, file progetto, preferenze e fixture di test;
+- valutare Dependabot e audit dipendenze come controlli CI leggeri.
 
 ## English
 
-Version: `1.0.0`
+Version: `1.0.1`
 
-This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
+This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
 ### Principles
 
@@ -126,7 +142,7 @@ The project currently has no certificates or credentials for Windows code signin
 
 - Initial security documentation: complete.
 - Electron skeleton with isolated renderer: complete.
-- Preload with minimal `getAppConfig` and `getRuntimeInfo` APIs: complete.
+- Preload with controlled IPC APIs for configuration, runtime, preferences, secrets, generation, saves, export, clipboard, and window state: complete.
 - Validated central configuration loading: complete.
 - Local interactive canvas through Pointer Events: complete.
 - Local stroke tools, layers, and undo/redo history in the renderer: complete.
@@ -142,4 +158,20 @@ The project currently has no certificates or credentials for Windows code signin
 - Non-secret UI preferences through configured `localStorage`, including zoom, language, and theme: complete.
 - Manual release workflow with version validation, release notes, and SHA-256 checksums: complete.
 - Static landing page under `docs/` with no secret handling, no backend, and only public repository/release links: complete.
+- `v1.0.1` patch for renderer asset loading in installed packages: complete.
 - Security tests for credential store, preferences, and CSP: complete.
+
+### Planned Improvements
+
+The `M12 - Security hardening post release` milestone should strengthen the current model before adding new surfaces such as image import, multiple AI providers, and complete offline mode.
+
+Planned fixes:
+
+- apply an explicit size limit to the PNG sent to `image-generation:generate-realistic`;
+- harden provider-returned image downloads by accepting only `https` URLs, blocking local/private hosts, applying timeout and byte limits, and preferring base64 responses when available;
+- add shared IPC sender/origin validation;
+- tighten the production CSP where possible, especially `connect-src`, `frame-src`, and `worker-src`;
+- centralize sanitization for IPC errors shown to the renderer;
+- make the encrypted `safeStorage` fallback explicit in the UI and documentation;
+- add automated checks to prevent API keys in configuration, project files, preferences, and test fixtures;
+- evaluate Dependabot and dependency audit as lightweight CI checks.
