@@ -33,7 +33,6 @@ jobs:
           required=(
             README.md
             ISTRUZIONI.md
-            INSTRUCTION.md
             INSTRUCTIONS.md
             SECURITY_MODEL.md
             AGENTS.md
