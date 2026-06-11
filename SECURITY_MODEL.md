@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione: `0.9.0`
+Versione: `1.0.0`
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API minime, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -69,11 +69,12 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Clipboard testo/immagine e fullscreen finestra tramite IPC controllati: completati.
 - Preferenze UI non segrete tramite `localStorage` configurato, incluse zoom, lingua e tema: completate.
 - Workflow release manuale con validazione versione, note release e checksum SHA-256: completato.
+- Landing page statica in `docs/` senza gestione segreti, senza backend e con soli link pubblici a repository/release: in sviluppo.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ## English
 
-Version: `0.9.0`
+Version: `1.0.0`
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only minimal APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -140,4 +141,5 @@ The project currently has no certificates or credentials for Windows code signin
 - Text/image clipboard and window fullscreen through controlled IPC: complete.
 - Non-secret UI preferences through configured `localStorage`, including zoom, language, and theme: complete.
 - Manual release workflow with version validation, release notes, and SHA-256 checksums: complete.
+- Static landing page under `docs/` with no secret handling, no backend, and only public repository/release links: in progress.
 - Security tests for credential store, preferences, and CSP: complete.

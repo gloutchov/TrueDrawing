@@ -29,5 +29,14 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/consistent-type-imports": "error"
     }
+  },
+  {
+    files: ["docs/**/*.js"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: {
+        ...globals.browser
+      }
+    }
   }
 );

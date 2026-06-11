@@ -932,9 +932,9 @@ Stato: completata manualmente.
 
 ### M10 - Landing page del programma
 
-- Versione finale prevista: `0.10.0`.
+- Versione finale prevista: `1.0.0`.
 - Branch: `milestone/10-landing-page`.
-- Tipo incremento: `+0.1.0`.
+- Tipo incremento: `+1.0.0`.
 - Obiettivo: creare una landing page pubblica per True Drawing con link al repository e al download della release.
 
 Attivita':
@@ -943,13 +943,15 @@ Attivita':
 - Creare una landing page statica, pubblicabile dal repository.
 - Mostrare screenshot dell'app in italiano e inglese, con interfaccia chiara e scura.
 - Inserire link al repository GitHub.
-- Inserire link alla release/download piu' recente.
+- Inserire link alla release/download `v1.0.0`.
 - Rendere la landing page bilingue italiano/inglese.
 - Selezionare automaticamente italiano quando il sistema/browser e' impostato in italiano.
 - Usare inglese come lingua predefinita per tutte le altre lingue di sistema.
 - Aggiungere un selettore manuale per passare fra italiano e inglese.
 - Curare layout responsive, testi brevi, accessibilita' base e alt text per immagini/GIF.
 - Documentare come visualizzare e pubblicare la landing page.
+- Preparare note release `v1.0.0`.
+- Pubblicare release GitHub `v1.0.0` con artifact Windows/macOS non firmati e checksum SHA-256.
 
 Criteri di accettazione:
 
@@ -957,6 +959,7 @@ Criteri di accettazione:
 - La lingua iniziale segue il sistema/browser: italiano per `it`, inglese per tutto il resto.
 - Il selettore lingua cambia i testi senza ricaricare la pagina.
 - I link a repository e release/download sono visibili e funzionanti.
+- Le note release `v1.0.0` sono presenti.
 - Le immagini e la GIF in `docs/assets` vengono usate senza duplicazioni inutili.
 - La pagina resta leggibile su desktop e mobile.
 
@@ -967,8 +970,36 @@ Verifiche:
 - Controllo manuale link repository e download.
 - Verifica layout desktop/mobile.
 - Verifica che gli asset siano tracciati e richiamati con percorsi relativi corretti.
+- Esecuzione CI completa e workflow release `v1.0.0` quando la milestone viene chiusa.
 
-Stato: pianificata.
+Esito locale M10 in corso:
+
+- Branch usato: `milestone/10-landing-page`.
+- Versione iniziale: `0.9.0`.
+- Versione finale prevista: `1.0.0`.
+- Implementazione locale:
+  - versione sorgente aggiornata a `1.0.0`;
+  - landing page statica aggiunta in `docs/index.html`;
+  - stili responsive aggiunti in `docs/landing.css`;
+  - selezione lingua automatica/manuale italiano/inglese aggiunta in `docs/landing.js`;
+  - immagini e GIF esistenti in `docs/assets` riutilizzate senza duplicazioni;
+  - note release `docs/release-notes/v1.0.0.md` aggiunte;
+  - documentazione aggiornata per landing page, versione stabile e checksum `v1.0.0`.
+- Verifiche locali:
+  - `git diff --check`, successo;
+  - `npm run lint`, successo;
+  - `npm run test`, successo con 10 file e 34 test;
+  - `npm run build`, successo;
+  - controllo statico landing page, successo: tutti i riferimenti locali agli asset esistono e tutte le chiavi `data-i18n` hanno traduzioni;
+  - browser in-app non disponibile nella sessione (`iab` non esposto);
+  - tentativo Edge headless desktop bloccato localmente da permessi Crashpad/IPC prima del rendering, senza screenshot generato.
+- CI:
+  - push branch `milestone/10-landing-page`: GitHub Actions run `27345829010`, successo.
+  - PR M10: da completare.
+- Release:
+  - da completare dopo merge/tag `v1.0.0` tramite workflow manuale `Release`.
+
+Stato: in sviluppo.
 
 ## Backlog post release
 
@@ -999,6 +1030,7 @@ Stato: pianificata.
 | 2026-06-10 | Patch preferenze lingua/tema interfaccia | 0.8.2 | `feature/ui-language-theme-preferences` | Completata | Aggiunta interfaccia italiano/inglese e tema chiaro/scuro con default di sistema, sotto `File > Impostazioni > Interfaccia...`; rimossa voce duplicata `Chiudi`; `npm run dev` ricompila il main Electron prima dell'avvio; PR #7 e CI verdi; tag `v0.8.2` pushato; branch eliminato; release rinviata. |
 | 2026-06-10 | Validazione beta e stabilizzazione | n/a | `main` | Completata | Test manuali reali eseguiti dall'utente; problemi emersi gia' corretti; documentazione aggiornata; le precedenti M10 beta privata e M11 release stabile sono assorbite prima della release `v0.9.0`. |
 | 2026-06-11 | M9 - Packaging, CI/CD e release cross-platform | 0.9.0 | `milestone/09-packaging-ci-release` | Completata | Versione aggiornata, PR #8 mergiata, CI branch/PR/main verde, tag `v0.9.0` pushato, workflow release `27340285563` verde, release `v0.9.0` pubblicata con artifact Windows/macOS non firmati e checksum SHA-256. |
+| 2026-06-11 | M10 - Landing page del programma | 1.0.0 | `milestone/10-landing-page` | In sviluppo | Versione portata a `1.0.0`, landing page statica bilingue in `docs/`, note release `v1.0.0` e documentazione in aggiornamento; verifiche locali, PR/CI e release ancora da completare. |
 
 ## Checklist di chiusura milestone
 
