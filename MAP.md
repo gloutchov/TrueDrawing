@@ -39,6 +39,14 @@ truedrawing/
 |   +-- icon.png
 |       Icona macOS/Linux e sorgente immagine per packaging.
 |
++-- docs/
+|   |
+|   +-- assets/
+|   |   Screenshot e GIF usati dalla documentazione e dalla landing page pianificata.
+|   |
+|   +-- release-notes/
+|       Note release versionate usate dal workflow GitHub manuale.
+|
 +-- index.html
 |   Entry HTML del renderer Vite.
 |
@@ -160,7 +168,7 @@ truedrawing/
 |       |   CI: installazione dipendenze, documenti obbligatori, lint, test e build.
 |       |
 |       +-- release.yml
-|           Release manuale: build Windows/macOS e upload diretto degli asset non firmati sulla release GitHub quando richiesto.
+|           Release manuale: validazione tag/versione, lint, test, build, creazione note release, package Windows/macOS, checksum SHA-256 e upload diretto degli asset non firmati sulla release GitHub.
 |
 +-- README.md
 |   Descrizione progetto in italiano e inglese.
@@ -194,9 +202,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.8.2`.
-- Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app.
-- Stato milestone: mergiata su `main` tramite PR #5 con CI PR verde; tag `v0.8.0` pushato; release GitHub rinviata secondo policy manuale.
+- Versione: `0.9.0`.
+- Ultima milestone completata: M8 - Esperienza utente completa e rifinitura app, seguita dalla patch `0.8.2` lingua/tema.
+- Milestone corrente: M9 - Packaging, CI/CD e release cross-platform.
+- Stato milestone: in sviluppo su `milestone/09-packaging-ci-release`; obiettivo pubblicare `v0.9.0` con workflow release manuale e artifact Windows/macOS.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -225,4 +234,4 @@ truedrawing/
 - Autosave temporizzato in `userData`, recupero ultimo autosave disponibile ed export PNG/WebP.
 - CSP e sandbox renderer configurati.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
-- Workflow CI presente; workflow release Windows/macOS disponibile solo con avvio manuale.
+- Workflow CI presente; workflow release Windows/macOS manuale consolidato con validazione tag/versione, note release, checksum e upload diretto asset.
