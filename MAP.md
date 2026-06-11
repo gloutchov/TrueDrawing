@@ -44,6 +44,15 @@ truedrawing/
 |   +-- assets/
 |   |   Screenshot e GIF usati dalla documentazione e dalla landing page pianificata.
 |   |
+|   +-- index.html
+|   |   Landing page statica bilingue del programma.
+|   |
+|   +-- landing.css
+|   |   Stili responsive della landing page.
+|   |
+|   +-- landing.js
+|   |   Selezione lingua automatica/manuale della landing page.
+|   |
 |   +-- release-notes/
 |       Note release versionate usate dal workflow GitHub manuale.
 |
@@ -202,10 +211,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `0.9.0`.
+- Versione: `1.0.0`.
 - Ultima milestone completata: M9 - Packaging, CI/CD e release cross-platform.
-- Milestone corrente: nessuna; prossima milestone pianificata M10 - Landing page del programma.
-- Stato milestone: M9 mergiata su `main` tramite PR #8; tag `v0.9.0` pushato; release GitHub `v0.9.0` pubblicata con artifact Windows/macOS, note release e checksum SHA-256.
+- Milestone corrente: M10 - Landing page del programma.
+- Stato milestone: in sviluppo su `milestone/10-landing-page`; obiettivo pubblicare una landing statica bilingue e preparare `v1.0.0`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -235,3 +244,4 @@ truedrawing/
 - CSP e sandbox renderer configurati.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI presente; workflow release Windows/macOS manuale consolidato con validazione tag/versione, note release, checksum e upload diretto asset.
+- Landing page statica in `docs/` in sviluppo con asset reali, lingua IT/EN e layout responsive.
