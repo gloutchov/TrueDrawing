@@ -8,17 +8,19 @@
       content="True Drawing is a local desktop app for turning quick sketches into AI-generated images."
     />
     <title>True Drawing</title>
+    <link rel="icon" type="image/png" href="./assets/icon.png" />
+    <link rel="apple-touch-icon" href="./assets/icon.png" />
     <link rel="stylesheet" href="./landing.css" />
   </head>
   <body>
     <header class="site-header" aria-label="Primary">
       <a class="brand" href="#top" aria-label="True Drawing">
+        <img src="./assets/icon.png" alt="" />
         <span>True Drawing</span>
       </a>
       <nav class="site-nav" aria-label="Main navigation">
         <a href="#gallery" data-i18n="navGallery">Gallery</a>
         <a href="#download" data-i18n="navDownload">Download</a>
-        <a href="https://github.com/gloutchov/truedrawing" data-i18n="navRepo">Repository</a>
       </nav>
       <div class="language-switch" aria-label="Language">
         <button type="button" data-lang="it">IT</button>
@@ -28,14 +30,6 @@
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <picture>
-          <source media="(max-width: 760px)" srcset="./assets/interfaccia_en_black.png" />
-          <img
-            class="hero-image"
-            src="./assets/disegno_en_black.png"
-            alt="True Drawing interface with a sketch and generated image preview"
-          />
-        </picture>
         <div class="hero-scrim" aria-hidden="true"></div>
         <div class="hero-content">
           <p class="release-kicker" data-i18n="releaseKicker">Version 1.0.0 for Windows and macOS</p>
@@ -50,6 +44,29 @@
             <a class="secondary-link" href="https://github.com/gloutchov/truedrawing" data-i18n="repoCta">
               View source
             </a>
+          </div>
+          <dl class="hero-facts" aria-label="Application facts">
+            <div>
+              <dt data-i18n="factVersionLabel">Version</dt>
+              <dd>1.0.0</dd>
+            </div>
+            <div>
+              <dt data-i18n="factPlatformsLabel">Platforms</dt>
+              <dd>macOS / Windows</dd>
+            </div>
+            <div>
+              <dt data-i18n="factLicenseLabel">License</dt>
+              <dd>Apache 2.0</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="hero-visual">
+          <div class="perspective-frame">
+            <img
+              class="hero-image"
+              src="./assets/disegno_en_black.png"
+              alt="True Drawing interface with a sketch and generated image preview"
+            />
           </div>
         </div>
       </section>
@@ -70,26 +87,20 @@
             The landing page uses the real application screenshots prepared for Italian and English, light and dark themes.
           </p>
         </div>
-        <div class="media-feature">
-          <img src="./assets/truedrawing.gif" alt="Animated preview of True Drawing transforming a sketch into an image" />
-        </div>
-        <div class="screenshot-grid">
-          <figure>
-            <img src="./assets/interfaccia_it_black.png" alt="True Drawing Italian interface in dark theme" />
-            <figcaption data-i18n="captionItDark">Italian interface, dark theme</figcaption>
-          </figure>
-          <figure>
-            <img src="./assets/interfaccia_en_white.png" alt="True Drawing English interface in light theme" />
-            <figcaption data-i18n="captionEnLight">English interface, light theme</figcaption>
-          </figure>
-          <figure>
-            <img src="./assets/disegno_it_white.png" alt="True Drawing Italian drawing view in light theme" />
-            <figcaption data-i18n="captionDrawingLight">Drawing and generated image, light theme</figcaption>
-          </figure>
-          <figure>
-            <img src="./assets/disegno_en_black.png" alt="True Drawing English drawing view in dark theme" />
-            <figcaption data-i18n="captionDrawingDark">Drawing and generated image, dark theme</figcaption>
-          </figure>
+        <div class="gallery-showcase">
+          <div class="gallery-thumbs" aria-label="Screenshots">
+            <figure class="gallery-thumb" data-shot="interface">
+              <img class="thumb-dark" src="./assets/interfaccia_en_black.png" alt="True Drawing interface in dark theme" />
+              <img class="thumb-light" src="./assets/interfaccia_en_white.png" alt="" aria-hidden="true" />
+            </figure>
+            <figure class="gallery-thumb" data-shot="drawing">
+              <img class="thumb-dark" src="./assets/disegno_en_black.png" alt="True Drawing drawing view in dark theme" />
+              <img class="thumb-light" src="./assets/disegno_en_white.png" alt="" aria-hidden="true" />
+            </figure>
+          </div>
+          <div class="media-feature">
+            <img src="./assets/truedrawing.gif" alt="Animated preview of True Drawing transforming a sketch into an image" />
+          </div>
         </div>
       </section>
 
@@ -102,14 +113,19 @@
           </p>
         </div>
         <div class="download-actions">
-          <a class="primary-link" href="https://github.com/gloutchov/truedrawing/releases/tag/v1.0.0" data-i18n="releaseCta">
-            Open release
+          <a class="primary-link" href="https://github.com/gloutchov/truedrawing/releases" data-i18n="releaseCta">
+            Releases
           </a>
-          <a class="secondary-link" href="https://github.com/gloutchov/truedrawing/releases/download/v1.0.0/SHA256SUMS-windows.txt" data-i18n="checksumWindowsCta">
-            Windows checksums
+          <a class="secondary-link" href="https://github.com/gloutchov/truedrawing" data-i18n="sourceCta">
+            Source code
           </a>
-          <a class="secondary-link" href="https://github.com/gloutchov/truedrawing/releases/download/v1.0.0/SHA256SUMS-macos.txt" data-i18n="checksumMacCta">
-            macOS checksums
+          <a
+            class="secondary-link"
+            href="https://github.com/gloutchov/truedrawing/blob/main/INSTRUCTIONS.md"
+            data-manual-link
+            data-i18n="manualCta"
+          >
+            Manual
           </a>
         </div>
       </section>

@@ -2,71 +2,67 @@ const translations = {
   en: {
     navGallery: "Gallery",
     navDownload: "Download",
-    navRepo: "Repository",
-    releaseKicker: "Version 1.0.0 for Windows and macOS",
-    heroCopy: "Draw a rough idea locally, then turn it into a polished image with your own OpenAI API key.",
-    downloadCta: "Download v1.0.0",
-    repoCta: "View source",
-    highlightLocal: "Local sketch files, autosave, recovery, and export stay on your computer.",
-    highlightTools: "Brushes, layers, fill, selection, undo/redo, and canvas zoom are ready to use.",
-    highlightRelease: "Unsigned GitHub builds include SHA-256 checksums for verification.",
+    releaseKicker: "Open Source Desktop App",
+    heroCopy: "Draw a rough idea locally, then turn it into a polished image with AI.",
+    downloadCta: "Download",
+    repoCta: "GitHub Repository",
+    factVersionLabel: "Version",
+    factPlatformsLabel: "Platforms",
+    factLicenseLabel: "License",
+    highlightLocal: "Your drawing and the generated image are always safe thanks to autosave. Your files always stay on your computer.",
+    highlightTools: "All essential drawing tools are available: brushes, geometric shapes, stroke types, fill, thickness and opacity controls... and much more!",
+    highlightRelease: "You choose when AI generates the image: immediately, automatically while you draw, or with one click, manually, when you decide.",
     galleryEyebrow: "Interface",
-    galleryTitle: "A focused drawing workspace",
+    galleryTitle: "A simple and immediate drawing workspace",
     galleryCopy:
-      "The landing page uses the real application screenshots prepared for Italian and English, light and dark themes.",
-    captionItDark: "Italian interface, dark theme",
-    captionEnLight: "English interface, light theme",
-    captionDrawingLight: "Drawing and generated image, light theme",
-    captionDrawingDark: "Drawing and generated image, dark theme",
-    downloadEyebrow: "Release",
-    downloadTitle: "Download True Drawing v1.0.0",
+      "Drawing is as simple as using a pencil on paper. Use a mouse, trackpad, or even a graphics pen. You do not need to be an artist. You do not need to be a designer. You do not need any experience. The less you know, the more fun you have!",
+    downloadEyebrow: "Download and Code",
+    downloadTitle: "Download the build or explore the repository.",
     downloadCopy:
-      "Builds are distributed through GitHub for Windows and macOS. They are not signed or notarized, so SmartScreen or Gatekeeper may warn on first launch.",
-    releaseCta: "Open release",
-    checksumWindowsCta: "Windows checksums",
-    checksumMacCta: "macOS checksums",
+      "Public builds are available in GitHub Releases. The source code, user documentation, and security model are in the repository.",
+    releaseCta: "Releases",
+    sourceCta: "Source Code",
+    manualCta: "Manual",
     footerRepo: "GitHub repository",
     heroAlt: "True Drawing interface with a sketch and generated image preview",
     gifAlt: "Animated preview of True Drawing transforming a sketch into an image",
-    itDarkAlt: "True Drawing Italian interface in dark theme",
-    enLightAlt: "True Drawing English interface in light theme",
-    drawingLightAlt: "True Drawing Italian drawing view in light theme",
-    drawingDarkAlt: "True Drawing English drawing view in dark theme"
+    interfaceDarkAlt: "True Drawing English interface in dark theme",
+    interfaceLightAlt: "True Drawing English interface in light theme",
+    drawingDarkAlt: "True Drawing English drawing view in dark theme",
+    drawingLightAlt: "True Drawing English drawing view in light theme"
   },
   it: {
     navGallery: "Galleria",
     navDownload: "Download",
-    navRepo: "Repository",
-    releaseKicker: "Versione 1.0.0 per Windows e macOS",
+    releaseKicker: "Desktop APP Open Source",
     heroCopy:
-      "Disegna un'idea grezza in locale, poi trasformala in un'immagine rifinita con la tua API key OpenAI.",
-    downloadCta: "Scarica v1.0.0",
-    repoCta: "Vedi sorgente",
-    highlightLocal: "File disegno, autosave, recupero ed export restano sul tuo computer.",
-    highlightTools: "Pennelli, layer, riempimento, selezione, undo/redo e zoom canvas sono pronti all'uso.",
-    highlightRelease: "Le build GitHub non firmate includono checksum SHA-256 per la verifica.",
+      "Disegna un'idea grezza in locale, poi trasformala in un'immagine rifinita con la AI.",
+    downloadCta: "Download",
+    repoCta: "Repository Github",
+    factVersionLabel: "Versione",
+    factPlatformsLabel: "Piattaforme",
+    factLicenseLabel: "Licenza",
+    highlightLocal: "Il tuo disegno, e l'immagine generata, sono sempre al sicuro grazie al salvataggio automatico. I tuoi files sono sempre sul tuo computer.",
+    highlightTools: "Tutti i tool fondamentali per il disegno sono a tua disposizione: Pennelli, Figure Geometriche, Tipi di tratto, Riempimento, regolazioni di spessore, di opacità... e tanto altro!",
+    highlightRelease: "Scegli tu quando la AI andrà a generare l'immagine: subito, in automatico, mentre disegni; oppure con un click, manualmente, quando decidi tu.",
     galleryEyebrow: "Interfaccia",
-    galleryTitle: "Uno spazio di disegno concentrato",
+    galleryTitle: "Uno spazio di disegno semplice e immediato",
     galleryCopy:
-      "La landing page usa gli screenshot reali dell'app preparati in italiano e inglese, tema chiaro e scuro.",
-    captionItDark: "Interfaccia italiana, tema scuro",
-    captionEnLight: "Interfaccia inglese, tema chiaro",
-    captionDrawingLight: "Disegno e immagine generata, tema chiaro",
-    captionDrawingDark: "Disegno e immagine generata, tema scuro",
-    downloadEyebrow: "Release",
-    downloadTitle: "Scarica True Drawing v1.0.0",
+      "Disegnare è semplice come con una matita su un foglio. Usa il mouse, il trackpad, o anche una penna grafica. Non serve essere artisti. Non serve essere disegnatori. Non serve avere alcuna esperienza. Meno sai, più ti diverti!",
+    downloadEyebrow: "Download e Codice",
+    downloadTitle: "Scarica la build o esplora il repository.",
     downloadCopy:
-      "Le build sono distribuite tramite GitHub per Windows e macOS. Non sono firmate o notarizzate, quindi SmartScreen o Gatekeeper possono mostrare un avviso al primo avvio.",
-    releaseCta: "Apri release",
-    checksumWindowsCta: "Checksum Windows",
-    checksumMacCta: "Checksum macOS",
+      "Le build pubbliche sono disponibili nelle GitHub Releases. Il codice sorgente, la documentazione utente e il modello di sicurezza sono nel repository.",
+    releaseCta: "Releases",
+    sourceCta: "Codice Sorgente",
+    manualCta: "Manuale",
     footerRepo: "Repository GitHub",
     heroAlt: "Interfaccia di True Drawing con schizzo e anteprima immagine generata",
     gifAlt: "Anteprima animata di True Drawing che trasforma uno schizzo in immagine",
-    itDarkAlt: "Interfaccia italiana di True Drawing in tema scuro",
-    enLightAlt: "Interfaccia inglese di True Drawing in tema chiaro",
-    drawingLightAlt: "Vista disegno italiana di True Drawing in tema chiaro",
-    drawingDarkAlt: "Vista disegno inglese di True Drawing in tema scuro"
+    interfaceDarkAlt: "Interfaccia italiana di True Drawing in tema scuro",
+    interfaceLightAlt: "Interfaccia italiana di True Drawing in tema chiaro",
+    drawingDarkAlt: "Vista disegno italiana di True Drawing in tema scuro",
+    drawingLightAlt: "Vista disegno italiana di True Drawing in tema chiaro"
   }
 };
 
@@ -94,18 +90,27 @@ function setLanguage(language) {
   }
 
   const heroImage = document.querySelector(".hero-image");
-  const heroSource = document.querySelector(".hero source");
   heroImage?.setAttribute("src", language === "it" ? "./assets/disegno_it_black.png" : "./assets/disegno_en_black.png");
   heroImage?.setAttribute("alt", copy.heroAlt);
-  heroSource?.setAttribute(
-    "srcset",
-    language === "it" ? "./assets/interfaccia_it_black.png" : "./assets/interfaccia_en_black.png"
-  );
   document.querySelector(".media-feature img")?.setAttribute("alt", copy.gifAlt);
-  document.querySelector('img[src="./assets/interfaccia_it_black.png"]')?.setAttribute("alt", copy.itDarkAlt);
-  document.querySelector('img[src="./assets/interfaccia_en_white.png"]')?.setAttribute("alt", copy.enLightAlt);
-  document.querySelector('img[src="./assets/disegno_it_white.png"]')?.setAttribute("alt", copy.drawingLightAlt);
-  document.querySelector('img[src="./assets/disegno_en_black.png"]')?.setAttribute("alt", copy.drawingDarkAlt);
+
+  const languageSuffix = language === "it" ? "it" : "en";
+  const interfaceThumb = document.querySelector('[data-shot="interface"]');
+  const drawingThumb = document.querySelector('[data-shot="drawing"]');
+  interfaceThumb?.querySelector(".thumb-dark")?.setAttribute("src", `./assets/interfaccia_${languageSuffix}_black.png`);
+  interfaceThumb?.querySelector(".thumb-dark")?.setAttribute("alt", copy.interfaceDarkAlt);
+  interfaceThumb?.querySelector(".thumb-light")?.setAttribute("src", `./assets/interfaccia_${languageSuffix}_white.png`);
+  drawingThumb?.querySelector(".thumb-dark")?.setAttribute("src", `./assets/disegno_${languageSuffix}_black.png`);
+  drawingThumb?.querySelector(".thumb-dark")?.setAttribute("alt", copy.drawingDarkAlt);
+  drawingThumb?.querySelector(".thumb-light")?.setAttribute("src", `./assets/disegno_${languageSuffix}_white.png`);
+
+  const manualLink = document.querySelector("[data-manual-link]");
+  manualLink?.setAttribute(
+    "href",
+    language === "it"
+      ? "https://github.com/gloutchov/truedrawing/blob/main/ISTRUZIONI.md"
+      : "https://github.com/gloutchov/truedrawing/blob/main/INSTRUCTIONS.md"
+  );
 
   for (const button of buttons) {
     button.setAttribute("aria-pressed", button.dataset.lang === language ? "true" : "false");
