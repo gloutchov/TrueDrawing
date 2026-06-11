@@ -109,7 +109,9 @@ a {
 .hero {
   position: relative;
   min-height: 92vh;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: clamp(28px, 5vw, 70px);
   align-items: center;
   padding: 96px clamp(18px, 6vw, 72px) 80px;
   overflow: hidden;
@@ -117,29 +119,43 @@ a {
   background: #111416;
 }
 
-.hero-image,
-.hero picture {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero-image {
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(0.9) brightness(0.72);
-}
-
 .hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(10, 12, 12, 0.88), rgba(10, 12, 12, 0.56) 48%, rgba(10, 12, 12, 0.1));
+  background:
+    radial-gradient(circle at 74% 30%, rgba(125, 167, 200, 0.26), transparent 34%),
+    linear-gradient(115deg, rgba(10, 12, 12, 0.94), rgba(22, 24, 24, 0.84) 48%, rgba(12, 14, 15, 0.98));
 }
 
 .hero-content {
   position: relative;
   width: min(680px, 100%);
+  z-index: 2;
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  perspective: 1200px;
+}
+
+.perspective-frame {
+  width: min(760px, 100%);
+  margin-left: auto;
+  padding: 10px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  box-shadow: -34px 44px 80px rgba(0, 0, 0, 0.46);
+  transform: rotateX(9deg) rotateY(-23deg) rotateZ(2deg);
+  transform-origin: center;
+}
+
+.hero-image {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  filter: saturate(0.96) contrast(1.04);
 }
 
 .release-kicker,
@@ -183,6 +199,36 @@ h2 {
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 28px;
+}
+
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  width: min(620px, 100%);
+  margin: 24px 0 0;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.hero-facts div {
+  min-height: 76px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hero-facts dt {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.hero-facts dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 800;
 }
 
 .primary-link,
@@ -252,7 +298,7 @@ h2 {
 }
 
 .section-heading {
-  max-width: 760px;
+  max-width: none;
 }
 
 .section-heading p:not(.eyebrow),
@@ -262,39 +308,59 @@ h2 {
   line-height: 1.6;
 }
 
-.media-feature {
+.gallery-showcase {
+  display: grid;
+  grid-template-columns: minmax(280px, 336px) minmax(0, 720px);
+  gap: 34px;
+  align-items: start;
+  justify-content: start;
   margin-top: 36px;
+}
+
+.gallery-thumbs {
+  display: grid;
+  gap: 18px;
+}
+
+.gallery-thumb {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
   border: 1px solid #c9c4ba;
   background: #151718;
 }
 
-.media-feature img {
-  width: 100%;
-}
-
-.screenshot-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-top: 18px;
-}
-
-figure {
-  margin: 0;
-  border: 1px solid #c9c4ba;
-  background: #fff;
-}
-
-figure img {
+.gallery-thumb img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
 }
 
-figcaption {
-  padding: 12px;
-  font-size: 0.92rem;
-  color: #4e5559;
+.gallery-thumb .thumb-light {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.gallery-thumb:hover .thumb-light,
+.gallery-thumb:focus-within .thumb-light {
+  opacity: 1;
+}
+
+.media-feature {
+  overflow: hidden;
+  max-width: 720px;
+  padding: 16px 0;
+  background: #000;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.media-feature img {
+  width: min(100%, 720px);
+  max-width: none;
+  height: auto;
 }
 
 .download-band {
@@ -338,9 +404,27 @@ figcaption {
   }
 
   .intro-grid,
-  .screenshot-grid,
+  .gallery-showcase,
   .download-band {
     grid-template-columns: 1fr;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual {
+    order: -1;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .perspective-frame {
+    transform: rotateX(7deg) rotateY(-13deg) rotateZ(1deg);
+  }
+
+  .gallery-thumbs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .download-actions {
@@ -370,6 +454,10 @@ figcaption {
   .primary-link,
   .secondary-link {
     width: 100%;
+  }
+
+  .hero-facts {
+    grid-template-columns: 1fr;
   }
 
   .intro-grid {
