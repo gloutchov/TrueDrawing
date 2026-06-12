@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TimerReset, X } from "lucide-react";
+import { ChevronDown, ChevronUp, TimerReset, X } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";
 import { t } from "../i18n/appI18n";
@@ -57,6 +57,15 @@ export function AutoRedrawDialog({
     Math.max(delayRange.min, parsedDelaySeconds)
   );
   const delayIsValid = Number.isFinite(parsedDelaySeconds);
+  const stepDelaySeconds = (direction: -1 | 1) => {
+    const baseDelaySeconds = delayIsValid ? clampedDelaySeconds : delayRange.min;
+    const nextDelaySeconds = Math.min(
+      delayRange.max,
+      Math.max(delayRange.min, baseDelaySeconds + (delayRange.step * direction))
+    );
+
+    setSelectedDelaySeconds(String(nextDelaySeconds));
+  };
   const savePreferences = async () => {
     if (!delayIsValid) {
       setSaveState({
@@ -105,14 +114,32 @@ export function AutoRedrawDialog({
           </label>
           <label className="field">
             <span>{t(locale, "autoRedrawDelay")}</span>
-            <input
-              type="number"
-              min={delayRange.min}
-              max={delayRange.max}
-              step={delayRange.step}
-              value={selectedDelaySeconds}
-              onChange={(event) => setSelectedDelaySeconds(event.currentTarget.value)}
-            />
+            <div className="number-stepper">
+              <input
+                type="number"
+                min={delayRange.min}
+                max={delayRange.max}
+                step={delayRange.step}
+                value={selectedDelaySeconds}
+                onChange={(event) => setSelectedDelaySeconds(event.currentTarget.value)}
+              />
+              <div className="number-stepper-controls">
+                <button
+                  type="button"
+                  aria-label="Increase auto redraw delay"
+                  onClick={() => stepDelaySeconds(1)}
+                >
+                  <ChevronUp size={13} />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Decrease auto redraw delay"
+                  onClick={() => stepDelaySeconds(-1)}
+                >
+                  <ChevronDown size={13} />
+                </button>
+              </div>
+            </div>
           </label>
           {saveState.status === "success" && (
             <p className="form-message form-message--success">{saveState.message}</p>

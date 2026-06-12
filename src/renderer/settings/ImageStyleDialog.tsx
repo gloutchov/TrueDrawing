@@ -29,13 +29,11 @@ export function ImageStyleDialog({
   onStyleChange
 }: ImageStyleDialogProps): JSX.Element | null {
   const [selectedStyle, setSelectedStyle] = useState(imageGenerationStyle);
-  const [styleMenuOpen, setStyleMenuOpen] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>({ status: "idle" });
 
   useEffect(() => {
     if (open) {
       setSelectedStyle(imageGenerationStyle);
-      setStyleMenuOpen(false);
       setSaveState({ status: "idle" });
     }
   }, [imageGenerationStyle, open]);
@@ -73,39 +71,6 @@ export function ImageStyleDialog({
           </button>
         </div>
         <div className="modal-body">
-          <div className="field">
-            <span>{t(locale, "imageStyle")}</span>
-            <div className="style-picker">
-              <button
-                className="style-picker-trigger"
-                type="button"
-                aria-haspopup="listbox"
-                aria-expanded={styleMenuOpen}
-                onClick={() => setStyleMenuOpen((currentOpen) => !currentOpen)}
-              >
-                {selectedStyle || config.imageGeneration.defaultStyle}
-              </button>
-              {styleMenuOpen && (
-                <div className="style-picker-menu" role="listbox" aria-label={t(locale, "imageStyle")}>
-                  {config.imageGeneration.availableStyles.map((style) => (
-                    <button
-                      key={style}
-                      className={`style-picker-option${style === selectedStyle ? " is-active" : ""}`}
-                      type="button"
-                      role="option"
-                      aria-selected={style === selectedStyle}
-                      onClick={() => {
-                        setSelectedStyle(style);
-                        setStyleMenuOpen(false);
-                      }}
-                    >
-                      {style}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
           <label className="field">
             <span>{t(locale, "imageStyle")}</span>
             <input
@@ -113,23 +78,20 @@ export function ImageStyleDialog({
               type="text"
               value={selectedStyle}
               placeholder={config.imageGeneration.defaultStyle}
-              onChange={(event) => {
-                setSelectedStyle(event.currentTarget.value);
-                setStyleMenuOpen(false);
-              }}
+              onChange={(event) => setSelectedStyle(event.currentTarget.value)}
             />
           </label>
           <div className="style-chip-list" aria-label={t(locale, "imageStyle")}>
-              {config.imageGeneration.availableStyles.map((style) => (
-                <button
-                  key={style}
-                  className={`style-chip${style === selectedStyle ? " is-active" : ""}`}
-                  type="button"
-                  onClick={() => setSelectedStyle(style)}
-                >
-                  {style}
-                </button>
-              ))}
+            {config.imageGeneration.availableStyles.map((style) => (
+              <button
+                key={style}
+                className={`style-chip${style === selectedStyle ? " is-active" : ""}`}
+                type="button"
+                onClick={() => setSelectedStyle(style)}
+              >
+                {style}
+              </button>
+            ))}
           </div>
           {saveState.status === "success" && (
             <p className="form-message form-message--success">{saveState.message}</p>

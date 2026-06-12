@@ -5,9 +5,9 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 ## Stato corrente
 
 - Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
-- Ultima patch completata: `1.0.1` - fix caricamento asset renderer nei pacchetti Electron installati.
-- Versione corrente: `1.0.1`.
-- Branch corrente: `main`.
+- Ultima patch completata: `1.0.2` - fix leggibilita' dialog impostazioni in tema scuro.
+- Versione corrente: `1.0.2`.
+- Branch corrente: `patch/1.0.2-dark-settings`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
 - Ultimo branch milestone completato: `milestone/11-post-release-roadmap`, merge diretto su `main` come modifica documentale.
@@ -15,7 +15,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
 - CI M10: PR #9 verde con GitHub Actions run `27345974695`; `main` verde con run `27346032900`; release workflow `27346106628` verde.
 - CI patch `v1.0.1`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; workflow release `27353682972` verde.
-- Release GitHub corrente: `v1.0.1` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- CI patch `v1.0.2`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; workflow release da eseguire dopo tag `v1.0.2`.
+- Release GitHub corrente pubblicata: `v1.0.1`; release `v1.0.2` da pubblicare con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
