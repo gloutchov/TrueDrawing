@@ -8,7 +8,7 @@ True Drawing e' arrivato alla release stabile `1.0.2`.
 - Branch stabile: `main`.
 - Ultima milestone completata: `M11 - Roadmap post release e pulizia piano`.
 - Ultima patch completata: `v1.0.2 - Fix leggibilita' dialog impostazioni in tema scuro`.
-- Release GitHub corrente pubblicata: `v1.0.1`; release `v1.0.2` da pubblicare con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.0.2`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Milestone corrente in sviluppo: nessuna.
 
 ## Obiettivo della fase post release
@@ -280,7 +280,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | --- | --- | --- | --- | --- | --- |
 | 2026-06-11 | Baseline stabile | 1.0.1 | `main` | Completata | Release `v1.0.1` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256. |
 | 2026-06-11 | M11 - Roadmap post release e pulizia piano | 1.0.1 | `milestone/11-post-release-roadmap` | Completata | Piano storico sostituito da roadmap post release basata sul backlog; nessuna nuova release per modifica solo documentale. |
-| 2026-06-12 | Patch tema scuro impostazioni | 1.0.2 | `patch/1.0.2-dark-settings` | Completata | Corretta leggibilita' dei preset stile e della checkbox redraw automatico in tema scuro; rimosso dropdown stile duplicato. |
+| 2026-06-12 | Patch tema scuro impostazioni | 1.0.2 | `patch/1.0.2-dark-settings` | Completata | PR #10, tag `v1.0.2` e release workflow `27415761496` verdi; corretta leggibilita' dei preset stile e della checkbox redraw automatico in tema scuro, rimosso dropdown stile duplicato e sostituito spinner numerico nativo. |
 
 ## Checklist di chiusura milestone
 
