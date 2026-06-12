@@ -618,65 +618,50 @@ button {
   accent-color: #4f6972;
 }
 
-.style-picker {
+.number-stepper {
   position: relative;
 }
 
-.style-picker-trigger {
+.number-stepper input {
   width: 100%;
-  height: 34px;
-  border: 1px solid #9fb0b8;
-  border-radius: 6px;
-  color: #2f393d;
-  background: #ffffff;
-  cursor: pointer;
-  font: inherit;
-  padding: 0 30px 0 9px;
-  text-align: left;
+  padding-right: 36px;
 }
 
-.style-picker-trigger::after {
-  position: absolute;
-  top: 13px;
-  right: 11px;
-  width: 7px;
-  height: 7px;
-  border-right: 1px solid #5b666b;
-  border-bottom: 1px solid #5b666b;
-  content: "";
-  pointer-events: none;
-  transform: rotate(45deg);
+.number-stepper input::-webkit-outer-spin-button,
+.number-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  appearance: none;
 }
 
-.style-picker-menu {
+.number-stepper-controls {
   position: absolute;
-  z-index: 12;
-  top: 38px;
-  right: 0;
-  left: 0;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
   display: grid;
-  gap: 2px;
-  border: 1px solid #9fb0b8;
-  border-radius: 6px;
-  background: #ffffff;
-  box-shadow: 0 12px 30px rgb(31 37 40 / 18%);
-  padding: 4px;
+  width: 30px;
+  overflow: hidden;
+  border-left: 1px solid #c3ccd0;
+  border-radius: 0 5px 5px 0;
 }
 
-.style-picker-option {
-  height: 30px;
-  border-radius: 5px;
-  color: #2f393d;
-  background: transparent;
+.number-stepper-controls button {
+  display: grid;
+  place-items: center;
+  color: #5b666b;
+  background: #edf1f2;
   cursor: pointer;
-  font: inherit;
-  padding: 0 8px;
-  text-align: left;
+  padding: 0;
 }
 
-.style-picker-option:hover,
-.style-picker-option.is-active {
-  background: #e0e7ea;
+.number-stepper-controls button:hover {
+  color: #2f393d;
+  background: #dce5e8;
+}
+
+.number-stepper-controls button + button {
+  border-top: 1px solid #c3ccd0;
 }
 
 .style-chip-list {
@@ -702,8 +687,7 @@ button {
 }
 
 .field input:focus,
-.field select:focus,
-.style-picker-trigger:focus {
+.field select:focus {
   outline: 2px solid #b8cbd3;
   outline-offset: 0;
 }
@@ -863,6 +847,8 @@ button {
 .app-shell[data-theme="dark"] .panel-header,
 .app-shell[data-theme="dark"] .panel-header span,
 .app-shell[data-theme="dark"] .modal-header span,
+.app-shell[data-theme="dark"] .checkbox-field,
+.app-shell[data-theme="dark"] .style-chip,
 .app-shell[data-theme="dark"] .icon-button,
 .app-shell[data-theme="dark"] .mini-button,
 .app-shell[data-theme="dark"] .text-button,
@@ -876,20 +862,34 @@ button {
 .app-shell[data-theme="dark"] .project-name-input,
 .app-shell[data-theme="dark"] .field input,
 .app-shell[data-theme="dark"] .field select,
-.app-shell[data-theme="dark"] .style-picker-trigger,
-.app-shell[data-theme="dark"] .style-picker-menu,
 .app-shell[data-theme="dark"] .form-message-textarea {
   border-color: #55626a;
   color: #e8ecee;
   background: #11171a;
 }
 
+.app-shell[data-theme="dark"] .number-stepper-controls {
+  border-color: #55626a;
+}
+
+.app-shell[data-theme="dark"] .number-stepper-controls button {
+  color: #c8d2d7;
+  background: #263038;
+}
+
+.app-shell[data-theme="dark"] .number-stepper-controls button:hover {
+  color: #ffffff;
+  background: #344149;
+}
+
+.app-shell[data-theme="dark"] .number-stepper-controls button + button {
+  border-color: #55626a;
+}
+
 .app-shell[data-theme="dark"] .icon-button:hover,
 .app-shell[data-theme="dark"] .mini-button:hover,
 .app-shell[data-theme="dark"] .icon-button.is-active,
 .app-shell[data-theme="dark"] .mini-button.is-active,
-.app-shell[data-theme="dark"] .style-picker-option:hover,
-.app-shell[data-theme="dark"] .style-picker-option.is-active,
 .app-shell[data-theme="dark"] .layer-row.is-active,
 .app-shell[data-theme="dark"] .text-button,
 .app-shell[data-theme="dark"] .style-chip {

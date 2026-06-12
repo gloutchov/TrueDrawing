@@ -211,10 +211,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `1.0.1`.
+- Versione: `1.0.2`.
 - Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
 - Milestone corrente: nessuna.
-- Stato milestone: M11 completata come modifica documentale senza nuova release; M10 mergiata su `main` tramite PR #9 e patch `v1.0.1` pubblicata per correggere il caricamento asset renderer nei pacchetti installati.
+- Stato milestone: M11 completata come modifica documentale senza nuova release; patch `v1.0.2` completata per correggere i dialog impostazioni in tema scuro.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -237,6 +237,7 @@ truedrawing/
 - Preferenze modello immagini, stile immagine e redraw automatico persistenti e separate dalla API key.
 - Preferenze lingua interfaccia e tema chiaro/scuro persistenti in `localStorage`, con default di sistema.
 - Menu `File > Impostazioni > Stile...`, `File > Impostazioni > Redraw automatico...` e `File > Impostazioni > Interfaccia...` per controllare prompt, rigenerazione inspector, lingua e tema.
+- Il dialog Stile usa campo testo libero e pulsanti preset; il dropdown duplicato e' stato rimosso.
 - Salvataggio manuale `.tdraw` con sidecar `<nome>_canvas.png` e `<nome>_image.png`.
 - Salvataggio rapido vincolato ai percorsi progetto selezionati dall'utente nella sessione main.
 - Limiti payload IPC per immagini/prompt/clipboard e limite dimensione file progetto in apertura.
@@ -246,3 +247,4 @@ truedrawing/
 - Workflow CI presente; workflow release Windows/macOS manuale consolidato con validazione tag/versione, note release, checksum e upload diretto asset.
 - Landing page statica in `docs/` completata con asset reali, lingua IT/EN e layout responsive.
 - Build renderer configurata con asset relativi, cosi' i pacchetti Electron installati caricano correttamente JavaScript e CSS da `file://`.
+- Tema scuro corretto nei dialog Stile e Redraw automatico per mantenere leggibili preset e checkbox.

@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione: `1.0.1`
+Versione: `1.0.2`
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -71,6 +71,7 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Workflow release manuale con validazione versione, note release e checksum SHA-256: completato.
 - Landing page statica in `docs/` senza gestione segreti, senza backend e con soli link pubblici a repository/release: completata.
 - Patch `v1.0.1` per caricamento asset renderer nei pacchetti installati: completata.
+- Patch `v1.0.2` per leggibilita' dei dialog impostazioni in tema scuro: completata, senza modifiche a segreti, rete o IPC.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ### Miglioramenti pianificati
@@ -90,7 +91,7 @@ Correttivi previsti:
 
 ## English
 
-Version: `1.0.1`
+Version: `1.0.2`
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -159,6 +160,7 @@ The project currently has no certificates or credentials for Windows code signin
 - Manual release workflow with version validation, release notes, and SHA-256 checksums: complete.
 - Static landing page under `docs/` with no secret handling, no backend, and only public repository/release links: complete.
 - `v1.0.1` patch for renderer asset loading in installed packages: complete.
+- `v1.0.2` patch for settings dialog readability in dark theme: complete, with no changes to secrets, network, or IPC.
 - Security tests for credential store, preferences, and CSP: complete.
 
 ### Planned Improvements
