@@ -31,6 +31,9 @@ truedrawing/
 +-- electron-builder.yml
 |   Configurazione packaging Windows/macOS e artifact release.
 |
++-- LICENSE
+|   Testo licenza Apache License 2.0 riconosciuto da GitHub e metadata repository.
+|
 +-- build/
 |   |
 |   +-- icon.ico
