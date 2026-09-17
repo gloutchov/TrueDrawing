@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.2-blue" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.3-blue" />
   <img alt="Electron" src="https://img.shields.io/badge/Electron-42-47848f" />
   <img alt="React" src="https://img.shields.io/badge/React-18-61dafb" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178c6" />
@@ -21,8 +21,8 @@
 
 | IT | EN |
 | --- | --- |
-| Versione sorgente: `1.0.2` | Source version: `1.0.2` |
-| Stato: patch stabile impostazioni tema scuro | Status: stable dark-theme settings patch |
+| Versione sorgente: `1.0.3` | Source version: `1.0.3` |
+| Stato: patch stabile link e dominio landing page | Status: stable landing-page domain and links patch |
 | Piattaforme: macOS e Windows | Platforms: macOS and Windows |
 | Runtime desktop: Electron | Desktop runtime: Electron |
 | UI: React, TypeScript, Vite | UI: React, TypeScript, Vite |
@@ -36,6 +36,7 @@
 ## Riferimenti tecnici / Technical references
 
 - Repository: `https://github.com/gloutchov/truedrawing`
+- Sito / website: `https://truedrawing.glaucosilvestri.it/`
 - App ID: `com.truedrawing.app`
 - Package name: `truedrawing`
 - Entry point Electron: `dist-electron/main/appMain.js`
@@ -68,7 +69,7 @@ npm run dist:mac
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione corrente e' `1.0.2` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
+Il progetto e' in fase iniziale. La versione corrente e' `1.0.3` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
 
 Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
 
@@ -80,7 +81,7 @@ La release stabile `v1.0.2` corregge i dialog Stile e Redraw automatico in tema 
 
 ### Landing page
 
-La landing page statica si trova in `docs/index.html` e usa asset relativi da `docs/assets`. Si apre direttamente nel browser senza backend e seleziona automaticamente italiano per browser/sistemi in italiano, inglese negli altri casi.
+La landing page pubblica e' disponibile esclusivamente all'indirizzo `https://truedrawing.glaucosilvestri.it/`. I file sorgente si trovano in `docs/index.html` e usano asset relativi da `docs/assets`. La pagina si apre direttamente nel browser senza backend, seleziona automaticamente italiano per browser/sistemi in italiano, inglese negli altri casi, e include nell'header un collegamento a `https://glaucosilvestri.it/`.
 
 ### Funzionalita' previste
 
@@ -141,7 +142,7 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Current version is `1.0.2` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
+The project is at its initial stage. Current version is `1.0.3` and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
 
 Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
 
@@ -153,7 +154,7 @@ Stable release `v1.0.2` fixes the Style and Auto redraw dialogs in dark theme: `
 
 ### Landing Page
 
-The static landing page lives at `docs/index.html` and uses relative assets from `docs/assets`. It opens directly in the browser without a backend and automatically selects Italian for Italian browser/system languages, English otherwise.
+The public landing page is available exclusively at `https://truedrawing.glaucosilvestri.it/`. Its source lives at `docs/index.html` and uses relative assets from `docs/assets`. It opens directly in the browser without a backend, automatically selects Italian for Italian browser/system languages and English otherwise, and includes a header link to `https://glaucosilvestri.it/`.
 
 ### Planned Features
 

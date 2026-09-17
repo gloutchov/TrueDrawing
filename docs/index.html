@@ -8,6 +8,7 @@
       content="True Drawing is a local desktop app for turning quick sketches into AI-generated images."
     />
     <title>True Drawing</title>
+    <link rel="canonical" href="https://truedrawing.glaucosilvestri.it/" />
     <link rel="icon" type="image/png" href="./assets/icon.png" />
     <link rel="apple-touch-icon" href="./assets/icon.png" />
     <link rel="stylesheet" href="./landing.css" />
@@ -22,9 +23,24 @@
         <a href="#gallery" data-i18n="navGallery">Gallery</a>
         <a href="#download" data-i18n="navDownload">Download</a>
       </nav>
-      <div class="language-switch" aria-label="Language">
-        <button type="button" data-lang="it">IT</button>
-        <button type="button" data-lang="en">EN</button>
+      <div class="header-actions">
+        <div class="language-switch" aria-label="Language">
+          <button type="button" data-lang="it">IT</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <a
+          class="home-link"
+          href="https://glaucosilvestri.it/"
+          aria-label="Glauco Silvestri homepage"
+          title="Glauco Silvestri homepage"
+          data-home-link
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 11.5 12 4l9 7.5" />
+            <path d="M5.5 10.5V20h13v-9.5" />
+            <path d="M9.5 20v-6h5v6" />
+          </svg>
+        </a>
       </div>
     </header>
 
@@ -32,14 +48,14 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-scrim" aria-hidden="true"></div>
         <div class="hero-content">
-          <p class="release-kicker" data-i18n="releaseKicker">Version 1.0.2 for Windows and macOS</p>
+          <p class="release-kicker" data-i18n="releaseKicker">Version 1.0.3 for Windows and macOS</p>
           <h1 id="hero-title">True Drawing</h1>
           <p class="hero-copy" data-i18n="heroCopy">
             Draw a rough idea locally, then turn it into a polished image with your own OpenAI API key.
           </p>
           <div class="hero-actions">
-            <a class="primary-link" href="https://github.com/gloutchov/truedrawing/releases/tag/v1.0.2" data-i18n="downloadCta">
-              Download v1.0.2
+            <a class="primary-link" href="https://github.com/gloutchov/truedrawing/releases/latest" data-i18n="downloadCta">
+              Download v1.0.3
             </a>
             <a class="secondary-link" href="https://github.com/gloutchov/truedrawing" data-i18n="repoCta">
               View source
@@ -48,7 +64,7 @@
           <dl class="hero-facts" aria-label="Application facts">
             <div>
               <dt data-i18n="factVersionLabel">Version</dt>
-              <dd>1.0.2</dd>
+              <dd>1.0.3</dd>
             </div>
             <div>
               <dt data-i18n="factPlatformsLabel">Platforms</dt>
@@ -107,7 +123,7 @@
       <section id="download" class="download-band" aria-labelledby="download-title">
         <div>
           <p class="eyebrow" data-i18n="downloadEyebrow">Release</p>
-          <h2 id="download-title" data-i18n="downloadTitle">Download True Drawing v1.0.2</h2>
+          <h2 id="download-title" data-i18n="downloadTitle">Download True Drawing v1.0.3</h2>
           <p data-i18n="downloadCopy">
             Builds are distributed through GitHub for Windows and macOS. They are not signed or notarized, so SmartScreen or Gatekeeper may warn on first launch.
           </p>

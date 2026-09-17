@@ -5,17 +5,18 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 ## Stato corrente
 
 - Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
-- Ultima patch completata: `1.0.2` - fix leggibilita' dialog impostazioni in tema scuro.
-- Versione corrente: `1.0.2`.
+- Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
+- Versione corrente: `1.0.3`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch patch completato: `patch/1.0.2-dark-settings`, mergiato su `main` tramite PR #10.
+- Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
 - CI M10: PR #9 verde con GitHub Actions run `27345974695`; `main` verde con run `27346032900`; release workflow `27346106628` verde.
 - CI patch `v1.0.1`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; workflow release `27353682972` verde.
 - CI patch `v1.0.2`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; PR #10 verde con GitHub Actions run `27415112843` e `27415123564`; `main` verde con run `27415599523`; workflow release `27415761496` verde.
+- Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Release GitHub corrente: `v1.0.2` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
