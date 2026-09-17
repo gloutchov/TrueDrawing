@@ -36,6 +36,8 @@ L'interfaccia di True Drawing è bilingue italiano/inglese. La lingua viene scel
 
 ## Come iniziare
 
+Il sito ufficiale di True Drawing e' `https://truedrawing.glaucosilvestri.it/`.
+
 ### Download, firma e checksum
 
 True Drawing è nato come programma personale ed e poi stato pubblicato come progetto open source con licenza Apache 2.0. Le build pubblicate non sono firmate con certificati Apple o Windows.
@@ -52,12 +54,12 @@ _Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. 
 
 ### Verifica checksum SHA-256
 
-La release `v1.0.2` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
+La release `v1.0.3` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
 
 Su Windows, dalla cartella dove si trova l'installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.0.2-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.0.3-Windows-x64.exe -Algorithm SHA256
 ```
 
 Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
@@ -65,7 +67,7 @@ Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.t
 Su macOS, dalla cartella dove si trova il download:
 
 ```bash
-shasum -a 256 True-Drawing-1.0.2-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.0.3-macOS-arm64.dmg
 ```
 
 Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.

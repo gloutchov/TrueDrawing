@@ -214,10 +214,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `1.0.2`.
+- Versione: `1.0.3`.
 - Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
 - Milestone corrente: nessuna.
-- Stato milestone: M11 completata come modifica documentale senza nuova release; patch `v1.0.2` completata per correggere i dialog impostazioni in tema scuro.
+- Stato milestone: M11 completata come modifica documentale senza nuova release; patch `v1.0.3` per dominio canonico e link della landing page completata.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -248,6 +248,6 @@ truedrawing/
 - CSP e sandbox renderer configurati.
 - UI modulare presente per canvas, strumenti, inspector, layer e settings.
 - Workflow CI presente; workflow release Windows/macOS manuale consolidato con validazione tag/versione, note release, checksum e upload diretto asset.
-- Landing page statica in `docs/` completata con asset reali, lingua IT/EN e layout responsive.
+- Landing page statica in `docs/` completata con asset reali, lingua IT/EN, layout responsive, dominio canonico `https://truedrawing.glaucosilvestri.it/` e link al sito principale.
 - Build renderer configurata con asset relativi, cosi' i pacchetti Electron installati caricano correttamente JavaScript e CSS da `file://`.
 - Tema scuro corretto nei dialog Stile e Redraw automatico per mantenere leggibili preset e checkbox.

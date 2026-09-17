@@ -2,6 +2,7 @@ const translations = {
   en: {
     navGallery: "Gallery",
     navDownload: "Download",
+    homeLinkLabel: "Glauco Silvestri homepage",
     releaseKicker: "Open Source Desktop App",
     heroCopy: "Draw a rough idea locally, then turn it into a polished image with AI.",
     downloadCta: "Download",
@@ -34,6 +35,7 @@ const translations = {
   it: {
     navGallery: "Galleria",
     navDownload: "Download",
+    homeLinkLabel: "Pagina principale di Glauco Silvestri",
     releaseKicker: "Desktop APP Open Source",
     heroCopy:
       "Disegna un'idea grezza in locale, poi trasformala in un'immagine rifinita con la AI.",
@@ -111,6 +113,10 @@ function setLanguage(language) {
       ? "https://github.com/gloutchov/truedrawing/blob/main/ISTRUZIONI.md"
       : "https://github.com/gloutchov/truedrawing/blob/main/INSTRUCTIONS.md"
   );
+
+  const homeLink = document.querySelector("[data-home-link]");
+  homeLink?.setAttribute("aria-label", copy.homeLinkLabel);
+  homeLink?.setAttribute("title", copy.homeLinkLabel);
 
   for (const button of buttons) {
     button.setAttribute("aria-pressed", button.dataset.lang === language ? "true" : "false");
