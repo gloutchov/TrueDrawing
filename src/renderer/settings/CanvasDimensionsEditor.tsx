@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Ruler, X } from "lucide-react";
+import { Lock, LockOpen, Ruler, X } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";
 import { t } from "../i18n/appI18n";
+import { CollapsiblePanel } from "../ui/CollapsiblePanel";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import {
   cmToPixels,
+  linkedCanvasLength,
   pixelsToCm,
   validateCanvasDimensions,
   type CanvasDimensions
@@ -26,12 +28,15 @@ export function CanvasDimensionsEditor({ config, locale, canvas, onApply, onClos
   const [width, setWidth] = useState(String(canvas.width));
   const [height, setHeight] = useState(String(canvas.height));
   const [dpi, setDpi] = useState(String(canvas.dpi));
+  const [aspectLocked, setAspectLocked] = useState(false);
+  const [lockedRatio, setLockedRatio] = useState(canvas.width / canvas.height);
   const limits = config.canvas.dimensions;
 
   useEffect(() => {
     setWidth(formatLength(canvas.width, unit, canvas.dpi));
     setHeight(formatLength(canvas.height, unit, canvas.dpi));
     setDpi(String(canvas.dpi));
+    setLockedRatio(canvas.width / canvas.height);
   }, [canvas.width, canvas.height, canvas.dpi]);
 
   const parsedDpi = Number(dpi);
@@ -66,6 +71,34 @@ export function CanvasDimensionsEditor({ config, locale, canvas, onApply, onClos
     setHeight(formatLength(source.height, nextUnit, source.dpi));
   };
 
+  const changeLength = (side: "width" | "height", rawValue: string) => {
+    if (side === "width") {
+      setWidth(rawValue);
+    } else {
+      setHeight(rawValue);
+    }
+
+    const value = Number(rawValue);
+    if (!aspectLocked || rawValue.trim() === "" || !Number.isFinite(value) || value <= 0) {
+      return;
+    }
+
+    const linked = String(linkedCanvasLength(value, lockedRatio, side, unit));
+    if (side === "width") {
+      setHeight(linked);
+    } else {
+      setWidth(linked);
+    }
+  };
+
+  const toggleAspectLock = () => {
+    if (!aspectLocked) {
+      const source = nextCanvas && !error ? nextCanvas : canvas;
+      setLockedRatio(source.width / source.height);
+    }
+    setAspectLocked((locked) => !locked);
+  };
+
   const fields = (
     <>
       <div className="canvas-size-fields">
@@ -81,15 +114,27 @@ export function CanvasDimensionsEditor({ config, locale, canvas, onApply, onClos
           <input type="number" min={limits.minDpi} max={limits.maxDpi} step="1"
             value={dpi} onChange={(event) => setDpi(event.currentTarget.value)} />
         </label>
+      </div>
+      <div className="canvas-size-measurements">
         <label className="field">
           <span>{t(locale, "canvasWidth")}</span>
           <input type="number" min="0" step={unit === "px" ? "1" : "0.001"}
-            value={width} onChange={(event) => setWidth(event.currentTarget.value)} />
+            value={width} onChange={(event) => changeLength("width", event.currentTarget.value)} />
         </label>
+        <button
+          className={`mini-button canvas-size-lock${aspectLocked ? " is-active" : ""}`}
+          type="button"
+          aria-label={t(locale, aspectLocked ? "unlockAspectRatio" : "lockAspectRatio")}
+          title={t(locale, aspectLocked ? "unlockAspectRatio" : "lockAspectRatio")}
+          aria-pressed={aspectLocked}
+          onClick={toggleAspectLock}
+        >
+          {aspectLocked ? <Lock size={16} /> : <LockOpen size={16} />}
+        </button>
         <label className="field">
           <span>{t(locale, "canvasHeight")}</span>
           <input type="number" min="0" step={unit === "px" ? "1" : "0.001"}
-            value={height} onChange={(event) => setHeight(event.currentTarget.value)} />
+            value={height} onChange={(event) => changeLength("height", event.currentTarget.value)} />
         </label>
       </div>
       <p className="canvas-size-readout">
@@ -128,15 +173,14 @@ export function CanvasDimensionsEditor({ config, locale, canvas, onApply, onClos
   }
 
   return (
-    <section className="panel canvas-size-panel" aria-label={t(locale, "canvasSize")}>
-      <div className="panel-header"><span><Ruler size={16} /> {t(locale, "canvasSize")}</span></div>
+    <CollapsiblePanel title={t(locale, "canvasSize")} icon={<Ruler size={16} />} locale={locale} className="canvas-size-panel">
       <div className="canvas-size-body">
         {fields}
         <button className="text-button text-button--primary" type="button" disabled={Boolean(error) || isUnchanged} onClick={apply}>
           {t(locale, "apply")}
         </button>
       </div>
-    </section>
+    </CollapsiblePanel>
   );
 }
 

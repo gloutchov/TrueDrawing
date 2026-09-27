@@ -111,6 +111,8 @@ Per spostarsi su un canvas ingrandito, selezionare la manina e trascinare la par
 
 Per cambiare le dimensioni del canvas, usare **Dimensioni canvas** nel pannello destro oppure `File > Impostazioni > Dimensioni canvas...`. Scegliere `px` o `cm`, indicare larghezza, altezza e risoluzione in DPI, poi premere **Applica**. La conversione usa 2,54 cm per pollice e arrotonda al pixel piu' vicino; il pannello mostra sempre la misura effettiva in pixel e centimetri. In `px`, cambiare DPI conserva i pixel e modifica la misura fisica; in `cm`, conserva i centimetri inseriti e ricalcola i pixel. I limiti configurati sono 64-4096 pixel per lato, 12 megapixel complessivi e 72-600 DPI. L'origine resta in alto a sinistra: i tratti non vengono scalati o cancellati quando il canvas si restringe, e possono riapparire ampliandolo. Undo/redo ripristina anche le dimensioni.
 
+Il lucchetto tra larghezza e altezza e' inizialmente aperto. Cliccarlo per mantenere le proporzioni correnti: cambiando un lato si aggiorna l'altro, in pixel o in centimetri. Cliccarlo di nuovo per modificare i due lati separatamente. I riquadri **Dimensioni canvas**, **Inspector** e **Layer** a destra si comprimono e si espandono cliccando sul rispettivo titolo; comprimere un riquadro non modifica il disegno.
+
 Il Menù Edit offre alcune funzionalità aggiuntive utili:
 
 - Annulla/Ripeti;

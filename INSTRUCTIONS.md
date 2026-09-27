@@ -111,6 +111,8 @@ To move around a zoomed canvas, select the hand and drag the visible area with a
 
 To change the canvas size, use **Canvas size** in the right panel or `File > Settings > Canvas size...`. Select `px` or `cm`, enter width, height, and resolution in DPI, then press **Apply**. Conversion uses 2.54 cm per inch and rounds to the nearest pixel; the panel always shows the effective size in pixels and centimeters. In `px`, changing DPI preserves the pixel count and changes the physical size; in `cm`, it preserves the entered centimeters and recalculates pixels. Configured limits are 64-4096 pixels per side, 12 megapixels total, and 72-600 DPI. The origin stays at the top left: shrinking the canvas does not scale or delete strokes, which can reappear when enlarged. Undo/redo also restores dimensions.
 
+The lock between width and height starts open. Click it to keep the current proportions: changing either side updates the other in pixels or centimeters. Click it again to edit the sides separately. The **Canvas size**, **Inspector**, and **Layers** sections on the right collapse or expand when you click their titles; collapsing a section does not change the drawing.
+
 The Edit menu offers some useful additional features:
 
 - Undo/Redo;

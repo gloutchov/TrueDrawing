@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { AppConfig } from "../../src/shared/config/appConfigSchema";
 import {
   cmToPixels,
+  linkedCanvasLength,
   pixelsToCm,
   validateCanvasDimensions
 } from "../../src/shared/document/canvasDimensions";
@@ -29,6 +30,12 @@ describe("canvas dimensions", () => {
     expect(cmToPixels(2.54, 300)).toBe(300);
     expect(cmToPixels(21, 300)).toBe(2480);
     expect(pixelsToCm(300, 300)).toBeCloseTo(2.54);
+  });
+
+  it("links the opposite side at the locked ratio in pixels and centimeters", () => {
+    expect(linkedCanvasLength(1200, 3 / 2, "width", "px")).toBe(800);
+    expect(linkedCanvasLength(10, 3 / 2, "height", "cm")).toBe(15);
+    expect(linkedCanvasLength(20, 3 / 2, "width", "cm")).toBe(13.333);
   });
 
   it("rejects pixel, area and DPI limits", () => {

@@ -3,6 +3,10 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 const translations = {
   it: {
     apply: "Applica",
+    collapsePanel: "Comprimi pannello",
+    expandPanel: "Espandi pannello",
+    lockAspectRatio: "Blocca proporzioni",
+    unlockAspectRatio: "Sblocca proporzioni",
     canvasSize: "Dimensioni canvas",
     canvasWidth: "Larghezza",
     canvasHeight: "Altezza",
@@ -80,6 +84,10 @@ const translations = {
   },
   en: {
     apply: "Apply",
+    collapsePanel: "Collapse panel",
+    expandPanel: "Expand panel",
+    lockAspectRatio: "Lock aspect ratio",
+    unlockAspectRatio: "Unlock aspect ratio",
     canvasSize: "Canvas size",
     canvasWidth: "Width",
     canvasHeight: "Height",

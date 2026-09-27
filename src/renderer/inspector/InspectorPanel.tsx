@@ -2,6 +2,7 @@ import { Image, KeyRound, Loader2, RefreshCw } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";
 import { t } from "../i18n/appI18n";
+import { CollapsiblePanel } from "../ui/CollapsiblePanel";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { DrawingDocument } from "../../shared/document/documentTypes";
 import type { StoredRealisticImage } from "../../shared/image-generation/imageGenerationTypes";
@@ -41,10 +42,13 @@ export function InspectorPanel({
   const canGenerate = apiKeyConfigured && !isGenerating;
 
   return (
-    <section className="panel inspector-panel" aria-label={t(locale, "inspector")}>
-      <div className="panel-header">
-        <span><Image size={16} /> {t(locale, "inspector")}</span>
-        <div className="panel-actions">
+    <CollapsiblePanel
+      title={t(locale, "inspector")}
+      icon={<Image size={16} />}
+      locale={locale}
+      className="inspector-panel"
+      actions={(
+        <>
           <button
             className="mini-button"
             title={t(locale, "openApiKeySettings")}
@@ -62,8 +66,9 @@ export function InspectorPanel({
           >
             {isGenerating ? <Loader2 className="spin-icon" size={15} /> : <RefreshCw size={15} />}
           </button>
-        </div>
-      </div>
+        </>
+      )}
+    >
       <div
         className="inspector-preview"
         style={{
@@ -108,7 +113,7 @@ export function InspectorPanel({
           <dd>{formatGeneratedAt(realisticImage?.generatedAt)}</dd>
         </div>
       </dl>
-    </section>
+    </CollapsiblePanel>
   );
 }
 
@@ -181,4 +186,3 @@ function formatGeneratedAt(generatedAt: string | undefined): string {
     minute: "2-digit"
   });
 }
-

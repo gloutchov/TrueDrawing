@@ -24,6 +24,20 @@ export function pixelsToCm(pixels: number, dpi: number): number {
   return pixels * 2.54 / dpi;
 }
 
+export function linkedCanvasLength(
+  value: number,
+  aspectRatio: number,
+  editedSide: "width" | "height",
+  unit: "px" | "cm"
+): number {
+  if (!Number.isFinite(value) || !Number.isFinite(aspectRatio) || aspectRatio <= 0) {
+    return Number.NaN;
+  }
+
+  const linked = editedSide === "width" ? value / aspectRatio : value * aspectRatio;
+  return unit === "px" ? Math.round(linked) : Number(linked.toFixed(3));
+}
+
 export function validateCanvasDimensions(
   value: CanvasDimensions,
   limits: CanvasDimensionLimits

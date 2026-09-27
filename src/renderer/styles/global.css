@@ -393,10 +393,14 @@ button {
   padding: 10px;
 }
 
+.right-panel > .panel {
+  flex-shrink: 0;
+}
+
 .canvas-size-body {
   display: grid;
   gap: 8px;
-  padding: 10px;
+  padding: 10px 10px 12px;
 }
 
 .canvas-size-fields {
@@ -409,6 +413,28 @@ button {
 .canvas-size-fields .field select {
   width: 100%;
   min-width: 0;
+}
+
+.canvas-size-measurements {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+  gap: 6px;
+}
+
+.canvas-size-measurements .field input {
+  width: 100%;
+  min-width: 0;
+}
+
+.canvas-size-lock {
+  align-self: end;
+  height: 34px;
+  color: #485c65;
+}
+
+.canvas-size-lock.is-active {
+  color: #ffffff;
+  background: #4f6972;
 }
 
 .canvas-size-readout,
@@ -448,6 +474,29 @@ button {
   gap: 7px;
 }
 
+.panel[data-expanded="false"] .panel-header {
+  border-bottom: 0;
+}
+
+.panel-title-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+}
+
+.panel-title-button span {
+  flex: 1;
+  min-width: 0;
+}
+
 .panel-actions {
   display: flex;
   gap: 4px;
@@ -459,7 +508,7 @@ button {
   border-radius: 6px;
 }
 
-.inspector-panel {
+.inspector-panel[data-expanded="true"] {
   min-height: 292px;
 }
 
@@ -956,6 +1005,11 @@ button {
 .app-shell[data-theme="dark"] .text-button--primary:hover,
 .app-shell[data-theme="dark"] .fullscreen-exit-button:hover {
   background: #367f99;
+}
+
+.app-shell[data-theme="dark"] .canvas-size-lock.is-active {
+  color: #ffffff;
+  background: #2f6f86;
 }
 
 .app-shell[data-theme="dark"] .text-button--danger {

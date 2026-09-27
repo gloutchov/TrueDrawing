@@ -131,6 +131,9 @@ truedrawing/
 |   |   |   Riepilogo impostazioni provider/modello/stile, editor condiviso dimensioni canvas, dialog API key, stile immagine, redraw automatico e interfaccia.
 |   |   |   `CanvasDimensionsEditor.tsx` serve sia il pannello destro sia il dialog del menu Impostazioni.
 |   |   |
+|   |   +-- ui/
+|   |   |   `CollapsiblePanel.tsx` fornisce intestazione e stato di apertura ai tre riquadri del pannello destro.
+|   |   |
 |   |   +-- i18n/
 |   |   |   Dizionario italiano/inglese per menu e controlli principali del renderer.
 |   |   |
@@ -236,7 +239,8 @@ truedrawing/
 - Zoom canvas con pulsanti, rotella e comandi View dedicati.
 - Zoom canvas persistente come preferenza UI non segreta in `localStorage`.
 - Pan canvas con la manina mantenuto nella sola memoria del renderer, senza modificare documento o export.
-- Dimensioni canvas e DPI nel documento, modificabili dal pannello destro e dal menu Impostazioni; conversione cm/pixel e undo/redo.
+- Dimensioni canvas e DPI nel documento, modificabili dal pannello destro e dal menu Impostazioni; conversione cm/pixel, lucchetto proporzioni e undo/redo.
+- Riquadri Dimensioni canvas, Inspector e Layer collassabili in modo indipendente.
 - Status bar con stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom.
 - Inspector realistico proporzionale al canvas di disegno.
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.

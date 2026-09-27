@@ -95,7 +95,7 @@ La landing page pubblica e' disponibile esclusivamente all'indirizzo `https://tr
 - Controllo colore, dimensione tratto, opacita' e hardness.
 - Zoom canvas con pulsanti `+`/`-`, reset e rotella del mouse.
 - Manina come primo strumento a sinistra: trascinare il canvas per spostare la vista senza modificare il disegno; il reset zoom ricentra la vista.
-- Dimensioni canvas modificabili in pixel o centimetri a DPI scelti, dal pannello destro e da `File > Impostazioni > Dimensioni canvas...`; undo/redo ripristina la misura.
+- Dimensioni canvas modificabili in pixel o centimetri a DPI scelti, dal pannello destro e da `File > Impostazioni > Dimensioni canvas...`; lucchetto per mantenere le proporzioni e riquadri destri collassabili. Undo/redo ripristina la misura.
 - Status bar con stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom.
 - Pulsante visibile per uscire dal fullscreen quando la finestra e' a schermo intero.
 - Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
@@ -171,7 +171,7 @@ The public landing page is available exclusively at `https://truedrawing.glaucos
 - Color, stroke size, opacity, and hardness controls.
 - Canvas zoom with `+`/`-` buttons, reset, and mouse wheel.
 - Hand as the first tool on the left: drag the canvas to move the view without changing the drawing; zoom reset recenters the view.
-- Canvas size editable in pixels or centimeters at a chosen DPI, from the right panel and `File > Settings > Canvas size...`; undo/redo restores the size.
+- Canvas size editable in pixels or centimeters at a chosen DPI, from the right panel and `File > Settings > Canvas size...`; aspect ratio lock and collapsible right panels. Undo/redo restores the size.
 - Status bar with save state, dirty state, active tool, active layer, layer/stroke counts, and zoom.
 - Visible fullscreen exit button while the window is fullscreen.
 - Layer creation, renaming, protected deletion, visibility, opacity, and ordering.
