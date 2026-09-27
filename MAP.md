@@ -2,7 +2,7 @@
 
 Questo file descrive la struttura prevista del programma. Deve essere aggiornato alla conclusione di ogni milestone quando cambiano file, cartelle o responsabilita'.
 
-## Mappa iniziale prevista
+## Mappa repository
 
 ```text
 truedrawing/
@@ -110,7 +110,10 @@ truedrawing/
 |   |   |   Root React, layout, preferenze UI non segrete, status bar, recovery dialog e routing interno.
 |   |   |
 |   |   +-- canvas/
-|   |   |   Canvas interattivo, coordinate Pointer Events e rendering tratti con strumenti selezionati.
+|   |   |   Canvas interattivo, coordinate Pointer Events, rendering tratti e spostamento della vista con manina.
+|   |   |
+|   |   |   +-- canvasPan.ts
+|   |   |       Calcolo testabile dello spostamento della vista dai movimenti del puntatore.
 |   |   |
 |   |   +-- tools/
 |   |   |   Toolbar, menu strumenti, preset, controlli colore/size/opacita'/hardness e stato tool.
@@ -167,7 +170,7 @@ truedrawing/
 +-- tests/
 |   |
 |   +-- unit/
-|   |   Test di modello, strumenti, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto e configurazione Vite.
+|   |   Test di modello, strumenti, pan canvas, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto e configurazione Vite.
 |   |
 |   +-- e2e/
 |       Test end-to-end su flussi principali.
@@ -197,6 +200,9 @@ truedrawing/
 +-- AGENTS.md
 |   Direttive operative per sviluppo e manutenzione.
 |
++-- STARTUP_PREFERENCES.md
+|   Preferenze operative generali per milestone, Git, CI, documentazione e sicurezza.
+|
 +-- PLAN.md
 |   Piano milestone, versioni, verifiche e stato avanzamento.
 |
@@ -214,10 +220,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione: `1.0.3`.
-- Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
-- Milestone corrente: nessuna.
-- Stato milestone: M11 completata come modifica documentale senza nuova release; patch `v1.0.3` per dominio canonico e link della landing page completata.
+- Versione sorgente su `main`: `1.1.0`; release GitHub pubblicata: `v1.0.2`.
+- Ultima milestone completata: C12 - Manina e navigazione canvas.
+- Milestone corrente: nessuna; prossima M13 - Dimensioni canvas in pixel e centimetri.
+- Stato milestone: C12 completata con pan locale della vista e checkpoint `milestone/C12`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -228,6 +234,7 @@ truedrawing/
 - Menu Edit collegato alla history del disegno, alla selezione canvas e alla clipboard testo/immagine tramite IPC controllati.
 - Zoom canvas con pulsanti, rotella e comandi View dedicati.
 - Zoom canvas persistente come preferenza UI non segreta in `localStorage`.
+- Pan canvas con la manina mantenuto nella sola memoria del renderer, senza modificare documento o export.
 - Status bar con stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom.
 - Inspector realistico proporzionale al canvas di disegno.
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.

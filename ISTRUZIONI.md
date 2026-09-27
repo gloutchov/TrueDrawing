@@ -54,12 +54,12 @@ _Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. 
 
 ### Verifica checksum SHA-256
 
-La release `v1.0.3` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
+La release pubblicata `v1.0.2` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
 
 Su Windows, dalla cartella dove si trova l'installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.0.3-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.0.2-Windows-x64.exe -Algorithm SHA256
 ```
 
 Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
@@ -67,7 +67,7 @@ Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.t
 Su macOS, dalla cartella dove si trova il download:
 
 ```bash
-shasum -a 256 True-Drawing-1.0.3-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.0.2-macOS-arm64.dmg
 ```
 
 Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.
@@ -89,8 +89,9 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Sul lato sinistro dello schermo sono presenti i tool principali di disegno. Ovvero (dall'alto verso il basso):
+Nella versione sorgente `1.1.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
+- Manina per spostare la vista del canvas;
 - Tool di selezione;
 - Tool di disegno al tratto (matita, pennarello, pennello, gomma);
 - Tool di disegno figure (quadrato/rettangolo, cerchio/ellisse, triangolo);
@@ -105,6 +106,8 @@ Ognuno di questi tool offre alcuni setup che permettono di personalizzare ulteri
 - Dimensione tratto.
 
 L'attività di disegno è molto semplice. E' sufficiente selezionare il tool desiderato, e tracciare ciò che si vuole sul canvas bianco.
+
+Per spostarsi su un canvas ingrandito, selezionare la manina e trascinare la parte visibile con mouse, penna o touch. Il trascinamento non cambia il disegno e non viene salvato nel progetto. Il reset dello zoom riporta anche la vista al centro.
 
 Il Menù Edit offre alcune funzionalità aggiuntive utili:
 

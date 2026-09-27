@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing e' arrivato alla versione sorgente stabile `1.0.3`.
+True Drawing e' arrivato alla versione sorgente `1.1.0` con la manina per navigare nel canvas. La release GitHub pubblicata resta `v1.0.2`.
 
-- Versione corrente: `1.0.3`.
+- Versione corrente: `1.1.0` (sorgente, senza nuova GitHub release).
 - Branch stabile: `main`.
-- Ultima milestone completata: `M11 - Roadmap post release e pulizia piano`.
+- Ultima milestone completata: `C12 - Manina e navigazione canvas`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.0.2`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna.
+- Milestone corrente in sviluppo: nessuna; la prossima e' `M13 - Dimensioni canvas in pixel e centimetri`.
 
 ## Obiettivo della fase post release
 
@@ -22,9 +22,7 @@ Le priorita' sono:
 - permettere l'uso di immagini di riferimento;
 - aggiungere funzioni avanzate sui layer;
 - conservare versioni del documento oltre ad autosave e undo/redo;
-- rendere la generazione AI piu' configurabile;
-- aprire l'architettura a provider AI multipli;
-- garantire un'esperienza completa anche offline.
+- rendere la generazione AI piu' configurabile.
 
 ## Regole operative
 
@@ -35,6 +33,9 @@ Le priorita' sono:
 - Aggiornare `SECURITY_MODEL.md` quando cambiano segreti, rete, IPC, salvataggi, logging o dati inviati ai provider AI.
 - Aggiornare `MAP.md` quando vengono aggiunti, rimossi o spostati moduli rilevanti.
 - Continuare a distribuire artifact non firmati finche' non sono disponibili credenziali di firma Windows/macOS e notarizzazione Apple.
+- Usare `M<n>` per le milestone in programma, `C<n>` per quelle chiuse e `P<n>` per le idee fuori dal piano esecutivo. Eseguire le `M` in ordine numerico.
+- Prima di ogni operazione Git/GitHub verificare autore `gloutchov <gloutchov@gmail.com>` e account GitHub `gloutchov`.
+- Richiedere l'avallo esplicito del progettista prima di ogni merge. Dopo il merge creare e verificare sul remoto il tag annotato `milestone/C<n>`; senza tale checkpoint la milestone seguente non inizia.
 
 ## Verifica minima per ogni milestone
 
@@ -52,7 +53,7 @@ Prima della chiusura di una milestone:
 
 ## Roadmap
 
-### M11 - Roadmap post release e pulizia piano
+### C11 - Roadmap post release e pulizia piano
 
 - Versione finale: `1.0.1` senza nuova release, perche' la milestone modifica solo documentazione e roadmap.
 - Branch: `milestone/11-post-release-roadmap`.
@@ -73,14 +74,70 @@ Criteri di accettazione:
 - `PLAN.md` contiene solo stato corrente, regole operative, verifiche e roadmap futura.
 - La roadmap non include l'auto-update firmato.
 - I riferimenti documentali usano il manuale inglese `INSTRUCTIONS.md`.
-- `SECURITY_MODEL.md` riflette lo stato corrente `1.0.1` e la milestone di hardening pianificata.
+- `SECURITY_MODEL.md` riflette lo stato corrente `1.0.1` e la milestone di hardening pianificata, ora M14.
 
-### M12 - Security hardening post release
+Stato: completata nel 2026-06-11, prima dell'introduzione dei checkpoint `milestone/C<n>`; nessun tag di checkpoint retroattivo. Riepilogo: roadmap post release e documentazione riallineate alla release `1.0.1`.
 
-- Versione finale prevista: `1.1.0`.
-- Branch previsto: `milestone/12-security-hardening`.
+### C12 - Manina e navigazione canvas
+
+- Versione finale: `1.1.0` (sorgente, senza GitHub release).
+- Branch: `milestone/12-canvas-hand-tool`.
+- Tag di checkpoint: `milestone/C12`.
 - Tipo incremento: `+0.1.0`.
-- Obiettivo: rafforzare le difese gia' documentate in `SECURITY_MODEL.md` prima di aggiungere nuove superfici come import immagini, provider multipli e modalita' offline.
+- Stato: completata dopo avallo esplicito del progettista e verifica di CI e checkpoint remoto.
+- Obiettivo: permettere di spostare la vista del canvas senza modificare il disegno.
+
+Attivita':
+
+- Inserire la manina come primo strumento nella barra a sinistra, con etichette italiane e inglesi.
+- Consentire il trascinamento del canvas con puntatore o touch, anche dopo uno zoom; mantenere il pan come stato di vista non salvato nel progetto.
+- Evitare che la navigazione generi stroke, selezioni o voci undo/redo; integrare il reset della vista con lo zoom.
+- Aggiornare `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`; aggiornare `SECURITY_MODEL.md` solo se cambia una superficie di rischio.
+
+Criteri di accettazione:
+
+- La manina precede tutti gli altri strumenti e il trascinamento sposta la vista in entrambe le direzioni.
+- Il disegno rimane immutato, anche dopo cambio strumento, undo/redo, salvataggio ed export.
+- Zoom, temi chiaro/scuro e input puntatore/touch continuano a funzionare.
+
+Test richiesti: test mirati della selezione strumento e del pan, `npm run lint`, `npm run test`, `npm run build` e smoke test manuale della UI.
+
+Riepilogo e verifiche (2026-09-27): manina, pan locale, reset vista, test mirati, documenti e preferenze operative aggiornati; lint, 41 test, build e CI PR #12 (run `36323912210`) verdi. Smoke test Electron: pan a zoom 132% senza tratti, reset e temi chiaro/scuro verificati. Limite residuo: penna e touch fisici non disponibili per lo smoke test. Il progettista ha approvato il merge; CI su `main` e tag remoto vanno verificati prima di M13.
+
+### M13 - Dimensioni canvas in pixel e centimetri
+
+- Versione finale prevista: `1.2.0`.
+- Branch previsto: `milestone/13-canvas-dimensions`.
+- Tag di checkpoint previsto: `milestone/C13`.
+- Tipo incremento: `+0.1.0`.
+- Stato: pianificata; inizia solo dopo la chiusura e la verifica remota di `C12`.
+- Obiettivo: cambiare larghezza e altezza del canvas dal pannello a destra e dal menu Impostazioni.
+
+Attivita':
+
+- Aggiungere controlli condivisi per larghezza e altezza in pixel o centimetri, con risoluzione DPI esplicita e conversione coerente.
+- Validare minimi, massimi e risoluzione tramite configurazione centrale; mantenere le dimensioni nel documento `.tdraw` e recuperare i progetti precedenti.
+- Applicare il ridimensionamento senza scalare i tratti: origine in alto a sinistra, contenuto oltre i bordi temporaneamente non visibile e ripristinabile con undo/redo o ampliamento.
+- Aggiornare rendering, selezione, crop, clipboard, inspector, generazione, salvataggio, autosave ed export per usare le dimensioni del documento.
+- Aggiornare `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
+
+Criteri di accettazione:
+
+- I due accessi modificano lo stesso canvas e mostrano la stessa misura effettiva.
+- I valori in centimetri producono dimensioni pixel prevedibili alla risoluzione selezionata.
+- Dimensioni, tratti e layer si conservano dopo salvataggio e riapertura; undo/redo ripristina le dimensioni.
+- Export e file laterali usano le dimensioni effettive, senza perdita di contenuto nel documento quando il canvas si restringe.
+
+Test richiesti: conversione e limiti, compatibilita' file, history, rendering/export, `npm run lint`, `npm run test`, `npm run build` e smoke test manuale in entrambi i temi.
+
+### M14 - Security hardening post release
+
+- Versione finale prevista: `1.3.0`.
+- Branch previsto: `milestone/14-security-hardening`.
+- Tag di checkpoint previsto: `milestone/C14`.
+- Tipo incremento: `+0.1.0`.
+- Stato: pianificata.
+- Obiettivo: rafforzare le difese gia' documentate in `SECURITY_MODEL.md` prima di aggiungere nuove superfici come l'import di immagini di riferimento.
 
 Attivita':
 
@@ -108,11 +165,17 @@ Criteri di accettazione:
 - I test coprono hardening IPC, CSP, sanitizzazione errori, limiti payload e assenza segreti tracciati.
 - `SECURITY_MODEL.md`, `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `MAP.md` e `AGENTS.md` sono aggiornati se il comportamento cambia.
 
-### M13 - Brush avanzati e texture personalizzate
+Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
-- Versione finale prevista: `1.2.0`.
-- Branch previsto: `milestone/13-advanced-brushes`.
+Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+### M15 - Brush avanzati e texture personalizzate
+
+- Versione finale prevista: `1.4.0`.
+- Branch previsto: `milestone/15-advanced-brushes`.
+- Tag di checkpoint previsto: `milestone/C15`.
 - Tipo incremento: `+0.1.0`.
+- Stato: pianificata.
 - Obiettivo: rendere il motore di disegno piu' espressivo con brush avanzati e texture configurabili.
 
 Attivita':
@@ -131,11 +194,17 @@ Criteri di accettazione:
 - I file `.tdraw` conservano correttamente le impostazioni brush.
 - Le prestazioni restano fluide su canvas di dimensione predefinita.
 
-### M14 - Import immagini di riferimento
+Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
-- Versione finale prevista: `1.3.0`.
-- Branch previsto: `milestone/14-reference-image-import`.
+Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+### M16 - Import immagini di riferimento
+
+- Versione finale prevista: `1.5.0`.
+- Branch previsto: `milestone/16-reference-image-import`.
+- Tag di checkpoint previsto: `milestone/C16`.
 - Tipo incremento: `+0.1.0`.
+- Stato: pianificata.
 - Obiettivo: permettere all'utente di importare immagini locali come riferimento o base di lavoro.
 
 Attivita':
@@ -154,11 +223,17 @@ Criteri di accettazione:
 - Errori di formato o permessi sono sanitizzati e comprensibili.
 - La funzione non invia immagini ai provider AI senza azione esplicita dell'utente.
 
-### M15 - Maschere e clipping layer
+Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
-- Versione finale prevista: `1.4.0`.
-- Branch previsto: `milestone/15-masks-clipping-layers`.
+Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+### M17 - Maschere e clipping layer
+
+- Versione finale prevista: `1.6.0`.
+- Branch previsto: `milestone/17-masks-clipping-layers`.
+- Tag di checkpoint previsto: `milestone/C17`.
 - Tipo incremento: `+0.1.0`.
+- Stato: pianificata.
 - Obiettivo: aggiungere controllo avanzato della composizione tramite maschere e clipping.
 
 Attivita':
@@ -176,11 +251,17 @@ Criteri di accettazione:
 - Le operazioni sono reversibili con undo/redo.
 - La UI impedisce stati layer incoerenti.
 
-### M16 - Storia versioni del documento
+Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
-- Versione finale prevista: `1.5.0`.
-- Branch previsto: `milestone/16-document-version-history`.
+Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+### M18 - Storia versioni del documento
+
+- Versione finale prevista: `1.7.0`.
+- Branch previsto: `milestone/18-document-version-history`.
+- Tag di checkpoint previsto: `milestone/C18`.
 - Tipo incremento: `+0.1.0`.
+- Stato: pianificata.
 - Obiettivo: permettere all'utente di tornare a snapshot precedenti del progetto.
 
 Attivita':
@@ -199,11 +280,17 @@ Criteri di accettazione:
 - I limiti configurati impediscono crescita incontrollata dei file.
 - Autosave, recovery e snapshot hanno responsabilita' chiare e documentate.
 
-### M17 - Preset di stile realistico
+Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
-- Versione finale prevista: `1.6.0`.
-- Branch previsto: `milestone/17-realistic-style-presets`.
+Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+### M19 - Preset di stile realistico
+
+- Versione finale prevista: `1.8.0`.
+- Branch previsto: `milestone/19-realistic-style-presets`.
+- Tag di checkpoint previsto: `milestone/C19`.
 - Tipo incremento: `+0.1.0`.
+- Stato: pianificata.
 - Obiettivo: rendere piu' potente e prevedibile la generazione realistica tramite preset di stile.
 
 Attivita':
@@ -221,51 +308,9 @@ Criteri di accettazione:
 - Il prompt generato resta documentato e testabile.
 - Gli errori del provider non espongono segreti o dati non necessari.
 
-### M18 - Supporto provider AI multipli
+Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
-- Versione finale prevista: `1.7.0`.
-- Branch previsto: `milestone/18-multiple-ai-providers`.
-- Tipo incremento: `+0.1.0`.
-- Obiettivo: rendere la generazione immagini indipendente dal solo provider OpenAI.
-
-Attivita':
-
-- Definire interfaccia provider per generazione immagini.
-- Separare configurazione provider, modello, credenziali e capacita' supportate.
-- Conservare OpenAI come provider predefinito.
-- Aggiungere gestione credenziali per provider multipli senza salvare segreti in chiaro.
-- Aggiornare IPC, UI impostazioni e documentazione sicurezza.
-- Aggiungere test per routing provider, validazione config e sanitizzazione errori.
-
-Criteri di accettazione:
-
-- L'utente puo' scegliere provider e modello dalle impostazioni.
-- OpenAI resta funzionante e retrocompatibile.
-- Ogni provider usa solo i segreti necessari e li salva nel keychain/fallback sicuro.
-- La UI indica chiaramente provider non configurati o non disponibili.
-
-### M19 - Modalita' offline completa
-
-- Versione finale prevista: `1.8.0`.
-- Branch previsto: `milestone/19-offline-mode`.
-- Tipo incremento: `+0.1.0`.
-- Obiettivo: permettere a True Drawing di funzionare pienamente come app di disegno locale anche senza rete o API key.
-
-Attivita':
-
-- Definire stato offline esplicito dell'app.
-- Disattivare o nascondere in modo coerente le azioni di generazione AI non disponibili.
-- Garantire apertura, disegno, layer, salvataggio, recupero ed export senza provider configurati.
-- Aggiungere messaggi UI non invasivi per spiegare la disponibilita' della generazione.
-- Aggiungere test per avvio senza API key, assenza rete e provider non configurato.
-- Aggiornare manuali e modello di sicurezza.
-
-Criteri di accettazione:
-
-- L'app e' usabile come editor locale senza API key.
-- Nessuna chiamata di rete parte in modalita' offline.
-- I flussi di salvataggio/export funzionano senza generazione AI.
-- Il passaggio da offline a provider configurato non richiede riavvio, salvo limiti tecnici documentati.
+Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
 
 ## Fuori roadmap attiva
 
@@ -280,9 +325,10 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | Data | Milestone | Versione | Branch | Stato | Note |
 | --- | --- | --- | --- | --- | --- |
 | 2026-06-11 | Baseline stabile | 1.0.1 | `main` | Completata | Release `v1.0.1` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256. |
-| 2026-06-11 | M11 - Roadmap post release e pulizia piano | 1.0.1 | `milestone/11-post-release-roadmap` | Completata | Piano storico sostituito da roadmap post release basata sul backlog; nessuna nuova release per modifica solo documentale. |
+| 2026-06-11 | C11 - Roadmap post release e pulizia piano | 1.0.1 | `milestone/11-post-release-roadmap` | Completata | Piano storico sostituito da roadmap post release basata sul backlog; nessuna nuova release per modifica solo documentale. |
 | 2026-06-12 | Patch tema scuro impostazioni | 1.0.2 | `patch/1.0.2-dark-settings` | Completata | PR #10, tag `v1.0.2` e release workflow `27415761496` verdi; corretta leggibilita' dei preset stile e della checkbox redraw automatico in tema scuro, rimosso dropdown stile duplicato e sostituito spinner numerico nativo. |
 | 2026-09-17 | Patch dominio e link landing page | 1.0.3 | `patch/1.0.3-canonical-site-links` | Completata | Dichiarato il dominio personalizzato come canonical, aggiunto il link accessibile al sito principale e introdotto un controllo contro riferimenti al dominio GitHub Pages predefinito; verifiche automatiche e manuali completate. |
+| 2026-09-27 | C12 - Manina e navigazione canvas | 1.1.0 | `milestone/12-canvas-hand-tool` | Completata | PR #12, 41 test, lint/build e CI PR verdi; pan locale verificato in Electron; checkpoint `milestone/C12` dopo CI su `main`. |
 
 ## Checklist di chiusura milestone
 
@@ -298,11 +344,14 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 - [ ] `AGENTS.md` aggiornato.
 - [ ] `MAP.md` aggiornato.
 - [ ] `PLAN.md` aggiornato.
+- [ ] Avallo esplicito del progettista ottenuto prima del merge.
 - [ ] Commit finale creato.
 - [ ] Pull request aperta verso `main`.
 - [ ] CI verde.
 - [ ] Merge su `main` completato.
+- [ ] Tag annotato `milestone/C<numero>` creato sul commit finale di `main`, pubblicato e verificato sul remoto.
 - [ ] Tag versione creato.
+- [ ] Push di `main` e del tag versione verificato sul remoto, quando previsto.
 - [ ] Release GitHub pubblicata con artifact Windows e macOS, quando prevista.
 - [ ] Artifact scaricati e verificati, quando la release e' prevista.
 - [ ] Branch milestone eliminato dopo release o dopo merge verificato.

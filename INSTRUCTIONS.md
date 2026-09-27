@@ -54,12 +54,12 @@ _Note:_ If you have doubts, the repository contains the program checksums. In th
 
 ### Verifying SHA-256 checksums
 
-Release `v1.0.3` includes `SHA256SUMS-windows.txt` and `SHA256SUMS-macos.txt`. Download the checksum file for your operating system together with the app package.
+The published `v1.0.2` release includes `SHA256SUMS-windows.txt` and `SHA256SUMS-macos.txt`. Download the checksum file for your operating system together with the app package.
 
 On Windows, from the folder containing the installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.0.3-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.0.2-Windows-x64.exe -Algorithm SHA256
 ```
 
 Compare the `Hash` value with the matching line in `SHA256SUMS-windows.txt`.
@@ -67,7 +67,7 @@ Compare the `Hash` value with the matching line in `SHA256SUMS-windows.txt`.
 On macOS, from the download folder:
 
 ```bash
-shasum -a 256 True-Drawing-1.0.3-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.0.2-macOS-arm64.dmg
 ```
 
 Compare the value with the matching line in `SHA256SUMS-macos.txt`.
@@ -89,8 +89,9 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-On the left side of the screen are the main drawing tools. That is, from top to bottom:
+In source version `1.1.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
+- Hand tool to move the canvas view;
 - Selection tool;
 - Stroke drawing tools (pencil, marker, brush, eraser);
 - Shape drawing tools (square/rectangle, circle/ellipse, triangle);
@@ -105,6 +106,8 @@ Each of these tools offers some settings that let you further customize the stro
 - Stroke size.
 
 Drawing is very simple. Just select the desired tool and draw whatever you want on the white canvas.
+
+To move around a zoomed canvas, select the hand and drag the visible area with a mouse, pen, or touch. Dragging does not change the drawing and is not saved in the project. Resetting zoom also recenters the view.
 
 The Edit menu offers some useful additional features:
 

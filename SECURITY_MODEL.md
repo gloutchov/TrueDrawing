@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione: `1.0.3`
+Versione sorgente: `1.1.0` (release GitHub pubblicata: `v1.0.2`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -32,7 +32,7 @@ Il renderer puo' interrogare solo lo stato della chiave e il nome del backend, n
 
 Il modello immagini, lo stile immagine e le impostazioni di redraw automatico scelti dall'utente vengono salvati come preferenze non segrete in `userData/preferences`. La preferenza modello viene validata come nome modello non vuoto con caratteri sicuri, ma non viene limitata alla lista dei modelli suggeriti, cosi' l'utente puo' inserire modelli OpenAI futuri. Lo stile puo' essere scelto dai preset configurati o scritto come testo personalizzato non segreto.
 
-Le preferenze UI non segrete, come zoom canvas persistente, lingua interfaccia e tema chiaro/scuro, vengono salvate dal renderer in `localStorage` usando una chiave configurata in `config/app.config.json`. Queste preferenze non contengono API key, percorsi progetto o contenuto del disegno.
+Le preferenze UI non segrete, come zoom canvas persistente, lingua interfaccia e tema chiaro/scuro, vengono salvate dal renderer in `localStorage` usando una chiave configurata in `config/app.config.json`. Il pan della manina resta nella memoria della vista e non viene salvato. Queste preferenze non contengono API key, percorsi progetto o contenuto del disegno.
 
 ### IPC e hardening Electron
 
@@ -73,11 +73,12 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Patch `v1.0.1` per caricamento asset renderer nei pacchetti installati: completata.
 - Patch `v1.0.2` per leggibilita' dei dialog impostazioni in tema scuro: completata, senza modifiche a segreti, rete o IPC.
 - Patch `v1.0.3` per dominio e collegamenti della landing page: completata, senza modifiche a segreti, rete o IPC dell'app desktop.
+- C12: la manina modifica solo la vista nel renderer; nessun nuovo canale IPC, permesso, invio di rete o campo nel file progetto.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ### Miglioramenti pianificati
 
-La milestone `M12 - Security hardening post release` deve rafforzare il modello corrente prima di aggiungere nuove superfici come import immagini, provider AI multipli e modalita' offline completa.
+La milestone `M14 - Security hardening post release` deve rafforzare il modello corrente prima di aggiungere nuove superfici come l'import di immagini di riferimento.
 
 Correttivi previsti:
 
@@ -92,7 +93,7 @@ Correttivi previsti:
 
 ## English
 
-Version: `1.0.3`
+Source version: `1.1.0` (published GitHub release: `v1.0.2`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -122,7 +123,7 @@ The renderer can query only key status and backend name; it cannot read the key.
 
 The user-selected image model, image style, and auto-redraw settings are stored as non-secret preferences under `userData/preferences`. The model preference is validated as a non-empty model name with safe characters, but it is not limited to the suggested model list, so users can enter future OpenAI models. The style may be selected from configured presets or entered as custom non-secret text.
 
-Non-secret UI preferences, such as persistent canvas zoom, interface language, and light/dark theme, are stored by the renderer in `localStorage` using a key configured in `config/app.config.json`. These preferences do not contain API keys, project paths, or drawing content.
+Non-secret UI preferences, such as persistent canvas zoom, interface language, and light/dark theme, are stored by the renderer in `localStorage` using a key configured in `config/app.config.json`. Hand-tool pan remains in view memory and is not saved. These preferences do not contain API keys, project paths, or drawing content.
 
 ### IPC and Electron Hardening
 
@@ -163,11 +164,12 @@ The project currently has no certificates or credentials for Windows code signin
 - `v1.0.1` patch for renderer asset loading in installed packages: complete.
 - `v1.0.2` patch for settings dialog readability in dark theme: complete, with no changes to secrets, network, or IPC.
 - `v1.0.3` landing-page domain and links patch: complete, with no changes to desktop-app secrets, network behavior, or IPC.
+- C12: the hand tool changes only the renderer view; it adds no IPC channel, permission, network transfer, or project-file field.
 - Security tests for credential store, preferences, and CSP: complete.
 
 ### Planned Improvements
 
-The `M12 - Security hardening post release` milestone should strengthen the current model before adding new surfaces such as image import, multiple AI providers, and complete offline mode.
+The `M14 - Security hardening post release` milestone should strengthen the current model before adding new surfaces such as reference image import.
 
 Planned fixes:
 

@@ -342,6 +342,14 @@ button {
   user-select: none;
 }
 
+.canvas-surface--hand {
+  cursor: grab;
+}
+
+.canvas-surface--panning {
+  cursor: grabbing;
+}
+
 .canvas-selection {
   position: absolute;
   border: 1px solid #1f6feb;

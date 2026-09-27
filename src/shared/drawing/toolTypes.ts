@@ -2,7 +2,7 @@ export const strokeToolIds = ["pencil", "marker", "brush", "eraser"] as const;
 export const lineToolIds = ["straight-line", "curved-line"] as const;
 export const shapeToolIds = ["rectangle", "ellipse", "triangle", "polygon"] as const;
 export const fillToolIds = ["fill"] as const;
-export const utilityToolIds = ["selection", "clear-rect", "image"] as const;
+export const utilityToolIds = ["hand", "selection", "clear-rect", "image"] as const;
 export const drawingToolIds = [
   ...strokeToolIds,
   ...lineToolIds,
