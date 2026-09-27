@@ -4,11 +4,11 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: M11 - Roadmap post release e pulizia piano.
+- Ultima milestone completata: C11 - Roadmap post release e pulizia piano.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.0.3`.
-- Branch corrente: `main`.
-- Milestone corrente in sviluppo: nessuna.
+- Versione sorgente sul branch milestone: `1.1.0` (base stabile `main`: `1.0.3`).
+- Branch corrente: `milestone/12-canvas-hand-tool`.
+- Milestone corrente in sviluppo: M12 - Manina e navigazione canvas.
 - Patch corrente: nessuna.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
@@ -22,13 +22,18 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Regole generali
 
+- Applicare anche `STARTUP_PREFERENCES.md`: `M<n>` indica una milestone eseguibile, `C<n>` una milestone chiusa e `P<n>` un'attivita' fuori dal piano corrente. Eseguire le `M` in ordine numerico.
+- Prima di qualsiasi operazione Git o GitHub verificare autore `gloutchov <gloutchov@gmail.com>` e account GitHub autenticato `gloutchov`; fermarsi se l'identita' non e' verificabile.
 - Sviluppare sempre su un branch dedicato alla milestone: `milestone/<numero>-<slug>`.
 - Non fare merge su `main` finche' implementazione, test, documentazione e CI non sono verificati.
+- Richiedere l'avallo esplicito del progettista prima del merge; dopo il merge creare un tag annotato univoco `milestone/C<numero>` sul commit finale di `main`, pubblicarlo e verificarlo sul remoto prima di iniziare la milestone successiva.
+- Registrare in `PLAN.md` per ogni `C<n>` riepilogo, verifiche, limiti residui, versione e checkpoint. Creare il tag `vX.Y.Z` quando la milestone produce una versione rilasciabile.
 - Non eliminare il branch milestone prima che la release GitHub sia stata generata e controllata, quando la release e' prevista.
 - Per risparmiare credito GitHub Actions, non generare release GitHub automatiche per ogni milestone intermedia: produrre release Windows/macOS solo quando esplicitamente richiesto o quando il piano indica una versione beta/stabile quasi definitiva.
 - Non configurare firma codice Windows, firma macOS o notarizzazione finche' non saranno disponibili credenziali esplicite; produrre artifact non firmati e documentare SmartScreen/Gatekeeper nelle istruzioni utente.
 - Aggiornare la versione alla chiusura di ogni milestone secondo `PLAN.md`; le milestone solo documentali possono restare sulla versione corrente se il piano non prevede una nuova release.
-- Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`.
+- Mantenere aggiornati `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `SECURITY_MODEL.md`, `MAP.md`, `AGENTS.md` e `PLAN.md`; aggiornare `AGENTS.md` quando cambiano le regole operative e gli altri documenti secondo il comportamento modificato.
+- Preferire verifiche locali proporzionate; limitare push intermedi e avvii GitHub Actions non necessari.
 
 ## Architettura
 
@@ -85,6 +90,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Non salvare API key in chiaro nel repository, nei log, nei file di progetto o nei crash report.
 - Salvare la API key nel keychain del sistema operativo.
 - Il modello immagini scelto dall'utente e' una preferenza non segreta; la API key resta un segreto.
+- La manina modifica soltanto lo stato locale della vista; il pan non entra nei file `.tdraw`, nei log o nei payload API.
 - Sanitizzare errori e log prima di mostrarli o salvarli.
 - Limitare i dati inviati all'API al minimo necessario per generare l'immagine realistica.
 - Aggiornare `SECURITY_MODEL.md` quando cambia il comportamento relativo a segreti, rete, IPC, salvataggi o logging.
@@ -105,5 +111,6 @@ Prima di chiudere una milestone:
 - controllare che la configurazione non abbia parametri duplicati o hardcoded;
 - controllare che non ci siano segreti tracciati;
 - aggiornare documentazione e piano;
-- verificare CI;
+- verificare CI quando prevista e necessaria;
+- chiedere avallo prima del merge, quindi verificare sul remoto `main` e il tag `milestone/C<numero>`;
 - generare e controllare release Windows e macOS quando previsto.

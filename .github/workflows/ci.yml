@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - "**"
+      - main
   pull_request:
     branches:
       - main
@@ -36,8 +36,10 @@ jobs:
             INSTRUCTIONS.md
             SECURITY_MODEL.md
             AGENTS.md
+            STARTUP_PREFERENCES.md
             MAP.md
             PLAN.md
+            LICENSE
             VERSION
             config/app.config.json
           )

@@ -3,6 +3,7 @@ import {
   Brush,
   Circle,
   Eraser,
+  Hand,
   Highlighter,
   Minus,
   PaintBucket,
@@ -130,6 +131,16 @@ export function ToolPanel({
 
   return (
     <div className="tool-panel">
+      <button
+        className={`icon-button${settings.tool === "hand" ? " is-active" : ""}`}
+        type="button"
+        title={t(locale, "hand")}
+        aria-label={t(locale, "hand")}
+        aria-pressed={settings.tool === "hand"}
+        onClick={() => onSelectTool("hand")}
+      >
+        <Hand size={iconSize} />
+      </button>
       <button
         className={`icon-button${settings.tool === "selection" ? " is-active" : ""}`}
         title={t(locale, "selection")}

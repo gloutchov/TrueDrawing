@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, type PointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { EffectiveLocale } from "../app/uiPreferences";
@@ -14,6 +14,7 @@ import type { DrawingDocument } from "../../shared/document/documentTypes";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
 import type { DrawingToolSettings } from "../../shared/drawing/toolTypes";
 import { pointerEventToCanvasPoint } from "./canvasCoordinates";
+import { panFromPointerDrag, type CanvasPan } from "./canvasPan";
 import { renderCanvas } from "./canvasRenderer";
 
 type CanvasStageProps = {
@@ -27,6 +28,8 @@ type CanvasStageProps = {
   onBeginNewSelection: () => void;
   onMoveSelectedObject: (selection: CanvasSelection) => void;
   zoom: number;
+  pan: CanvasPan;
+  onPanChange: (pan: CanvasPan) => void;
   onZoomIn: () => void;
   onZoomOut: () => void;
   onZoomReset: () => void;
@@ -49,6 +52,8 @@ export function CanvasStage({
   onBeginNewSelection,
   onMoveSelectedObject,
   zoom,
+  pan,
+  onPanChange,
   onZoomIn,
   onZoomOut,
   onZoomReset,
@@ -60,6 +65,11 @@ export function CanvasStage({
   const activePointerIdRef = useRef<number | null>(null);
   const activeStrokeIdRef = useRef<string | null>(null);
   const activeSelectionStartRef = useRef<{ x: number; y: number } | null>(null);
+  const activePanDragRef = useRef<{
+    pointerStart: CanvasPan;
+    initialPan: CanvasPan;
+  } | null>(null);
+  const [isPanning, setIsPanning] = useState(false);
   const activeSelectionMoveRef = useRef<{
     pointerStart: { x: number; y: number };
     selectionStart: CanvasSelection;
@@ -104,6 +114,26 @@ export function CanvasStage({
 
   const handlePointerDown = useCallback((event: PointerEvent<HTMLCanvasElement>) => {
     const canvas = event.currentTarget;
+
+    if (toolSettings.tool === "hand") {
+      if (event.pointerType === "mouse" && event.button !== 0) {
+        return;
+      }
+
+      event.preventDefault();
+      canvas.setPointerCapture(event.pointerId);
+      activePointerIdRef.current = event.pointerId;
+      activeStrokeIdRef.current = null;
+      activeSelectionStartRef.current = null;
+      activeSelectionMoveRef.current = null;
+      activePanDragRef.current = {
+        pointerStart: { x: event.clientX, y: event.clientY },
+        initialPan: pan
+      };
+      setIsPanning(true);
+      return;
+    }
+
     const point = pointerEventToCanvasPoint(
       event,
       canvas,
@@ -170,6 +200,7 @@ export function CanvasStage({
     onBeginNewSelection,
     onSelectionChange,
     onMoveSelectedObject,
+    pan,
     toolSettings.color,
     toolSettings.hardness,
     toolSettings.opacity,
@@ -182,6 +213,16 @@ export function CanvasStage({
 
   const handlePointerMove = useCallback((event: PointerEvent<HTMLCanvasElement>) => {
     if (event.pointerId !== activePointerIdRef.current) {
+      return;
+    }
+
+    if (activePanDragRef.current) {
+      event.preventDefault();
+      onPanChange(panFromPointerDrag(
+        activePanDragRef.current.initialPan,
+        activePanDragRef.current.pointerStart,
+        { x: event.clientX, y: event.clientY }
+      ));
       return;
     }
 
@@ -236,6 +277,7 @@ export function CanvasStage({
     config.canvas.minPointDistance,
     config.canvas.strokeSmoothing,
     onSelectionChange,
+    onPanChange,
     onMoveSelectedObject,
     onUpdateStroke
   ]);
@@ -253,6 +295,8 @@ export function CanvasStage({
     activeStrokeIdRef.current = null;
     activeSelectionStartRef.current = null;
     activeSelectionMoveRef.current = null;
+    activePanDragRef.current = null;
+    setIsPanning(false);
   }, []);
 
   const normalizedSelection = selection ? normalizeCanvasSelection(selection) : null;
@@ -264,12 +308,12 @@ export function CanvasStage({
           className="canvas-transform"
           style={{
             aspectRatio: `${config.canvas.defaultWidth} / ${config.canvas.defaultHeight}`,
-            transform: `scale(${zoom})`
+            transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`
           }}
         >
           <canvas
             ref={canvasRef}
-            className="canvas-surface"
+            className={`canvas-surface${toolSettings.tool === "hand" ? " canvas-surface--hand" : ""}${isPanning ? " canvas-surface--panning" : ""}`}
             width={config.canvas.defaultWidth}
             height={config.canvas.defaultHeight}
             onPointerDown={handlePointerDown}
@@ -345,4 +389,3 @@ function clampSelectionToCanvas(
     height
   };
 }
-

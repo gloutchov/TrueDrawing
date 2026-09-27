@@ -8,6 +8,7 @@ import {
   exportDocumentSelectionToPngDataUrl
 } from "../canvas/canvasExport";
 import { CanvasStage } from "../canvas/CanvasStage";
+import type { CanvasPan } from "../canvas/canvasPan";
 import { preloadCanvasImage } from "../canvas/canvasRenderer";
 import { useDrawingDocumentHistory } from "../history/useDrawingDocumentHistory";
 import { InspectorPanel } from "../inspector/InspectorPanel";
@@ -98,6 +99,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [fileStatusMessage, setFileStatusMessage] = useState("Not saved");
   const [recoveryAutosave, setRecoveryAutosave] = useState<ProjectAutosaveInfo | null>(null);
   const [canvasZoom, setCanvasZoom] = useState(() => readCanvasZoomPreference(config));
+  const [canvasPan, setCanvasPan] = useState<CanvasPan>({ x: 0, y: 0 });
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [canvasSelection, setCanvasSelection] = useState<CanvasSelection | null>(null);
   const [movablePastedStrokeId, setMovablePastedStrokeId] = useState<string | null>(null);
@@ -287,6 +289,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     const signature = JSON.stringify(nextDocument);
 
     replaceDocument(nextDocument);
+    setCanvasPan({ x: 0, y: 0 });
     setCanvasSelection(null);
     setMovablePastedStrokeId(null);
     setProjectName(config.files.defaultProjectName);
@@ -407,6 +410,10 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   ]);
 
   const changeCanvasZoom = useCallback((direction: "in" | "out" | "reset") => {
+    if (direction === "reset") {
+      setCanvasPan({ x: 0, y: 0 });
+    }
+
     setCanvasZoom((currentZoom) => {
       if (direction === "reset") {
         return 1;
@@ -941,6 +948,8 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onBeginNewSelection={beginNewCanvasSelection}
           onMoveSelectedObject={moveSelectedCanvasObject}
           zoom={canvasZoom}
+          pan={canvasPan}
+          onPanChange={setCanvasPan}
           onZoomIn={() => changeCanvasZoom("in")}
           onZoomOut={() => changeCanvasZoom("out")}
           onZoomReset={() => changeCanvasZoom("reset")}
@@ -1072,6 +1081,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     const signature = JSON.stringify(project.document);
 
     replaceDocument(project.document);
+    setCanvasPan({ x: 0, y: 0 });
     setCanvasSelection(null);
     setMovablePastedStrokeId(null);
     setProjectName(project.name);
@@ -1187,6 +1197,10 @@ function createCanvasGenerationSignature(document: DrawingProjectFile["document"
 }
 
 function formatToolLabel(tool: DrawingToolId, locale: ReturnType<typeof resolveEffectiveLocale>): string {
+  if (tool === "hand") {
+    return t(locale, "hand");
+  }
+
   if (tool === "selection") {
     return t(locale, "selection");
   }
