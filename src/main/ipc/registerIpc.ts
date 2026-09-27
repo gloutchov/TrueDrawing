@@ -110,13 +110,13 @@ export function registerIpc({
     return generateOpenAiRealisticImage(realisticImageRequest, apiKey, getConfig());
   });
   ipcMain.handle("project:save", (event, request: unknown) => (
-    documentStore.saveProject(validateProjectSaveRequest(request), {
+    documentStore.saveProject(validateProjectSaveRequest(request, getConfig()), {
       showSaveDialog: false,
       parentWindow: BrowserWindow.fromWebContents(event.sender)
     })
   ));
   ipcMain.handle("project:save-as", (event, request: unknown) => (
-    documentStore.saveProject(validateProjectSaveRequest(request), {
+    documentStore.saveProject(validateProjectSaveRequest(request, getConfig()), {
       showSaveDialog: true,
       parentWindow: BrowserWindow.fromWebContents(event.sender)
     })
@@ -125,7 +125,7 @@ export function registerIpc({
     documentStore.openProject(BrowserWindow.fromWebContents(event.sender))
   ));
   ipcMain.handle("project:autosave", (_event, request: unknown) => (
-    documentStore.autosaveProject(validateProjectAutosaveRequest(request))
+    documentStore.autosaveProject(validateProjectAutosaveRequest(request, getConfig()))
   ));
   ipcMain.handle("project:autosaves:list", () => documentStore.listAutosaves());
   ipcMain.handle("project:autosave:load", (_event, id: unknown) => {
@@ -228,8 +228,8 @@ function isValidImageModelName(model: string): boolean {
   return /^[A-Za-z0-9._:-]{2,100}$/.test(model.trim());
 }
 
-function validateProjectSaveRequest(value: unknown): ProjectSaveRequest {
-  const request = validateProjectWriteRequest(value);
+function validateProjectSaveRequest(value: unknown, config: AppConfig): ProjectSaveRequest {
+  const request = validateProjectWriteRequest(value, config);
 
   return {
     project: request.project,
@@ -239,8 +239,8 @@ function validateProjectSaveRequest(value: unknown): ProjectSaveRequest {
   };
 }
 
-function validateProjectAutosaveRequest(value: unknown): ProjectAutosaveRequest {
-  const request = validateProjectWriteRequest(value);
+function validateProjectAutosaveRequest(value: unknown, config: AppConfig): ProjectAutosaveRequest {
+  const request = validateProjectWriteRequest(value, config);
 
   return {
     project: request.project,
@@ -249,7 +249,7 @@ function validateProjectAutosaveRequest(value: unknown): ProjectAutosaveRequest 
   };
 }
 
-function validateProjectWriteRequest(value: unknown): ProjectSaveRequest {
+function validateProjectWriteRequest(value: unknown, config: AppConfig): ProjectSaveRequest {
   if (!value || typeof value !== "object") {
     throw new Error("Invalid project request.");
   }
@@ -257,7 +257,7 @@ function validateProjectWriteRequest(value: unknown): ProjectSaveRequest {
   const request = value as Partial<ProjectSaveRequest>;
 
   return {
-    project: parseDrawingProjectFile(request.project),
+    project: parseDrawingProjectFile(request.project, config),
     filePath: request.filePath === null || typeof request.filePath === "string"
       ? request.filePath
       : null,
@@ -306,4 +306,3 @@ function expectImageDataUrl(value: unknown, label: string): string {
 function isImageDataUrl(value: string): boolean {
   return /^data:image\/(png|webp|jpeg);base64,[A-Za-z0-9+/=]+$/.test(value);
 }
-

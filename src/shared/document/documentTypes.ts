@@ -1,5 +1,6 @@
 import type { DrawingStroke } from "../drawing/strokeTypes";
 import type { StoredRealisticImage } from "../image-generation/imageGenerationTypes";
+import type { CanvasDimensions } from "./canvasDimensions";
 
 export type DrawingLayer = {
   id: string;
@@ -10,6 +11,7 @@ export type DrawingLayer = {
 };
 
 export type DrawingDocument = {
+  canvas: CanvasDimensions;
   layers: DrawingLayer[];
   activeLayerId: string;
   realisticImage: StoredRealisticImage | null;

@@ -63,8 +63,7 @@ button {
 .brand-lockup,
 .document-meta,
 .settings-summary,
-.panel-header,
-.panel-header span {
+.panel-header {
   display: flex;
   align-items: center;
 }
@@ -326,7 +325,6 @@ button {
 
 .canvas-transform {
   position: relative;
-  width: min(100%, calc(100vh - var(--top-bar-height) - var(--status-bar-height) - (var(--workspace-padding) * 2)));
   max-height: calc(100vh - var(--top-bar-height) - var(--status-bar-height) - (var(--workspace-padding) * 2));
   transform-origin: center center;
 }
@@ -388,9 +386,71 @@ button {
   flex-direction: column;
   gap: 10px;
   min-height: 0;
+  overflow-y: auto;
   border-left: 1px solid #aeb8bd;
   background: #e7ebed;
   padding: 10px;
+}
+
+.right-panel > .panel {
+  flex-shrink: 0;
+}
+
+.canvas-size-body {
+  display: grid;
+  gap: 8px;
+  padding: 10px 10px 12px;
+}
+
+.canvas-size-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.canvas-size-fields .field input,
+.canvas-size-fields .field select {
+  width: 100%;
+  min-width: 0;
+}
+
+.canvas-size-measurements {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr);
+  gap: 6px;
+}
+
+.canvas-size-measurements .field input {
+  width: 100%;
+  min-width: 0;
+}
+
+.canvas-size-lock {
+  align-self: end;
+  height: 34px;
+  color: #485c65;
+}
+
+.canvas-size-lock.is-active {
+  color: #ffffff;
+  background: #4f6972;
+}
+
+.canvas-size-readout,
+.canvas-size-help {
+  margin: 0;
+  color: #5b666b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.canvas-size-readout {
+  color: #2f393d;
+  font-weight: 600;
+}
+
+.canvas-size-body > .text-button {
+  justify-self: end;
 }
 
 .panel {
@@ -409,13 +469,34 @@ button {
   font-size: 13px;
 }
 
-.panel-header span {
+.panel[data-expanded="false"] .panel-header {
+  border-bottom: 0;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
   gap: 7px;
+  flex: 1;
+  min-width: 0;
+}
+
+.panel-title > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .panel-actions {
   display: flex;
   gap: 4px;
+  flex-shrink: 0;
+}
+
+.panel-collapse-button {
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
 .mini-button {
@@ -424,7 +505,7 @@ button {
   border-radius: 6px;
 }
 
-.inspector-panel {
+.inspector-panel[data-expanded="true"] {
   min-height: 292px;
 }
 
@@ -845,6 +926,7 @@ button {
 .app-shell[data-theme="dark"] .inspector-meta,
 .app-shell[data-theme="dark"] .layer-row small,
 .app-shell[data-theme="dark"] .field,
+.app-shell[data-theme="dark"] .canvas-size-help,
 .app-shell[data-theme="dark"] .settings-readout,
 .app-shell[data-theme="dark"] .status-bar,
 .app-shell[data-theme="dark"] .tool-readout,
@@ -854,6 +936,7 @@ button {
 
 .app-shell[data-theme="dark"] .panel-header,
 .app-shell[data-theme="dark"] .panel-header span,
+.app-shell[data-theme="dark"] .canvas-size-readout,
 .app-shell[data-theme="dark"] .modal-header span,
 .app-shell[data-theme="dark"] .checkbox-field,
 .app-shell[data-theme="dark"] .style-chip,
@@ -919,6 +1002,11 @@ button {
 .app-shell[data-theme="dark"] .text-button--primary:hover,
 .app-shell[data-theme="dark"] .fullscreen-exit-button:hover {
   background: #367f99;
+}
+
+.app-shell[data-theme="dark"] .canvas-size-lock.is-active {
+  color: #ffffff;
+  background: #2f6f86;
 }
 
 .app-shell[data-theme="dark"] .text-button--danger {

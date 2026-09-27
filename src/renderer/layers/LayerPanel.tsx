@@ -2,6 +2,7 @@ import { ChevronDown, ChevronUp, Eye, EyeOff, Layers, Plus, Trash2 } from "lucid
 
 import type { EffectiveLocale } from "../app/uiPreferences";
 import { t } from "../i18n/appI18n";
+import { CollapsiblePanel } from "../ui/CollapsiblePanel";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { DrawingDocument, DrawingLayer } from "../../shared/document/documentTypes";
 
@@ -36,10 +37,12 @@ export function LayerPanel({
   const layerRows = [...document.layers].reverse();
 
   return (
-    <section className="panel" aria-label={t(locale, "layers")}>
-      <div className="panel-header">
-        <span><Layers size={16} /> {t(locale, "layers")}</span>
-        <div className="panel-actions">
+    <CollapsiblePanel
+      title={t(locale, "layers")}
+      icon={<Layers size={16} />}
+      locale={locale}
+      actions={(
+        <>
           <button
             className="mini-button"
             title={t(locale, "addLayer")}
@@ -58,8 +61,9 @@ export function LayerPanel({
           >
             <Trash2 size={15} />
           </button>
-        </div>
-      </div>
+        </>
+      )}
+    >
       <div className="layer-list">
         {layerRows.map((layer) => {
           const sourceIndex = document.layers.findIndex((documentLayer) => documentLayer.id === layer.id);
@@ -83,7 +87,7 @@ export function LayerPanel({
           );
         })}
       </div>
-    </section>
+    </CollapsiblePanel>
   );
 }
 
@@ -181,4 +185,3 @@ function LayerRow({
     </div>
   );
 }
-

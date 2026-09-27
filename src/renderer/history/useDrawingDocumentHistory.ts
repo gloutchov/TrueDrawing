@@ -15,6 +15,7 @@ import {
   updateStrokeInDocument
 } from "../../shared/document/layerModel";
 import type { DrawingDocument } from "../../shared/document/documentTypes";
+import { createDefaultCanvasDimensions } from "../../shared/document/canvasDimensions";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
 import type { StoredRealisticImage } from "../../shared/image-generation/imageGenerationTypes";
 import {
@@ -33,7 +34,7 @@ export function useDrawingDocumentHistory(config: AppConfig) {
       id: crypto.randomUUID(),
       name: config.layers.defaultLayerName,
       opacity: config.layers.defaultOpacity
-    }),
+    }, createDefaultCanvasDimensions(config)),
     config.app.historyLimit
   ));
 

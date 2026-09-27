@@ -115,7 +115,7 @@ async function openProject(
     };
   }
 
-  const openResult = await loadProjectFromPath(result.filePaths[0]);
+  const openResult = await loadProjectFromPath(result.filePaths[0], config);
 
   trustedProjectPaths.add(path.resolve(result.filePaths[0]));
 
@@ -172,7 +172,7 @@ async function listAutosaves(
       .filter((entry) => entry.isFile() && entry.name.endsWith(config.files.autosaveExtension))
       .map(async (entry) => {
         const filePath = path.join(autosaveDirectory, entry.name);
-        const project = await readProjectFileSafely(filePath);
+        const project = await readProjectFileSafely(filePath, config);
 
         if (!project) {
           return null;
@@ -207,7 +207,7 @@ async function loadAutosave(
     throw new Error("Invalid autosave identifier.");
   }
 
-  return loadProjectFromPath(path.join(getAutosaveDirectory(userDataPath, config), id));
+  return loadProjectFromPath(path.join(getAutosaveDirectory(userDataPath, config), id), config);
 }
 
 async function clearAutosave(
@@ -296,27 +296,27 @@ async function writeProjectBundle(
   }
 }
 
-async function loadProjectFromPath(filePath: string): Promise<ProjectOpenResult> {
+async function loadProjectFromPath(filePath: string, config: AppConfig): Promise<ProjectOpenResult> {
   return {
     canceled: false,
     filePath,
-    project: await readProjectFile(filePath)
+    project: await readProjectFile(filePath, config)
   };
 }
 
-async function readProjectFile(filePath: string): Promise<DrawingProjectFile> {
+async function readProjectFile(filePath: string, config: AppConfig): Promise<DrawingProjectFile> {
   const fileStats = await fs.stat(filePath);
 
   if (fileStats.size > maxProjectFileBytes) {
     throw new Error("Project file is too large.");
   }
 
-  return parseDrawingProjectJson(await fs.readFile(filePath, "utf8"));
+  return parseDrawingProjectJson(await fs.readFile(filePath, "utf8"), config);
 }
 
-async function readProjectFileSafely(filePath: string): Promise<DrawingProjectFile | null> {
+async function readProjectFileSafely(filePath: string, config: AppConfig): Promise<DrawingProjectFile | null> {
   try {
-    return await readProjectFile(filePath);
+    return await readProjectFile(filePath, config);
   } catch {
     return null;
   }

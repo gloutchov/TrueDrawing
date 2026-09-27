@@ -1,5 +1,10 @@
 import type { AppConfig } from "../config/appConfigSchema";
 import type { DrawingDocument, DrawingLayer } from "../document/documentTypes";
+import {
+  createDefaultCanvasDimensions,
+  validateCanvasDimensions,
+  type CanvasDimensions
+} from "../document/canvasDimensions";
 import { isDrawingToolId } from "../drawing/toolTypes";
 import type { DrawingPoint, DrawingStroke } from "../drawing/strokeTypes";
 import { isStrokeStyleId } from "../drawing/toolTypes";
@@ -33,7 +38,7 @@ export function serializeDrawingProject(project: DrawingProjectFile): string {
   return `${JSON.stringify(project, null, 2)}\n`;
 }
 
-export function parseDrawingProjectFile(value: unknown): DrawingProjectFile {
+export function parseDrawingProjectFile(value: unknown, config: AppConfig): DrawingProjectFile {
   const project = expectObject(value, "project");
 
   if (project.format !== drawingProjectFormat) {
@@ -50,12 +55,12 @@ export function parseDrawingProjectFile(value: unknown): DrawingProjectFile {
     appVersion: expectString(project.appVersion, "project.appVersion"),
     name: expectString(project.name, "project.name").trim(),
     savedAt: expectIsoDate(project.savedAt, "project.savedAt"),
-    document: parseDrawingDocument(project.document)
+    document: parseDrawingDocument(project.document, config)
   };
 }
 
-export function parseDrawingProjectJson(json: string): DrawingProjectFile {
-  return parseDrawingProjectFile(JSON.parse(json) as unknown);
+export function parseDrawingProjectJson(json: string, config: AppConfig): DrawingProjectFile {
+  return parseDrawingProjectFile(JSON.parse(json) as unknown, config);
 }
 
 export function normalizeProjectName(value: string, fallbackName: string): string {
@@ -109,7 +114,7 @@ export function createProjectSidecarFileNames(
   };
 }
 
-function parseDrawingDocument(value: unknown): DrawingDocument {
+function parseDrawingDocument(value: unknown, config: AppConfig): DrawingDocument {
   const document = expectObject(value, "document");
   const layers = expectArray(document.layers, "document.layers").map(parseDrawingLayer);
   const activeLayerId = expectString(document.activeLayerId, "document.activeLayerId");
@@ -123,12 +128,25 @@ function parseDrawingDocument(value: unknown): DrawingDocument {
   }
 
   return {
+    canvas: document.canvas === undefined
+      ? createDefaultCanvasDimensions(config)
+      : parseCanvasDimensions(document.canvas, config),
     layers,
     activeLayerId,
     realisticImage: document.realisticImage === null
       ? null
       : parseRealisticImage(document.realisticImage)
   };
+}
+
+function parseCanvasDimensions(value: unknown, config: AppConfig): CanvasDimensions {
+  const canvas = expectObject(value, "document.canvas");
+
+  return validateCanvasDimensions({
+    width: expectFiniteNumber(canvas.width, "document.canvas.width"),
+    height: expectFiniteNumber(canvas.height, "document.canvas.height"),
+    dpi: expectFiniteNumber(canvas.dpi, "document.canvas.dpi")
+  }, config.canvas.dimensions);
 }
 
 function parseDrawingLayer(value: unknown): DrawingLayer {

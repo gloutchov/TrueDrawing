@@ -10,6 +10,7 @@ import {
 } from "../../src/shared/project/projectModel";
 
 const config = {
+  canvas: { defaultWidth: 2048, defaultHeight: 2048, dimensions: { minPixels: 64, maxPixels: 4096, maxAreaPixels: 12000000, defaultDpi: 300, minDpi: 72, maxDpi: 600 } },
   files: {
     defaultProjectName: "Untitled Drawing",
     autosaveDirectoryName: "autosave",
@@ -29,7 +30,7 @@ describe("project model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
     const project = createDrawingProjectFile(document, {
       appVersion: "0.7.0",
       name: "Sketch",
@@ -37,7 +38,42 @@ describe("project model", () => {
       savedAt: "2026-06-09T10:00:00.000Z"
     });
 
-    expect(parseDrawingProjectJson(serializeDrawingProject(project))).toEqual(project);
+    expect(parseDrawingProjectJson(serializeDrawingProject(project), config)).toEqual(project);
+  });
+
+  it("opens legacy projects without dimensions at the configured default", () => {
+    const document = createInitialDrawingDocument(
+      { id: "layer-1", name: "Layer 1", opacity: 1 },
+      { width: 800, height: 600, dpi: 240 }
+    );
+    const project = createDrawingProjectFile(document, {
+      appVersion: "1.1.0",
+      name: "Legacy",
+      fallbackName: "Untitled Drawing"
+    });
+    const legacy = JSON.parse(serializeDrawingProject(project)) as Record<string, unknown>;
+    delete (legacy.document as Record<string, unknown>).canvas;
+
+    expect(parseDrawingProjectJson(JSON.stringify(legacy), config).document.canvas).toEqual({
+      width: 2048, height: 2048, dpi: 300
+    });
+  });
+
+  it("rejects invalid dimensions in a project", () => {
+    const document = createInitialDrawingDocument(
+      { id: "layer-1", name: "Layer 1", opacity: 1 },
+      { width: 800, height: 600, dpi: 240 }
+    );
+    const project = createDrawingProjectFile(document, {
+      appVersion: "1.2.0",
+      name: "Invalid",
+      fallbackName: "Untitled Drawing"
+    });
+
+    expect(() => parseDrawingProjectJson(JSON.stringify({
+      ...project,
+      document: { ...project.document, canvas: { width: 99999, height: 600, dpi: 240 } }
+    }), config)).toThrow(/pixel limits/);
   });
 
   it("rejects malformed project files", () => {
@@ -52,7 +88,7 @@ describe("project model", () => {
         activeLayerId: "missing",
         realisticImage: null
       }
-    }))).toThrow(/at least one layer/);
+    }), config)).toThrow(/at least one layer/);
   });
 
   it("builds configured canvas and image sidecar names", () => {
