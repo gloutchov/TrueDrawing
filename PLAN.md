@@ -116,7 +116,7 @@ Riepilogo e verifiche (2026-09-27): manina, pan locale, reset vista, test mirati
 Attivita':
 
 - Aggiungere controlli condivisi per larghezza e altezza in pixel o centimetri, con risoluzione DPI esplicita e conversione coerente.
-- Consentire il blocco delle proporzioni con lucchetto e la compressione indipendente dei riquadri del pannello destro.
+- Consentire il blocco delle proporzioni con lucchetto e la compressione indipendente dei riquadri del pannello destro, ordinati Inspector, Dimensioni canvas e Layer, con freccia all'estrema destra.
 - Validare minimi, massimi e risoluzione tramite configurazione centrale; mantenere le dimensioni nel documento `.tdraw` e recuperare i progetti precedenti.
 - Applicare il ridimensionamento senza scalare i tratti: origine in alto a sinistra, contenuto oltre i bordi temporaneamente non visibile e ripristinabile con undo/redo o ampliamento.
 - Aggiornare rendering, selezione, crop, clipboard, inspector, generazione, salvataggio, autosave ed export per usare le dimensioni del documento.
@@ -132,7 +132,7 @@ Criteri di accettazione:
 
 Test richiesti: conversione e limiti, compatibilita' file, history, rendering/export, `npm run lint`, `npm run test`, `npm run build` e smoke test manuale in entrambi i temi.
 
-Verifica locale sul branch (2026-09-27): implementazione e rifiniture UI completate; 49 test automatici, lint e build verdi. Smoke test Electron in profilo temporaneo: riquadri indipendenti, bozza preservata dopo compressione, lucchetto in px e cm, margine del pulsante, undo, accesso dal menu Impostazioni e temi chiaro/scuro verificati. CI PR #13 iniziale verde (run `36326146634`); la CI delle rifiniture e l'avallo del progettista precedono merge e checkpoint.
+Verifica locale sul branch (2026-09-27): implementazione e rifiniture UI completate; 49 test automatici, lint e build verdi. Smoke test Electron in profilo temporaneo: riquadri indipendenti, bozza preservata dopo compressione, lucchetto in px e cm, margine del pulsante, undo, accesso dal menu Impostazioni e temi chiaro/scuro verificati. Dopo il riordino Inspector → Dimensioni canvas → Layer, la freccia a destra dei comandi e la compressione dell'Inspector sono state ricontrollate in entrambi i temi. CI PR #13 verde fino alla prima rifinitura (run `36332496621`); la CI dell'ultimo ritocco e l'avallo del progettista precedono merge e checkpoint.
 
 ### M14 - Security hardening post release
 

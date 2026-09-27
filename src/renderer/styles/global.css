@@ -63,8 +63,7 @@ button {
 .brand-lockup,
 .document-meta,
 .settings-summary,
-.panel-header,
-.panel-header span {
+.panel-header {
   display: flex;
   align-items: center;
 }
@@ -470,36 +469,34 @@ button {
   font-size: 13px;
 }
 
-.panel-header span {
-  gap: 7px;
-}
-
 .panel[data-expanded="false"] .panel-header {
   border-bottom: 0;
 }
 
-.panel-title-button {
+.panel-title {
   display: flex;
   align-items: center;
   gap: 7px;
   flex: 1;
   min-width: 0;
-  height: 100%;
-  color: inherit;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-  padding: 0;
 }
 
-.panel-title-button span {
-  flex: 1;
+.panel-title > span {
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .panel-actions {
   display: flex;
   gap: 4px;
+  flex-shrink: 0;
+}
+
+.panel-collapse-button {
+  flex-shrink: 0;
+  margin-left: 4px;
 }
 
 .mini-button {

@@ -20,19 +20,21 @@ export function CollapsiblePanel({ title, icon, locale, className, actions, chil
   return (
     <section className={`panel${className ? ` ${className}` : ""}`} aria-label={title} data-expanded={expanded}>
       <div className="panel-header">
+        <span className="panel-title">
+          {icon}
+          <span>{title}</span>
+        </span>
+        {expanded && actions && <div className="panel-actions">{actions}</div>}
         <button
-          className="panel-title-button"
+          className="mini-button panel-collapse-button"
           type="button"
           aria-expanded={expanded}
           aria-controls={contentId}
           aria-label={`${t(locale, expanded ? "collapsePanel" : "expandPanel")}: ${title}`}
           onClick={() => setExpanded((value) => !value)}
         >
-          {icon}
-          <span>{title}</span>
           {expanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
         </button>
-        {expanded && actions && <div className="panel-actions">{actions}</div>}
       </div>
       <div id={contentId} hidden={!expanded}>{children}</div>
     </section>

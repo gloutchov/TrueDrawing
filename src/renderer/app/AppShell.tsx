@@ -985,12 +985,6 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         />
       </main>
       <aside className="right-panel" aria-label="Document panels">
-        <CanvasDimensionsEditor
-          config={config}
-          locale={effectiveLocale}
-          canvas={document.canvas}
-          onApply={applyCanvasDimensions}
-        />
         <InspectorPanel
           config={config}
           locale={effectiveLocale}
@@ -1005,6 +999,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           errorMessage={generationErrorMessage}
           onGenerateImage={generateRealisticImage}
           onOpenApiKeySettings={openApiKeyDialog}
+        />
+        <CanvasDimensionsEditor
+          config={config}
+          locale={effectiveLocale}
+          canvas={document.canvas}
+          onApply={applyCanvasDimensions}
         />
         <LayerPanel
           config={config}
