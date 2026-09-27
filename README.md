@@ -35,7 +35,7 @@
 
 ## Riferimenti tecnici / Technical references
 
-- Repository: `https://github.com/gloutchov/truedrawing`
+- Repository: `https://github.com/gloutchov/TrueDrawing`
 - Sito / website: `https://truedrawing.glaucosilvestri.it/`
 - App ID: `com.truedrawing.app`
 - Package name: `truedrawing`
@@ -71,13 +71,13 @@ True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare 
 
 Il progetto e' in fase iniziale. Il branch M12 prepara `1.1.0` sulla base stabile `1.0.3` e contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
 
-Repository privato GitHub: `https://github.com/gloutchov/truedrawing`.
+Repository pubblico GitHub: `https://github.com/gloutchov/TrueDrawing`.
 
 ### Distribuzione
 
 Le release GitHub per Windows e macOS sono distribuite senza firma codice e senza notarizzazione perche' non sono disponibili certificati o credenziali di firma. Windows SmartScreen e macOS Gatekeeper possono quindi mostrare avvisi di sicurezza all'apertura dell'app scaricata.
 
-La release stabile `v1.0.2` corregge i dialog Stile e Redraw automatico in tema scuro: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.2`. Viene prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v1.0.2`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v1.0.2.md` e file checksum SHA-256.
+La release stabile `v1.0.2` corregge i dialog Stile e Redraw automatico in tema scuro: `https://github.com/gloutchov/TrueDrawing/releases/tag/v1.0.2`. Viene prodotta con il workflow manuale GitHub Actions `Release`, usando il tag `v1.0.2`. Il workflow valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v1.0.2.md` e file checksum SHA-256.
 
 ### Landing page
 
@@ -146,13 +146,13 @@ True Drawing is a local desktop app for macOS and Windows designed for drawing w
 
 The project is at its initial stage. The M12 branch prepares `1.1.0` from the stable `1.0.3` base and includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
 
-Private GitHub repository: `https://github.com/gloutchov/truedrawing`.
+Public GitHub repository: `https://github.com/gloutchov/TrueDrawing`.
 
 ### Distribution
 
 GitHub releases for Windows and macOS are distributed without code signing and without notarization because signing certificates or credentials are not available. Windows SmartScreen and macOS Gatekeeper may therefore show security warnings when opening the downloaded app.
 
-Stable release `v1.0.2` fixes the Style and Auto redraw dialogs in dark theme: `https://github.com/gloutchov/truedrawing/releases/tag/v1.0.2`. It is produced with the manual GitHub Actions `Release` workflow, using tag `v1.0.2`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v1.0.2.md`, and SHA-256 checksum files.
+Stable release `v1.0.2` fixes the Style and Auto redraw dialogs in dark theme: `https://github.com/gloutchov/TrueDrawing/releases/tag/v1.0.2`. It is produced with the manual GitHub Actions `Release` workflow, using tag `v1.0.2`. The workflow validates required documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v1.0.2.md`, and SHA-256 checksum files.
 
 ### Landing Page
 
