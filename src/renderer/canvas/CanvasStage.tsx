@@ -92,12 +92,12 @@ export function CanvasStage({
       return;
     }
 
-    if (canvas.width !== config.canvas.defaultWidth) {
-      canvas.width = config.canvas.defaultWidth;
+    if (canvas.width !== document.canvas.width) {
+      canvas.width = document.canvas.width;
     }
 
-    if (canvas.height !== config.canvas.defaultHeight) {
-      canvas.height = config.canvas.defaultHeight;
+    if (canvas.height !== document.canvas.height) {
+      canvas.height = document.canvas.height;
     }
 
     const context = canvas.getContext("2d");
@@ -106,8 +106,8 @@ export function CanvasStage({
       renderCanvas(context, document, renderOptions);
     }
   }, [
-    config.canvas.defaultHeight,
-    config.canvas.defaultWidth,
+    document.canvas.height,
+    document.canvas.width,
     document,
     renderOptions,
   ]);
@@ -248,7 +248,7 @@ export function CanvasStage({
         ...activeSelectionMoveRef.current.selectionStart,
         x: activeSelectionMoveRef.current.selectionStart.x + point.x - activeSelectionMoveRef.current.pointerStart.x,
         y: activeSelectionMoveRef.current.selectionStart.y + point.y - activeSelectionMoveRef.current.pointerStart.y
-      }, config.canvas.defaultWidth, config.canvas.defaultHeight);
+      }, document.canvas.width, document.canvas.height);
 
       onSelectionChange(nextSelection);
       onMoveSelectedObject(nextSelection);
@@ -272,8 +272,8 @@ export function CanvasStage({
     ));
   }, [
     config.canvas.defaultPointerPressure,
-    config.canvas.defaultHeight,
-    config.canvas.defaultWidth,
+    document.canvas.height,
+    document.canvas.width,
     config.canvas.minPointDistance,
     config.canvas.strokeSmoothing,
     onSelectionChange,
@@ -307,15 +307,16 @@ export function CanvasStage({
         <div
           className="canvas-transform"
           style={{
-            aspectRatio: `${config.canvas.defaultWidth} / ${config.canvas.defaultHeight}`,
+            aspectRatio: `${document.canvas.width} / ${document.canvas.height}`,
+            width: `min(100%, calc((100vh - var(--top-bar-height) - var(--status-bar-height) - (var(--workspace-padding) * 2)) * ${document.canvas.width / document.canvas.height}))`,
             transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`
           }}
         >
           <canvas
             ref={canvasRef}
             className={`canvas-surface${toolSettings.tool === "hand" ? " canvas-surface--hand" : ""}${isPanning ? " canvas-surface--panning" : ""}`}
-            width={config.canvas.defaultWidth}
-            height={config.canvas.defaultHeight}
+            width={document.canvas.width}
+            height={document.canvas.height}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={endPointerStroke}
@@ -327,17 +328,17 @@ export function CanvasStage({
             }}
             style={{
               backgroundColor: config.canvas.backgroundColor,
-              aspectRatio: `${config.canvas.defaultWidth} / ${config.canvas.defaultHeight}`
+              aspectRatio: `${document.canvas.width} / ${document.canvas.height}`
             }}
           />
           {normalizedSelection && normalizedSelection.width > 0 && normalizedSelection.height > 0 && (
             <div
               className="canvas-selection"
               style={{
-                left: `${(normalizedSelection.x / config.canvas.defaultWidth) * 100}%`,
-                top: `${(normalizedSelection.y / config.canvas.defaultHeight) * 100}%`,
-                width: `${(normalizedSelection.width / config.canvas.defaultWidth) * 100}%`,
-                height: `${(normalizedSelection.height / config.canvas.defaultHeight) * 100}%`
+                left: `${(normalizedSelection.x / document.canvas.width) * 100}%`,
+                top: `${(normalizedSelection.y / document.canvas.height) * 100}%`,
+                width: `${(normalizedSelection.width / document.canvas.width) * 100}%`,
+                height: `${(normalizedSelection.height / document.canvas.height) * 100}%`
               }}
             />
           )}

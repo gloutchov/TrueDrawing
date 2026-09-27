@@ -32,6 +32,14 @@ export type AppConfig = {
   canvas: {
     defaultWidth: number;
     defaultHeight: number;
+    dimensions: {
+      minPixels: number;
+      maxPixels: number;
+      maxAreaPixels: number;
+      defaultDpi: number;
+      minDpi: number;
+      maxDpi: number;
+    };
     backgroundColor: string;
     maxZoom: number;
     minZoom: number;
@@ -108,6 +116,15 @@ export function validateAppConfig(value: unknown): AppConfig {
   const defaultThemeMode = expectString(ui.defaultThemeMode, "ui.defaultThemeMode");
   const availableThemeModes = expectStringArray(ui.availableThemeModes, "ui.availableThemeModes");
   const canvas = expectObject(config.canvas, "canvas");
+  const canvasDimensions = expectObject(canvas.dimensions, "canvas.dimensions");
+  const minPixels = expectPositiveInteger(canvasDimensions.minPixels, "canvas.dimensions.minPixels");
+  const maxPixels = expectPositiveInteger(canvasDimensions.maxPixels, "canvas.dimensions.maxPixels");
+  const maxAreaPixels = expectPositiveInteger(canvasDimensions.maxAreaPixels, "canvas.dimensions.maxAreaPixels");
+  const defaultDpi = expectPositiveInteger(canvasDimensions.defaultDpi, "canvas.dimensions.defaultDpi");
+  const minDpi = expectPositiveInteger(canvasDimensions.minDpi, "canvas.dimensions.minDpi");
+  const maxDpi = expectPositiveInteger(canvasDimensions.maxDpi, "canvas.dimensions.maxDpi");
+  const defaultWidth = expectPositiveInteger(canvas.defaultWidth, "canvas.defaultWidth");
+  const defaultHeight = expectPositiveInteger(canvas.defaultHeight, "canvas.defaultHeight");
   const tools = expectObject(config.tools, "tools");
   const layers = expectObject(config.layers, "layers");
   const imageGeneration = expectObject(config.imageGeneration, "imageGeneration");
@@ -134,6 +151,14 @@ export function validateAppConfig(value: unknown): AppConfig {
 
   if (!availableLocaleModes.includes(defaultLocaleMode)) {
     throw new Error("Invalid app configuration: ui.defaultLocaleMode must be listed in ui.availableLocaleModes.");
+  }
+
+  if (maxPixels < minPixels || maxAreaPixels < minPixels * minPixels
+    || defaultWidth < minPixels || defaultWidth > maxPixels
+    || defaultHeight < minPixels || defaultHeight > maxPixels
+    || defaultWidth * defaultHeight > maxAreaPixels
+    || maxDpi < minDpi || defaultDpi < minDpi || defaultDpi > maxDpi) {
+    throw new Error("Invalid app configuration: canvas dimensions and DPI limits are inconsistent.");
   }
 
   if (!availableThemeModes.includes(defaultThemeMode)) {
@@ -184,8 +209,9 @@ export function validateAppConfig(value: unknown): AppConfig {
       availableThemeModes
     },
     canvas: {
-      defaultWidth: expectPositiveNumber(canvas.defaultWidth, "canvas.defaultWidth"),
-      defaultHeight: expectPositiveNumber(canvas.defaultHeight, "canvas.defaultHeight"),
+      defaultWidth,
+      defaultHeight,
+      dimensions: { minPixels, maxPixels, maxAreaPixels, defaultDpi, minDpi, maxDpi },
       backgroundColor: expectString(canvas.backgroundColor, "canvas.backgroundColor"),
       maxZoom: expectPositiveNumber(canvas.maxZoom, "canvas.maxZoom"),
       minZoom: expectPositiveNumber(canvas.minZoom, "canvas.minZoom"),

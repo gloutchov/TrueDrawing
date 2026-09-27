@@ -67,7 +67,7 @@ export function InspectorPanel({
       <div
         className="inspector-preview"
         style={{
-          aspectRatio: `${config.canvas.defaultWidth} / ${config.canvas.defaultHeight}`
+          aspectRatio: `${document.canvas.width} / ${document.canvas.height}`
         }}
       >
         <InspectorPreview

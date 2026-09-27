@@ -6,9 +6,9 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: C12 - Manina e navigazione canvas.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente del codice sorgente: `1.1.0`; release GitHub pubblicata: `v1.0.2`.
-- Branch corrente: `main`.
-- Milestone corrente in sviluppo: nessuna; prossima M13 - Dimensioni canvas in pixel e centimetri.
+- Versione corrente del codice sorgente sul branch M13: `1.2.0`; release GitHub pubblicata: `v1.0.2`.
+- Branch corrente: `milestone/13-canvas-dimensions`.
+- Milestone corrente in sviluppo: M13 - Dimensioni canvas in pixel e centimetri, in verifica.
 - Patch corrente: nessuna.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
@@ -17,7 +17,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - CI patch `v1.0.1`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; workflow release `27353682972` verde.
 - CI patch `v1.0.2`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; PR #10 verde con GitHub Actions run `27415112843` e `27415123564`; `main` verde con run `27415599523`; workflow release `27415761496` verde.
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
-- Verifica C12: PR #12 con CI run `36323912210` verde; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` sul commit finale di `main`.
+- Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Release GitHub corrente: `v1.0.2` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 

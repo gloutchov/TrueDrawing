@@ -128,7 +128,8 @@ truedrawing/
 |   |   |   Inspector realistico con preview immagine, stati vuoti/errore/generazione e metadati provider/modello.
 |   |   |
 |   |   +-- settings/
-|   |   |   Riepilogo impostazioni provider/modello/stile, dialog API key, stile immagine, redraw automatico e interfaccia.
+|   |   |   Riepilogo impostazioni provider/modello/stile, editor condiviso dimensioni canvas, dialog API key, stile immagine, redraw automatico e interfaccia.
+|   |   |   `CanvasDimensionsEditor.tsx` serve sia il pannello destro sia il dialog del menu Impostazioni.
 |   |   |
 |   |   +-- i18n/
 |   |   |   Dizionario italiano/inglese per menu e controlli principali del renderer.
@@ -145,7 +146,7 @@ truedrawing/
 |   |   |   Modello condiviso e testabile per stack undo/redo.
 |   |   |
 |   |   +-- document/
-|   |   |   Tipi e modello layer/documento True Drawing.
+|   |   |   Tipi e modello layer/documento True Drawing; conversione cm/pixel, DPI e limiti canvas in `canvasDimensions.ts`.
 |   |   |
 |   |   +-- image-generation/
 |   |   |   Tipi generazione immagine e prompt tecnico realistico.
@@ -170,7 +171,7 @@ truedrawing/
 +-- tests/
 |   |
 |   +-- unit/
-|   |   Test di modello, strumenti, pan canvas, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto e configurazione Vite.
+|   |   Test di modello, strumenti, pan e dimensioni canvas, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto e configurazione Vite.
 |   |
 |   +-- e2e/
 |       Test end-to-end su flussi principali.
@@ -220,9 +221,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione sorgente su `main`: `1.1.0`; release GitHub pubblicata: `v1.0.2`.
+- Versione sorgente sul branch M13: `1.2.0`; release GitHub pubblicata: `v1.0.2`.
 - Ultima milestone completata: C12 - Manina e navigazione canvas.
-- Milestone corrente: nessuna; prossima M13 - Dimensioni canvas in pixel e centimetri.
+- Milestone corrente: M13 - Dimensioni canvas in pixel e centimetri, in verifica.
 - Stato milestone: C12 completata con pan locale della vista e checkpoint `milestone/C12`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -235,6 +236,7 @@ truedrawing/
 - Zoom canvas con pulsanti, rotella e comandi View dedicati.
 - Zoom canvas persistente come preferenza UI non segreta in `localStorage`.
 - Pan canvas con la manina mantenuto nella sola memoria del renderer, senza modificare documento o export.
+- Dimensioni canvas e DPI nel documento, modificabili dal pannello destro e dal menu Impostazioni; conversione cm/pixel e undo/redo.
 - Status bar con stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom.
 - Inspector realistico proporzionale al canvas di disegno.
 - Controlli colore, dimensione, opacita' e hardness letti dalla configurazione.

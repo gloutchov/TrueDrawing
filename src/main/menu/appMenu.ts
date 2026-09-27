@@ -20,6 +20,7 @@ const menuText = {
     exportImageWebp: "Esporta immagine WebP",
     settings: "Impostazioni",
     interface: "Interfaccia...",
+    canvasSize: "Dimensioni canvas...",
     style: "Stile...",
     autoRedraw: "Redraw automatico...",
     exit: "Esci",
@@ -50,6 +51,7 @@ const menuText = {
     exportImageWebp: "Export image WebP",
     settings: "Settings",
     interface: "Interface...",
+    canvasSize: "Canvas size...",
     style: "Style...",
     autoRedraw: "Auto redraw...",
     exit: "Exit",
@@ -119,6 +121,10 @@ export function installAppMenu(config: AppConfig, locale: MenuLocale = resolveSy
             {
               label: labels.interface,
               click: () => sendSettingsCommand("interface")
+            },
+            {
+              label: labels.canvasSize,
+              click: () => sendSettingsCommand("canvas-size")
             },
             {
               label: "API Key...",

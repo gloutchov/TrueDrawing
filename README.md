@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.1.0-blue" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.2.0-blue" />
   <img alt="Electron" src="https://img.shields.io/badge/Electron-42-47848f" />
   <img alt="React" src="https://img.shields.io/badge/React-18-61dafb" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178c6" />
@@ -21,8 +21,8 @@
 
 | IT | EN |
 | --- | --- |
-| Versione sorgente: `1.1.0` | Source version: `1.1.0` |
-| Stato: C12 completata; release pubblicata `v1.0.2` | Status: C12 complete; published release `v1.0.2` |
+| Versione sorgente: `1.2.0` | Source version: `1.2.0` |
+| Stato: M13 in verifica; release pubblicata `v1.0.2` | Status: M13 under review; published release `v1.0.2` |
 | Piattaforme: macOS e Windows | Platforms: macOS and Windows |
 | Runtime desktop: Electron | Desktop runtime: Electron |
 | UI: React, TypeScript, Vite | UI: React, TypeScript, Vite |
@@ -69,7 +69,7 @@ npm run dist:mac
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione sorgente `1.1.0` contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
+Il progetto e' in fase iniziale. La versione sorgente `1.2.0` contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
 
 Repository pubblico GitHub: `https://github.com/gloutchov/TrueDrawing`.
 
@@ -95,6 +95,7 @@ La landing page pubblica e' disponibile esclusivamente all'indirizzo `https://tr
 - Controllo colore, dimensione tratto, opacita' e hardness.
 - Zoom canvas con pulsanti `+`/`-`, reset e rotella del mouse.
 - Manina come primo strumento a sinistra: trascinare il canvas per spostare la vista senza modificare il disegno; il reset zoom ricentra la vista.
+- Dimensioni canvas modificabili in pixel o centimetri a DPI scelti, dal pannello destro e da `File > Impostazioni > Dimensioni canvas...`; undo/redo ripristina la misura.
 - Status bar con stato salvataggio, modifiche, tool, layer attivo, conteggio layer/tratti e zoom.
 - Pulsante visibile per uscire dal fullscreen quando la finestra e' a schermo intero.
 - Layer con creazione, rinomina, cancellazione protetta, visibilita', opacita' e riordino.
@@ -144,7 +145,7 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Source version `1.1.0` includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
+The project is at its initial stage. Source version `1.2.0` includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
 
 Public GitHub repository: `https://github.com/gloutchov/TrueDrawing`.
 
@@ -170,6 +171,7 @@ The public landing page is available exclusively at `https://truedrawing.glaucos
 - Color, stroke size, opacity, and hardness controls.
 - Canvas zoom with `+`/`-` buttons, reset, and mouse wheel.
 - Hand as the first tool on the left: drag the canvas to move the view without changing the drawing; zoom reset recenters the view.
+- Canvas size editable in pixels or centimeters at a chosen DPI, from the right panel and `File > Settings > Canvas size...`; undo/redo restores the size.
 - Status bar with save state, dirty state, active tool, active layer, layer/stroke counts, and zoom.
 - Visible fullscreen exit button while the window is fullscreen.
 - Layer creation, renaming, protected deletion, visibility, opacity, and ordering.

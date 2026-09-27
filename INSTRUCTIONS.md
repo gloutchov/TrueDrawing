@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.1.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.2.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -109,6 +109,8 @@ Drawing is very simple. Just select the desired tool and draw whatever you want 
 
 To move around a zoomed canvas, select the hand and drag the visible area with a mouse, pen, or touch. Dragging does not change the drawing and is not saved in the project. Resetting zoom also recenters the view.
 
+To change the canvas size, use **Canvas size** in the right panel or `File > Settings > Canvas size...`. Select `px` or `cm`, enter width, height, and resolution in DPI, then press **Apply**. Conversion uses 2.54 cm per inch and rounds to the nearest pixel; the panel always shows the effective size in pixels and centimeters. In `px`, changing DPI preserves the pixel count and changes the physical size; in `cm`, it preserves the entered centimeters and recalculates pixels. Configured limits are 64-4096 pixels per side, 12 megapixels total, and 72-600 DPI. The origin stays at the top left: shrinking the canvas does not scale or delete strokes, which can reappear when enlarged. Undo/redo also restores dimensions.
+
 The Edit menu offers some useful additional features:
 
 - Undo/Redo;
@@ -126,6 +128,8 @@ For a drawing called `name`, the app will use:
 - `name.tdraw` for the True Drawing project;
 - `name_canvas.png` for the composited canvas;
 - `name_image.png` for the generated realistic image, when present.
+
+The `.tdraw` project stores pixels and DPI; older projects open at the 2048 × 2048 px, 300 DPI default. The canvas sidecar and PNG/WebP exports use the exact current pixel dimensions. DPI is project data used for conversions in the interface; it does not add DPI metadata to exported images.
 
 ## The interface
 
@@ -151,7 +155,7 @@ The File menu has the following options:
 - Settings;
 - Exit.
 
-The Settings menu lets you change the program language, its appearance, enter the AI API key, choose the type of output image (realistic, cartoon, etc.), and set automatic AI image generation during pauses in drawing.
+The Settings menu lets you change canvas dimensions, the program language and appearance, enter the AI API key, choose the output image style (realistic, cartoon, etc.), and set automatic AI image generation during pauses in drawing.
 
 #### Edit Menu
 

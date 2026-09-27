@@ -30,7 +30,7 @@ describe("layer model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
 
     expect(document.activeLayerId).toBe("layer-1");
     expect(document.layers).toHaveLength(1);
@@ -41,7 +41,7 @@ describe("layer model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
     const updatedDocument = appendStrokeToActiveLayer(document, stroke);
 
     expect(updatedDocument.layers[0].strokes).toEqual([stroke]);
@@ -52,7 +52,7 @@ describe("layer model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
     const withLayer = addLayer(document, { id: "layer-2", name: "Layer 2", opacity: 0.8 }, 4);
     const renamed = renameLayer(withLayer, "layer-2", "Ink");
     const hidden = setLayerVisibility(renamed, "layer-2", false);
@@ -71,7 +71,7 @@ describe("layer model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
 
     expect(deleteLayer(document, "layer-1")).toBe(document);
   });
@@ -81,7 +81,7 @@ describe("layer model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
     const withLayer = addLayer(document, { id: "layer-2", name: "Layer 2", opacity: 1 }, 4);
     const movedDown = moveLayer(withLayer, "layer-2", "down");
 
@@ -93,7 +93,7 @@ describe("layer model", () => {
       id: "layer-1",
       name: "Layer 1",
       opacity: 1
-    });
+    }, { width: 2048, height: 2048, dpi: 300 });
     const history = createHistory(document, 10);
     const committed = commitHistory(
       history,

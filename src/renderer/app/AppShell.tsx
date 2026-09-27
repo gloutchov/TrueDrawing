@@ -5,6 +5,7 @@ import {
   convertImageDataUrl,
   exportDocumentCanvasToDataUrl,
   exportDocumentCanvasToPngDataUrl,
+  exportDocumentForGenerationToPngDataUrl,
   exportDocumentSelectionToPngDataUrl
 } from "../canvas/canvasExport";
 import { CanvasStage } from "../canvas/CanvasStage";
@@ -15,6 +16,7 @@ import { InspectorPanel } from "../inspector/InspectorPanel";
 import { LayerPanel } from "../layers/LayerPanel";
 import { ApiKeyDialog } from "../settings/ApiKeyDialog";
 import { AutoRedrawDialog } from "../settings/AutoRedrawDialog";
+import { CanvasDimensionsEditor } from "../settings/CanvasDimensionsEditor";
 import { ImageStyleDialog } from "../settings/ImageStyleDialog";
 import { InterfacePreferencesDialog } from "../settings/InterfacePreferencesDialog";
 import { SettingsSummary } from "../settings/SettingsSummary";
@@ -30,6 +32,7 @@ import {
 import { t } from "../i18n/appI18n";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import { createInitialDrawingDocument } from "../../shared/document/layerModel";
+import { createDefaultCanvasDimensions, type CanvasDimensions } from "../../shared/document/canvasDimensions";
 import type { CanvasSelection } from "../../shared/document/selectionTypes";
 import { normalizeCanvasSelection } from "../../shared/document/selectionTypes";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
@@ -90,6 +93,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [imageStyleDialogOpen, setImageStyleDialogOpen] = useState(false);
   const [autoRedrawDialogOpen, setAutoRedrawDialogOpen] = useState(false);
   const [interfacePreferencesDialogOpen, setInterfacePreferencesDialogOpen] = useState(false);
+  const [canvasDimensionsDialogOpen, setCanvasDimensionsDialogOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationErrorMessage, setGenerationErrorMessage] = useState<string | null>(null);
   const [projectName, setProjectName] = useState(config.files.defaultProjectName);
@@ -141,12 +145,19 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const openInterfacePreferencesDialog = useCallback(() => {
     setInterfacePreferencesDialogOpen(true);
   }, []);
+  const applyCanvasDimensions = useCallback((canvas: CanvasDimensions) => {
+    commitDocumentUpdate((currentDocument) => ({ ...currentDocument, canvas }));
+    setCanvasSelection(null);
+    setMovablePastedStrokeId(null);
+    setFileStatusMessage(`Canvas ${canvas.width} × ${canvas.height} px`);
+    setCanvasDimensionsDialogOpen(false);
+  }, [commitDocumentUpdate]);
   const generateRealisticImage = useCallback(async () => {
     setIsGenerating(true);
     setGenerationErrorMessage(null);
 
     try {
-      const canvasDataUrl = exportDocumentCanvasToPngDataUrl(document, config);
+      const canvasDataUrl = exportDocumentForGenerationToPngDataUrl(document, config);
       const result = await window.trueDrawing.generateRealisticImage({
         canvasDataUrl,
         model: imageGenerationModel,
@@ -285,7 +296,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       id: crypto.randomUUID(),
       name: config.layers.defaultLayerName,
       opacity: config.layers.defaultOpacity
-    });
+    }, createDefaultCanvasDimensions(config));
     const signature = JSON.stringify(nextDocument);
 
     replaceDocument(nextDocument);
@@ -305,6 +316,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     config.files.defaultProjectName,
     config.layers.defaultLayerName,
     config.layers.defaultOpacity,
+    config.canvas,
     isDirty,
     replaceDocument
   ]);
@@ -482,7 +494,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       if (command === "paste") {
         void pasteClipboardImageToCanvas(
           canvasSelection,
-          config,
+          document.canvas,
           toolSettings,
           appendStroke,
           setCanvasSelection,
@@ -501,7 +513,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       if (command === "crop") {
         cropCanvasToSelection(
           canvasSelection,
-          config,
+          document.canvas,
           toolSettings,
           commitDocumentUpdate,
           setCanvasSelection,
@@ -605,6 +617,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     window.trueDrawing.onSettingsCommand((command) => {
       if (command === "interface") {
         openInterfacePreferencesDialog();
+        return;
+      }
+
+      if (command === "canvas-size") {
+        setCanvasDimensionsDialogOpen(true);
         return;
       }
 
@@ -728,6 +745,11 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
 
     setIsDirty(signature !== lastSavedDocumentSignatureRef.current);
   }, [document]);
+
+  useEffect(() => {
+    setCanvasSelection(null);
+    setMovablePastedStrokeId(null);
+  }, [document.canvas.width, document.canvas.height]);
 
   useEffect(() => {
     if (config.app.autosaveIntervalMs <= 0) {
@@ -963,6 +985,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         />
       </main>
       <aside className="right-panel" aria-label="Document panels">
+        <CanvasDimensionsEditor
+          config={config}
+          locale={effectiveLocale}
+          canvas={document.canvas}
+          onApply={applyCanvasDimensions}
+        />
         <InspectorPanel
           config={config}
           locale={effectiveLocale}
@@ -1042,6 +1070,15 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           writeUiPreferences(config, preferences);
         }}
       />
+      {canvasDimensionsDialogOpen && (
+        <CanvasDimensionsEditor
+          config={config}
+          locale={effectiveLocale}
+          canvas={document.canvas}
+          onApply={applyCanvasDimensions}
+          onClose={() => setCanvasDimensionsDialogOpen(false)}
+        />
+      )}
       {recoveryAutosave && (
         <RecoveryDialog
           autosave={recoveryAutosave}
@@ -1191,6 +1228,7 @@ function countDocumentStrokes(document: DrawingProjectFile["document"]): number 
 
 function createCanvasGenerationSignature(document: DrawingProjectFile["document"]): string {
   return JSON.stringify({
+    canvas: document.canvas,
     activeLayerId: document.activeLayerId,
     layers: document.layers
   });
@@ -1336,7 +1374,7 @@ async function copyCanvasSelectionToClipboard(
 
 async function pasteClipboardImageToCanvas(
   selection: CanvasSelection | null,
-  config: AppConfig,
+  canvas: CanvasDimensions,
   toolSettings: DrawingToolSettings,
   appendStroke: (stroke: DrawingStroke) => void,
   setSelection: (selection: CanvasSelection | null) => void,
@@ -1353,7 +1391,7 @@ async function pasteClipboardImageToCanvas(
     const imageSize = await preloadCanvasImage(dataUrl);
     const bounds = selection && selection.width > 0 && selection.height > 0
       ? normalizeCanvasSelection(selection)
-      : centeredImageBounds(imageSize, config);
+      : centeredImageBounds(imageSize, canvas);
     const stroke = createImageStroke(bounds, dataUrl, toolSettings);
 
     appendStroke(stroke);
@@ -1371,7 +1409,7 @@ async function pasteClipboardImageToCanvas(
 
 function cropCanvasToSelection(
   selection: CanvasSelection | null,
-  config: AppConfig,
+  canvas: CanvasDimensions,
   toolSettings: DrawingToolSettings,
   commitDocumentUpdate: (
     updater: (document: DrawingProjectFile["document"]) => DrawingProjectFile["document"]
@@ -1381,7 +1419,7 @@ function cropCanvasToSelection(
   setStatus: (message: string) => void
 ): void {
   const cropBounds = selection
-    ? clampSelectionToCanvasBounds(selection, config.canvas.defaultWidth, config.canvas.defaultHeight)
+    ? clampSelectionToCanvasBounds(selection, canvas.width, canvas.height)
     : null;
 
   if (!cropBounds) {
@@ -1396,8 +1434,8 @@ function cropCanvasToSelection(
 
   const cropRectangles = createCropClearRectangles(
     cropBounds,
-    config.canvas.defaultWidth,
-    config.canvas.defaultHeight
+    canvas.width,
+    canvas.height
   );
 
   if (cropRectangles.length === 0) {
@@ -1539,17 +1577,17 @@ function updateStrokeBounds(stroke: DrawingStroke, selection: CanvasSelection): 
 
 function centeredImageBounds(
   imageSize: { width: number; height: number },
-  config: AppConfig
+  canvas: CanvasDimensions
 ): CanvasSelection {
-  const maxWidth = config.canvas.defaultWidth * 0.5;
-  const maxHeight = config.canvas.defaultHeight * 0.5;
+  const maxWidth = canvas.width * 0.5;
+  const maxHeight = canvas.height * 0.5;
   const scale = Math.min(1, maxWidth / imageSize.width, maxHeight / imageSize.height);
   const width = Math.max(1, imageSize.width * scale);
   const height = Math.max(1, imageSize.height * scale);
 
   return {
-    x: (config.canvas.defaultWidth - width) / 2,
-    y: (config.canvas.defaultHeight - height) / 2,
+    x: (canvas.width - width) / 2,
+    y: (canvas.height - height) / 2,
     width,
     height
   };

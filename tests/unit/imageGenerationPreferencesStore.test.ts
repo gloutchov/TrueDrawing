@@ -14,6 +14,7 @@ const config: AppConfig = {
   canvas: {
     defaultWidth: 2048,
     defaultHeight: 2048,
+    dimensions: { minPixels: 64, maxPixels: 4096, maxAreaPixels: 12000000, defaultDpi: 300, minDpi: 72, maxDpi: 600 },
     backgroundColor: "#ffffff",
     maxZoom: 8,
     minZoom: 0.1,

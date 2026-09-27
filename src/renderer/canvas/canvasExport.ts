@@ -16,9 +16,17 @@ export function exportDocumentCanvasToDataUrl(
   config: AppConfig,
   mimeType: "image/png" | "image/webp"
 ): string {
+  return renderDocumentToCanvas(document, config).toDataURL(mimeType);
+}
+
+export function exportDocumentForGenerationToPngDataUrl(
+  document: DrawingDocument,
+  config: AppConfig
+): string {
+  const sourceCanvas = renderDocumentToCanvas(document, config);
   const canvas = window.document.createElement("canvas");
-  const sourceWidth = config.canvas.defaultWidth;
-  const sourceHeight = config.canvas.defaultHeight;
+  const sourceWidth = document.canvas.width;
+  const sourceHeight = document.canvas.height;
   const padding = Math.round(
     Math.min(sourceWidth, sourceHeight) * config.imageGeneration.canvasPaddingRatio
   );
@@ -36,25 +44,27 @@ export function exportDocumentCanvasToDataUrl(
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.translate(padding, padding);
 
-  const sourceCanvas = window.document.createElement("canvas");
+  context.drawImage(sourceCanvas, 0, 0);
 
-  sourceCanvas.width = sourceWidth;
-  sourceCanvas.height = sourceHeight;
+  return canvas.toDataURL("image/png");
+}
 
-  const sourceContext = sourceCanvas.getContext("2d");
+function renderDocumentToCanvas(document: DrawingDocument, config: AppConfig): HTMLCanvasElement {
+  const canvas = window.document.createElement("canvas");
+  canvas.width = document.canvas.width;
+  canvas.height = document.canvas.height;
 
-  if (!sourceContext) {
-    throw new Error("Unable to create canvas source export context.");
+  const context = canvas.getContext("2d");
+  if (!context) {
+    throw new Error("Unable to create canvas export context.");
   }
 
-  renderCanvas(sourceContext, document, {
+  renderCanvas(context, document, {
     backgroundColor: config.canvas.backgroundColor,
     pressureMinSizeFactor: config.tools.pressureMinSizeFactor,
     pressureMaxSizeFactor: config.tools.pressureMaxSizeFactor
   });
-  context.drawImage(sourceCanvas, 0, 0);
-
-  return canvas.toDataURL(mimeType);
+  return canvas;
 }
 
 export async function convertImageDataUrl(
@@ -93,8 +103,8 @@ export function exportDocumentSelectionToPngDataUrl(
   const normalizedSelection = normalizeCanvasSelection(selection);
   const sourceCanvas = window.document.createElement("canvas");
 
-  sourceCanvas.width = config.canvas.defaultWidth;
-  sourceCanvas.height = config.canvas.defaultHeight;
+  sourceCanvas.width = document.canvas.width;
+  sourceCanvas.height = document.canvas.height;
 
   const sourceContext = sourceCanvas.getContext("2d");
 

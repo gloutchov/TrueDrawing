@@ -2,6 +2,14 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 
 const translations = {
   it: {
+    apply: "Applica",
+    canvasSize: "Dimensioni canvas",
+    canvasWidth: "Larghezza",
+    canvasHeight: "Altezza",
+    canvasUnit: "Unita'",
+    canvasDpi: "Risoluzione (DPI)",
+    canvasSizeInvalid: "Controlla dimensioni e DPI nei limiti configurati",
+    canvasSizeHelp: "L'origine resta in alto a sinistra. I tratti fuori dal canvas restano nel progetto.",
     addLayer: "Aggiungi layer",
     apiKey: "API Key",
     apiKeyConfigured: "Configurata",
@@ -71,6 +79,14 @@ const translations = {
     resetZoom: "Reset zoom"
   },
   en: {
+    apply: "Apply",
+    canvasSize: "Canvas size",
+    canvasWidth: "Width",
+    canvasHeight: "Height",
+    canvasUnit: "Unit",
+    canvasDpi: "Resolution (DPI)",
+    canvasSizeInvalid: "Check size and DPI against configured limits",
+    canvasSizeHelp: "The origin stays at the top left. Strokes outside the canvas remain in the project.",
     addLayer: "Add layer",
     apiKey: "API key",
     apiKeyConfigured: "Configured",

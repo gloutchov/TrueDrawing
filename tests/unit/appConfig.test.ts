@@ -33,6 +33,16 @@ describe("app configuration", () => {
       "brush",
       "eraser"
     ]);
+    expect(config.canvas.dimensions.defaultDpi).toBe(300);
+  });
+
+  it("rejects inconsistent canvas defaults and limits", () => {
+    const configPath = path.join(process.cwd(), "config", "app.config.json");
+    const config = JSON.parse(fs.readFileSync(configPath, "utf8")) as Record<string, unknown>;
+    const canvas = config.canvas as Record<string, unknown>;
+    canvas.defaultWidth = 5000;
+
+    expect(() => validateAppConfig(config)).toThrow(/canvas dimensions and DPI limits/);
   });
 
   it("rejects invalid opacity values", () => {
@@ -51,6 +61,7 @@ describe("app configuration", () => {
       canvas: {
         defaultWidth: 2048,
         defaultHeight: 2048,
+        dimensions: { minPixels: 64, maxPixels: 4096, maxAreaPixels: 12000000, defaultDpi: 300, minDpi: 72, maxDpi: 600 },
         backgroundColor: "#ffffff",
         maxZoom: 8,
         minZoom: 0.1,

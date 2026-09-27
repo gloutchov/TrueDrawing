@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.1.0` (release GitHub pubblicata: `v1.0.2`)
+Versione sorgente: `1.2.0` (release GitHub pubblicata: `v1.0.2`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -39,6 +39,8 @@ Le preferenze UI non segrete, come zoom canvas persistente, lingua interfaccia e
 I canali IPC disponibili sono limitati a configurazione, runtime, stato/scrittura/rimozione API key, preferenze immagine, generazione realistica, salvataggio/apertura progetto, autosave, recupero autosave, export immagini, clipboard controllata per testo/immagini e fullscreen finestra. Gli input IPC vengono validati nel main process. Il renderer non ha `nodeIntegration`, non accede direttamente a filesystem o API native e riceve solo le API esposte dal preload.
 
 I payload IPC per immagini, prompt e testo clipboard hanno limiti di dimensione espliciti. Il salvataggio rapido puo' riusare solo percorsi progetto gia' scelti dall'utente nella sessione tramite dialog nativi o apertura progetto; un percorso arbitrario inviato dal renderer viene rifiutato dal main process. I file progetto aperti vengono controllati con un limite massimo di dimensione prima della lettura completa.
+
+Le dimensioni canvas e i DPI sono salvati nel progetto e validati nel main process sia all'apertura sia nelle richieste di salvataggio/autosave. I limiti centrali evitano dimensioni canvas eccessive. Il ridimensionamento non invia dati in rete; solo una richiesta di generazione OpenAI invia il PNG del canvas, con il padding configurato. Il sidecar e gli export non includono quel padding.
 
 La Content Security Policy limita script, immagini, form, frame e connessioni remote. In produzione le connessioni remote ammesse dal renderer sono ristrette al base URL configurato per OpenAI; la chiamata effettiva all'API resta comunque nel main process.
 
@@ -93,7 +95,7 @@ Correttivi previsti:
 
 ## English
 
-Source version: `1.1.0` (published GitHub release: `v1.0.2`)
+Source version: `1.2.0` (published GitHub release: `v1.0.2`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -130,6 +132,8 @@ Non-secret UI preferences, such as persistent canvas zoom, interface language, a
 Available IPC channels are limited to configuration, runtime, API key status/write/removal, image preferences, realistic generation, project save/open, autosave, autosave recovery, image export, controlled text/image clipboard, and window fullscreen. IPC inputs are validated in the main process. The renderer has no `nodeIntegration`, does not directly access filesystem or native APIs, and receives only preload-exposed APIs.
 
 IPC payloads for images, prompts, and clipboard text have explicit size limits. Quick save can only reuse project paths already selected by the user in the current session through native dialogs or project open; arbitrary paths sent by the renderer are rejected by the main process. Opened project files are checked against a maximum size before full read.
+
+Canvas dimensions and DPI are stored in the project and validated in the main process on both open and save/autosave requests. Central limits prevent excessive canvas sizes. Resizing sends no data over the network; only an OpenAI generation request sends a canvas PNG with configured padding. Sidecars and exports do not include that padding.
 
 The Content Security Policy limits scripts, images, forms, frames, and remote connections. In production, renderer remote connection sources are restricted to the configured OpenAI base URL; the actual API call still happens in the main process.
 

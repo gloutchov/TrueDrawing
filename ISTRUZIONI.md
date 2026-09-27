@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.1.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.2.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -109,6 +109,8 @@ L'attività di disegno è molto semplice. E' sufficiente selezionare il tool des
 
 Per spostarsi su un canvas ingrandito, selezionare la manina e trascinare la parte visibile con mouse, penna o touch. Il trascinamento non cambia il disegno e non viene salvato nel progetto. Il reset dello zoom riporta anche la vista al centro.
 
+Per cambiare le dimensioni del canvas, usare **Dimensioni canvas** nel pannello destro oppure `File > Impostazioni > Dimensioni canvas...`. Scegliere `px` o `cm`, indicare larghezza, altezza e risoluzione in DPI, poi premere **Applica**. La conversione usa 2,54 cm per pollice e arrotonda al pixel piu' vicino; il pannello mostra sempre la misura effettiva in pixel e centimetri. In `px`, cambiare DPI conserva i pixel e modifica la misura fisica; in `cm`, conserva i centimetri inseriti e ricalcola i pixel. I limiti configurati sono 64-4096 pixel per lato, 12 megapixel complessivi e 72-600 DPI. L'origine resta in alto a sinistra: i tratti non vengono scalati o cancellati quando il canvas si restringe, e possono riapparire ampliandolo. Undo/redo ripristina anche le dimensioni.
+
 Il Menù Edit offre alcune funzionalità aggiuntive utili:
 
 - Annulla/Ripeti;
@@ -126,6 +128,8 @@ Per un disegno chiamato `nome`, l'app usera':
 - `nome.tdraw` per il progetto True Drawing;
 - `nome_canvas.png` per il canvas composito;
 - `nome_image.png` per l'immagine realistica generata, quando presente.
+
+Il progetto `.tdraw` conserva pixel e DPI; i progetti precedenti si aprono con il default 2048 × 2048 px a 300 DPI. Il sidecar canvas e l'export PNG/WebP usano esattamente i pixel correnti del canvas. La risoluzione DPI e' un dato del progetto per le conversioni nell'interfaccia; non aggiunge metadati DPI ai file immagine esportati.
 
 ## L'interfaccia
 
@@ -151,7 +155,7 @@ Il menù File ha le seguenti opzioni
 - Impostazioni;
 - Esci.
 
-Il menù Impostazioni permette di modificare la lingua del programma, il suo aspetto, di inserire la chiave API della AI, di scegliere la tipologia di immagine in uscita (realistica, cartoon, etc), di impostare l'autogenerazione dell'immagine AI durante le pause dal disegno.
+Il menù Impostazioni permette di modificare le dimensioni del canvas, la lingua del programma e il suo aspetto, di inserire la chiave API della AI, di scegliere la tipologia di immagine in uscita (realistica, cartoon, etc) e di impostare l'autogenerazione dell'immagine AI durante le pause dal disegno.
 
 #### Menù Modifica
 

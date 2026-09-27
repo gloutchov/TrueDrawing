@@ -326,7 +326,6 @@ button {
 
 .canvas-transform {
   position: relative;
-  width: min(100%, calc(100vh - var(--top-bar-height) - var(--status-bar-height) - (var(--workspace-padding) * 2)));
   max-height: calc(100vh - var(--top-bar-height) - var(--status-bar-height) - (var(--workspace-padding) * 2));
   transform-origin: center center;
 }
@@ -388,9 +387,45 @@ button {
   flex-direction: column;
   gap: 10px;
   min-height: 0;
+  overflow-y: auto;
   border-left: 1px solid #aeb8bd;
   background: #e7ebed;
   padding: 10px;
+}
+
+.canvas-size-body {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+}
+
+.canvas-size-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.canvas-size-fields .field input,
+.canvas-size-fields .field select {
+  width: 100%;
+  min-width: 0;
+}
+
+.canvas-size-readout,
+.canvas-size-help {
+  margin: 0;
+  color: #5b666b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.canvas-size-readout {
+  color: #2f393d;
+  font-weight: 600;
+}
+
+.canvas-size-body > .text-button {
+  justify-self: end;
 }
 
 .panel {
@@ -845,6 +880,7 @@ button {
 .app-shell[data-theme="dark"] .inspector-meta,
 .app-shell[data-theme="dark"] .layer-row small,
 .app-shell[data-theme="dark"] .field,
+.app-shell[data-theme="dark"] .canvas-size-help,
 .app-shell[data-theme="dark"] .settings-readout,
 .app-shell[data-theme="dark"] .status-bar,
 .app-shell[data-theme="dark"] .tool-readout,
@@ -854,6 +890,7 @@ button {
 
 .app-shell[data-theme="dark"] .panel-header,
 .app-shell[data-theme="dark"] .panel-header span,
+.app-shell[data-theme="dark"] .canvas-size-readout,
 .app-shell[data-theme="dark"] .modal-header span,
 .app-shell[data-theme="dark"] .checkbox-field,
 .app-shell[data-theme="dark"] .style-chip,
