@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.2.0` (release GitHub pubblicata: `v1.0.2`)
+Versione sorgente: `1.2.0` (release GitHub pubblicata: `v1.2.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -76,6 +76,7 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - Patch `v1.0.2` per leggibilita' dei dialog impostazioni in tema scuro: completata, senza modifiche a segreti, rete o IPC.
 - Patch `v1.0.3` per dominio e collegamenti della landing page: completata, senza modifiche a segreti, rete o IPC dell'app desktop.
 - C12: la manina modifica solo la vista nel renderer; nessun nuovo canale IPC, permesso, invio di rete o campo nel file progetto.
+- C13: dimensioni canvas e DPI sono validati nel renderer e nel main, persistono nel progetto e non aggiungono segreti, permessi o canali IPC; il PNG inviato su richiesta all'API rispecchia le dimensioni del documento.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
 ### Miglioramenti pianificati
@@ -95,7 +96,7 @@ Correttivi previsti:
 
 ## English
 
-Source version: `1.2.0` (published GitHub release: `v1.0.2`)
+Source version: `1.2.0` (published GitHub release: `v1.2.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -169,6 +170,7 @@ The project currently has no certificates or credentials for Windows code signin
 - `v1.0.2` patch for settings dialog readability in dark theme: complete, with no changes to secrets, network, or IPC.
 - `v1.0.3` landing-page domain and links patch: complete, with no changes to desktop-app secrets, network behavior, or IPC.
 - C12: the hand tool changes only the renderer view; it adds no IPC channel, permission, network transfer, or project-file field.
+- C13: canvas dimensions and DPI are validated in the renderer and main process, persist in project files, and add no secrets, permissions, or IPC channels; the PNG sent to the API on request reflects the document dimensions.
 - Security tests for credential store, preferences, and CSP: complete.
 
 ### Planned Improvements

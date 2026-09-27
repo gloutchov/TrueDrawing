@@ -224,10 +224,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione sorgente sul branch M13: `1.2.0`; release GitHub pubblicata: `v1.0.2`.
-- Ultima milestone completata: C12 - Manina e navigazione canvas.
-- Milestone corrente: M13 - Dimensioni canvas in pixel e centimetri, in verifica.
-- Stato milestone: C12 completata con pan locale della vista e checkpoint `milestone/C12`.
+- Versione corrente su `main`: `1.2.0`; release GitHub pubblicata: `v1.2.0`.
+- Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
+- Milestone corrente: nessuna; M14 e' la prossima pianificata.
+- Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.

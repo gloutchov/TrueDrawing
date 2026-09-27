@@ -4,12 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C12 - Manina e navigazione canvas.
+- Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente del codice sorgente sul branch M13: `1.2.0`; release GitHub pubblicata: `v1.0.2`.
-- Branch corrente: `milestone/13-canvas-dimensions`.
-- Milestone corrente in sviluppo: M13 - Dimensioni canvas in pixel e centimetri, in verifica.
+- Versione corrente: `1.2.0`; release GitHub pubblicata: `v1.2.0`.
+- Branch corrente: `main`.
+- Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
+- Ultimo branch milestone completato: `milestone/13-canvas-dimensions`.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -18,7 +19,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - CI patch `v1.0.2`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; PR #10 verde con GitHub Actions run `27415112843` e `27415123564`; `main` verde con run `27415599523`; workflow release `27415761496` verde.
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
-- Release GitHub corrente: `v1.0.2` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
+- Release GitHub corrente: `v1.2.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali

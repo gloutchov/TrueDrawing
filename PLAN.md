@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing e' arrivato alla versione sorgente `1.2.0` sul branch M13, con le dimensioni canvas modificabili. La release GitHub pubblicata resta `v1.0.2`.
+True Drawing ha completato C13 alla versione `1.2.0`, con le dimensioni canvas modificabili e la release GitHub `v1.2.0`.
 
-- Versione corrente sul branch M13: `1.2.0` (sorgente, senza nuova GitHub release).
+- Versione corrente su `main`: `1.2.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C12 - Manina e navigazione canvas`.
+- Ultima milestone completata: `C13 - Dimensioni canvas in pixel e centimetri`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.0.2`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: `M13 - Dimensioni canvas in pixel e centimetri`.
+- Release GitHub corrente: `v1.2.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Milestone corrente in sviluppo: nessuna; M14 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -104,13 +104,13 @@ Test richiesti: test mirati della selezione strumento e del pan, `npm run lint`,
 
 Riepilogo e verifiche (2026-09-27): manina, pan locale, reset vista, test mirati, documenti e preferenze operative aggiornati; lint, 41 test, build, CI PR #12 (run `36323912210`) e CI `main` (run `36325069504`) verdi. Smoke test Electron: pan a zoom 132% senza tratti, reset e temi chiaro/scuro verificati. Limite residuo: penna e touch fisici non disponibili per lo smoke test. Il progettista ha approvato il merge; `main`, `milestone/C12` e `v1.1.0` verificati sul remoto prima di M13.
 
-### M13 - Dimensioni canvas in pixel e centimetri
+### C13 - Dimensioni canvas in pixel e centimetri
 
-- Versione finale prevista: `1.2.0`.
-- Branch previsto: `milestone/13-canvas-dimensions`.
-- Tag di checkpoint previsto: `milestone/C13`.
+- Versione finale: `1.2.0`, con release GitHub `v1.2.0`.
+- Branch: `milestone/13-canvas-dimensions`.
+- Tag di checkpoint: `milestone/C13`.
 - Tipo incremento: `+0.1.0`.
-- Stato: in verifica sul branch dedicato; `C12` e' stato chiuso e verificato sul remoto.
+- Stato: completata dopo avallo esplicito del progettista, merge, CI, checkpoint e release verificati.
 - Obiettivo: cambiare larghezza e altezza del canvas dal pannello a destra e dal menu Impostazioni.
 
 Attivita':
@@ -132,7 +132,7 @@ Criteri di accettazione:
 
 Test richiesti: conversione e limiti, compatibilita' file, history, rendering/export, `npm run lint`, `npm run test`, `npm run build` e smoke test manuale in entrambi i temi.
 
-Verifica locale sul branch (2026-09-27): implementazione e rifiniture UI completate; 49 test automatici, lint e build verdi. Smoke test Electron in profilo temporaneo: riquadri indipendenti, bozza preservata dopo compressione, lucchetto in px e cm, margine del pulsante, undo, accesso dal menu Impostazioni e temi chiaro/scuro verificati. Dopo il riordino Inspector → Dimensioni canvas → Layer, la freccia a destra dei comandi e la compressione dell'Inspector sono state ricontrollate in entrambi i temi. CI PR #13 verde fino alla prima rifinitura (run `36332496621`); la CI dell'ultimo ritocco e l'avallo del progettista precedono merge e checkpoint.
+Riepilogo e verifiche (2026-09-27): dimensioni e DPI modificabili in px/cm dal pannello destro e dalle Impostazioni, lucchetto proporzioni, riquadri collassabili, persistenza nel progetto e undo/redo. L'Inspector precede Dimensioni canvas e la freccia di compressione chiude ogni intestazione. Lint, 49 test e build verdi; smoke test Electron in profilo temporaneo con px/cm, undo, riquadri e temi chiaro/scuro verificati. CI PR #13 verde (run `36333336031`); CI `main` e workflow release verificati in chiusura. Release `v1.2.0` con artifact Windows/macOS non firmati e checksum SHA-256. Limite residuo: penna e touch fisici non disponibili per lo smoke test.
 
 ### M14 - Security hardening post release
 
@@ -333,6 +333,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-06-12 | Patch tema scuro impostazioni | 1.0.2 | `patch/1.0.2-dark-settings` | Completata | PR #10, tag `v1.0.2` e release workflow `27415761496` verdi; corretta leggibilita' dei preset stile e della checkbox redraw automatico in tema scuro, rimosso dropdown stile duplicato e sostituito spinner numerico nativo. |
 | 2026-09-17 | Patch dominio e link landing page | 1.0.3 | `patch/1.0.3-canonical-site-links` | Completata | Dichiarato il dominio personalizzato come canonical, aggiunto il link accessibile al sito principale e introdotto un controllo contro riferimenti al dominio GitHub Pages predefinito; verifiche automatiche e manuali completate. |
 | 2026-09-27 | C12 - Manina e navigazione canvas | 1.1.0 | `milestone/12-canvas-hand-tool` | Completata | PR #12, 41 test, lint/build, CI PR e `main` verdi; pan locale verificato in Electron; `milestone/C12` e `v1.1.0` verificati sul remoto. |
+| 2026-09-27 | C13 - Dimensioni canvas in pixel e centimetri | 1.2.0 | `milestone/13-canvas-dimensions` | Completata | PR #13, 49 test, lint/build, smoke test chiaro/scuro, CI PR e `main` verdi; checkpoint `milestone/C13` e release `v1.2.0` verificati. |
 
 ## Checklist di chiusura milestone
 
