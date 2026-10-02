@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent, type JSX } from "react";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { EffectiveLocale } from "../app/uiPreferences";

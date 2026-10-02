@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { KeyRound, Trash2, X } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";

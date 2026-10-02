@@ -1,3 +1,5 @@
+import type { JSX } from "react";
+
 import { Settings } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";

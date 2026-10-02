@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { Languages, X } from "lucide-react";
 
 import type { EffectiveLocale, UiLocaleMode, UiPreferences, UiThemeMode } from "../app/uiPreferences";

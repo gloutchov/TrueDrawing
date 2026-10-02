@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C20 - Aggiornamento toolchain di sviluppo.
+- Ultima milestone completata: C21 - Migrazione React e React DOM.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.9.0`; release GitHub pubblicata: `v1.8.0`.
+- Versione corrente: `1.10.0`; release GitHub pubblicata: `v1.8.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M21 e' la prossima pianificata.
+- Milestone corrente: nessuna; M22 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/20-development-toolchain`.
+- Ultimo branch milestone completato: `milestone/21-react-runtime`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -154,3 +154,9 @@ Il progettista autorizza l'esecuzione delle PR #15, #16 e #17 tramite milestone 
 ## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
 
 Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. / Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.
+
+## C21 - Migrazione React e React DOM (`1.10.0`)
+
+React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. / React and React DOM aligned at 19.3.0 with matching types; components use React-scoped JSX types. C20 toolchain preserved while resolving lockfile conflicts; canvas interactions, dialogs and persistence verified in the production renderer.
+
+- Verifica C20: PR #15 CI `37060839272`, main CI `37060915788`, checkpoint `milestone/C20` e versione `v1.9.0` verificati; branch milestone e Dependabot rimossi.

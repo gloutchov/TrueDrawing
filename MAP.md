@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.9.0`; release GitHub pubblicata: `v1.8.0`.
-- Ultima milestone completata: C20 - Aggiornamento toolchain di sviluppo.
-- Milestone corrente: nessuna; M21 e' la prossima pianificata.
-- Stato milestone: C20 completata con checkpoint `milestone/C20`.
+- Versione corrente su `main`: `1.10.0`; release GitHub pubblicata: `v1.8.0`.
+- Ultima milestone completata: C21 - Migrazione React e React DOM.
+- Milestone corrente: nessuna; M22 e' la prossima pianificata.
+- Stato milestone: C21 completata con checkpoint `milestone/C21`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -330,3 +330,7 @@ Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScr
 - `tests/unit/clipboardImages.test.ts`: scritture asincrone, errori nativi, decodifica PNG e limite Blob prima di arrayBuffer.
 - `src/main/security/ipcSecurity.ts`: costruzione errori pubblici senza cause/stack remoti, compatibile con ESLint 10.
 - `.github/dependabot.yml`: TypeScript >=6.1 escluso finche typescript-eslint non dichiara supporto; rivalutare alla sua migrazione.
+
+## C21 - Migrazione React e React DOM (`1.10.0`)
+
+React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. / React and React DOM aligned at 19.3.0 with matching types; components use React-scoped JSX types. C20 toolchain preserved while resolving lockfile conflicts; canvas interactions, dialogs and persistence verified in the production renderer.

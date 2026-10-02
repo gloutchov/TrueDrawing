@@ -1,4 +1,4 @@
-import { useId, useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode, type JSX } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";

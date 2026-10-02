@@ -1,3 +1,5 @@
+import type { JSX } from "react";
+
 import { Image, KeyRound, Loader2, RefreshCw } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";

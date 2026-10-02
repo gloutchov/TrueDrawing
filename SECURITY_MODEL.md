@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.9.0` (release GitHub pubblicata: `v1.8.0`)
+Versione sorgente: `1.10.0` (release GitHub pubblicata: `v1.8.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.9.0` (published GitHub release: `v1.8.0`)
+Source version: `1.10.0` (published GitHub release: `v1.8.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -221,3 +221,9 @@ Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScr
 IT: i canali appunti esistenti usano ClipboardItem/Blob nel main e attendono il completamento nativo. PNG normalizzato e limite 16 MiB sia prima della scrittura sia prima di allocare i bytes letti; il renderer non riceve nuove capacita native. La sanitizzazione omette anche cause e stack remoti: la regola ESLint 10 non deve reintrodurre informazioni private. Sandbox, CSP e controllo mittente IPC restano verificati dai test. Audit runtime: zero vulnerabilita; generazione API reale non eseguita.
 
 EN: existing clipboard channels use main-process ClipboardItem/Blob and await native completion. PNG normalization and the 16 MiB bound apply before writes and before allocating read bytes; renderer native capabilities do not expand. Sanitization also drops remote causes/stacks, so ESLint 10 does not reintroduce private details. Tests retain sandbox, CSP and IPC sender checks. Runtime audit: zero vulnerabilities; no paid live API generation was performed.
+
+## C21 - Migrazione React e React DOM (`1.10.0`)
+
+React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. / React and React DOM aligned at 19.3.0 with matching types; components use React-scoped JSX types. C20 toolchain preserved while resolving lockfile conflicts; canvas interactions, dialogs and persistence verified in the production renderer.
+
+C21: React 19 cambia il runtime UI e i tipi del renderer; CSP, sandbox, preload, canali IPC e storage segreti mantengono gli stessi controlli. / React 19 updates the UI runtime and renderer types; CSP, sandbox, preload, IPC channels and secret storage retain the same controls.
