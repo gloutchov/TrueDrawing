@@ -224,9 +224,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.6.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente su `main`: `1.7.0`; release GitHub pubblicata: `v1.2.0`.
 - Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
-- Milestone corrente: nessuna; M18 e' la prossima pianificata.
+- Milestone corrente: nessuna; M19 e' la prossima pianificata.
 - Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -296,3 +296,11 @@ Maschere non distruttive con editor, attivazione e rimozione; clipping con ident
 - `src/shared/document/layerEffects.ts`: maschere, clipping per identita, validazione cicli.
 - `src/renderer/layers/LayerEffectsPanel.tsx`: editor maschera e target clipping per layer attivo.
 - `tests/unit/layerEffects.test.ts`: persistenza, cancellazione, riordino e undo/redo.
+
+## C18 - Storia versioni del documento (`1.7.0`)
+
+Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+
+- `src/shared/document/snapshotModel.ts`: capsule persistenti senza ricorsione, budget e ripristino.
+- `src/renderer/project/SnapshotPanel.tsx`: creazione, rinomina, ripristino, cancellazione e snapshot automatici.
+- `tests/unit/snapshotModel.test.ts`: compatibilita tdraw, limiti e integrita dello stato ripristinato.

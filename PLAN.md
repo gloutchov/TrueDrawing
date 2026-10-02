@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C17 alla versione `1.6.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
+True Drawing ha completato C18 alla versione `1.7.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
 
-- Versione corrente su `main`: `1.6.0`.
+- Versione corrente su `main`: `1.7.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C17 - Maschere e clipping layer`.
+- Ultima milestone completata: `C18 - Storia versioni del documento`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.2.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M18 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M19 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -267,13 +267,13 @@ Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `
 
 Riepilogo (2026-10-02): Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence. Verifiche: lint, 93 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.6.0`, checkpoint `milestone/C17`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
 
-### M18 - Storia versioni del documento
+### C18 - Storia versioni del documento
 
-- Versione finale prevista: `1.7.0`.
-- Branch previsto: `milestone/18-document-version-history`.
-- Tag di checkpoint previsto: `milestone/C18`.
+- Versione finale: `1.7.0`.
+- Branch: `milestone/18-document-version-history`.
+- Tag di checkpoint: `milestone/C18`.
 - Tipo incremento: `+0.1.0`.
-- Stato: pianificata.
+- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
 - Obiettivo: permettere all'utente di tornare a snapshot precedenti del progetto.
 
 Attivita':
@@ -295,6 +295,8 @@ Criteri di accettazione:
 Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
 Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+Riepilogo (2026-10-02): Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules. Verifiche: lint, 99 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.7.0`, checkpoint `milestone/C18`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
 
 ### M19 - Preset di stile realistico
 
@@ -345,6 +347,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C15 - Brush avanzati e texture personalizzate | 1.4.0 | `milestone/15-advanced-brushes` | Completata | Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw. 79 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C16 - Import immagini di riferimento | 1.5.0 | `milestone/16-reference-image-import` | Completata | Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI. 83 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C17 - Maschere e clipping layer | 1.6.0 | `milestone/17-masks-clipping-layers` | Completata | Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence. 93 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-02 | C18 - Storia versioni del documento | 1.7.0 | `milestone/18-document-version-history` | Completata | Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules. 99 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

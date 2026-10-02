@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.6.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.7.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -210,3 +210,11 @@ Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensio
 Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
 
 In Masks and clipping choose **Create mask**, then **Edit mask**. A new mask reveals everything: eraser hides; pencil/brush restore visibility. Turn off Edit mask to draw on the layer again. Mask enabled toggles the effect without losing strokes; removing a mask requires confirmation. **Clip to layer** uses another layer's alpha, including its mask, opacity and visibility. Targets remain linked after reordering; cyclic targets are disabled and deleting a target clears the relationship. Canvas, export and generation share rendering; effects persist and support undo/redo.
+
+## C18 - Storia versioni del documento (`1.7.0`)
+
+Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+
+**Document versions** creates named snapshots that can be renamed and restored. Each contains canvas, layers, masks, references and the realistic image; snapshots never contain other snapshots. Restoration and deletion require confirmation; Undo restores the state preceding a version restoration. Save the project to keep versions, which are also included in autosave/recovery. Undo/Redo remains in-memory operational history and is not reconstructed when reopening.
+
+**Automatic versions** is a local preference disabled by default. When enabled it records changed content every five minutes, skipping content identical to the latest version. Configured `snapshots` limits: 20 versions, 8 MiB per content, 32 MiB total, 80-character names and the whole-project byte limit. Reaching a limit stops creation without evicting older versions; delete unneeded versions or adjust configuration. This is not an external backup: losing the tdraw file loses its versions.
