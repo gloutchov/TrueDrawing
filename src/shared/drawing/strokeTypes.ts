@@ -1,3 +1,4 @@
+import type { BrushSettings } from "./brushModel";
 import type { DrawingToolId, StrokeStyleId } from "./toolTypes";
 
 export type DrawingPoint = {
@@ -15,6 +16,7 @@ export type DrawingStroke = {
   opacity: number;
   hardness: number;
   strokeStyle: StrokeStyleId;
+  brush?: BrushSettings;
   points: DrawingPoint[];
   imageDataUrl?: string;
 };

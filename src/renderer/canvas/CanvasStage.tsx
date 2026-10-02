@@ -178,6 +178,7 @@ export function CanvasStage({
       opacity: toolSettings.opacity,
       hardness: toolSettings.hardness,
       strokeStyle: toolSettings.strokeStyle,
+      brush: ["pencil", "brush", "marker", "eraser"].includes(toolSettings.tool) ? toolSettings.brush : undefined,
       point
     });
     const stroke = isDragTool ? { ...baseStroke, points: [point, point] } : baseStroke;

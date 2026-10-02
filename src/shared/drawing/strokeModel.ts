@@ -1,3 +1,4 @@
+import type { BrushSettings } from "./brushModel";
 import type {
   DrawingPoint,
   DrawingStroke,
@@ -17,6 +18,7 @@ type CreateStrokeInput = {
   strokeStyle: StrokeStyleId;
   point: DrawingPoint;
   imageDataUrl?: string;
+  brush?: BrushSettings;
 };
 
 export function createStroke(input: CreateStrokeInput): DrawingStroke {
@@ -29,7 +31,8 @@ export function createStroke(input: CreateStrokeInput): DrawingStroke {
     hardness: input.hardness,
     strokeStyle: input.strokeStyle,
     points: [input.point],
-    imageDataUrl: input.imageDataUrl
+    imageDataUrl: input.imageDataUrl,
+    brush: input.brush ? {...input.brush} : undefined
   };
 }
 

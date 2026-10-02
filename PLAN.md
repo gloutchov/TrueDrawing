@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C14 alla versione `1.3.0`, con le dimensioni canvas modificabili e la release GitHub `v1.2.0`.
+True Drawing ha completato C15 alla versione `1.4.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
 
-- Versione corrente su `main`: `1.3.0`.
+- Versione corrente su `main`: `1.4.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C14 - Security hardening post release`.
+- Ultima milestone completata: `C15 - Brush avanzati e texture personalizzate`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.2.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M15 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M16 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -140,7 +140,7 @@ Riepilogo e verifiche (2026-09-27): dimensioni e DPI modificabili in px/cm dal p
 - Branch: `milestone/14-security-hardening`.
 - Tag di checkpoint: `milestone/C14`.
 - Tipo incremento: `+0.1.0`.
-- Stato: implementata; chiusura con CI e checkpoint remoto secondo checklist.
+- Stato: completata; CI PR #14 e main, checkpoint remoto e tag versione verificati.
 - Obiettivo: rafforzare le difese gia' documentate in `SECURITY_MODEL.md` prima di aggiungere nuove superfici come l'import di immagini di riferimento.
 
 Attivita':
@@ -175,13 +175,13 @@ Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `
 
 Riepilogo (2026-10-02): limiti immagini di 16 MiB, controllo DNS alla connessione HTTPS senza redirect, timeout e limite streaming; IPC limitato al renderer principale, errori controllati, CSP senza connessioni/frame/worker in produzione, avviso safeStorage e controlli segreti. Verifiche locali: lint, 74 test, build, smoke Electron nei due temi. Audit dipendenze runtime: zero vulnerabilita'. Dependabot mensile. Limiti: generazione AI reale e dispositivi penna/touch fisici non verificati. Versione `1.3.0`, checkpoint `milestone/C14`. Nessuna release intermedia per risparmiare Actions; release cumulativa prevista a M19.
 
-### M15 - Brush avanzati e texture personalizzate
+### C15 - Brush avanzati e texture personalizzate
 
-- Versione finale prevista: `1.4.0`.
-- Branch previsto: `milestone/15-advanced-brushes`.
-- Tag di checkpoint previsto: `milestone/C15`.
+- Versione finale: `1.4.0`.
+- Branch: `milestone/15-advanced-brushes`.
+- Tag di checkpoint: `milestone/C15`.
 - Tipo incremento: `+0.1.0`.
-- Stato: pianificata.
+- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
 - Obiettivo: rendere il motore di disegno piu' espressivo con brush avanzati e texture configurabili.
 
 Attivita':
@@ -203,6 +203,8 @@ Criteri di accettazione:
 Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
 Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+Riepilogo (2026-10-02): Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw. Verifiche: lint, 79 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.4.0`, checkpoint `milestone/C15`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
 
 ### M16 - Import immagini di riferimento
 
@@ -336,6 +338,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-09-17 | Patch dominio e link landing page | 1.0.3 | `patch/1.0.3-canonical-site-links` | Completata | Dichiarato il dominio personalizzato come canonical, aggiunto il link accessibile al sito principale e introdotto un controllo contro riferimenti al dominio GitHub Pages predefinito; verifiche automatiche e manuali completate. |
 | 2026-09-27 | C12 - Manina e navigazione canvas | 1.1.0 | `milestone/12-canvas-hand-tool` | Completata | PR #12, 41 test, lint/build, CI PR e `main` verdi; pan locale verificato in Electron; `milestone/C12` e `v1.1.0` verificati sul remoto. |
 | 2026-09-27 | C13 - Dimensioni canvas in pixel e centimetri | 1.2.0 | `milestone/13-canvas-dimensions` | Completata | PR #13, 49 test, lint/build, smoke test chiaro/scuro, CI PR e `main` verdi; checkpoint `milestone/C13` e release `v1.2.0` verificati. |
+| 2026-10-02 | C15 - Brush avanzati e texture personalizzate | 1.4.0 | `milestone/15-advanced-brushes` | Completata | Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw. 79 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

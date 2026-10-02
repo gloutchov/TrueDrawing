@@ -39,7 +39,8 @@ export function settingsForSelectedTool(
     tool,
     size: preset.size,
     opacity: preset.opacity,
-    hardness: preset.hardness
+    hardness: preset.hardness,
+    brush: undefined
   };
 }
 

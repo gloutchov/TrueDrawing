@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C14 - Security hardening post release.
+- Ultima milestone completata: C15 - Brush avanzati e texture personalizzate.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.3.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente: `1.4.0`; release GitHub pubblicata: `v1.2.0`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/14-security-hardening`.
+- Ultimo branch milestone completato: `milestone/15-advanced-brushes`.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -121,3 +121,7 @@ Prima di chiudere una milestone:
 
 - Esecuzione roadmap 2026-10-02: il progettista autorizza commit, merge, tag, push e rimozione branch senza controllo preventivo; resta obbligatoria la verifica dell'identita', CI e checkpoint. Release cumulativa prevista a M19 per limitare Actions.
 - C14: limiti immagini, download HTTPS con DNS controllato e senza redirect, sender IPC, errori sanitizzati, CSP e avviso safeStorage. Verifiche locali: 74 test, lint/build, smoke chiaro/scuro; audit runtime senza vulnerabilita'.
+
+## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
+
+Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.

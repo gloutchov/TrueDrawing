@@ -224,9 +224,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.3.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente su `main`: `1.4.0`; release GitHub pubblicata: `v1.2.0`.
 - Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
-- Milestone corrente: nessuna; M15 e' la prossima pianificata.
+- Milestone corrente: nessuna; M16 e' la prossima pianificata.
 - Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -272,3 +272,7 @@ truedrawing/
 - `src/main/security/remoteImage.ts`: HTTPS, DNS pubblico alla connessione, timeout, nessun redirect e limite streaming.
 - `tests/unit/securityHardening.test.ts`, `remoteImage.test.ts`, `secretHygiene.test.ts`: controlli negativi e assenza di credenziali nelle fixture.
 - `.github/dependabot.yml`: proposte aggiornamenti mensili limitate.
+
+## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
+
+Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
