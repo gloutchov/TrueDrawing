@@ -1,3 +1,4 @@
+import appConfig from "../../config/app.config.json";
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
@@ -47,82 +48,7 @@ describe("app configuration", () => {
 
   it("rejects invalid opacity values", () => {
     expect(() => validateAppConfig({
-      app: { name: "True Drawing", defaultLocale: "it", autosaveIntervalMs: 30000, historyLimit: 100 },
-      window: { width: 1280, height: 860, minWidth: 960, minHeight: 640 },
-      layout: { topBarHeight: 46, statusBarHeight: 28, toolRailWidth: 58, sidePanelWidth: 320, workspacePadding: 28 },
-      ui: {
-        preferencesStorageKey: "true-drawing-ui-preferences",
-        statusMessageDurationMs: 6000,
-        defaultLocaleMode: "system",
-        availableLocaleModes: ["system", "it", "en"],
-        defaultThemeMode: "system",
-        availableThemeModes: ["system", "light", "dark"]
-      },
-      canvas: {
-        defaultWidth: 2048,
-        defaultHeight: 2048,
-        dimensions: { minPixels: 64, maxPixels: 4096, maxAreaPixels: 12000000, defaultDpi: 300, minDpi: 72, maxDpi: 600 },
-        backgroundColor: "#ffffff",
-        maxZoom: 8,
-        minZoom: 0.1,
-        maxPixelRatio: 2,
-        minPointDistance: 1.25,
-        strokeSmoothing: 0.55,
-        defaultPointerPressure: 0.5
-      },
-      tools: {
-        defaultTool: "pencil",
-        defaultColor: "#111111",
-        defaultSize: 8,
-        defaultOpacity: 2,
-        defaultBrushHardness: 0.85,
-        defaultStrokeStyle: "solid",
-        pressureMinSizeFactor: 0.65,
-        pressureMaxSizeFactor: 1.25,
-        sizeRange: { min: 1, max: 96, step: 1 },
-        opacityRange: { min: 0.05, max: 1, step: 0.05 },
-        hardnessRange: { min: 0.1, max: 1, step: 0.05 },
-        presets: [
-          { id: "pencil", label: "Pencil", size: 4, opacity: 1, hardness: 0.95 },
-          { id: "marker", label: "Marker", size: 16, opacity: 0.45, hardness: 0.75 },
-          { id: "brush", label: "Brush", size: 22, opacity: 0.9, hardness: 0.35 },
-          { id: "eraser", label: "Eraser", size: 28, opacity: 1, hardness: 0.8 }
-        ]
-      },
-      layers: {
-        defaultLayerName: "Layer 1",
-        newLayerNamePrefix: "Layer",
-        defaultOpacity: 1,
-        maxLayers: 32,
-        opacityRange: { min: 0.05, max: 1, step: 0.05 }
-      },
-      imageGeneration: {
-        defaultProvider: "openai",
-        baseUrl: "https://api.openai.com/v1",
-        defaultModel: "gpt-image-1.5",
-        availableModels: ["gpt-image-1.5"],
-        defaultStyle: "realistica",
-        availableStyles: ["acquerello", "cartoon", "infantile", "olio", "realistica", "surreale"],
-        autoRedrawDefaultEnabled: false,
-        autoRedrawDefaultDelaySeconds: 5,
-        autoRedrawDelayRange: { min: 1, max: 120, step: 1 },
-        defaultSize: "1024x1024",
-        defaultQuality: "auto",
-        canvasPaddingRatio: 0.08,
-        timeoutMs: 120000,
-        defaultOutputFormat: "png"
-      },
-      files: {
-        defaultProjectName: "Untitled Drawing",
-        autosaveDirectoryName: "autosave",
-        autosaveExtension: ".autosave.tdraw",
-        canvasSuffix: "_canvas",
-        imageSuffix: "_image",
-        projectExtension: ".tdraw",
-        canvasExportExtension: ".png",
-        imageExportExtension: ".png",
-        webpExportExtension: ".webp"
-      }
+      ...appConfig, tools: {...appConfig.tools, defaultOpacity: 2}
     })).toThrow(/tools\.defaultOpacity/);
   });
 });

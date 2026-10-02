@@ -15,7 +15,7 @@ import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
 import type { DrawingToolSettings } from "../../shared/drawing/toolTypes";
 import { pointerEventToCanvasPoint } from "./canvasCoordinates";
 import { panFromPointerDrag, type CanvasPan } from "./canvasPan";
-import { renderCanvas } from "./canvasRenderer";
+import { renderCanvas, preloadDocumentImages } from "./canvasRenderer";
 
 type CanvasStageProps = {
   config: AppConfig;
@@ -76,6 +76,7 @@ export function CanvasStage({
   } | null>(null);
 
   const renderOptions = useMemo(() => ({
+    includeReferences: true,
     backgroundColor: config.canvas.backgroundColor,
     pressureMinSizeFactor: config.tools.pressureMinSizeFactor,
     pressureMaxSizeFactor: config.tools.pressureMaxSizeFactor
@@ -102,9 +103,12 @@ export function CanvasStage({
 
     const context = canvas.getContext("2d");
 
+    let active = true;
     if (context) {
       renderCanvas(context, document, renderOptions);
+      void preloadDocumentImages(document).then(() => { if (active) renderCanvas(context, document, renderOptions); }).catch(() => undefined);
     }
+    return () => { active = false; };
   }, [
     document.canvas.height,
     document.canvas.width,

@@ -224,9 +224,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.4.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente su `main`: `1.5.0`; release GitHub pubblicata: `v1.2.0`.
 - Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
-- Milestone corrente: nessuna; M16 e' la prossima pianificata.
+- Milestone corrente: nessuna; M17 e' la prossima pianificata.
 - Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -276,3 +276,13 @@ truedrawing/
 ## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
 
 Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
+
+## C16 - Import immagini di riferimento (`1.5.0`)
+
+Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
+
+- `src/shared/document/referenceModel.ts`: metadati, trasformazione e validazione riferimenti embedded.
+- `src/main/project/referenceImport.ts`: scelta locale, limiti, decodifica e normalizzazione PNG nel main.
+- `src/renderer/references/ReferencePanel.tsx`: visibilita, opacita, posizione e scala proporzionale.
+- `tests/unit/referenceImport.test.ts`: formato, limiti, privacy del percorso e persistenza.
+- `src/renderer/project/ProjectNameDialog.tsx`: nome progetto prima del salvataggio, senza window.prompt non supportato in Electron.

@@ -21,6 +21,7 @@ export function createInitialDrawingDocument(
 
   return {
     canvas,
+    references: [],
     layers: [layer],
     activeLayerId: layer.id,
     realisticImage: null

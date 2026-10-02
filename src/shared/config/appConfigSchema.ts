@@ -88,7 +88,9 @@ export type AppConfig = {
     maxImageBytes: number;
     defaultOutputFormat: string;
   };
+  references: {maxImages: number; maxImageBytes: number; defaultOpacity: number; maxScale: number};
   files: {
+    maxProjectBytes: number;
     defaultProjectName: string;
     autosaveDirectoryName: string;
     autosaveExtension: string;
@@ -151,6 +153,7 @@ export function validateAppConfig(value: unknown): AppConfig {
     false
   );
   const files = expectObject(config.files, "files");
+  const references = expectObject(config.references, "references");
 
   if (!availableLocaleModes.includes(defaultLocaleMode)) {
     throw new Error("Invalid app configuration: ui.defaultLocaleMode must be listed in ui.availableLocaleModes.");
@@ -265,7 +268,14 @@ export function validateAppConfig(value: unknown): AppConfig {
       maxImageBytes: expectPositiveInteger(imageGeneration.maxImageBytes, "imageGeneration.maxImageBytes"),
       defaultOutputFormat: expectString(imageGeneration.defaultOutputFormat, "imageGeneration.defaultOutputFormat")
     },
+    references: {
+      maxImages: expectPositiveInteger(references.maxImages, "references.maxImages"),
+      maxImageBytes: expectPositiveInteger(references.maxImageBytes, "references.maxImageBytes"),
+      defaultOpacity: expectUnitNumber(references.defaultOpacity, "references.defaultOpacity"),
+      maxScale: expectPositiveNumber(references.maxScale, "references.maxScale")
+    },
     files: {
+      maxProjectBytes: expectPositiveInteger(files.maxProjectBytes, "files.maxProjectBytes"),
       defaultProjectName: expectString(files.defaultProjectName, "files.defaultProjectName"),
       autosaveDirectoryName: expectString(files.autosaveDirectoryName, "files.autosaveDirectoryName"),
       autosaveExtension: expectString(files.autosaveExtension, "files.autosaveExtension"),

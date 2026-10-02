@@ -1,3 +1,4 @@
+import { importReferenceImage } from "../project/referenceImport";
 import { BrowserWindow, clipboard, ipcMain, nativeImage } from "electron";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
@@ -131,6 +132,7 @@ export function registerIpc({
       parentWindow: BrowserWindow.fromWebContents(event.sender)
     })
   ));
+  handle("reference:import", event => importReferenceImage(getConfig(), BrowserWindow.fromWebContents(event.sender)));
   handle("project:open", (event) => (
     documentStore.openProject(BrowserWindow.fromWebContents(event.sender))
   ));

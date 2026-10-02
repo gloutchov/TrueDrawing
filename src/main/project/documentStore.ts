@@ -288,7 +288,9 @@ async function writeProjectBundle(
   const sidecars = createProjectSidecarFileNames(project.name, config);
 
   await fs.mkdir(directory, { recursive: true });
-  await writeFileAtomically(filePath, Buffer.from(serializeDrawingProject(project), "utf8"));
+  const bytes = Buffer.from(serializeDrawingProject(project), "utf8");
+  if (bytes.length > (config.files.maxProjectBytes ?? maxProjectFileBytes)) throw new Error("Invalid project: file is too large.");
+  await writeFileAtomically(filePath, bytes);
   await writeDataUrl(path.join(directory, sidecars.canvasFileName), request.canvasDataUrl, "png");
 
   if (request.imageDataUrl) {
@@ -307,7 +309,7 @@ async function loadProjectFromPath(filePath: string, config: AppConfig): Promise
 async function readProjectFile(filePath: string, config: AppConfig): Promise<DrawingProjectFile> {
   const fileStats = await fs.stat(filePath);
 
-  if (fileStats.size > maxProjectFileBytes) {
+  if (fileStats.size > (config.files.maxProjectBytes ?? maxProjectFileBytes)) {
     throw new Error("Project file is too large.");
   }
 

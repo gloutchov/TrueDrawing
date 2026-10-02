@@ -1,3 +1,4 @@
+import { validateReference } from "../document/referenceModel";
 import { validateBrush } from "../drawing/brushModel";
 import { validateImageDataUrl } from "../security/imagePayload";
 import type { AppConfig } from "../config/appConfigSchema";
@@ -129,7 +130,10 @@ function parseDrawingDocument(value: unknown, config: AppConfig): DrawingDocumen
     throw new Error("Invalid True Drawing project: active layer is missing.");
   }
 
+  const references = document.references === undefined ? [] : expectArray(document.references, "document.references").map(item => validateReference(item, config));
+  if (references.length > (config.references?.maxImages ?? 4) || new Set(references.map(item => item.id)).size !== references.length) throw new Error("Invalid reference images.");
   return {
+    references,
     canvas: document.canvas === undefined
       ? createDefaultCanvasDimensions(config)
       : parseCanvasDimensions(document.canvas, config),

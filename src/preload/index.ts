@@ -1,3 +1,4 @@
+import type { ImportedReference } from "../shared/document/referenceModel";
 import { contextBridge, ipcRenderer } from "electron";
 import type { IpcRendererEvent } from "electron";
 
@@ -21,6 +22,7 @@ import type {
 } from "../shared/project/projectTypes";
 
 const api = {
+  importReferenceImage: (): Promise<ImportedReference | null> => ipcRenderer.invoke("reference:import"),
   getAppConfig: (): Promise<AppConfig> => ipcRenderer.invoke("config:get") as Promise<AppConfig>,
   getRuntimeInfo: (): Promise<RuntimeInfo> => ipcRenderer.invoke("runtime:get") as Promise<RuntimeInfo>,
   setUiMenuLocale: (locale: "it" | "en"): Promise<void> => (

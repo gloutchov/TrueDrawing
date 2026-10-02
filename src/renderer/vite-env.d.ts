@@ -1,3 +1,4 @@
+import type { ImportedReference } from "../shared/document/referenceModel";
 /// <reference types="vite/client" />
 
 import type { AppConfig } from "../shared/config/appConfigSchema";
@@ -22,6 +23,7 @@ import type {
 declare global {
   interface Window {
     trueDrawing: {
+      importReferenceImage: () => Promise<ImportedReference | null>;
       getAppConfig: () => Promise<AppConfig>;
       getRuntimeInfo: () => Promise<RuntimeInfo>;
       setUiMenuLocale: (locale: "it" | "en") => Promise<void>;

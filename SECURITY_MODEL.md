@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.4.0` (release GitHub pubblicata: `v1.2.0`)
+Versione sorgente: `1.5.0` (release GitHub pubblicata: `v1.2.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.4.0` (published GitHub release: `v1.2.0`)
+Source version: `1.5.0` (published GitHub release: `v1.2.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -181,3 +181,9 @@ The UI explicitly warns when using safeStorage fallback. Linux protection depend
 ## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
 
 Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
+
+## C16 - Import immagini di riferimento (`1.5.0`)
+
+Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
+
+C16: il renderer non sceglie percorsi arbitrari per l'import; il main legge solo il file scelto nel dialogo, verifica dimensione e signature, decodifica con nativeImage e normalizza a PNG. Limite riferimento 4 MiB, quattro immagini, limiti pixel/trasformazione validati anche alla riapertura. Il percorso sorgente non viene restituito o salvato. Il progetto completo e' limitato a 64 MiB prima di scrittura e lettura. / C16: renderer import accepts no arbitrary path; the main reads only the dialog-selected file, validates signature/size, decodes through nativeImage and normalizes to PNG. Four references up to 4 MiB each, validated pixel/transform limits, no returned/stored source path. Whole project size is checked before writing and reading (64 MiB).

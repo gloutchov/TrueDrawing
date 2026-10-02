@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.4.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.5.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -196,3 +196,9 @@ Sicurezza 1.3.0: immagini IPC/progetto limitate a 16 MiB; il download AI rifiuta
 ## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
 
 Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
+
+## C16 - Import immagini di riferimento (`1.5.0`)
+
+Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
+
+Dal pannello Riferimenti scegliere **Importa riferimento** e un file PNG, JPEG o WebP locale (massimo 4 MiB e limiti pixel della configurazione). I controlli X/Y spostano l'immagine; la larghezza conserva le proporzioni. Visibilita e opacita non cambiano gli strumenti di disegno. Si possono conservare fino a quattro riferimenti embedded nel progetto: il file originale non serve per riaprirli. Undo/redo ripristina le modifiche. I riferimenti restano esclusi da canvas esportato, sidecar e generazione AI, anche con redraw automatico. Rimuovi riferimento richiede conferma.
