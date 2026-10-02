@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.3.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.4.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -192,3 +192,7 @@ The Layers window lets you build the image on multiple levels, hide or show each
 This project is distributed under the Apache 2.0 license. See [LICENSE](./LICENSE).
 
 Security 1.3.0: IPC/project images are limited to 16 MiB; AI downloads reject local addresses and redirects. API key settings warn when encrypted local safeStorage fallback is used; its protection depends on the operating system.
+
+## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
+
+Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.

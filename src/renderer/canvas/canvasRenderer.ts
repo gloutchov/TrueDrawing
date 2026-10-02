@@ -1,3 +1,4 @@
+import { renderBrushStroke } from "./brushRenderer";
 import { strokeWidthForPressure } from "../../shared/drawing/strokeModel";
 import type { DrawingDocument, DrawingLayer } from "../../shared/document/documentTypes";
 import type { DrawingPoint } from "../../shared/drawing/strokeTypes";
@@ -124,6 +125,12 @@ function renderStroke(
 
   if (isGeometryTool(stroke.tool)) {
     renderGeometryStroke(context, stroke, options);
+    context.restore();
+    return;
+  }
+
+  if (stroke.brush) {
+    renderBrushStroke(context, stroke);
     context.restore();
     return;
   }

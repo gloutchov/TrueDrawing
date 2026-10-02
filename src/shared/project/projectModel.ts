@@ -1,3 +1,4 @@
+import { validateBrush } from "../drawing/brushModel";
 import { validateImageDataUrl } from "../security/imagePayload";
 import type { AppConfig } from "../config/appConfigSchema";
 import type { DrawingDocument, DrawingLayer } from "../document/documentTypes";
@@ -180,6 +181,8 @@ function parseDrawingStroke(value: unknown): DrawingStroke {
     strokeStyle: parseStrokeStyle(stroke.strokeStyle),
     points: expectArray(stroke.points, "stroke.points").map(parseDrawingPoint)
   };
+
+  if (stroke.brush !== undefined) parsedStroke.brush = validateBrush(stroke.brush);
 
   if (typeof stroke.imageDataUrl === "string") {
     parsedStroke.imageDataUrl = expectImageDataUrl(stroke.imageDataUrl, "stroke.imageDataUrl");

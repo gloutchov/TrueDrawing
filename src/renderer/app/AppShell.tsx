@@ -1,3 +1,4 @@
+import { BrushPanel } from "../tools/BrushPanel";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 
@@ -1006,6 +1007,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           canvas={document.canvas}
           onApply={applyCanvasDimensions}
         />
+        <BrushPanel config={config} locale={effectiveLocale} settings={toolSettings} onChange={changeToolSettings} />
         <LayerPanel
           config={config}
           locale={effectiveLocale}

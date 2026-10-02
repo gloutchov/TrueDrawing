@@ -1,3 +1,4 @@
+import { validateBrush, type BrushPreset } from "../drawing/brushModel";
 import type { DrawingToolId, DrawingToolPreset, StrokeStyleId } from "../drawing/toolTypes";
 import { isDrawingToolId, isStrokeStyleId, isStrokeToolId } from "../drawing/toolTypes";
 
@@ -61,6 +62,7 @@ export type AppConfig = {
     opacityRange: NumberRange;
     hardnessRange: NumberRange;
     presets: DrawingToolPreset[];
+    brushPresets: BrushPreset[];
   };
   layers: {
     defaultLayerName: string;
@@ -233,7 +235,8 @@ export function validateAppConfig(value: unknown): AppConfig {
       sizeRange: expectNumberRange(tools.sizeRange, "tools.sizeRange", false),
       opacityRange: expectNumberRange(tools.opacityRange, "tools.opacityRange", true),
       hardnessRange: expectNumberRange(tools.hardnessRange, "tools.hardnessRange", true),
-      presets: expectToolPresets(tools.presets, "tools.presets")
+      presets: expectToolPresets(tools.presets, "tools.presets"),
+      brushPresets: expectBrushPresets(tools.brushPresets)
     },
     layers: {
       defaultLayerName: expectString(layers.defaultLayerName, "layers.defaultLayerName"),
@@ -400,4 +403,17 @@ function expectStrokeToolId(value: unknown, label: string): DrawingToolPreset["i
   }
 
   return tool;
+}
+
+function expectBrushPresets(value: unknown): BrushPreset[] {
+  if (!Array.isArray(value) || !value.length) throw new Error("Invalid brush presets.");
+  const presets = value.map(item => {
+    const input = expectObject(item, "brush preset");
+    const label = expectObject(input.label, "brush label");
+    return {...validateBrush(input), label: {it: expectString(label.it, "label.it"), en: expectString(label.en, "label.en")},
+      tool: expectStrokeToolId(input.tool, "brush tool"), size: expectPositiveNumber(input.size, "brush size"),
+      opacity: expectUnitNumber(input.opacity, "brush opacity"), hardness: expectUnitNumber(input.hardness, "brush hardness")};
+  });
+  if (new Set(presets.map(item => item.presetId)).size !== presets.length) throw new Error("Invalid duplicate brush preset.");
+  return presets;
 }

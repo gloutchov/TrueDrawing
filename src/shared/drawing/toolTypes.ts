@@ -1,3 +1,4 @@
+import type { BrushSettings } from "./brushModel";
 export const strokeToolIds = ["pencil", "marker", "brush", "eraser"] as const;
 export const lineToolIds = ["straight-line", "curved-line"] as const;
 export const shapeToolIds = ["rectangle", "ellipse", "triangle", "polygon"] as const;
@@ -35,6 +36,7 @@ export type DrawingToolSettings = {
   opacity: number;
   hardness: number;
   strokeStyle: StrokeStyleId;
+  brush?: BrushSettings;
 };
 
 export function isDrawingToolId(value: string): value is DrawingToolId {

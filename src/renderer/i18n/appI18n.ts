@@ -2,6 +2,21 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 
 const translations = {
   it: {
+    advancedBrush: "Brush avanzati",
+    brushPreset: "Preset brush",
+    classicBrush: "Classico",
+    brushTexture: "Texture brush",
+    none: "Nessuna",
+    grain: "Grana",
+    dots: "Punti",
+    hatch: "Tratteggio",
+    spacing: "Spaziatura",
+    pressureSize: "Pressione dimensione",
+    pressureOpacity: "Pressione opacita",
+    velocitySize: "Velocita dimensione",
+    textureAmount: "Intensita texture",
+    textureScale: "Scala texture",
+
     apply: "Applica",
     collapsePanel: "Comprimi pannello",
     expandPanel: "Espandi pannello",
@@ -84,6 +99,21 @@ const translations = {
     resetZoom: "Reset zoom"
   },
   en: {
+    advancedBrush: "Advanced brushes",
+    brushPreset: "Brush preset",
+    classicBrush: "Classic",
+    brushTexture: "Brush texture",
+    none: "None",
+    grain: "Grain",
+    dots: "Dots",
+    hatch: "Hatch",
+    spacing: "Spacing",
+    pressureSize: "Pressure size",
+    pressureOpacity: "Pressure opacity",
+    velocitySize: "Velocity size",
+    textureAmount: "Texture amount",
+    textureScale: "Texture scale",
+
     apply: "Apply",
     collapsePanel: "Collapse panel",
     expandPanel: "Expand panel",

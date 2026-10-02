@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.3.0` (release GitHub pubblicata: `v1.2.0`)
+Versione sorgente: `1.4.0` (release GitHub pubblicata: `v1.2.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.3.0` (published GitHub release: `v1.2.0`)
+Source version: `1.4.0` (published GitHub release: `v1.2.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -177,3 +177,7 @@ Downloads accept HTTPS without credentials or alternative ports, reject local/pr
 Every IPC channel checks the main frame and expected UI URL. Raw provider/filesystem errors are replaced by controlled messages; remote revised_prompt is omitted. Production CSP denies renderer connections, frames and workers. Network operations use main-process IPC. Popups, navigation and webviews are blocked.
 
 The UI explicitly warns when using safeStorage fallback. Linux protection depends on the available secret service. Cloud development needs --no-sandbox due to container limitations and does not validate production sandbox protection. Tests cover image limits, DNS, redirects, timeouts, senders and errors. Credential scanning of config/fixtures is heuristic, not an absolute guarantee. Monthly Dependabot updates are limited; the runtime dependency audit reported no vulnerabilities.
+
+## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
+
+Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
