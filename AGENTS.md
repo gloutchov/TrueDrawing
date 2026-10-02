@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C19 - Preset di stile realistico.
+- Ultima milestone completata: C20 - Aggiornamento toolchain di sviluppo.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.8.0`; release GitHub pubblicata: `v1.8.0`.
+- Versione corrente: `1.9.0`; release GitHub pubblicata: `v1.8.0`.
 - Branch corrente: `main`.
-- Milestone corrente in sviluppo: nessuna.
+- Milestone corrente: nessuna; M21 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/19-realistic-style-presets`.
+- Ultimo branch milestone completato: `milestone/20-development-toolchain`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -19,7 +19,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - CI patch `v1.0.2`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; PR #10 verde con GitHub Actions run `27415112843` e `27415123564`; `main` verde con run `27415599523`; workflow release `27415761496` verde.
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
-- Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.8.0`, CI `main` e workflow release verificati in chiusura.
+- Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
 - Release GitHub corrente: `v1.8.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
@@ -146,3 +146,11 @@ Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI va
 
 - Verifica C18: PR #22 CI `37047176018`, main CI `37047290899`, checkpoint `milestone/C18` e versione `v1.7.0` verificati.
 - C19: 117 test, lint/build e smoke Electron chiaro/scuro; preferito, stile custom, persistenza, IPC e regressioni documento verificati. Release cumulativa Windows/macOS tramite workflow manuale; branch conservato fino al controllo asset/checksum.
+
+## Manutenzione dipendenze M20-M22
+
+Il progettista autorizza l'esecuzione delle PR #15, #16 e #17 tramite milestone dedicate, senza controllo preventivo su commit, merge, tag, push o rimozione branch. Lavorare sul branch milestone e integrare il branch Dependabot preservandone la cronologia; aggiornare la PR esistente con push fast-forward. Restano obbligatorie verifica identita, CI e checkpoint remoto per ogni milestone. Una sola release cumulativa v1.11.0 a M22; conservare i branch finali fino alla verifica dei pacchetti/checksum.
+
+## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+
+Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. / Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.

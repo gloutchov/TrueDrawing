@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.8.0` (release GitHub pubblicata: `v1.8.0`)
+Versione sorgente: `1.9.0` (release GitHub pubblicata: `v1.8.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.8.0` (published GitHub release: `v1.8.0`)
+Source version: `1.9.0` (published GitHub release: `v1.8.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -213,3 +213,11 @@ Il prompt contiene esclusivamente istruzioni generali di composizione e stile; n
 EN: Unique IDs, bilingual names/descriptions and prompt fragments are validated on startup. Presets support only allowed quality/size values; main resolves them from its trusted configuration and ignores arbitrary renderer parameters. The existing style preference channel saves style and favorite ID together; no new channel reads secrets. Legacy preferences remain readable; removed favorites are discarded.
 
 Prompts contain only composition and style instructions, without document counts or names. Uploaded canvas excludes reference images and versions and includes layer effects. The key is used only in the main-process authentication header. A heuristic guard rejects common credential pastes in presets, style, model and prompts; it cannot detect every secret. Tests cover text limits, unsupported parameters, credential-free persistence, rejection before network calls and omission of remote error/revised_prompt details. Paid live generation remains untested.
+
+## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+
+Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. / Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.
+
+IT: i canali appunti esistenti usano ClipboardItem/Blob nel main e attendono il completamento nativo. PNG normalizzato e limite 16 MiB sia prima della scrittura sia prima di allocare i bytes letti; il renderer non riceve nuove capacita native. La sanitizzazione omette anche cause e stack remoti: la regola ESLint 10 non deve reintrodurre informazioni private. Sandbox, CSP e controllo mittente IPC restano verificati dai test. Audit runtime: zero vulnerabilita; generazione API reale non eseguita.
+
+EN: existing clipboard channels use main-process ClipboardItem/Blob and await native completion. PNG normalization and the 16 MiB bound apply before writes and before allocating read bytes; renderer native capabilities do not expand. Sanitization also drops remote causes/stacks, so ESLint 10 does not reintroduce private details. Tests retain sandbox, CSP and IPC sender checks. Runtime audit: zero vulnerabilities; no paid live API generation was performed.

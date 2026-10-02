@@ -10,10 +10,10 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.8.0-blue" />
-  <img alt="Electron" src="https://img.shields.io/badge/Electron-42-47848f" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.9.0-blue" />
+  <img alt="Electron" src="https://img.shields.io/badge/Electron-44-47848f" />
   <img alt="React" src="https://img.shields.io/badge/React-18-61dafb" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178c6" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-3178c6" />
   <img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-green" />
 </p>
 
@@ -21,8 +21,8 @@
 
 | IT | EN |
 | --- | --- |
-| Versione sorgente: `1.8.0` | Source version: `1.8.0` |
-| Stato: C19 completata; release pubblicata `v1.8.0` | Status: C19 complete; published release `v1.8.0` |
+| Versione sorgente: `1.9.0` | Source version: `1.9.0` |
+| Stato: C20 completata; release pubblicata `v1.8.0` | Status: C20 complete; published release `v1.8.0` |
 | Piattaforme: macOS e Windows | Platforms: macOS and Windows |
 | Runtime desktop: Electron | Desktop runtime: Electron |
 | UI: React, TypeScript, Vite | UI: React, TypeScript, Vite |
@@ -69,7 +69,7 @@ npm run dist:mac
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione sorgente `1.8.0` contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
+Il progetto e' in fase iniziale. La versione sorgente `1.9.0` contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
 
 Repository pubblico GitHub: `https://github.com/gloutchov/TrueDrawing`.
 
@@ -128,7 +128,7 @@ La landing page pubblica e' disponibile esclusivamente all'indirizzo `https://tr
 
 Requisiti:
 
-- Node.js 22.
+- Node.js 22.13 or newer (22.22 verified).13 o successivo (22.22 verificato).
 - npm.
 
 Comandi:
@@ -145,7 +145,7 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Source version `1.8.0` includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
+The project is at its initial stage. Source version `1.9.0` includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
 
 Public GitHub repository: `https://github.com/gloutchov/TrueDrawing`.
 
@@ -240,3 +240,7 @@ Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e c
 ## C19 - Preset di stile realistico (`1.8.0`)
 
 Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+
+## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+
+Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. / Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.

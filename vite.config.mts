@@ -1,6 +1,8 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
+// Explicit ESM config keeps Vite native loading compatible with our CommonJS Electron entry.
+
 export default defineConfig({
   base: "./",
   plugins: [react()],
@@ -14,4 +16,3 @@ export default defineConfig({
     strictPort: true
   }
 });
-

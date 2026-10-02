@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { validateImageDataUrl } from "../../src/shared/security/imagePayload";
 import { isPublicAddress, validateRemoteImageUrl } from "../../src/main/security/remoteImage";
-import { isTrustedRendererUrl, sanitizeIpcError, validateIpcSender } from "../../src/main/security/ipcSecurity";
+import { createSanitizedIpcError, isTrustedRendererUrl, sanitizeIpcError, validateIpcSender } from "../../src/main/security/ipcSecurity";
 import type { IpcMainInvokeEvent } from "electron";
 import { generateOpenAiRealisticImage } from "../../src/main/image-generation/openAiImageAdapter";
 import { validateAppConfig } from "../../src/shared/config/appConfigSchema";
@@ -33,6 +33,12 @@ describe("security boundaries", () => {
   it("never exposes arbitrary provider messages, paths or secrets through IPC", () => {
     for (const message of ["Bearer private-token", "/home/user/private/file", "Provider returned a private prompt", "Invalid /workspace/private"]) {
       expect(sanitizeIpcError(new Error(message))).not.toContain(message);
+      const rawError = new Error(message, {cause: new Error("private nested cause")});
+      rawError.stack = `Private provider stack: ${message}`;
+      const publicError = createSanitizedIpcError(rawError);
+      expect(publicError.message).not.toContain(message);
+      expect(publicError).not.toHaveProperty("cause");
+      expect(publicError.stack).not.toContain(rawError.stack);
     }
     expect(sanitizeIpcError(new Error("Invalid clipboard text."))).toBe("Invalid clipboard text.");
   });
