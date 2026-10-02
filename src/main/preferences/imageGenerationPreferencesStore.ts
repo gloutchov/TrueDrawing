@@ -3,11 +3,13 @@ import path from "node:path";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { ImageGenerationPreferences } from "../../shared/image-generation/imageGenerationTypes";
+import { findStylePreset, validateCustomStyle } from "../../shared/image-generation/stylePresets";
+import { containsCredentialText } from "../../shared/security/credentialText";
 
 export type ImageGenerationPreferencesStore = {
   getPreferences: () => ImageGenerationPreferences;
   setModel: (model: string) => ImageGenerationPreferences;
-  setStyle: (style: string) => ImageGenerationPreferences;
+  setStyle: (style: string, favoriteStyleId?: string | null) => ImageGenerationPreferences;
   setAutoRedraw: (enabled: boolean, delaySeconds: number) => ImageGenerationPreferences;
 };
 
@@ -15,6 +17,7 @@ type StoredPreferences = {
   version: 1;
   model: string;
   style?: string;
+  favoriteStyleId?: string | null;
   autoRedrawEnabled?: boolean;
   autoRedrawDelaySeconds?: number;
 };
@@ -29,7 +32,7 @@ export function createImageGenerationPreferencesStore(
   return {
     getPreferences: () => readPreferences(userDataPath, getConfig()),
     setModel: (model) => setModel(userDataPath, model, getConfig()),
-    setStyle: (style) => setStyle(userDataPath, style, getConfig()),
+    setStyle: (style, favoriteStyleId) => setStyle(userDataPath, style, getConfig(), favoriteStyleId),
     setAutoRedraw: (enabled, delaySeconds) => setAutoRedraw(
       userDataPath,
       enabled,
@@ -76,17 +79,15 @@ function setModel(userDataPath: string, model: string, config: AppConfig): Image
   });
 }
 
-function setStyle(userDataPath: string, style: string, config: AppConfig): ImageGenerationPreferences {
-  const trimmedStyle = style.trim();
-
-  if (!isValidImageStyle(trimmedStyle)) {
-    throw new Error("Image style is not valid.");
+function setStyle(userDataPath: string, style: string, config: AppConfig, favoriteStyleId?: string | null): ImageGenerationPreferences {
+  const trimmedStyle = findStylePreset(config.imageGeneration.stylePresets ?? [], style.trim())
+    ? style.trim() : validateCustomStyle(style, config.imageGeneration.maxCustomStyleLength);
+  const current = readPreferences(userDataPath, config);
+  const favorite = favoriteStyleId === undefined ? current.favoriteStyleId : favoriteStyleId;
+  if (favorite !== null && !findStylePreset(config.imageGeneration.stylePresets ?? [], favorite)) {
+    throw new Error("Invalid favorite style preset.");
   }
-
-  return writePreferences(userDataPath, {
-    ...readPreferences(userDataPath, config),
-    style: trimmedStyle
-  });
+  return writePreferences(userDataPath, { ...current, style: trimmedStyle, favoriteStyleId: favorite });
 }
 
 function setAutoRedraw(
@@ -129,13 +130,14 @@ function getDefaultPreferences(config: AppConfig): ImageGenerationPreferences {
   return {
     model: config.imageGeneration.defaultModel,
     style: config.imageGeneration.defaultStyle,
+    favoriteStyleId: null,
     autoRedrawEnabled: config.imageGeneration.autoRedrawDefaultEnabled,
     autoRedrawDelaySeconds: config.imageGeneration.autoRedrawDefaultDelaySeconds
   };
 }
 
 function isValidImageModelName(model: string): boolean {
-  return /^[A-Za-z0-9._:-]{2,100}$/.test(model);
+  return /^[A-Za-z0-9._:-]{2,100}$/.test(model) && !containsCredentialText(model);
 }
 
 function normalizePreferences(
@@ -143,7 +145,7 @@ function normalizePreferences(
   config: AppConfig
 ): ImageGenerationPreferences {
   const defaults = getDefaultPreferences(config);
-  const style = typeof storedPreferences.style === "string" && isValidImageStyle(storedPreferences.style)
+  const style = typeof storedPreferences.style === "string" && isValidImageStyle(storedPreferences.style, config)
     ? storedPreferences.style.trim()
     : defaults.style;
   const delaySeconds = typeof storedPreferences.autoRedrawDelaySeconds === "number"
@@ -153,6 +155,9 @@ function normalizePreferences(
   return {
     model: storedPreferences.model ?? defaults.model,
     style,
+    favoriteStyleId: typeof storedPreferences.favoriteStyleId === "string"
+      && findStylePreset(config.imageGeneration.stylePresets ?? [], storedPreferences.favoriteStyleId)
+      ? storedPreferences.favoriteStyleId : null,
     autoRedrawEnabled: typeof storedPreferences.autoRedrawEnabled === "boolean"
       ? storedPreferences.autoRedrawEnabled
       : defaults.autoRedrawEnabled,
@@ -160,20 +165,10 @@ function normalizePreferences(
   };
 }
 
-function isValidImageStyle(style: string): boolean {
-  const trimmedStyle = style.trim();
-
-  return trimmedStyle.length >= 2
-    && trimmedStyle.length <= 80
-    && !containsControlCharacter(trimmedStyle);
-}
-
-function containsControlCharacter(value: string): boolean {
-  return Array.from(value).some((character) => {
-    const charCode = character.charCodeAt(0);
-
-    return charCode < 32 || charCode === 127;
-  });
+function isValidImageStyle(style: string, config: AppConfig): boolean {
+  if (findStylePreset(config.imageGeneration.stylePresets ?? [], style.trim())) return true;
+  try { validateCustomStyle(style, config.imageGeneration.maxCustomStyleLength); return true; }
+  catch { return false; }
 }
 
 function clampDelaySeconds(delaySeconds: number, config: AppConfig): number {

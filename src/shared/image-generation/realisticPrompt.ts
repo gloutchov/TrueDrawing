@@ -1,23 +1,25 @@
-import type { DrawingDocument } from "../document/documentTypes";
+import { findStylePreset, validateCustomStyle, type StylePreset } from "./stylePresets";
 
 type RealisticImagePromptOptions = {
   imageStyle?: string;
+  presets?: readonly StylePreset[];
+  maxCustomStyleLength?: number;
 };
 
 export function buildRealisticImagePrompt(
-  document: DrawingDocument,
   options: RealisticImagePromptOptions = {}
 ): string {
-  const visibleLayerCount = document.layers.filter((layer) => layer.visible).length;
-  const strokeCount = document.layers.reduce((count, layer) => count + layer.strokes.length, 0);
   const imageStyle = options.imageStyle?.trim();
+  const preset = imageStyle ? findStylePreset(options.presets ?? [], imageStyle) : undefined;
+  const styleInstruction = preset?.promptFragment ?? (imageStyle
+    ? `Use this visual style: ${validateCustomStyle(imageStyle, options.maxCustomStyleLength)}.`
+    : "Use natural lighting, plausible materials, and realistic surface detail.");
 
   return [
-    "Transform the supplied drawing canvas into a realistic image.",
-    imageStyle ? `Use this visual style: ${imageStyle}.` : null,
+    "Transform the supplied drawing canvas into a finished image.",
     "Preserve the composition, silhouette, spatial relationships, and intent of the sketch.",
-    "Use natural lighting, plausible materials, and realistic surface detail.",
+    "Render coherent lighting, forms, and materials that fit the requested visual style.",
     "Do not add text, signatures, watermarks, frames, or UI elements.",
-    `Visible layers: ${visibleLayerCount}. Total strokes: ${strokeCount}.`
-  ].filter((part): part is string => part !== null).join(" ");
+    styleInstruction
+  ].join(" ");
 }

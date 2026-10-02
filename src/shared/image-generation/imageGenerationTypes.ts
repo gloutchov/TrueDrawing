@@ -6,6 +6,7 @@ export type ApiKeyStatus = {
 export type ImageGenerationPreferences = {
   model: string;
   style: string;
+  favoriteStyleId: string | null;
   autoRedrawEnabled: boolean;
   autoRedrawDelaySeconds: number;
 };
@@ -14,6 +15,7 @@ export type RealisticImageRequest = {
   canvasDataUrl: string;
   model: string;
   prompt: string;
+  stylePresetId?: string;
 };
 
 export type RealisticImageResult = {

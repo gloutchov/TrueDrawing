@@ -43,8 +43,8 @@ const api = {
   setImageGenerationModel: (model: string): Promise<ImageGenerationPreferences> => (
     ipcRenderer.invoke("preferences:image-generation:set-model", model) as Promise<ImageGenerationPreferences>
   ),
-  setImageGenerationStyle: (style: string): Promise<ImageGenerationPreferences> => (
-    ipcRenderer.invoke("preferences:image-generation:set-style", style) as Promise<ImageGenerationPreferences>
+  setImageGenerationStyle: (style: string, favoriteStyleId?: string | null): Promise<ImageGenerationPreferences> => (
+    ipcRenderer.invoke("preferences:image-generation:set-style", style, favoriteStyleId) as Promise<ImageGenerationPreferences>
   ),
   setImageGenerationAutoRedraw: (
     enabled: boolean,
@@ -184,4 +184,3 @@ const api = {
 contextBridge.exposeInMainWorld("trueDrawing", api);
 
 export type TrueDrawingApi = typeof api;
-

@@ -4,14 +4,14 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C18 - Storia versioni del documento.
-- Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.7.0`; release GitHub pubblicata: `v1.2.0`.
+- Ultima milestone completata: C19 - Preset di stile realistico.
+- Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
+- Versione corrente: `1.8.0`; release GitHub pubblicata: `v1.8.0`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/18-document-version-history`.
-- Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
+- Ultimo branch milestone completato: `milestone/19-realistic-style-presets`.
+- Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
 - CI M10: PR #9 verde con GitHub Actions run `27345974695`; `main` verde con run `27346032900`; release workflow `27346106628` verde.
@@ -19,8 +19,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - CI patch `v1.0.2`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; PR #10 verde con GitHub Actions run `27415112843` e `27415123564`; `main` verde con run `27415599523`; workflow release `27415761496` verde.
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
-- Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.2.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.8.0`, CI `main` e workflow release verificati in chiusura.
+- Release GitHub corrente: `v1.8.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -139,3 +139,10 @@ Maschere non distruttive con editor, attivazione e rimozione; clipping con ident
 ## C18 - Storia versioni del documento (`1.7.0`)
 
 Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+
+## C19 - Preset di stile realistico (`1.8.0`)
+
+Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+
+- Verifica C18: PR #22 CI `37047176018`, main CI `37047290899`, checkpoint `milestone/C18` e versione `v1.7.0` verificati.
+- C19: 117 test, lint/build e smoke Electron chiaro/scuro; preferito, stile custom, persistenza, IPC e regressioni documento verificati. Release cumulativa Windows/macOS tramite workflow manuale; branch conservato fino al controllo asset/checksum.

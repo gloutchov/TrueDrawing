@@ -1,5 +1,7 @@
 import { defaultMaxImageBytes, validateImageDataUrl } from "../../shared/security/imagePayload";
 import { downloadRemoteImage } from "../security/remoteImage";
+import { findStylePreset } from "../../shared/image-generation/stylePresets";
+import { containsCredentialText } from "../../shared/security/credentialText";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type {
   RealisticImageRequest,
@@ -29,6 +31,12 @@ export async function generateOpenAiRealisticImage(
   if (!apiKey) {
     throw new Error("OpenAI API key is not configured.");
   }
+  if (containsCredentialText(request.prompt) || containsCredentialText(request.model)) {
+    throw new Error("Invalid image generation request.");
+  }
+  const preset = request.stylePresetId === undefined ? undefined
+    : findStylePreset(config.imageGeneration.stylePresets ?? [], request.stylePresetId);
+  if (request.stylePresetId !== undefined && !preset) throw new Error("Invalid image style preset.");
 
   const maxBytes = config.imageGeneration.maxImageBytes ?? defaultMaxImageBytes;
   validateImageDataUrl(request.canvasDataUrl, maxBytes);
@@ -45,8 +53,8 @@ export async function generateOpenAiRealisticImage(
 
     formData.append("model", request.model);
     formData.append("prompt", request.prompt);
-    formData.append("size", config.imageGeneration.defaultSize);
-    formData.append("quality", config.imageGeneration.defaultQuality);
+    formData.append("size", preset?.parameters.size ?? config.imageGeneration.defaultSize);
+    formData.append("quality", preset?.parameters.quality ?? config.imageGeneration.defaultQuality);
     formData.append("output_format", config.imageGeneration.defaultOutputFormat);
     formData.append("image", new Blob([imageBuffer], { type: "image/png" }), "canvas.png");
 

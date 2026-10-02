@@ -54,12 +54,12 @@ _Note:_ If you have doubts, the repository contains the program checksums. In th
 
 ### Verifying SHA-256 checksums
 
-The published `v1.2.0` release includes `SHA256SUMS-windows.txt` and `SHA256SUMS-macos.txt`. Download the checksum file for your operating system together with the app package.
+The published `v1.8.0` release includes `SHA256SUMS-windows.txt` and `SHA256SUMS-macos.txt`. Download the checksum file for your operating system together with the app package.
 
 On Windows, from the folder containing the installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.2.0-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.8.0-Windows-x64.exe -Algorithm SHA256
 ```
 
 Compare the `Hash` value with the matching line in `SHA256SUMS-windows.txt`.
@@ -67,7 +67,7 @@ Compare the `Hash` value with the matching line in `SHA256SUMS-windows.txt`.
 On macOS, from the download folder:
 
 ```bash
-shasum -a 256 True-Drawing-1.2.0-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.8.0-macOS-arm64.dmg
 ```
 
 Compare the value with the matching line in `SHA256SUMS-macos.txt`.
@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.7.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.8.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -193,28 +193,42 @@ This project is distributed under the Apache 2.0 license. See [LICENSE](./LICENS
 
 Security 1.3.0: IPC/project images are limited to 16 MiB; AI downloads reject local addresses and redirects. API key settings warn when encrypted local safeStorage fallback is used; its protection depends on the operating system.
 
-## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
+## C15 - Advanced brushes and procedural textures (`1.4.0`)
 
-Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
+Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
 
-## C16 - Import immagini di riferimento (`1.5.0`)
+In **Advanced brushes**, select graphite, soft, marker, ink or texture. Pressure size/opacity, speed, spacing and grain/dots/hatching affect new strokes; existing strokes retain their parameters. Select a classic tool to return to its earlier behavior. Undo/Redo restores strokes; their applied settings remain in the project. Pressure behavior depends on the Pointer Events device.
 
-Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
+## C16 - Import reference images (`1.5.0`)
+
+Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
 
 In the References panel choose **Import reference** and a local PNG, JPEG or WebP file (up to 4 MiB and the configured pixel limits). X/Y move the image; width preserves its aspect ratio. Visibility and opacity do not change drawing tools. Up to four references are embedded in the project, so their original files are unnecessary when reopening. Undo/redo restores changes. References are excluded from exported canvas, sidecars and AI generation, including auto redraw. Removing a reference requires confirmation.
 
-Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
+WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 tests, lint/build and WebP smoke checks in light/dark themes.
 
-## C17 - Maschere e clipping layer (`1.6.0`)
+## C17 - Layer masks and clipping (`1.6.0`)
 
-Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
+Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
 
 In Masks and clipping choose **Create mask**, then **Edit mask**. A new mask reveals everything: eraser hides; pencil/brush restore visibility. Turn off Edit mask to draw on the layer again. Mask enabled toggles the effect without losing strokes; removing a mask requires confirmation. **Clip to layer** uses another layer's alpha, including its mask, opacity and visibility. Targets remain linked after reordering; cyclic targets are disabled and deleting a target clears the relationship. Canvas, export and generation share rendering; effects persist and support undo/redo.
 
-## C18 - Storia versioni del documento (`1.7.0`)
+## C18 - Document version history (`1.7.0`)
 
-Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+Persistent bounded document versions with complete restoration and non-recursive capsules.
 
 **Document versions** creates named snapshots that can be renamed and restored. Each contains canvas, layers, masks, references and the realistic image; snapshots never contain other snapshots. Restoration and deletion require confirmation; Undo restores the state preceding a version restoration. Save the project to keep versions, which are also included in autosave/recovery. Undo/Redo remains in-memory operational history and is not reconstructed when reopening.
 
 **Automatic versions** is a local preference disabled by default. When enabled it records changed content every five minutes, skipping content identical to the latest version. Configured `snapshots` limits: 20 versions, 8 MiB per content, 32 MiB total, 80-character names and the whole-project byte limit. Reaching a limit stops creation without evicting older versions; delete unneeded versions or adjust configuration. This is not an external backup: losing the tdraw file loses its versions.
+
+## C19 - Realistic style presets (`1.8.0`)
+
+Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+
+In **File > Settings > Image style**, select a preset and read its description. **Favorite preset** stores one preset; **Use favorite** recalls it while using a custom style too. A star marks the favorite. **Save** applies style and favorite together; **Cancel** retains previous preferences. To clear the favorite, select it, uncheck the box and save.
+
+**Custom style** accepts a short non-secret visual description (80 characters by default). Never paste API keys or credentials: common formats are rejected, but the guard cannot detect every secret. Text matching a preset ID selects that preset. Style and favorite persist in local app data, separate from the project and API key.
+
+The six presets follow `imageGeneration.stylePresets` order in `config/app.config.json`. Each has an ID, Italian/English names and descriptions, a `promptFragment` and `parameters`. Only `quality` (`auto`, `low`, `medium`, `high`) and `size` (`auto`, `1024x1024`, `1536x1024`, `1024x1536`) are supported; omitted values use central defaults. `availableStyles` must list the same IDs in the same order. Invalid configuration is rejected on startup; restart after editing.
+
+Generation sends OpenAI the composited canvas PNG (masks/clipping applied, configured padding), composition/style prompt, model and parameters. It excludes references, saved versions, layer/project names, paths, stroke counts and favorite metadata. Enabled auto redraw uses the same flow. Authentication uses the main-process secret backend; displayed errors omit remote messages and `revised_prompt`. Actual image quality and cost depend on the model and provider.

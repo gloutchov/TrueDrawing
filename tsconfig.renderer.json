@@ -29,6 +29,6 @@
     "src/shared/image-generation/**/*.ts",
     "src/shared/project/**/*.ts",
     "src/shared/runtime/**/*.ts",
-    "src/shared/security/imagePayload.ts"
+    "src/shared/security/*.ts"
   ]
 }

@@ -46,6 +46,7 @@ import { normalizeCanvasSelection } from "../../shared/document/selectionTypes";
 import type { DrawingStroke } from "../../shared/drawing/strokeTypes";
 import type { DrawingToolId, DrawingToolSettings } from "../../shared/drawing/toolTypes";
 import { buildRealisticImagePrompt } from "../../shared/image-generation/realisticPrompt";
+import { findStylePreset } from "../../shared/image-generation/stylePresets";
 import {
   createDrawingProjectFile,
   normalizeProjectName
@@ -96,6 +97,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   const [apiKeyBackend, setApiKeyBackend] = useState("unknown");
   const [imageGenerationModel, setImageGenerationModel] = useState(config.imageGeneration.defaultModel);
   const [imageGenerationStyle, setImageGenerationStyle] = useState(config.imageGeneration.defaultStyle);
+  const [favoriteStyleId, setFavoriteStyleId] = useState<string | null>(null);
   const [autoRedrawEnabled, setAutoRedrawEnabled] = useState(config.imageGeneration.autoRedrawDefaultEnabled);
   const [autoRedrawDelaySeconds, setAutoRedrawDelaySeconds] = useState(
     config.imageGeneration.autoRedrawDefaultDelaySeconds
@@ -184,9 +186,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       const result = await window.trueDrawing.generateRealisticImage({
         canvasDataUrl,
         model: imageGenerationModel,
-        prompt: buildRealisticImagePrompt(document, {
-          imageStyle: imageGenerationStyle
-        })
+        prompt: buildRealisticImagePrompt({
+          imageStyle: imageGenerationStyle,
+          presets: config.imageGeneration.stylePresets,
+          maxCustomStyleLength: config.imageGeneration.maxCustomStyleLength
+        }),
+        stylePresetId: findStylePreset(config.imageGeneration.stylePresets, imageGenerationStyle)?.id
       });
 
       setRealisticImage(result);
@@ -599,6 +604,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       if (isMounted) {
         setImageGenerationModel(preferences.model);
         setImageGenerationStyle(preferences.style);
+        setFavoriteStyleId(preferences.favoriteStyleId);
         setAutoRedrawEnabled(preferences.autoRedrawEnabled);
         setAutoRedrawDelaySeconds(preferences.autoRedrawDelaySeconds);
       }
@@ -606,6 +612,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       if (isMounted) {
         setImageGenerationModel(config.imageGeneration.defaultModel);
         setImageGenerationStyle(config.imageGeneration.defaultStyle);
+        setFavoriteStyleId(null);
         setAutoRedrawEnabled(config.imageGeneration.autoRedrawDefaultEnabled);
         setAutoRedrawDelaySeconds(config.imageGeneration.autoRedrawDefaultDelaySeconds);
       }
@@ -1096,8 +1103,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         locale={effectiveLocale}
         open={imageStyleDialogOpen}
         imageGenerationStyle={imageGenerationStyle}
+        favoriteStyleId={favoriteStyleId}
         onClose={() => setImageStyleDialogOpen(false)}
-        onStyleChange={setImageGenerationStyle}
+        onStyleChange={(preferences) => {
+          setImageGenerationStyle(preferences.style);
+          setFavoriteStyleId(preferences.favoriteStyleId);
+        }}
       />
       <AutoRedrawDialog
         config={config}

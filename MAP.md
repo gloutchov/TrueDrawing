@@ -153,6 +153,10 @@ truedrawing/
 |   |   |
 |   |   +-- image-generation/
 |   |   |   Tipi generazione immagine e prompt tecnico realistico.
+|   |   |   +-- stylePresets.ts
+|   |   |   |   Preset bilingui, parametri OpenAI e validazione testo/ID.
+|   |   |   +-- realisticPrompt.ts
+|   |   |       Prompt composizione/stile senza metadati del documento.
 |   |   |
 |   |   +-- project/
 |   |   |   Formato progetto versionato, validazione, serializzazione e naming file.
@@ -162,6 +166,8 @@ truedrawing/
 |   |   |
 |   |   +-- security/
 |   |   |   Builder CSP condiviso e testabile.
+|   |   |   +-- credentialText.ts
+|   |   |       Guardia euristica su incolli accidentali di credenziali.
 |   |   |
 |   |   +-- runtime/
 |   |       Tipi per informazioni runtime esposte al renderer.
@@ -224,10 +230,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.7.0`; release GitHub pubblicata: `v1.2.0`.
-- Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
-- Milestone corrente: nessuna; M19 e' la prossima pianificata.
-- Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
+- Versione corrente su `main`: `1.8.0`; release GitHub pubblicata: `v1.8.0`.
+- Ultima milestone completata: C19 - Preset di stile realistico.
+- Milestone corrente: nessuna; roadmap attiva completata.
+- Stato milestone: roadmap attiva completata con checkpoint `milestone/C19`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -304,3 +310,12 @@ Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e c
 - `src/shared/document/snapshotModel.ts`: capsule persistenti senza ricorsione, budget e ripristino.
 - `src/renderer/project/SnapshotPanel.tsx`: creazione, rinomina, ripristino, cancellazione e snapshot automatici.
 - `tests/unit/snapshotModel.test.ts`: compatibilita tdraw, limiti e integrita dello stato ripristinato.
+
+## C19 - Preset di stile realistico (`1.8.0`)
+
+Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+
+- `src/renderer/settings/ImageStyleDialog.tsx`: selezione preset con descrizione, preferito e testo custom; stile/preferito salvati in un unico aggiornamento.
+- `src/main/preferences/imageGenerationPreferencesStore.ts`: persistenza non segreta e compatibilita' legacy.
+- `tests/unit/stylePresets.test.ts`, `realisticPrompt.test.ts`, `imageGenerationPreferencesStore.test.ts`, `openAiImageAdapter.test.ts`: configurazione, prompt minimo, preferenze e parametri/errori provider.
+- `docs/release-notes/v1.8.0.md`: note bilingui della release cumulativa C14-C19 e patch WebP.
