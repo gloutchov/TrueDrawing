@@ -1,3 +1,6 @@
+import { ProjectNameDialog } from "../project/ProjectNameDialog";
+import { ReferencePanel } from "../references/ReferencePanel";
+import { validateReference } from "../../shared/document/referenceModel";
 import { BrushPanel } from "../tools/BrushPanel";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
@@ -78,6 +81,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     undo,
     redo
   } = useDrawingDocumentHistory(config);
+  const [projectNamePrompt, setProjectNamePrompt] = useState<{value: string; resolve: (name: string | null) => void} | null>(null);
   const [toolSettings, setToolSettings] = useState<DrawingToolSettings>(() => (
     createInitialToolSettings(config)
   ));
@@ -207,7 +211,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     imageDataUrl: document.realisticImage?.dataUrl ?? null
   }), [config, createProject, document]);
 
-  const ensureNamedProject = useCallback((): string | null => {
+  const ensureNamedProject = useCallback(async (): Promise<string | null> => {
     const normalizedName = normalizeProjectName(projectName, config.files.defaultProjectName);
 
     if (projectFilePath || normalizedName !== config.files.defaultProjectName) {
@@ -215,7 +219,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       return normalizedName;
     }
 
-    const enteredName = window.prompt("Nome disegno", normalizedName);
+    const enteredName = await new Promise<string | null>(resolve => setProjectNamePrompt({value: normalizedName, resolve}));
 
     if (enteredName === null) {
       return null;
@@ -232,7 +236,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   ]);
 
   const saveProject = useCallback(async (forceSaveAs: boolean) => {
-    const nextName = ensureNamedProject();
+    const nextName = await ensureNamedProject();
 
     if (!nextName) {
       return;
@@ -1008,6 +1012,19 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onApply={applyCanvasDimensions}
         />
         <BrushPanel config={config} locale={effectiveLocale} settings={toolSettings} onChange={changeToolSettings} />
+        <ReferencePanel config={config} locale={effectiveLocale} images={document.references ?? []}
+          onImport={() => { void (async () => {
+            try {
+              const image = await window.trueDrawing.importReferenceImage();
+              if (!image) return;
+              await preloadCanvasImage(image.dataUrl);
+              const scale = Math.min(1, document.canvas.width / image.width, document.canvas.height / image.height);
+              commitDocumentUpdate(current => (current.references?.length ?? 0) >= config.references.maxImages ? current : ({...current,references:[...(current.references ?? []),
+                {...image,id:crypto.randomUUID(),visible:true,opacity:config.references.defaultOpacity,x:0,y:0,width:image.width*scale,height:image.height*scale}]}));
+            } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); }
+          })(); }}
+          onUpdate={(id,patch) => { try { commitDocumentUpdate(current=>({...current,references:(current.references ?? []).map(image=>image.id===id ? validateReference({...image,...patch},config) : image)})); } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); } }}
+          onRemove={id=>{ if (window.confirm(t(effectiveLocale,"removeReferenceConfirm"))) commitDocumentUpdate(current=>({...current,references:(current.references ?? []).filter(image=>image.id!==id)})); }} />
         <LayerPanel
           config={config}
           locale={effectiveLocale}
@@ -1030,6 +1047,10 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
         <span>{totalStrokeCount} {t(effectiveLocale, "strokes")}</span>
         <span>{Math.round(canvasZoom * 100)}%</span>
       </footer>
+      {projectNamePrompt && <ProjectNameDialog locale={effectiveLocale} value={projectNamePrompt.value}
+        onChange={value=>setProjectNamePrompt(current=>current ? {...current,value} : null)}
+        onSubmit={()=>{projectNamePrompt.resolve(projectNamePrompt.value.trim());setProjectNamePrompt(null);}}
+        onCancel={()=>{projectNamePrompt.resolve(null);setProjectNamePrompt(null);}} />}
       <ApiKeyDialog
         config={config}
         locale={effectiveLocale}

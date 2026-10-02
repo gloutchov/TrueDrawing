@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C15 alla versione `1.4.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
+True Drawing ha completato C16 alla versione `1.5.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
 
-- Versione corrente su `main`: `1.4.0`.
+- Versione corrente su `main`: `1.5.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C15 - Brush avanzati e texture personalizzate`.
+- Ultima milestone completata: `C16 - Import immagini di riferimento`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.2.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M16 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M17 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -206,13 +206,13 @@ Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `
 
 Riepilogo (2026-10-02): Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw. Verifiche: lint, 79 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.4.0`, checkpoint `milestone/C15`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
 
-### M16 - Import immagini di riferimento
+### C16 - Import immagini di riferimento
 
-- Versione finale prevista: `1.5.0`.
-- Branch previsto: `milestone/16-reference-image-import`.
-- Tag di checkpoint previsto: `milestone/C16`.
+- Versione finale: `1.5.0`.
+- Branch: `milestone/16-reference-image-import`.
+- Tag di checkpoint: `milestone/C16`.
 - Tipo incremento: `+0.1.0`.
-- Stato: pianificata.
+- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
 - Obiettivo: permettere all'utente di importare immagini locali come riferimento o base di lavoro.
 
 Attivita':
@@ -234,6 +234,8 @@ Criteri di accettazione:
 Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
 Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+Riepilogo (2026-10-02): Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI. Verifiche: lint, 83 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.5.0`, checkpoint `milestone/C16`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
 
 ### M17 - Maschere e clipping layer
 
@@ -339,6 +341,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-09-27 | C12 - Manina e navigazione canvas | 1.1.0 | `milestone/12-canvas-hand-tool` | Completata | PR #12, 41 test, lint/build, CI PR e `main` verdi; pan locale verificato in Electron; `milestone/C12` e `v1.1.0` verificati sul remoto. |
 | 2026-09-27 | C13 - Dimensioni canvas in pixel e centimetri | 1.2.0 | `milestone/13-canvas-dimensions` | Completata | PR #13, 49 test, lint/build, smoke test chiaro/scuro, CI PR e `main` verdi; checkpoint `milestone/C13` e release `v1.2.0` verificati. |
 | 2026-10-02 | C15 - Brush avanzati e texture personalizzate | 1.4.0 | `milestone/15-advanced-brushes` | Completata | Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw. 79 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-02 | C16 - Import immagini di riferimento | 1.5.0 | `milestone/16-reference-image-import` | Completata | Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI. 83 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 
@@ -365,3 +368,5 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 - [ ] Release GitHub pubblicata con artifact Windows e macOS, quando prevista.
 - [ ] Artifact scaricati e verificati, quando la release e' prevista.
 - [ ] Branch milestone eliminato dopo release o dopo merge verificato.
+
+Nota C16: lo smoke end-to-end ha identificato window.prompt non supportato nel salvataggio nuovo progetto; sostituito da ProjectNameDialog React bilingue e verificato con salvataggio reale.

@@ -252,6 +252,13 @@
     "projectExtension": ".tdraw",
     "canvasExportExtension": ".png",
     "imageExportExtension": ".png",
-    "webpExportExtension": ".webp"
+    "webpExportExtension": ".webp",
+    "maxProjectBytes": 67108864
+  },
+  "references": {
+    "maxImages": 4,
+    "maxImageBytes": 4194304,
+    "defaultOpacity": 0.5,
+    "maxScale": 4
   }
 }

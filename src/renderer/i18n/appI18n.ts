@@ -2,6 +2,19 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 
 const translations = {
   it: {
+    projectName: "Nome progetto",
+    references: "Riferimenti",
+    importReference: "Importa riferimento",
+    referenceLocalOnly: "Solo riferimento locale: escluso da export e AI.",
+    referenceVisible: "Riferimento visibile",
+    referenceOpacity: "Opacita riferimento",
+    referencePosition: "Posizione riferimento",
+    removeReference: "Rimuovi riferimento",
+    removeReferenceConfirm: "Rimuovere questo riferimento?",
+    referenceImportFailed: "Immagine non valida, troppo grande o non accessibile.",
+    x: "X",
+    y: "Y",
+
     advancedBrush: "Brush avanzati",
     brushPreset: "Preset brush",
     classicBrush: "Classico",
@@ -99,6 +112,19 @@ const translations = {
     resetZoom: "Reset zoom"
   },
   en: {
+    projectName: "Project name",
+    references: "References",
+    importReference: "Import reference",
+    referenceLocalOnly: "Local reference only: excluded from exports and AI.",
+    referenceVisible: "Reference visible",
+    referenceOpacity: "Reference opacity",
+    referencePosition: "Reference position",
+    removeReference: "Remove reference",
+    removeReferenceConfirm: "Remove this reference?",
+    referenceImportFailed: "Image is invalid, too large or inaccessible.",
+    x: "X",
+    y: "Y",
+
     advancedBrush: "Advanced brushes",
     brushPreset: "Brush preset",
     classicBrush: "Classic",

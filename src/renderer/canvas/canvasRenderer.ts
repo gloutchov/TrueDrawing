@@ -6,6 +6,7 @@ import type { DrawingStroke, StrokeRenderOptions } from "../../shared/drawing/st
 
 type RenderCanvasOptions = StrokeRenderOptions & {
   backgroundColor: string;
+  includeReferences?: boolean;
 };
 
 const imageCache = new Map<string, HTMLImageElement>();
@@ -50,6 +51,13 @@ export function renderCanvas(
   context.fillStyle = options.backgroundColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
+  if (options.includeReferences) for (const reference of document.references ?? []) {
+    const image = imageCache.get(reference.dataUrl);
+    if (reference.visible && image) {
+      context.save();context.globalAlpha=reference.opacity;
+      context.drawImage(image,reference.x,reference.y,reference.width,reference.height);context.restore();
+    }
+  }
   for (const layer of document.layers) {
     renderLayer(context, layer, options);
   }
@@ -518,3 +526,8 @@ function strokeOpacity(opacity: number): number {
   return Number.isFinite(opacity) ? opacity : 1;
 }
 
+
+export async function preloadDocumentImages(document: DrawingDocument): Promise<void> {
+  const images = [...(document.references ?? []).map(item=>item.dataUrl), ...document.layers.flatMap(layer=>layer.strokes.flatMap(stroke=>stroke.imageDataUrl ? [stroke.imageDataUrl] : []))];
+  await Promise.all(images.map(preloadCanvasImage));
+}
