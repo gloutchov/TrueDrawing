@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { Lock, LockOpen, Ruler, X } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";

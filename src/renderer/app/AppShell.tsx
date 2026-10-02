@@ -6,7 +6,7 @@ import { ProjectNameDialog } from "../project/ProjectNameDialog";
 import { ReferencePanel } from "../references/ReferencePanel";
 import { validateReference } from "../../shared/document/referenceModel";
 import { BrushPanel } from "../tools/BrushPanel";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import type { CSSProperties } from "react";
 
 import {

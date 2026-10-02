@@ -1,3 +1,5 @@
+import type { JSX } from "react";
+
 import { ChevronDown, ChevronUp, Eye, EyeOff, Layers, Plus, Trash2 } from "lucide-react";
 
 import type { EffectiveLocale } from "../app/uiPreferences";
