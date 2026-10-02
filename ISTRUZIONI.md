@@ -54,12 +54,12 @@ _Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. 
 
 ### Verifica checksum SHA-256
 
-La release pubblicata `v1.8.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
+La release pubblicata `v1.11.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
 
 Su Windows, dalla cartella dove si trova l'installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.8.0-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.11.0-Windows-x64.exe -Algorithm SHA256
 ```
 
 Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
@@ -67,7 +67,7 @@ Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.t
 Su macOS, dalla cartella dove si trova il download:
 
 ```bash
-shasum -a 256 True-Drawing-1.8.0-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.11.0-macOS-arm64.dmg
 ```
 
 Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.
@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.10.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.11.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -240,3 +240,7 @@ Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScr
 ## C21 - Migrazione React e React DOM (`1.10.0`)
 
 React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione.
+
+## C22 - Aggiornamento icone Lucide (`1.11.0`)
+
+Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura.

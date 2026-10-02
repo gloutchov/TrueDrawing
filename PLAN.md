@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C21 alla versione `1.10.0`. La fase di manutenzione M20-M22 aggiorna le dipendenze proposte nelle PR #15-#17; la release pubblicata resta `v1.8.0` fino alla verifica della release cumulativa finale.
+True Drawing ha completato C22 alla versione `1.11.0`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.10.0`.
+- Versione corrente su `main`: `1.11.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C21 - Migrazione React e React DOM`.
+- Ultima milestone completata: `C22 - Aggiornamento icone Lucide`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.8.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M22 e' la prossima pianificata.
+- Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Milestone corrente in sviluppo: nessuna; manutenzione M20-M22 completata.
 
 ## Obiettivo della fase post release
 
@@ -388,14 +388,14 @@ Release: nessuna release intermedia; packaging cumulativo a M22.
 
 Riepilogo (2026-10-02): React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. Verifiche: npm ci, lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.10.0`, checkpoint `milestone/C21`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-### M22 - Aggiornamento icone Lucide
+### C22 - Aggiornamento icone Lucide
 
 - PR di riferimento: [#17](https://github.com/gloutchov/TrueDrawing/pull/17).
-- Versione finale prevista: `1.11.0`.
-- Branch previsto: `milestone/22-lucide-icons`.
-- Tag di checkpoint previsto: `milestone/C22`.
+- Versione finale: `1.11.0`.
+- Branch: `milestone/22-lucide-icons`.
+- Tag di checkpoint: `milestone/C22`.
 - Tipo incremento: `+0.1.0` (migrazione dello stack e compatibilita runtime/UI).
-- Stato: pianificata.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
 - Obiettivo: Aggiornare la libreria icone mantenendo toolbar, pannelli, dialoghi e accessibilita leggibili nei due temi.
 
 Attivita': Integrare lucide-react 1.48, verificare export e resa delle icone e correggere incompatibilita effettive. Eseguire regressioni Electron, generare una sola release cumulativa Windows/macOS 1.11.0 e scaricare/verificare pacchetti e SHA-256.
@@ -414,6 +414,8 @@ Test richiesti: installazione `npm ci`, test esistenti e prove dei flussi intere
 Documenti: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, `MAP.md`, `SECURITY_MODEL.md`; note release finali a M22.
 
 Release: release cumulativa v1.11.0, artifact Windows/macOS non firmati e checksum SHA-256 verificati.
+
+Riepilogo (2026-10-02): Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. Verifiche: npm ci, lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.11.0`, checkpoint `milestone/C22`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ## Fuori roadmap attiva
 
@@ -440,6 +442,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C19 - Preset di stile realistico | 1.8.0 | `milestone/19-realistic-style-presets` | Completata | Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads. 117 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C20 - Aggiornamento toolchain di sviluppo | 1.9.0 | `milestone/20-development-toolchain` | Completata | Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C21 - Migrazione React e React DOM | 1.10.0 | `milestone/21-react-runtime` | Completata | React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-02 | C22 - Aggiornamento icone Lucide | 1.11.0 | `milestone/22-lucide-icons` | Completata | Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 
