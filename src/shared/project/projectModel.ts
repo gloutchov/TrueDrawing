@@ -1,3 +1,4 @@
+import { validateLayerEffects } from "../document/layerEffects";
 import { validateReference } from "../document/referenceModel";
 import { validateBrush } from "../drawing/brushModel";
 import { validateImageDataUrl } from "../security/imagePayload";
@@ -120,6 +121,8 @@ export function createProjectSidecarFileNames(
 function parseDrawingDocument(value: unknown, config: AppConfig): DrawingDocument {
   const document = expectObject(value, "document");
   const layers = expectArray(document.layers, "document.layers").map(parseDrawingLayer);
+  validateLayerEffects(layers);
+  if (layers.length > (config.layers?.maxLayers ?? 32)) throw new Error("Invalid layer count.");
   const activeLayerId = expectString(document.activeLayerId, "document.activeLayerId");
 
   if (layers.length === 0) {
@@ -158,7 +161,14 @@ function parseCanvasDimensions(value: unknown, config: AppConfig): CanvasDimensi
 function parseDrawingLayer(value: unknown): DrawingLayer {
   const layer = expectObject(value, "layer");
 
+  const effects: Pick<DrawingLayer,"mask"|"clipToLayerId"> = {};
+  if (layer.mask !== undefined && layer.mask !== null) {
+    const mask=expectObject(layer.mask,"layer.mask");
+    effects.mask={enabled:expectBoolean(mask.enabled,"mask.enabled"),strokes:expectArray(mask.strokes,"mask.strokes").map(parseDrawingStroke)};
+  }
+  if (layer.clipToLayerId !== undefined && layer.clipToLayerId !== null) effects.clipToLayerId=expectString(layer.clipToLayerId,"layer.clipToLayerId");
   return {
+    ...effects,
     id: expectString(layer.id, "layer.id"),
     name: expectString(layer.name, "layer.name"),
     visible: expectBoolean(layer.visible, "layer.visible"),

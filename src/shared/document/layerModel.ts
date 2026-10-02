@@ -53,7 +53,8 @@ export function updateStrokeInDocument(
       ...layer,
       strokes: layer.strokes.map((stroke) => (
         stroke.id === strokeId ? updater(stroke) : stroke
-      ))
+      )),
+      mask: layer.mask ? {...layer.mask,strokes:layer.mask.strokes.map(stroke=>stroke.id===strokeId ? updater(stroke) : stroke)} : undefined
     }))
   };
 }
@@ -104,7 +105,7 @@ export function deleteLayer(document: DrawingDocument, layerId: string): Drawing
     return document;
   }
 
-  const layers = document.layers.filter((layer) => layer.id !== layerId);
+  const layers = document.layers.filter((layer) => layer.id !== layerId).map(layer=>layer.clipToLayerId===layerId ? {...layer,clipToLayerId:null} : layer);
   const activeLayerId = document.activeLayerId === layerId
     ? layers[Math.max(0, layerIndex - 1)]?.id ?? layers[0].id
     : document.activeLayerId;

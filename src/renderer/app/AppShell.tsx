@@ -1,3 +1,5 @@
+import { LayerEffectsPanel } from "../layers/LayerEffectsPanel";
+import { setLayerClip, setLayerMask } from "../../shared/document/layerEffects";
 import { ProjectNameDialog } from "../project/ProjectNameDialog";
 import { ReferencePanel } from "../references/ReferencePanel";
 import { validateReference } from "../../shared/document/referenceModel";
@@ -81,6 +83,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     undo,
     redo
   } = useDrawingDocumentHistory(config);
+  const [maskEditing,setMaskEditing] = useState(false);
   const [projectNamePrompt, setProjectNamePrompt] = useState<{value: string; resolve: (name: string | null) => void} | null>(null);
   const [toolSettings, setToolSettings] = useState<DrawingToolSettings>(() => (
     createInitialToolSettings(config)
@@ -985,7 +988,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
               clampCanvasZoom(currentZoom * delta, config.canvas.minZoom, config.canvas.maxZoom)
             ));
           }}
-          onAppendStroke={appendStroke}
+          onAppendStroke={stroke=>appendStroke(stroke,maskEditing && Boolean(activeLayer?.mask?.enabled))}
           onUpdateStroke={updateStroke}
         />
       </main>
@@ -1039,6 +1042,10 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onSetLayerOpacity={setLayerOpacity}
           onMoveLayer={moveLayer}
         />
+        <LayerEffectsPanel locale={effectiveLocale} layer={activeLayer} layers={document.layers} editing={maskEditing}
+          onEditing={setMaskEditing}
+          onMask={enabled=>commitDocumentUpdate(current=>setLayerMask(current,current.activeLayerId,enabled))}
+          onClip={id=>commitDocumentUpdate(current=>setLayerClip(current,current.activeLayerId,id))} />
       </aside>
       <footer className="status-bar" aria-live="polite">
         <span>{formatWorkspaceStatus(fileStatusMessage, isDirty, lastSavedAt)}</span>

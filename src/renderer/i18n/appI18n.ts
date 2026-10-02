@@ -2,6 +2,15 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 
 const translations = {
   it: {
+    layerEffects: "Maschere e clipping",
+    createMask: "Crea maschera",
+    maskEnabled: "Maschera attiva",
+    editMask: "Modifica maschera",
+    maskInstructions: "Gomma nasconde, matita e pennello ripristinano. I tratti originali restano intatti.",
+    removeMask: "Rimuovi maschera",
+    removeMaskConfirm: "Rimuovere la maschera?",
+    clipLayer: "Clipping su layer",
+
     projectName: "Nome progetto",
     references: "Riferimenti",
     importReference: "Importa riferimento",
@@ -112,6 +121,15 @@ const translations = {
     resetZoom: "Reset zoom"
   },
   en: {
+    layerEffects: "Masks and clipping",
+    createMask: "Create mask",
+    maskEnabled: "Mask enabled",
+    editMask: "Edit mask",
+    maskInstructions: "Eraser hides; pencil and brush restore. Original strokes remain intact.",
+    removeMask: "Remove mask",
+    removeMaskConfirm: "Remove the mask?",
+    clipLayer: "Clip to layer",
+
     projectName: "Project name",
     references: "References",
     importReference: "Import reference",

@@ -58,39 +58,44 @@ export function renderCanvas(
       context.drawImage(image,reference.x,reference.y,reference.width,reference.height);context.restore();
     }
   }
+  const surfaces = new Map<string,HTMLCanvasElement>();
+  const remainingUses = new Map<string,number>();
+  for (const layer of document.layers) if(layer.clipToLayerId) remainingUses.set(layer.clipToLayerId,(remainingUses.get(layer.clipToLayerId) ?? 0)+1);
   for (const layer of document.layers) {
-    renderLayer(context, layer, options);
+    if (!layer.visible || layer.opacity <= 0 || !layer.strokes.length) continue;
+    const surface = renderLayerSurface(context,layer,document.layers,options,surfaces);
+    context.save();context.globalAlpha=layer.opacity;context.drawImage(surface,0,0);context.restore();
+    if (!(remainingUses.get(layer.id) ?? 0)) surfaces.delete(layer.id);
+    if (layer.clipToLayerId) {
+      const uses=(remainingUses.get(layer.clipToLayerId) ?? 1)-1;remainingUses.set(layer.clipToLayerId,uses);
+      if(!uses) surfaces.delete(layer.clipToLayerId);
+    }
   }
 }
 
-function renderLayer(
-  context: CanvasRenderingContext2D,
-  layer: DrawingLayer,
-  options: StrokeRenderOptions
-): void {
-  if (!layer.visible || layer.opacity <= 0 || layer.strokes.length === 0) {
-    return;
+function renderLayerSurface(context:CanvasRenderingContext2D,layer:DrawingLayer,layers:DrawingLayer[],options:StrokeRenderOptions,cache:Map<string,HTMLCanvasElement>):HTMLCanvasElement {
+  const cached=cache.get(layer.id);if(cached)return cached;
+  const canvas=window.document.createElement("canvas");canvas.width=context.canvas.width;canvas.height=context.canvas.height;
+  cache.set(layer.id,canvas);
+  const layerContext=canvas.getContext("2d");
+  if(!layerContext || !layer.visible || layer.opacity<=0)return canvas;
+  for(const stroke of layer.strokes)renderStroke(layerContext,stroke,options);
+  if(layer.mask?.enabled) {
+    const mask=window.document.createElement("canvas");mask.width=canvas.width;mask.height=canvas.height;
+    const maskContext=mask.getContext("2d");
+    if(maskContext) {
+      maskContext.fillStyle="#ffffff";maskContext.fillRect(0,0,mask.width,mask.height);
+      for(const stroke of layer.mask.strokes)renderStroke(maskContext,{...stroke,color:"#ffffff"},options);
+      layerContext.save();layerContext.globalCompositeOperation="destination-in";layerContext.drawImage(mask,0,0);layerContext.restore();
+    }
   }
-
-  const layerCanvas = document.createElement("canvas");
-
-  layerCanvas.width = context.canvas.width;
-  layerCanvas.height = context.canvas.height;
-
-  const layerContext = layerCanvas.getContext("2d");
-
-  if (!layerContext) {
-    return;
+  const target=layers.find(item=>item.id===layer.clipToLayerId);
+  if(target) {
+    const targetCanvas=renderLayerSurface(context,target,layers,options,cache);
+    layerContext.save();layerContext.globalCompositeOperation="destination-in";layerContext.globalAlpha=target.opacity;
+    layerContext.drawImage(targetCanvas,0,0);layerContext.restore();
   }
-
-  for (const stroke of layer.strokes) {
-    renderStroke(layerContext, stroke, options);
-  }
-
-  context.save();
-  context.globalAlpha = layer.opacity;
-  context.drawImage(layerCanvas, 0, 0);
-  context.restore();
+  return canvas;
 }
 
 function renderStroke(
@@ -528,6 +533,6 @@ function strokeOpacity(opacity: number): number {
 
 
 export async function preloadDocumentImages(document: DrawingDocument): Promise<void> {
-  const images = [...(document.references ?? []).map(item=>item.dataUrl), ...document.layers.flatMap(layer=>layer.strokes.flatMap(stroke=>stroke.imageDataUrl ? [stroke.imageDataUrl] : []))];
+  const images = [...(document.references ?? []).map(item=>item.dataUrl), ...document.layers.flatMap(layer=>[...layer.strokes,...(layer.mask?.strokes ?? [])].flatMap(stroke=>stroke.imageDataUrl ? [stroke.imageDataUrl] : []))];
   await Promise.all(images.map(preloadCanvasImage));
 }
