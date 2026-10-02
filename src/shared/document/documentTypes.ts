@@ -9,6 +9,8 @@ export type DrawingLayer = {
   visible: boolean;
   opacity: number;
   strokes: DrawingStroke[];
+  mask?: {enabled:boolean;strokes:DrawingStroke[]};
+  clipToLayerId?: string | null;
 };
 
 export type DrawingDocument = {

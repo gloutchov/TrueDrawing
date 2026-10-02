@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.5.1`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.6.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -204,3 +204,9 @@ Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e
 In the References panel choose **Import reference** and a local PNG, JPEG or WebP file (up to 4 MiB and the configured pixel limits). X/Y move the image; width preserves its aspect ratio. Visibility and opacity do not change drawing tools. Up to four references are embedded in the project, so their original files are unnecessary when reopening. Undo/redo restores changes. References are excluded from exported canvas, sidecars and AI generation, including auto redraw. Removing a reference requires confirmation.
 
 Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
+
+## C17 - Maschere e clipping layer (`1.6.0`)
+
+Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
+
+In Masks and clipping choose **Create mask**, then **Edit mask**. A new mask reveals everything: eraser hides; pencil/brush restore visibility. Turn off Edit mask to draw on the layer again. Mask enabled toggles the effect without losing strokes; removing a mask requires confirmation. **Clip to layer** uses another layer's alpha, including its mask, opacity and visibility. Targets remain linked after reordering; cyclic targets are disabled and deleting a target clears the relationship. Canvas, export and generation share rendering; effects persist and support undo/redo.

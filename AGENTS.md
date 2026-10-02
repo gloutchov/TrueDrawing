@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C16 - Import immagini di riferimento.
+- Ultima milestone completata: C17 - Maschere e clipping layer.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.5.1`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente: `1.6.0`; release GitHub pubblicata: `v1.2.0`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/16-reference-image-import`.
+- Ultimo branch milestone completato: `milestone/17-masks-clipping-layers`.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -131,3 +131,7 @@ Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e 
 Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
 
 Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
+
+## C17 - Maschere e clipping layer (`1.6.0`)
+
+Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.

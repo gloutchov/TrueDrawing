@@ -224,9 +224,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.5.1`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente su `main`: `1.6.0`; release GitHub pubblicata: `v1.2.0`.
 - Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
-- Milestone corrente: nessuna; M17 e' la prossima pianificata.
+- Milestone corrente: nessuna; M18 e' la prossima pianificata.
 - Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -288,3 +288,11 @@ Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e
 - `src/renderer/project/ProjectNameDialog.tsx`: nome progetto prima del salvataggio, senza window.prompt non supportato in Electron.
 
 Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
+
+## C17 - Maschere e clipping layer (`1.6.0`)
+
+Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
+
+- `src/shared/document/layerEffects.ts`: maschere, clipping per identita, validazione cicli.
+- `src/renderer/layers/LayerEffectsPanel.tsx`: editor maschera e target clipping per layer attivo.
+- `tests/unit/layerEffects.test.ts`: persistenza, cancellazione, riordino e undo/redo.
