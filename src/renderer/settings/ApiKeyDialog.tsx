@@ -144,6 +144,7 @@ export function ApiKeyDialog({
             <span>{t(locale, "apiKeyStorage")}</span>
             <strong>{formatBackend(apiKeyBackend)}</strong>
           </div>
+          {apiKeyBackend === "encrypted-local-storage" && <p className="form-message">{t(locale, "localStorageWarning")}</p>}
           {saveState.status === "success" && (
             <p className="form-message form-message--success">{saveState.message}</p>
           )}

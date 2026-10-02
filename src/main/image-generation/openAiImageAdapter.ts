@@ -1,3 +1,5 @@
+import { defaultMaxImageBytes, validateImageDataUrl } from "../../shared/security/imagePayload";
+import { downloadRemoteImage } from "../security/remoteImage";
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type {
   RealisticImageRequest,
@@ -21,12 +23,15 @@ export async function generateOpenAiRealisticImage(
   request: RealisticImageRequest,
   apiKey: string,
   config: AppConfig,
-  fetchImpl: FetchLike = fetch
+  fetchImpl: FetchLike = fetch,
+  downloadImage: typeof downloadRemoteImage = downloadRemoteImage
 ): Promise<RealisticImageResult> {
   if (!apiKey) {
     throw new Error("OpenAI API key is not configured.");
   }
 
+  const maxBytes = config.imageGeneration.maxImageBytes ?? defaultMaxImageBytes;
+  validateImageDataUrl(request.canvasDataUrl, maxBytes);
   const imageBytes = dataUrlToBytes(request.canvasDataUrl);
   const abortController = new AbortController();
   const timeout = setTimeout(() => abortController.abort(), config.imageGeneration.timeoutMs);
@@ -53,7 +58,7 @@ export async function generateOpenAiRealisticImage(
       body: formData,
       signal: abortController.signal
     });
-    const parsedResponse = await parseOpenAiImageResponse(response);
+    const parsedResponse = await parseOpenAiImageResponse(response, Math.ceil(maxBytes / 3) * 4 + 65536);
 
     if (!response.ok) {
       throw new Error(sanitizeOpenAiError(parsedResponse, response.status));
@@ -61,41 +66,31 @@ export async function generateOpenAiRealisticImage(
 
     const image = parsedResponse.data?.[0];
     const imageBase64 = image?.b64_json ?? (
-      image?.url ? await fetchImageUrlAsBase64(image.url, fetchImpl) : null
+      image?.url ? await downloadImage(image.url, config.imageGeneration.timeoutMs, maxBytes) : null
     );
 
     if (!imageBase64) {
       throw new Error("OpenAI did not return an image.");
     }
 
+    validateImageDataUrl(`data:image/png;base64,${imageBase64}`, maxBytes);
     return {
       dataUrl: `data:image/png;base64,${imageBase64}`,
       provider: config.imageGeneration.defaultProvider,
       model: request.model,
       generatedAt: new Date().toISOString(),
-      revisedPrompt: image?.revised_prompt
+      revisedPrompt: undefined
     };
   } catch (error: unknown) {
     if (error instanceof Error) {
-      throw new Error(sanitizeErrorMessage(error.message));
+      if (/^OpenAI image generation failed with status \d+\.$/.test(error.message)) throw error;
+      throw new Error(error.name === "AbortError" ? "Image generation timed out." : "Image generation failed.");
     }
 
     throw new Error("Image generation failed.");
   } finally {
     clearTimeout(timeout);
   }
-}
-
-async function fetchImageUrlAsBase64(imageUrl: string, fetchImpl: FetchLike): Promise<string | null> {
-  const response = await fetchImpl(imageUrl);
-
-  if (!response.ok) {
-    return null;
-  }
-
-  const arrayBuffer = await response.arrayBuffer();
-
-  return Buffer.from(arrayBuffer).toString("base64");
 }
 
 function dataUrlToBytes(dataUrl: string): Uint8Array {
@@ -108,27 +103,25 @@ function dataUrlToBytes(dataUrl: string): Uint8Array {
   return Uint8Array.from(Buffer.from(match[1], "base64"));
 }
 
-async function parseOpenAiImageResponse(response: Response): Promise<OpenAiImageResponse> {
+async function parseOpenAiImageResponse(response: Response, maxBytes: number): Promise<OpenAiImageResponse> {
+  if (Number(response.headers.get("content-length") ?? 0) > maxBytes) throw new Error("Image response is too large.");
+  const reader = response.body?.getReader();
+  if (!reader) return {};
+  const chunks: Uint8Array[] = []; let size = 0;
   try {
-    return await response.json() as OpenAiImageResponse;
+    while (true) {
+      const {value, done} = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > maxBytes) { await reader.cancel(); throw new Error("Image response is too large."); }
+      chunks.push(value);
+    }
+    return JSON.parse(Buffer.concat(chunks).toString("utf8")) as OpenAiImageResponse;
   } catch {
     return {};
   }
 }
 
-function sanitizeOpenAiError(response: OpenAiImageResponse, status: number): string {
-  const message = sanitizeErrorMessage(response.error?.message ?? "");
-
-  if (message.length > 0) {
-    return message;
-  }
-
+function sanitizeOpenAiError(_response: OpenAiImageResponse, status: number): string {
   return `OpenAI image generation failed with status ${status}.`;
-}
-
-function sanitizeErrorMessage(message: string): string {
-  const withoutBearer = message.replace(/Bearer\s+[A-Za-z0-9._-]+/g, "Bearer [redacted]");
-  const withoutKeys = withoutBearer.replace(/sk-(proj-)?[A-Za-z0-9_-]+/g, "[redacted]");
-
-  return withoutKeys || "Image generation failed.";
 }

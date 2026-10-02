@@ -1,3 +1,4 @@
+import { validateImageDataUrl } from "../security/imagePayload";
 import type { AppConfig } from "../config/appConfigSchema";
 import type { DrawingDocument, DrawingLayer } from "../document/documentTypes";
 import {
@@ -305,5 +306,5 @@ function expectImageDataUrl(value: unknown, label: string): string {
     throw new Error(`Invalid True Drawing project: ${label} must be an image data URL.`);
   }
 
-  return dataUrl;
+  return validateImageDataUrl(dataUrl);
 }

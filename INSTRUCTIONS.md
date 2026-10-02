@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.2.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.3.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -190,3 +190,5 @@ The Layers window lets you build the image on multiple levels, hide or show each
 ## License
 
 This project is distributed under the Apache 2.0 license. See [LICENSE](./LICENSE).
+
+Security 1.3.0: IPC/project images are limited to 16 MiB; AI downloads reject local addresses and redirects. API key settings warn when encrypted local safeStorage fallback is used; its protection depends on the operating system.

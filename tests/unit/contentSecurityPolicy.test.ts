@@ -10,11 +10,13 @@ const config = {
 } as AppConfig;
 
 describe("content security policy", () => {
-  it("allows OpenAI API as the only production remote connection source", () => {
+  it("denies production renderer network, frames and workers", () => {
     const policy = buildContentSecurityPolicy(config, false);
 
     expect(policy).toContain("default-src 'self'");
-    expect(policy).toContain("connect-src 'self' https://api.openai.com/v1");
+    expect(policy).toContain("connect-src 'none'");
+    expect(policy).toContain("frame-src 'none'");
+    expect(policy).toContain("worker-src 'none'");
     expect(policy).not.toContain("unsafe-eval");
   });
 

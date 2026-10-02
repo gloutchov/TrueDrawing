@@ -14,7 +14,17 @@ import type {
   ProjectSaveRequest
 } from "../../shared/project/projectTypes";
 
-const maxImageDataUrlLength = 32 * 1024 * 1024;
+import { maxImageDataUrlLength, validateImageDataUrl } from "../../shared/security/imagePayload";
+import { sanitizeIpcError, validateIpcSender } from "../security/ipcSecurity";
+
+const handle: typeof ipcMain.handle = (channel, listener) => {
+  ipcMain.handle(channel, async (event, ...args) => {
+    try {
+      validateIpcSender(event);
+      return await listener(event, ...args);
+    } catch (error: unknown) { throw new Error(sanitizeIpcError(error)); }
+  });
+};
 const maxPromptLength = 8000;
 const maxClipboardTextLength = 1024 * 1024;
 
@@ -35,20 +45,20 @@ export function registerIpc({
   preferencesStore,
   documentStore
 }: RegisterIpcOptions): void {
-  ipcMain.handle("config:get", () => getConfig());
-  ipcMain.handle("runtime:get", () => getRuntimeInfo());
-  ipcMain.handle("settings:ui-menu-locale:set", (_event, locale: unknown) => {
+  handle("config:get", () => getConfig());
+  handle("runtime:get", () => getRuntimeInfo());
+  handle("settings:ui-menu-locale:set", (_event, locale: unknown) => {
     if (locale !== "it" && locale !== "en") {
       throw new Error("Invalid UI locale.");
     }
 
     onUiLocaleChange(locale);
   });
-  ipcMain.handle("secrets:openai-key-status", () => ({
+  handle("secrets:openai-key-status", () => ({
     configured: apiKeyStore.hasOpenAiApiKey(),
     backend: apiKeyStore.getStorageBackend()
   }));
-  ipcMain.handle("secrets:set-openai-key", (_event, apiKey: unknown) => {
+  handle("secrets:set-openai-key", (_event, apiKey: unknown) => {
     if (typeof apiKey !== "string") {
       throw new Error("Invalid API key input.");
     }
@@ -60,7 +70,7 @@ export function registerIpc({
       backend: apiKeyStore.getStorageBackend()
     };
   });
-  ipcMain.handle("secrets:clear-openai-key", () => {
+  handle("secrets:clear-openai-key", () => {
     apiKeyStore.clearOpenAiApiKey();
 
     return {
@@ -68,22 +78,22 @@ export function registerIpc({
       backend: apiKeyStore.getStorageBackend()
     };
   });
-  ipcMain.handle("preferences:image-generation:get", () => preferencesStore.getPreferences());
-  ipcMain.handle("preferences:image-generation:set-model", (_event, model: unknown) => {
+  handle("preferences:image-generation:get", () => preferencesStore.getPreferences());
+  handle("preferences:image-generation:set-model", (_event, model: unknown) => {
     if (typeof model !== "string") {
       throw new Error("Invalid image model input.");
     }
 
     return preferencesStore.setModel(model);
   });
-  ipcMain.handle("preferences:image-generation:set-style", (_event, style: unknown) => {
+  handle("preferences:image-generation:set-style", (_event, style: unknown) => {
     if (typeof style !== "string") {
       throw new Error("Invalid image style input.");
     }
 
     return preferencesStore.setStyle(style);
   });
-  ipcMain.handle("preferences:image-generation:set-auto-redraw", (_event, options: unknown) => {
+  handle("preferences:image-generation:set-auto-redraw", (_event, options: unknown) => {
     if (!options || typeof options !== "object") {
       throw new Error("Invalid auto redraw preferences.");
     }
@@ -99,7 +109,7 @@ export function registerIpc({
 
     return preferencesStore.setAutoRedraw(preferences.enabled, preferences.delaySeconds);
   });
-  ipcMain.handle("image-generation:generate-realistic", async (_event, request: unknown) => {
+  handle("image-generation:generate-realistic", async (_event, request: unknown) => {
     const realisticImageRequest = validateRealisticImageRequest(request);
     const apiKey = apiKeyStore.getOpenAiApiKey();
 
@@ -109,53 +119,54 @@ export function registerIpc({
 
     return generateOpenAiRealisticImage(realisticImageRequest, apiKey, getConfig());
   });
-  ipcMain.handle("project:save", (event, request: unknown) => (
+  handle("project:save", (event, request: unknown) => (
     documentStore.saveProject(validateProjectSaveRequest(request, getConfig()), {
       showSaveDialog: false,
       parentWindow: BrowserWindow.fromWebContents(event.sender)
     })
   ));
-  ipcMain.handle("project:save-as", (event, request: unknown) => (
+  handle("project:save-as", (event, request: unknown) => (
     documentStore.saveProject(validateProjectSaveRequest(request, getConfig()), {
       showSaveDialog: true,
       parentWindow: BrowserWindow.fromWebContents(event.sender)
     })
   ));
-  ipcMain.handle("project:open", (event) => (
+  handle("project:open", (event) => (
     documentStore.openProject(BrowserWindow.fromWebContents(event.sender))
   ));
-  ipcMain.handle("project:autosave", (_event, request: unknown) => (
+  handle("project:autosave", (_event, request: unknown) => (
     documentStore.autosaveProject(validateProjectAutosaveRequest(request, getConfig()))
   ));
-  ipcMain.handle("project:autosaves:list", () => documentStore.listAutosaves());
-  ipcMain.handle("project:autosave:load", (_event, id: unknown) => {
+  handle("project:autosaves:list", () => documentStore.listAutosaves());
+  handle("project:autosave:load", (_event, id: unknown) => {
     if (typeof id !== "string") {
       throw new Error("Invalid autosave identifier.");
     }
 
     return documentStore.loadAutosave(id);
   });
-  ipcMain.handle("project:autosave:clear", (_event, id: unknown) => {
+  handle("project:autosave:clear", (_event, id: unknown) => {
     if (typeof id !== "string") {
       throw new Error("Invalid autosave identifier.");
     }
 
     return documentStore.clearAutosave(id);
   });
-  ipcMain.handle("project:export", (event, request: unknown) => (
+  handle("project:export", (event, request: unknown) => (
     documentStore.exportImage(
       validateProjectExportRequest(request),
       BrowserWindow.fromWebContents(event.sender)
     )
   ));
-  ipcMain.handle("clipboard:write-image", (_event, dataUrl: unknown) => {
+  handle("clipboard:write-image", (_event, dataUrl: unknown) => {
     if (typeof dataUrl !== "string" || !isImageDataUrl(dataUrl) || dataUrl.length > maxImageDataUrlLength) {
       throw new Error("Invalid clipboard image.");
     }
 
+    validateImageDataUrl(dataUrl);
     clipboard.writeImage(nativeImage.createFromDataURL(dataUrl));
   });
-  ipcMain.handle("clipboard:read-image", () => {
+  handle("clipboard:read-image", () => {
     const image = clipboard.readImage();
 
     if (image.isEmpty()) {
@@ -170,22 +181,22 @@ export function registerIpc({
 
     return dataUrl;
   });
-  ipcMain.handle("clipboard:write-text", (_event, text: unknown) => {
+  handle("clipboard:write-text", (_event, text: unknown) => {
     if (typeof text !== "string" || text.length > maxClipboardTextLength) {
       throw new Error("Invalid clipboard text.");
     }
 
     clipboard.writeText(text);
   });
-  ipcMain.handle("clipboard:read-text", () => clipboard.readText());
-  ipcMain.handle("window:set-fullscreen", (event, fullscreen: unknown) => {
+  handle("clipboard:read-text", () => clipboard.readText());
+  handle("window:set-fullscreen", (event, fullscreen: unknown) => {
     if (typeof fullscreen !== "boolean") {
       throw new Error("Invalid fullscreen state.");
     }
 
     BrowserWindow.fromWebContents(event.sender)?.setFullScreen(fullscreen);
   });
-  ipcMain.handle("window:is-fullscreen", (event) => (
+  handle("window:is-fullscreen", (event) => (
     BrowserWindow.fromWebContents(event.sender)?.isFullScreen() ?? false
   ));
 }
@@ -196,6 +207,7 @@ function validateRealisticImageRequest(value: unknown): RealisticImageRequest {
   }
 
   const request = value as Partial<RealisticImageRequest>;
+  validateImageDataUrl(request.canvasDataUrl);
 
   if (typeof request.canvasDataUrl !== "string" || !isPngDataUrl(request.canvasDataUrl)) {
     throw new Error("Invalid image generation request.");
@@ -300,7 +312,7 @@ function expectImageDataUrl(value: unknown, label: string): string {
     throw new Error(`Invalid ${label}.`);
   }
 
-  return value;
+  return validateImageDataUrl(value);
 }
 
 function isImageDataUrl(value: string): boolean {

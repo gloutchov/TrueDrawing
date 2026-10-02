@@ -83,6 +83,7 @@ export type AppConfig = {
     defaultQuality: string;
     canvasPaddingRatio: number;
     timeoutMs: number;
+    maxImageBytes: number;
     defaultOutputFormat: string;
   };
   files: {
@@ -258,6 +259,7 @@ export function validateAppConfig(value: unknown): AppConfig {
       defaultQuality: expectString(imageGeneration.defaultQuality, "imageGeneration.defaultQuality"),
       canvasPaddingRatio: expectUnitNumber(imageGeneration.canvasPaddingRatio, "imageGeneration.canvasPaddingRatio"),
       timeoutMs: expectPositiveNumber(imageGeneration.timeoutMs, "imageGeneration.timeoutMs"),
+      maxImageBytes: expectPositiveInteger(imageGeneration.maxImageBytes, "imageGeneration.maxImageBytes"),
       defaultOutputFormat: expectString(imageGeneration.defaultOutputFormat, "imageGeneration.defaultOutputFormat")
     },
     files: {

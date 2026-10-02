@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.2.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.3.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -190,3 +190,5 @@ La finestra Layer permette di costruire l'immagine su più livelli, di nasconder
 ## Licenza
 
 Questo progetto e distribuito sotto licenza Apache 2.0. Vedi [LICENSE](./LICENSE).
+
+Sicurezza 1.3.0: immagini IPC/progetto limitate a 16 MiB; il download AI rifiuta indirizzi locali e redirect. Nelle impostazioni API key un avviso indica il fallback locale cifrato safeStorage, la cui protezione dipende dal sistema operativo.

@@ -22,6 +22,10 @@ export function createMainWindow(config: AppConfig): BrowserWindow {
     }
   });
 
+  window.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
+  window.webContents.on("will-navigate", event => event.preventDefault());
+  window.webContents.on("will-attach-webview", event => event.preventDefault());
+
   if (process.env.VITE_DEV_SERVER_URL) {
     void window.loadURL(process.env.VITE_DEV_SERVER_URL);
   } else {
