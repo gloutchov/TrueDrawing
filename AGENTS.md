@@ -6,7 +6,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: C16 - Import immagini di riferimento.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.5.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente: `1.5.1`; release GitHub pubblicata: `v1.2.0`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
@@ -129,3 +129,5 @@ Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e 
 ## C16 - Import immagini di riferimento (`1.5.0`)
 
 Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
+
+Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.

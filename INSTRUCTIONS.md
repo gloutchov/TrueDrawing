@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.5.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.5.1`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -202,3 +202,5 @@ Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e 
 Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
 
 In the References panel choose **Import reference** and a local PNG, JPEG or WebP file (up to 4 MiB and the configured pixel limits). X/Y move the image; width preserves its aspect ratio. Visibility and opacity do not change drawing tools. Up to four references are embedded in the project, so their original files are unnecessary when reopening. Undo/redo restores changes. References are excluded from exported canvas, sidecars and AI generation, including auto redraw. Removing a reference requires confirmation.
+
+Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
