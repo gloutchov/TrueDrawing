@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C21 - Migrazione React e React DOM.
+- Ultima milestone completata: C22 - Aggiornamento icone Lucide.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.10.0`; release GitHub pubblicata: `v1.8.0`.
+- Versione corrente: `1.11.0`; release GitHub pubblicata: `v1.11.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M22 e' la prossima pianificata.
+- Milestone corrente: nessuna; manutenzione M20-M22 completata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/21-react-runtime`.
+- Ultimo branch milestone completato: `milestone/22-lucide-icons`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -20,7 +20,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.8.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.11.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -160,3 +160,9 @@ Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScr
 React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. / React and React DOM aligned at 19.3.0 with matching types; components use React-scoped JSX types. C20 toolchain preserved while resolving lockfile conflicts; canvas interactions, dialogs and persistence verified in the production renderer.
 
 - Verifica C20: PR #15 CI `37060839272`, main CI `37060915788`, checkpoint `milestone/C20` e versione `v1.9.0` verificati; branch milestone e Dependabot rimossi.
+
+## C22 - Aggiornamento icone Lucide (`1.11.0`)
+
+Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. / Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
+
+- Verifica C21: PR #16 CI `37061482002`, main CI `37061575541`, checkpoint `milestone/C21` e versione `v1.10.0` verificati; branch milestone e Dependabot rimossi.

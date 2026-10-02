@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.10.0` (release GitHub pubblicata: `v1.8.0`)
+Versione sorgente: `1.11.0` (release GitHub pubblicata: `v1.11.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.10.0` (published GitHub release: `v1.8.0`)
+Source version: `1.11.0` (published GitHub release: `v1.11.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -227,3 +227,9 @@ EN: existing clipboard channels use main-process ClipboardItem/Blob and await na
 React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. / React and React DOM aligned at 19.3.0 with matching types; components use React-scoped JSX types. C20 toolchain preserved while resolving lockfile conflicts; canvas interactions, dialogs and persistence verified in the production renderer.
 
 C21: React 19 cambia il runtime UI e i tipi del renderer; CSP, sandbox, preload, canali IPC e storage segreti mantengono gli stessi controlli. / React 19 updates the UI runtime and renderer types; CSP, sandbox, preload, IPC channels and secret storage retain the same controls.
+
+## C22 - Aggiornamento icone Lucide (`1.11.0`)
+
+Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. / Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
+
+C22: le icone restano componenti SVG locali, senza nuove richieste di rete o privilegi. Audit dipendenze runtime: zero vulnerabilita. Release non firmata; verificare i checksum prima di aprire i pacchetti. / Icons remain local SVG components with no new network requests or privileges. Runtime dependency audit: zero vulnerabilities. Unsigned release: verify checksums before opening packages.

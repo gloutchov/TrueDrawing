@@ -54,12 +54,12 @@ _Note:_ If you have doubts, the repository contains the program checksums. In th
 
 ### Verifying SHA-256 checksums
 
-The published `v1.8.0` release includes `SHA256SUMS-windows.txt` and `SHA256SUMS-macos.txt`. Download the checksum file for your operating system together with the app package.
+The published `v1.11.0` release includes `SHA256SUMS-windows.txt` and `SHA256SUMS-macos.txt`. Download the checksum file for your operating system together with the app package.
 
 On Windows, from the folder containing the installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.8.0-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.11.0-Windows-x64.exe -Algorithm SHA256
 ```
 
 Compare the `Hash` value with the matching line in `SHA256SUMS-windows.txt`.
@@ -67,7 +67,7 @@ Compare the `Hash` value with the matching line in `SHA256SUMS-windows.txt`.
 On macOS, from the download folder:
 
 ```bash
-shasum -a 256 True-Drawing-1.8.0-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.11.0-macOS-arm64.dmg
 ```
 
 Compare the value with the matching line in `SHA256SUMS-macos.txt`.
@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.10.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.11.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -240,3 +240,7 @@ Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScri
 ## C21 - React and React DOM migration (`1.10.0`)
 
 React and React DOM aligned at 19.3.0 with matching types; components use React-scoped JSX types. C20 toolchain preserved while resolving lockfile conflicts; canvas interactions, dialogs and persistence verified in the production renderer.
+
+## C22 - Lucide icon update (`1.11.0`)
+
+Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
