@@ -148,7 +148,8 @@
     "defaultQuality": "auto",
     "canvasPaddingRatio": 0.08,
     "timeoutMs": 120000,
-    "defaultOutputFormat": "png"
+    "defaultOutputFormat": "png",
+    "maxImageBytes": 16777216
   },
   "files": {
     "defaultProjectName": "Untitled Drawing",

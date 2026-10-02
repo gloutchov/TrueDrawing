@@ -224,9 +224,9 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.2.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente su `main`: `1.3.0`; release GitHub pubblicata: `v1.2.0`.
 - Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
-- Milestone corrente: nessuna; M14 e' la prossima pianificata.
+- Milestone corrente: nessuna; M15 e' la prossima pianificata.
 - Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -264,3 +264,11 @@ truedrawing/
 - Landing page statica in `docs/` completata con asset reali, lingua IT/EN, layout responsive, dominio canonico `https://truedrawing.glaucosilvestri.it/` e link al sito principale.
 - Build renderer configurata con asset relativi, cosi' i pacchetti Electron installati caricano correttamente JavaScript e CSS da `file://`.
 - Tema scuro corretto nei dialog Stile e Redraw automatico per mantenere leggibili preset e checkbox.
+
+## C14 - Sicurezza (`1.3.0`)
+
+- `src/shared/security/imagePayload.ts`: limiti comuni per data URL, anche nei progetti.
+- `src/main/security/ipcSecurity.ts`: sender principale, origine e messaggi IPC controllati.
+- `src/main/security/remoteImage.ts`: HTTPS, DNS pubblico alla connessione, timeout, nessun redirect e limite streaming.
+- `tests/unit/securityHardening.test.ts`, `remoteImage.test.ts`, `secretHygiene.test.ts`: controlli negativi e assenza di credenziali nelle fixture.
+- `.github/dependabot.yml`: proposte aggiornamenti mensili limitate.

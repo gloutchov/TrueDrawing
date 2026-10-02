@@ -1,7 +1,7 @@
 import type { AppConfig } from "../config/appConfigSchema";
 
-export function buildContentSecurityPolicy(config: AppConfig, developmentMode: boolean): string {
-  const connectSources = ["'self'", config.imageGeneration.baseUrl];
+export function buildContentSecurityPolicy(_config: AppConfig, developmentMode: boolean): string {
+  const connectSources = [] as string[];
 
   if (developmentMode) {
     connectSources.push("http://127.0.0.1:5173", "ws://127.0.0.1:5173");
@@ -16,9 +16,11 @@ export function buildContentSecurityPolicy(config: AppConfig, developmentMode: b
     `script-src ${scriptSources.join(" ")}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
-    `connect-src ${connectSources.join(" ")}`,
+    `connect-src ${connectSources.length ? connectSources.join(" ") : "'none'"}`,
     "font-src 'self' data:",
     "object-src 'none'",
+    "frame-src 'none'",
+    "worker-src 'none'",
     "base-uri 'none'",
     "form-action 'none'",
     "frame-ancestors 'none'"

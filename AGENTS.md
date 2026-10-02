@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
+- Ultima milestone completata: C14 - Security hardening post release.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.2.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente: `1.3.0`; release GitHub pubblicata: `v1.2.0`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/13-canvas-dimensions`.
+- Ultimo branch milestone completato: `milestone/14-security-hardening`.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -118,3 +118,6 @@ Prima di chiudere una milestone:
 - verificare CI quando prevista e necessaria;
 - chiedere avallo prima del merge, quindi verificare sul remoto `main` e il tag `milestone/C<numero>`;
 - generare e controllare release Windows e macOS quando previsto.
+
+- Esecuzione roadmap 2026-10-02: il progettista autorizza commit, merge, tag, push e rimozione branch senza controllo preventivo; resta obbligatoria la verifica dell'identita', CI e checkpoint. Release cumulativa prevista a M19 per limitare Actions.
+- C14: limiti immagini, download HTTPS con DNS controllato e senza redirect, sender IPC, errori sanitizzati, CSP e avviso safeStorage. Verifiche locali: 74 test, lint/build, smoke chiaro/scuro; audit runtime senza vulnerabilita'.

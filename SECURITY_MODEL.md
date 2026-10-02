@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.2.0` (release GitHub pubblicata: `v1.2.0`)
+Versione sorgente: `1.3.0` (release GitHub pubblicata: `v1.2.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -79,24 +79,19 @@ Il progetto non dispone attualmente di certificati o credenziali per firma codic
 - C13: dimensioni canvas e DPI sono validati nel renderer e nel main, persistono nel progetto e non aggiungono segreti, permessi o canali IPC; il PNG inviato su richiesta all'API rispecchia le dimensioni del documento.
 - Test sicurezza su credential store, preferenze e CSP: completati.
 
-### Miglioramenti pianificati
+### C14 - Correttivi implementati
 
-La milestone `M14 - Security hardening post release` deve rafforzare il modello corrente prima di aggiungere nuove superfici come l'import di immagini di riferimento.
+Il limite comune per immagini IPC e immagini embedded nei progetti e' 16 MiB; `imageGeneration.maxImageBytes` configura il limite aggiuntivo per input/output AI. Il valore predefinito protegge anche chiamate di test con configurazione precedente. Le risposte provider hanno un limite streaming prima del parsing JSON.
 
-Correttivi previsti:
+I download accettano HTTPS senza credenziali o porte alternative, rifiutano host locali e indirizzi privati/loopback/link-local/mapped IPv4, controllano tutti i risultati DNS e collegano direttamente l'indirizzo verificato. Nessun redirect e' seguito. Timeout totale e limiti byte si applicano anche senza Content-Length. Base64 ha precedenza sugli URL.
 
-- applicare un limite esplicito anche al PNG inviato a `image-generation:generate-realistic`;
-- rafforzare il download dell'immagine restituita dal provider, accettando solo URL `https`, bloccando host locali/privati, applicando timeout e limite byte, e preferendo risposte base64 quando disponibili;
-- aggiungere validazione comune dell'origine/sender IPC;
-- restringere la CSP di produzione dove possibile, in particolare `connect-src`, `frame-src` e `worker-src`;
-- centralizzare la sanitizzazione degli errori IPC mostrati al renderer;
-- rendere esplicito in UI e documentazione quando viene usato il fallback cifrato `safeStorage`;
-- aggiungere controlli automatici per evitare API key in configurazione, file progetto, preferenze e fixture di test;
-- valutare Dependabot e audit dipendenze come controlli CI leggeri.
+Tutti i canali IPC verificano il frame principale e l'URL della UI prevista. Errori provider e filesystem sono sostituiti da messaggi controllati; revised_prompt remoto non viene esposto. La CSP di produzione imposta connect-src, frame-src e worker-src a none; il renderer usa IPC per la rete. Popup, navigazioni e webview sono bloccati.
+
+La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende dal servizio segreti disponibile; lo sviluppo cloud richiede --no-sandbox per il limite del container e non verifica la protezione della sandbox di produzione. Test automatici controllano limiti, DNS, redirect, timeout, mittenti ed errori; la scansione credenziali di configurazione e fixture e' euristica, non una garanzia assoluta. Dependabot mensile propone aggiornamenti; audit runtime eseguito senza vulnerabilita'.
 
 ## English
 
-Source version: `1.2.0` (published GitHub release: `v1.2.0`)
+Source version: `1.3.0` (published GitHub release: `v1.2.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -173,17 +168,12 @@ The project currently has no certificates or credentials for Windows code signin
 - C13: canvas dimensions and DPI are validated in the renderer and main process, persist in project files, and add no secrets, permissions, or IPC channels; the PNG sent to the API on request reflects the document dimensions.
 - Security tests for credential store, preferences, and CSP: complete.
 
-### Planned Improvements
+### C14 - Implemented hardening
 
-The `M14 - Security hardening post release` milestone should strengthen the current model before adding new surfaces such as reference image import.
+All IPC and project embedded images are bounded to 16 MiB. The validated imageGeneration.maxImageBytes setting adds an AI input/output bound; the default protects older test configurations. Provider JSON is bounded while streaming before parsing.
 
-Planned fixes:
+Downloads accept HTTPS without credentials or alternative ports, reject local/private/loopback/link-local/mapped addresses, check every DNS result and pin the checked address during connection. Redirects are rejected. Overall timeout and byte limits apply without Content-Length. Base64 takes precedence over URLs.
 
-- apply an explicit size limit to the PNG sent to `image-generation:generate-realistic`;
-- harden provider-returned image downloads by accepting only `https` URLs, blocking local/private hosts, applying timeout and byte limits, and preferring base64 responses when available;
-- add shared IPC sender/origin validation;
-- tighten the production CSP where possible, especially `connect-src`, `frame-src`, and `worker-src`;
-- centralize sanitization for IPC errors shown to the renderer;
-- make the encrypted `safeStorage` fallback explicit in the UI and documentation;
-- add automated checks to prevent API keys in configuration, project files, preferences, and test fixtures;
-- evaluate Dependabot and dependency audit as lightweight CI checks.
+Every IPC channel checks the main frame and expected UI URL. Raw provider/filesystem errors are replaced by controlled messages; remote revised_prompt is omitted. Production CSP denies renderer connections, frames and workers. Network operations use main-process IPC. Popups, navigation and webviews are blocked.
+
+The UI explicitly warns when using safeStorage fallback. Linux protection depends on the available secret service. Cloud development needs --no-sandbox due to container limitations and does not validate production sandbox protection. Tests cover image limits, DNS, redirects, timeouts, senders and errors. Credential scanning of config/fixtures is heuristic, not an absolute guarantee. Monthly Dependabot updates are limited; the runtime dependency audit reported no vulnerabilities.

@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C13 alla versione `1.2.0`, con le dimensioni canvas modificabili e la release GitHub `v1.2.0`.
+True Drawing ha completato C14 alla versione `1.3.0`, con le dimensioni canvas modificabili e la release GitHub `v1.2.0`.
 
-- Versione corrente su `main`: `1.2.0`.
+- Versione corrente su `main`: `1.3.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C13 - Dimensioni canvas in pixel e centimetri`.
+- Ultima milestone completata: `C14 - Security hardening post release`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.2.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M14 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M15 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -35,7 +35,7 @@ Le priorita' sono:
 - Continuare a distribuire artifact non firmati finche' non sono disponibili credenziali di firma Windows/macOS e notarizzazione Apple.
 - Usare `M<n>` per le milestone in programma, `C<n>` per quelle chiuse e `P<n>` per le idee fuori dal piano esecutivo. Eseguire le `M` in ordine numerico.
 - Prima di ogni operazione Git/GitHub verificare autore `gloutchov <gloutchov@gmail.com>` e account GitHub `gloutchov`.
-- Richiedere l'avallo esplicito del progettista prima di ogni merge. Dopo il merge creare e verificare sul remoto il tag annotato `milestone/C<n>`; senza tale checkpoint la milestone seguente non inizia.
+- Per questa esecuzione il progettista ha autorizzato commit, merge, tag, push e rimozione dei branch senza controllo preventivo. Dopo il merge creare e verificare sul remoto il tag annotato `milestone/C<n>`; senza tale checkpoint la milestone seguente non inizia.
 
 ## Verifica minima per ogni milestone
 
@@ -134,13 +134,13 @@ Test richiesti: conversione e limiti, compatibilita' file, history, rendering/ex
 
 Riepilogo e verifiche (2026-09-27): dimensioni e DPI modificabili in px/cm dal pannello destro e dalle Impostazioni, lucchetto proporzioni, riquadri collassabili, persistenza nel progetto e undo/redo. L'Inspector precede Dimensioni canvas e la freccia di compressione chiude ogni intestazione. Lint, 49 test e build verdi; smoke test Electron in profilo temporaneo con px/cm, undo, riquadri e temi chiaro/scuro verificati. CI PR #13 verde (run `36333336031`); CI `main` e workflow release verificati in chiusura. Release `v1.2.0` con artifact Windows/macOS non firmati e checksum SHA-256. Limite residuo: penna e touch fisici non disponibili per lo smoke test.
 
-### M14 - Security hardening post release
+### C14 - Security hardening post release
 
-- Versione finale prevista: `1.3.0`.
-- Branch previsto: `milestone/14-security-hardening`.
-- Tag di checkpoint previsto: `milestone/C14`.
+- Versione finale: `1.3.0`.
+- Branch: `milestone/14-security-hardening`.
+- Tag di checkpoint: `milestone/C14`.
 - Tipo incremento: `+0.1.0`.
-- Stato: pianificata.
+- Stato: implementata; chiusura con CI e checkpoint remoto secondo checklist.
 - Obiettivo: rafforzare le difese gia' documentate in `SECURITY_MODEL.md` prima di aggiungere nuove superfici come l'import di immagini di riferimento.
 
 Attivita':
@@ -172,6 +172,8 @@ Criteri di accettazione:
 Test richiesti: test mirati di logica e flussi interessati, `npm run lint`, `npm run test`, `npm run build` e verifica manuale della UI quando pertinente.
 
 Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, oltre a `SECURITY_MODEL.md` e `MAP.md` secondo le superfici e i moduli modificati.
+
+Riepilogo (2026-10-02): limiti immagini di 16 MiB, controllo DNS alla connessione HTTPS senza redirect, timeout e limite streaming; IPC limitato al renderer principale, errori controllati, CSP senza connessioni/frame/worker in produzione, avviso safeStorage e controlli segreti. Verifiche locali: lint, 74 test, build, smoke Electron nei due temi. Audit dipendenze runtime: zero vulnerabilita'. Dependabot mensile. Limiti: generazione AI reale e dispositivi penna/touch fisici non verificati. Versione `1.3.0`, checkpoint `milestone/C14`. Nessuna release intermedia per risparmiare Actions; release cumulativa prevista a M19.
 
 ### M15 - Brush avanzati e texture personalizzate
 

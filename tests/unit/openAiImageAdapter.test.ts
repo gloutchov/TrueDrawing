@@ -89,7 +89,7 @@ describe("OpenAI image adapter", () => {
       expect.objectContaining({ method: "POST" })
     );
     expect(result.dataUrl).toBe("data:image/png;base64,aW1hZ2U=");
-    expect(result.revisedPrompt).toBe("revised");
+    expect(result.revisedPrompt).toBeUndefined();
   });
 
   it("supports image responses that provide a URL instead of base64 data", async () => {
@@ -107,10 +107,9 @@ describe("OpenAI image adapter", () => {
       canvasDataUrl: "data:image/png;base64,aW1hZ2U=",
       model: "gpt-image-1.5",
       prompt: "make it realistic"
-    }, "test-api-key", config, fetchMock);
+    }, "test-api-key", config, fetchMock, async () => "AQID");
 
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(fetchMock).toHaveBeenNthCalledWith(2, "https://example.test/generated.png");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(result.dataUrl).toBe("data:image/png;base64,AQID");
   });
 
@@ -123,6 +122,6 @@ describe("OpenAI image adapter", () => {
       canvasDataUrl: "data:image/png;base64,aW1hZ2U=",
       model: "gpt-image-1.5",
       prompt: "make it realistic"
-    }, "test-api-key", config, fetchMock)).rejects.toThrow("[redacted]");
+    }, "test-api-key", config, fetchMock)).rejects.toThrow("OpenAI image generation failed with status 401.");
   });
 });
