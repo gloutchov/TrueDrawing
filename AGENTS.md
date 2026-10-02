@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C17 - Maschere e clipping layer.
+- Ultima milestone completata: C18 - Storia versioni del documento.
 - Ultima patch completata: `1.0.3` - dominio canonico della landing page e link al sito principale.
-- Versione corrente: `1.6.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente: `1.7.0`; release GitHub pubblicata: `v1.2.0`.
 - Branch corrente: `main`.
 - Milestone corrente in sviluppo: nessuna.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/17-masks-clipping-layers`.
+- Ultimo branch milestone completato: `milestone/18-document-version-history`.
 - Ultimo branch patch completato: `patch/1.0.3-canonical-site-links`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -135,3 +135,7 @@ Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensio
 ## C17 - Maschere e clipping layer (`1.6.0`)
 
 Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
+
+## C18 - Storia versioni del documento (`1.7.0`)
+
+Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.

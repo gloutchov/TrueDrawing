@@ -2,6 +2,21 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 
 const translations = {
   it: {
+    documentVersions: "Versioni documento",
+    versionName: "Nome versione",
+    createVersion: "Crea versione",
+    renameVersion: "Rinomina versione",
+    restoreVersion: "Ripristina versione",
+    deleteVersion: "Elimina versione",
+    automaticVersions: "Versioni automatiche",
+    automaticVersion: "Versione automatica",
+    versionInstructions: "Snapshot persistenti separati da Undo e autosave. Limiti da configurazione.",
+    restoreVersionConfirm: "Ripristinare questa versione? Lo stato corrente resta disponibile con Undo.",
+    deleteVersionConfirm: "Eliminare questa versione?",
+    versionLimitReached: "Limite versioni/dimensioni raggiunto o nome non valido.",
+    manual: "Manuale",
+    automatic: "Automatica",
+
     layerEffects: "Maschere e clipping",
     createMask: "Crea maschera",
     maskEnabled: "Maschera attiva",
@@ -121,6 +136,21 @@ const translations = {
     resetZoom: "Reset zoom"
   },
   en: {
+    documentVersions: "Document versions",
+    versionName: "Version name",
+    createVersion: "Create version",
+    renameVersion: "Rename version",
+    restoreVersion: "Restore version",
+    deleteVersion: "Delete version",
+    automaticVersions: "Automatic versions",
+    automaticVersion: "Automatic version",
+    versionInstructions: "Persistent snapshots separate from Undo and autosave. Configurable limits.",
+    restoreVersionConfirm: "Restore this version? The current state remains available through Undo.",
+    deleteVersionConfirm: "Delete this version?",
+    versionLimitReached: "Version size/count limit reached or invalid name.",
+    manual: "Manual",
+    automatic: "Automatic",
+
     layerEffects: "Masks and clipping",
     createMask: "Create mask",
     maskEnabled: "Mask enabled",

@@ -1,3 +1,5 @@
+import { SnapshotPanel } from "../project/SnapshotPanel";
+import { createDocumentSnapshot, restoreDocumentSnapshot, renameDocumentSnapshot, deleteDocumentSnapshot } from "../../shared/document/snapshotModel";
 import { LayerEffectsPanel } from "../layers/LayerEffectsPanel";
 import { setLayerClip, setLayerMask } from "../../shared/document/layerEffects";
 import { ProjectNameDialog } from "../project/ProjectNameDialog";
@@ -83,6 +85,8 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     undo,
     redo
   } = useDrawingDocumentHistory(config);
+  const currentDocumentRef = useRef(document);
+  currentDocumentRef.current = document;
   const [maskEditing,setMaskEditing] = useState(false);
   const [projectNamePrompt, setProjectNamePrompt] = useState<{value: string; resolve: (name: string | null) => void} | null>(null);
   const [toolSettings, setToolSettings] = useState<DrawingToolSettings>(() => (
@@ -128,6 +132,17 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
   } as CSSProperties;
   const effectiveLocale = resolveEffectiveLocale(uiPreferences.localeMode);
   const effectiveTheme = resolveEffectiveTheme(uiPreferences.themeMode);
+  useEffect(() => {
+    if (!uiPreferences.autoSnapshots) return;
+    const timer=window.setInterval(()=>{
+      const current=currentDocumentRef.current;
+      try {
+        const next=createDocumentSnapshot(current,config,{id:crypto.randomUUID(),name:t(effectiveLocale,"automaticVersion"),createdAt:new Date().toISOString(),source:"automatic"});
+        if(next!==current) commitDocumentUpdate(()=>next);
+      } catch { setFileStatusMessage(t(effectiveLocale,"versionLimitReached")); }
+    },config.snapshots.autoIntervalMs);
+    return ()=>window.clearInterval(timer);
+  },[uiPreferences.autoSnapshots,config,effectiveLocale,commitDocumentUpdate]);
   const selectTool = useCallback((tool: DrawingToolId) => {
     if (tool !== "selection") {
       setMovablePastedStrokeId(null);
@@ -1028,7 +1043,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
                 validateReference({...image,id:crypto.randomUUID(),visible:true,opacity:config.references.defaultOpacity,x:0,y:0,width:image.width*scale,height:image.height*scale},config)]}));
             } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); }
           })(); }}
-          onUpdate={(id,patch) => { try { commitDocumentUpdate(current=>({...current,references:(current.references ?? []).map(image=>image.id===id ? validateReference({...image,...patch},config) : image)})); } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); } }}
+          onUpdate={(id,patch) => { try { const image=document.references?.find(item=>item.id===id);if(!image)return;const next=validateReference({...image,...patch},config);commitDocumentUpdate(current=>({...current,references:(current.references ?? []).map(image=>image.id===id ? next : image)})); } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); } }}
           onRemove={id=>{ if (window.confirm(t(effectiveLocale,"removeReferenceConfirm"))) commitDocumentUpdate(current=>({...current,references:(current.references ?? []).filter(image=>image.id!==id)})); }} />
         <LayerPanel
           config={config}
@@ -1042,6 +1057,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onSetLayerOpacity={setLayerOpacity}
           onMoveLayer={moveLayer}
         />
+        <SnapshotPanel config={config} locale={effectiveLocale} snapshots={document.snapshots ?? []}
+          automatic={Boolean(uiPreferences.autoSnapshots)} onAutomatic={value=>setUiPreferences(current=>({...current,autoSnapshots:value}))}
+          onCreate={name=>{try{const next=createDocumentSnapshot(document,config,{id:crypto.randomUUID(),name,createdAt:new Date().toISOString(),source:"manual"});commitDocumentUpdate(()=>next);}catch{setFileStatusMessage(t(effectiveLocale,"versionLimitReached"));}}}
+          onRename={(id,name)=>{try{const next=renameDocumentSnapshot(document,id,name,config);commitDocumentUpdate(()=>next);}catch{setFileStatusMessage(t(effectiveLocale,"versionLimitReached"));}}}
+          onRestore={id=>{const next=restoreDocumentSnapshot(document,id);commitDocumentUpdate(()=>next);setCanvasSelection(null);setMovablePastedStrokeId(null);setCanvasPan({x:0,y:0});}}
+          onDelete={id=>commitDocumentUpdate(current=>deleteDocumentSnapshot(current,id))} />
         <LayerEffectsPanel locale={effectiveLocale} layer={activeLayer} layers={document.layers} editing={maskEditing}
           onEditing={setMaskEditing}
           onMask={enabled=>commitDocumentUpdate(current=>setLayerMask(current,current.activeLayerId,enabled))}

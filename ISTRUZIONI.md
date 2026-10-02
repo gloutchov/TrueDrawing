@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.6.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.7.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -210,3 +210,11 @@ Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensio
 Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
 
 Nel pannello Maschere e clipping selezionare **Crea maschera**, quindi **Modifica maschera**. La maschera iniziale rivela tutto: la gomma nasconde, matita/pennello ripristinano la visibilita. Disattivare Modifica maschera per tornare ai tratti del layer. La checkbox Maschera attiva applica/disattiva l'effetto senza perdere i tratti; Rimuovi maschera richiede conferma. **Clipping su layer** usa l'alpha di un altro layer, includendone maschera, opacita e visibilita. I target restano associati dopo riordino; target ciclici sono disabilitati e cancellare il target rimuove la relazione. Effetti, export e generazione condividono lo stesso rendering; tutto persiste e si ripristina con undo/redo.
+
+## C18 - Storia versioni del documento (`1.7.0`)
+
+Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+
+Il pannello **Versioni documento** crea snapshot con un nome, rinominabili e ripristinabili. Uno snapshot contiene canvas, layer, maschere, riferimenti e immagine realistica; le versioni non contengono altre versioni. Ripristino e cancellazione richiedono conferma; dopo ripristino Undo recupera lo stato precedente. Salvare il progetto per conservare le versioni, che sono incluse anche in autosave/recovery. Undo/Redo resta una cronologia operativa in memoria e non viene ricostruita alla riapertura.
+
+**Versioni automatiche** e' una preferenza locale disattivata per default. Se attiva, registra ogni cinque minuti solo contenuto cambiato rispetto all'ultima versione. Limiti `snapshots` da configurazione: 20 versioni, 8 MiB per contenuto, 32 MiB complessivi e nome di 80 caratteri; vale anche il limite totale progetto. Al raggiungimento dei limiti la creazione si arresta senza eliminare versioni precedenti: rimuovere versioni inutili o modificare la configurazione. Non e' un backup esterno: perdere il file tdraw significa perdere le sue versioni.

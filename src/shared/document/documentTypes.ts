@@ -1,3 +1,4 @@
+import type { DocumentSnapshot } from "./snapshotModel";
 import type { ReferenceImage } from "./referenceModel";
 import type { DrawingStroke } from "../drawing/strokeTypes";
 import type { StoredRealisticImage } from "../image-generation/imageGenerationTypes";
@@ -14,6 +15,7 @@ export type DrawingLayer = {
 };
 
 export type DrawingDocument = {
+  snapshots?: DocumentSnapshot[];
   references?: ReferenceImage[];
   canvas: CanvasDimensions;
   layers: DrawingLayer[];

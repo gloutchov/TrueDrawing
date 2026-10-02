@@ -6,6 +6,7 @@ export type EffectiveLocale = "it" | "en";
 export type EffectiveTheme = "light" | "dark";
 
 export type UiPreferences = {
+  autoSnapshots?: boolean;
   canvasZoom?: number;
   localeMode: UiLocaleMode;
   themeMode: UiThemeMode;
@@ -60,6 +61,7 @@ export function isUiThemeMode(value: string): value is UiThemeMode {
 
 function getDefaultUiPreferences(config: AppConfig): UiPreferences {
   return {
+    autoSnapshots: config.snapshots.autoDefaultEnabled,
     localeMode: isUiLocaleMode(config.ui.defaultLocaleMode) ? config.ui.defaultLocaleMode : "system",
     themeMode: isUiThemeMode(config.ui.defaultThemeMode) ? config.ui.defaultThemeMode : "system"
   };
@@ -79,6 +81,7 @@ function normalizeUiPreferences(
 
   return {
     ...preferences,
+    autoSnapshots: typeof preferences.autoSnapshots === "boolean" ? preferences.autoSnapshots : config.snapshots.autoDefaultEnabled,
     localeMode,
     themeMode
   };

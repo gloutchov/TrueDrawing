@@ -1,3 +1,4 @@
+import { validateSnapshotBudget, type DocumentSnapshot } from "../document/snapshotModel";
 import { validateLayerEffects } from "../document/layerEffects";
 import { validateReference } from "../document/referenceModel";
 import { validateBrush } from "../drawing/brushModel";
@@ -118,8 +119,19 @@ export function createProjectSidecarFileNames(
   };
 }
 
-function parseDrawingDocument(value: unknown, config: AppConfig): DrawingDocument {
+function parseDrawingDocument(value: unknown, config: AppConfig, allowSnapshots = true): DrawingDocument {
   const document = expectObject(value, "document");
+  let snapshots: DocumentSnapshot[] | undefined;
+  if(document.snapshots !== undefined) {
+    if(!allowSnapshots) throw new Error("Invalid nested snapshot document.");
+    snapshots=expectArray(document.snapshots,"document.snapshots").map(value=>{
+      const snapshot=expectObject(value,"snapshot");
+      const name=expectString(snapshot.name,"snapshot.name");
+      if(name.length>config.snapshots.maxNameLength || (snapshot.source!=="manual" && snapshot.source!=="automatic")) throw new Error("Invalid snapshot metadata.");
+      return {id:expectString(snapshot.id,"snapshot.id"),name,source:snapshot.source,createdAt:expectIsoDate(snapshot.createdAt,"snapshot.createdAt"),document:parseDrawingDocument(snapshot.document,config,false)};
+    });
+    validateSnapshotBudget(snapshots,config);
+  }
   const layers = expectArray(document.layers, "document.layers").map(parseDrawingLayer);
   validateLayerEffects(layers);
   if (layers.length > (config.layers?.maxLayers ?? 32)) throw new Error("Invalid layer count.");
@@ -136,6 +148,7 @@ function parseDrawingDocument(value: unknown, config: AppConfig): DrawingDocumen
   const references = document.references === undefined ? [] : expectArray(document.references, "document.references").map(item => validateReference(item, config));
   if (references.length > (config.references?.maxImages ?? 4) || new Set(references.map(item => item.id)).size !== references.length) throw new Error("Invalid reference images.");
   return {
+    ...(snapshots ? {snapshots} : {}),
     references,
     canvas: document.canvas === undefined
       ? createDefaultCanvasDimensions(config)

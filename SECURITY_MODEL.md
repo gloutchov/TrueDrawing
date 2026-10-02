@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.6.0` (release GitHub pubblicata: `v1.2.0`)
+Versione sorgente: `1.7.0` (release GitHub pubblicata: `v1.2.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.6.0` (published GitHub release: `v1.2.0`)
+Source version: `1.7.0` (published GitHub release: `v1.2.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -195,3 +195,9 @@ Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensio
 Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
 
 C17: maschere e relazioni clipping sono dati locali validati nel progetto; le immagini embedded nelle maschere hanno gli stessi limiti. Identita layer univoche, target esistenti e assenza cicli verificati prima del rendering. Nessun nuovo accesso filesystem/rete/IPC. / Masks and clipping are validated local project data, with the same limits for embedded mask images. Unique layer identities, existing targets and acyclic relationships are checked before rendering. No new filesystem/network/IPC access.
+
+## C18 - Storia versioni del documento (`1.7.0`)
+
+Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+
+C18: snapshot locali embedded, senza file aggiuntivi o invio provider. Capsule senza versioni annidate, metadati e contenuto validati alla riapertura; limiti conteggio, byte per versione e totali applicati a creazione e lettura. Ripristino/cancellazione chiedono conferma. / C18: local embedded snapshots, no extra files or provider transfers; non-recursive capsules, validated metadata/content and count/per-version/total byte limits at creation and load; restoration/deletion require confirmation.

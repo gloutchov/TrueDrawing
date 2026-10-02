@@ -260,5 +260,13 @@
     "maxImageBytes": 4194304,
     "defaultOpacity": 0.5,
     "maxScale": 4
+  },
+  "snapshots": {
+    "maxCount": 20,
+    "maxSnapshotBytes": 8388608,
+    "maxTotalBytes": 33554432,
+    "maxNameLength": 80,
+    "autoDefaultEnabled": false,
+    "autoIntervalMs": 300000
   }
 }

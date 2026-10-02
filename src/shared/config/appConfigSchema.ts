@@ -88,6 +88,7 @@ export type AppConfig = {
     maxImageBytes: number;
     defaultOutputFormat: string;
   };
+  snapshots: {maxCount:number;maxSnapshotBytes:number;maxTotalBytes:number;maxNameLength:number;autoDefaultEnabled:boolean;autoIntervalMs:number};
   references: {maxImages: number; maxImageBytes: number; defaultOpacity: number; maxScale: number};
   files: {
     maxProjectBytes: number;
@@ -153,6 +154,7 @@ export function validateAppConfig(value: unknown): AppConfig {
     false
   );
   const files = expectObject(config.files, "files");
+  const snapshots = expectObject(config.snapshots,"snapshots");
   const references = expectObject(config.references, "references");
 
   if (!availableLocaleModes.includes(defaultLocaleMode)) {
@@ -267,6 +269,14 @@ export function validateAppConfig(value: unknown): AppConfig {
       timeoutMs: expectPositiveNumber(imageGeneration.timeoutMs, "imageGeneration.timeoutMs"),
       maxImageBytes: expectPositiveInteger(imageGeneration.maxImageBytes, "imageGeneration.maxImageBytes"),
       defaultOutputFormat: expectString(imageGeneration.defaultOutputFormat, "imageGeneration.defaultOutputFormat")
+    },
+    snapshots: {
+      maxCount:expectPositiveInteger(snapshots.maxCount,"snapshots.maxCount"),
+      maxSnapshotBytes:expectPositiveInteger(snapshots.maxSnapshotBytes,"snapshots.maxSnapshotBytes"),
+      maxTotalBytes:expectPositiveInteger(snapshots.maxTotalBytes,"snapshots.maxTotalBytes"),
+      maxNameLength:expectPositiveInteger(snapshots.maxNameLength,"snapshots.maxNameLength"),
+      autoDefaultEnabled:expectBoolean(snapshots.autoDefaultEnabled,"snapshots.autoDefaultEnabled"),
+      autoIntervalMs:expectPositiveInteger(snapshots.autoIntervalMs,"snapshots.autoIntervalMs")
     },
     references: {
       maxImages: expectPositiveInteger(references.maxImages, "references.maxImages"),
