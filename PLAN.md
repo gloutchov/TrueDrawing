@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C18 alla versione `1.7.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
+True Drawing ha completato C19 alla versione `1.8.0`. La roadmap attiva e' completata; la release cumulativa e' `v1.8.0`.
 
-- Versione corrente su `main`: `1.7.0`.
+- Versione corrente su `main`: `1.8.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C18 - Storia versioni del documento`.
-- Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
+- Ultima milestone completata: `C19 - Preset di stile realistico`.
+- Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.2.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M19 e' la prossima pianificata.
+- Release GitHub corrente: `v1.8.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Milestone corrente in sviluppo: nessuna; roadmap attiva completata.
 
 ## Obiettivo della fase post release
 
@@ -181,7 +181,7 @@ Riepilogo (2026-10-02): limiti immagini di 16 MiB, controllo DNS alla connession
 - Branch: `milestone/15-advanced-brushes`.
 - Tag di checkpoint: `milestone/C15`.
 - Tipo incremento: `+0.1.0`.
-- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
+- Stato: completata; PR #18 CI `37043079381`, main CI `37043178946`, checkpoint e tag verificati sul remoto.
 - Obiettivo: rendere il motore di disegno piu' espressivo con brush avanzati e texture configurabili.
 
 Attivita':
@@ -212,7 +212,7 @@ Riepilogo (2026-10-02): Preset brush bilingui da configurazione: grafite, morbid
 - Branch: `milestone/16-reference-image-import`.
 - Tag di checkpoint: `milestone/C16`.
 - Tipo incremento: `+0.1.0`.
-- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
+- Stato: completata; PR #19 CI `37044259748`, main CI `37044386123`, checkpoint e tag verificati sul remoto.
 - Obiettivo: permettere all'utente di importare immagini locali come riferimento o base di lavoro.
 
 Attivita':
@@ -243,7 +243,7 @@ Riepilogo (2026-10-02): Import locale PNG/JPEG/WebP da dialogo nativo controllat
 - Branch: `milestone/17-masks-clipping-layers`.
 - Tag di checkpoint: `milestone/C17`.
 - Tipo incremento: `+0.1.0`.
-- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
+- Stato: completata; PR #21 CI `37045572252`, main CI `37045931619`, checkpoint e tag verificati sul remoto.
 - Obiettivo: aggiungere controllo avanzato della composizione tramite maschere e clipping.
 
 Attivita':
@@ -273,7 +273,7 @@ Riepilogo (2026-10-02): Maschere non distruttive con editor, attivazione e rimoz
 - Branch: `milestone/18-document-version-history`.
 - Tag di checkpoint: `milestone/C18`.
 - Tipo incremento: `+0.1.0`.
-- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
+- Stato: completata; PR #22 CI `37047176018`, main CI `37047290899`, checkpoint e tag verificati sul remoto.
 - Obiettivo: permettere all'utente di tornare a snapshot precedenti del progetto.
 
 Attivita':
@@ -298,13 +298,13 @@ Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `
 
 Riepilogo (2026-10-02): Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules. Verifiche: lint, 99 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.7.0`, checkpoint `milestone/C18`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
 
-### M19 - Preset di stile realistico
+### C19 - Preset di stile realistico
 
-- Versione finale prevista: `1.8.0`.
-- Branch previsto: `milestone/19-realistic-style-presets`.
-- Tag di checkpoint previsto: `milestone/C19`.
+- Versione finale: `1.8.0`.
+- Branch: `milestone/19-realistic-style-presets`.
+- Tag di checkpoint: `milestone/C19`.
 - Tipo incremento: `+0.1.0`.
-- Stato: pianificata.
+- Stato: completata con verifiche locali; CI e checkpoint verificati in chiusura.
 - Obiettivo: rendere piu' potente e prevedibile la generazione realistica tramite preset di stile.
 
 Attivita':
@@ -328,6 +328,8 @@ Documentazione da aggiornare: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `
 
 ## Fuori roadmap attiva
 
+Riepilogo (2026-10-02): Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads. Verifiche: lint, 117 test, build e smoke Electron nei temi chiaro/scuro. Versione `1.8.0`, checkpoint `milestone/C19`. Limite residuo: input penna/touch fisico non verificato. Release cumulativa a M19.
+
 ### Aggiornamenti automatici firmati
 
 Gli aggiornamenti automatici firmati non sono inclusi nella roadmap attiva.
@@ -348,8 +350,11 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C16 - Import immagini di riferimento | 1.5.0 | `milestone/16-reference-image-import` | Completata | Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI. 83 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C17 - Maschere e clipping layer | 1.6.0 | `milestone/17-masks-clipping-layers` | Completata | Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence. 93 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C18 - Storia versioni del documento | 1.7.0 | `milestone/18-document-version-history` | Completata | Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules. 99 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-02 | C19 - Preset di stile realistico | 1.8.0 | `milestone/19-realistic-style-presets` | Completata | Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads. 117 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
+
+Modello da applicare a ogni nuova milestone; gli esiti delle milestone chiuse sono registrati sopra. L'avallo preventivo e' stato esentato per questa esecuzione.
 
 - [ ] Branch milestone creato.
 - [ ] Implementazione completata.

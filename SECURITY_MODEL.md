@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.7.0` (release GitHub pubblicata: `v1.2.0`)
+Versione sorgente: `1.8.0` (release GitHub pubblicata: `v1.8.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -42,7 +42,7 @@ I payload IPC per immagini, prompt e testo clipboard hanno limiti di dimensione 
 
 Le dimensioni canvas e i DPI sono salvati nel progetto e validati nel main process sia all'apertura sia nelle richieste di salvataggio/autosave. I limiti centrali evitano dimensioni canvas eccessive. Il ridimensionamento non invia dati in rete; solo una richiesta di generazione OpenAI invia il PNG del canvas, con il padding configurato. Il sidecar e gli export non includono quel padding.
 
-La Content Security Policy limita script, immagini, form, frame e connessioni remote. In produzione le connessioni remote ammesse dal renderer sono ristrette al base URL configurato per OpenAI; la chiamata effettiva all'API resta comunque nel main process.
+La Content Security Policy limita script, immagini, form, frame e connessioni remote. In produzione connect-src, frame-src e worker-src sono none; solo il main process esegue le richieste OpenAI tramite IPC controllato.
 
 ### Rete
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.7.0` (published GitHub release: `v1.2.0`)
+Source version: `1.8.0` (published GitHub release: `v1.8.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -131,7 +131,7 @@ IPC payloads for images, prompts, and clipboard text have explicit size limits. 
 
 Canvas dimensions and DPI are stored in the project and validated in the main process on both open and save/autosave requests. Central limits prevent excessive canvas sizes. Resizing sends no data over the network; only an OpenAI generation request sends a canvas PNG with configured padding. Sidecars and exports do not include that padding.
 
-The Content Security Policy limits scripts, images, forms, frames, and remote connections. In production, renderer remote connection sources are restricted to the configured OpenAI base URL; the actual API call still happens in the main process.
+The Content Security Policy limits scripts, images, forms, frames, and remote connections. In production connect-src, frame-src and worker-src are none; only the main process performs OpenAI requests through controlled IPC.
 
 ### Network
 
@@ -201,3 +201,15 @@ C17: maschere e relazioni clipping sono dati locali validati nel progetto; le im
 Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
 
 C18: snapshot locali embedded, senza file aggiuntivi o invio provider. Capsule senza versioni annidate, metadati e contenuto validati alla riapertura; limiti conteggio, byte per versione e totali applicati a creazione e lettura. Ripristino/cancellazione chiedono conferma. / C18: local embedded snapshots, no extra files or provider transfers; non-recursive capsules, validated metadata/content and count/per-version/total byte limits at creation and load; restoration/deletion require confirmation.
+
+## C19 - Preset di stile realistico (`1.8.0`)
+
+Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+
+IT: ID univoci, nomi/descrizioni bilingui e frammenti prompt sono validati all'avvio. Solo quality/size supportati sono ammessi nei parametri; il main risolve il preset dalla propria configurazione e ignora parametri arbitrari del renderer. Il canale preferenze stile esistente salva stile e ID preferito insieme; nessun nuovo canale legge segreti. Preferenze legacy restano leggibili e un preferito rimosso dalla configurazione viene scartato.
+
+Il prompt contiene esclusivamente istruzioni generali di composizione e stile; nessun conteggio o nome del documento. Il canvas inviato esclude immagini di riferimento e versioni e include gli effetti layer. La chiave e' usata solo nell'header di autenticazione del main. Un controllo euristico blocca comuni incolli di credenziali in preset, stile, modello e prompt; non e' una garanzia di rilevamento completo. Test verificano limiti testo, parametri non supportati, persistenza senza credenziali, richieste respinte prima della rete e omissione degli errori/revised_prompt remoti. Generazione reale a pagamento non verificata.
+
+EN: Unique IDs, bilingual names/descriptions and prompt fragments are validated on startup. Presets support only allowed quality/size values; main resolves them from its trusted configuration and ignores arbitrary renderer parameters. The existing style preference channel saves style and favorite ID together; no new channel reads secrets. Legacy preferences remain readable; removed favorites are discarded.
+
+Prompts contain only composition and style instructions, without document counts or names. Uploaded canvas excludes reference images and versions and includes layer effects. The key is used only in the main-process authentication header. A heuristic guard rejects common credential pastes in presets, style, model and prompts; it cannot detect every secret. Tests cover text limits, unsupported parameters, credential-free persistence, rejection before network calls and omission of remote error/revised_prompt details. Paid live generation remains untested.

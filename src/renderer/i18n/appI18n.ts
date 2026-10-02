@@ -2,6 +2,12 @@ import type { EffectiveLocale, UiLocaleMode, UiThemeMode } from "../app/uiPrefer
 
 const translations = {
   it: {
+    stylePreset: "Preset di stile",
+    customStyle: "Stile personalizzato",
+    favoriteStyle: "Preset preferito",
+    useFavoriteStyle: "Usa preferito",
+    styleSaveFailed: "Stile non valido o impossibile da salvare. Non inserire credenziali nello stile.",
+    stylePrivacy: "La generazione invia il canvas composito e le istruzioni di stile a OpenAI. Riferimenti e versioni restano locali.",
     documentVersions: "Versioni documento",
     versionName: "Nome versione",
     createVersion: "Crea versione",
@@ -136,6 +142,12 @@ const translations = {
     resetZoom: "Reset zoom"
   },
   en: {
+    stylePreset: "Style preset",
+    customStyle: "Custom style",
+    favoriteStyle: "Favorite preset",
+    useFavoriteStyle: "Use favorite",
+    styleSaveFailed: "Invalid style or unable to save. Do not enter credentials in the style.",
+    stylePrivacy: "Generation sends the composited canvas and style instructions to OpenAI. References and versions stay local.",
     documentVersions: "Document versions",
     versionName: "Version name",
     createVersion: "Create version",

@@ -241,7 +241,106 @@
     "canvasPaddingRatio": 0.08,
     "timeoutMs": 120000,
     "defaultOutputFormat": "png",
-    "maxImageBytes": 16777216
+    "maxImageBytes": 16777216,
+    "maxCustomStyleLength": 80,
+    "stylePresets": [
+      {
+        "id": "acquerello",
+        "name": {
+          "it": "Acquerello",
+          "en": "Watercolor"
+        },
+        "description": {
+          "it": "Pigmenti trasparenti, carta e bordi morbidi.",
+          "en": "Transparent pigments, paper grain and soft edges."
+        },
+        "promptFragment": "Render a watercolor painting with transparent pigment washes, subtle paper grain and soft paint edges. Preserve the sketch composition.",
+        "parameters": {
+          "quality": "auto",
+          "size": "1024x1024"
+        }
+      },
+      {
+        "id": "cartoon",
+        "name": {
+          "it": "Cartoon",
+          "en": "Cartoon"
+        },
+        "description": {
+          "it": "Contorni puliti e colori piatti espressivi.",
+          "en": "Clean outlines and expressive flat colors."
+        },
+        "promptFragment": "Render a polished cartoon illustration with clean outlines, expressive shapes and controlled flat colors. Preserve the sketch composition.",
+        "parameters": {
+          "quality": "auto",
+          "size": "1024x1024"
+        }
+      },
+      {
+        "id": "infantile",
+        "name": {
+          "it": "Disegno infantile",
+          "en": "Childlike drawing"
+        },
+        "description": {
+          "it": "Tratti spontanei, pastelli e forme semplici.",
+          "en": "Spontaneous strokes, crayon texture and simple forms."
+        },
+        "promptFragment": "Render a playful childlike drawing with spontaneous lines, crayon textures and simple forms. Preserve the sketch composition.",
+        "parameters": {
+          "quality": "auto",
+          "size": "1024x1024"
+        }
+      },
+      {
+        "id": "olio",
+        "name": {
+          "it": "Pittura a olio",
+          "en": "Oil painting"
+        },
+        "description": {
+          "it": "Pennellate ricche e luce pittorica.",
+          "en": "Rich brushwork and painterly lighting."
+        },
+        "promptFragment": "Render an oil painting with rich brushwork, layered pigments and coherent painterly light. Preserve the sketch composition.",
+        "parameters": {
+          "quality": "auto",
+          "size": "1024x1024"
+        }
+      },
+      {
+        "id": "realistica",
+        "name": {
+          "it": "Realistico",
+          "en": "Realistic"
+        },
+        "description": {
+          "it": "Luce naturale, materiali e dettagli plausibili.",
+          "en": "Natural light, plausible materials and detailed surfaces."
+        },
+        "promptFragment": "Render a realistic image with natural lighting, plausible materials and detailed surfaces. Preserve the sketch composition.",
+        "parameters": {
+          "quality": "auto",
+          "size": "1024x1024"
+        }
+      },
+      {
+        "id": "surreale",
+        "name": {
+          "it": "Surreale",
+          "en": "Surreal"
+        },
+        "description": {
+          "it": "Atmosfera onirica e materiali evocativi.",
+          "en": "Dreamlike atmosphere and evocative materials."
+        },
+        "promptFragment": "Render a surreal image with a dreamlike atmosphere, evocative materials and coherent lighting. Preserve the original subjects and composition.",
+        "parameters": {
+          "quality": "auto",
+          "size": "1024x1024"
+        }
+      }
+    ]
   },
   "files": {
     "defaultProjectName": "Untitled Drawing",

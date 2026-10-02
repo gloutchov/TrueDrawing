@@ -4,6 +4,8 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { createImageGenerationPreferencesStore } from "../../src/main/preferences/imageGenerationPreferencesStore";
+import { validateAppConfig } from "../../src/shared/config/appConfigSchema";
+import repositoryConfig from "../../config/app.config.json";
 import type { AppConfig } from "../../src/shared/config/appConfigSchema";
 
 const config: AppConfig = {
@@ -81,6 +83,7 @@ describe("image generation preferences store", () => {
     expect(store.getPreferences()).toEqual({
       model: "gpt-image-1.5",
       style: "realistica",
+      favoriteStyleId: null,
       autoRedrawEnabled: false,
       autoRedrawDelaySeconds: 5
     });
@@ -123,5 +126,35 @@ describe("image generation preferences store", () => {
     expect(store.setStyle("cartoon").style).toBe("cartoon");
     expect(fs.statSync(path.join(userDataPath, "preferences")).isDirectory()).toBe(true);
     expect(store.getPreferences().style).toBe("cartoon");
+  });
+
+  it("persists a favorite atomically with the style, and preserves it on legacy updates", () => {
+    const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
+    const store = createImageGenerationPreferencesStore(userDataPath, () => validateAppConfig(repositoryConfig));
+    expect(store.setStyle("cartoon", "cartoon")).toMatchObject({ style: "cartoon", favoriteStyleId: "cartoon" });
+    expect(store.setStyle("soft pastel drawing").favoriteStyleId).toBe("cartoon");
+    const reopened = createImageGenerationPreferencesStore(userDataPath, () => validateAppConfig(repositoryConfig));
+    expect(reopened.getPreferences()).toMatchObject({ style: "soft pastel drawing", favoriteStyleId: "cartoon" });
+    expect(store.setStyle("realistica", null).favoriteStyleId).toBeNull();
+  });
+
+  it("rejects unknown favorites and credential-like custom styles before writing", () => {
+    const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
+    const store = createImageGenerationPreferencesStore(userDataPath, () => validateAppConfig(repositoryConfig));
+    store.setStyle("cartoon", "cartoon");
+    expect(() => store.setStyle("realistica", "missing")).toThrow(/Invalid favorite/);
+    expect(() => store.setStyle("sk-" + "a".repeat(32))).toThrow(/Invalid image style/);
+    expect(store.getPreferences()).toMatchObject({ style: "cartoon", favoriteStyleId: "cartoon" });
+  });
+
+  it("migrates legacy style preferences and drops favorites removed from configuration", () => {
+    const userDataPath = fs.mkdtempSync(path.join(os.tmpdir(), "truedrawing-"));
+    fs.mkdirSync(path.join(userDataPath, "preferences"));
+    const file = path.join(userDataPath, "preferences", "image-generation.json");
+    fs.writeFileSync(file, JSON.stringify({ version: 1, model: "gpt-image-1.5", style: "cartoon" }));
+    const store = createImageGenerationPreferencesStore(userDataPath, () => validateAppConfig(repositoryConfig));
+    expect(store.getPreferences()).toMatchObject({ style: "cartoon", favoriteStyleId: null });
+    fs.writeFileSync(file, JSON.stringify({ version: 1, model: "gpt-image-1.5", style: "cartoon", favoriteStyleId: "missing" }));
+    expect(store.getPreferences().favoriteStyleId).toBeNull();
   });
 });

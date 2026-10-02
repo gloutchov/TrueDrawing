@@ -17,6 +17,8 @@ import type {
 
 import { maxImageDataUrlLength, validateImageDataUrl } from "../../shared/security/imagePayload";
 import { sanitizeIpcError, validateIpcSender } from "../security/ipcSecurity";
+import { containsCredentialText } from "../../shared/security/credentialText";
+import { findStylePreset } from "../../shared/image-generation/stylePresets";
 
 const handle: typeof ipcMain.handle = (channel, listener) => {
   ipcMain.handle(channel, async (event, ...args) => {
@@ -87,12 +89,15 @@ export function registerIpc({
 
     return preferencesStore.setModel(model);
   });
-  handle("preferences:image-generation:set-style", (_event, style: unknown) => {
+  handle("preferences:image-generation:set-style", (_event, style: unknown, favoriteStyleId: unknown) => {
     if (typeof style !== "string") {
       throw new Error("Invalid image style input.");
     }
 
-    return preferencesStore.setStyle(style);
+    if (favoriteStyleId !== undefined && favoriteStyleId !== null && typeof favoriteStyleId !== "string") {
+      throw new Error("Invalid favorite style preset.");
+    }
+    return preferencesStore.setStyle(style, favoriteStyleId);
   });
   handle("preferences:image-generation:set-auto-redraw", (_event, options: unknown) => {
     if (!options || typeof options !== "object") {
@@ -111,7 +116,7 @@ export function registerIpc({
     return preferencesStore.setAutoRedraw(preferences.enabled, preferences.delaySeconds);
   });
   handle("image-generation:generate-realistic", async (_event, request: unknown) => {
-    const realisticImageRequest = validateRealisticImageRequest(request);
+    const realisticImageRequest = validateRealisticImageRequest(request, getConfig());
     const apiKey = apiKeyStore.getOpenAiApiKey();
 
     if (!apiKey) {
@@ -203,13 +208,13 @@ export function registerIpc({
   ));
 }
 
-function validateRealisticImageRequest(value: unknown): RealisticImageRequest {
+function validateRealisticImageRequest(value: unknown, config: AppConfig): RealisticImageRequest {
   if (!value || typeof value !== "object") {
     throw new Error("Invalid image generation request.");
   }
 
   const request = value as Partial<RealisticImageRequest>;
-  validateImageDataUrl(request.canvasDataUrl);
+  validateImageDataUrl(request.canvasDataUrl, config.imageGeneration.maxImageBytes);
 
   if (typeof request.canvasDataUrl !== "string" || !isPngDataUrl(request.canvasDataUrl)) {
     throw new Error("Invalid image generation request.");
@@ -222,15 +227,20 @@ function validateRealisticImageRequest(value: unknown): RealisticImageRequest {
   if (
     typeof request.prompt !== "string" ||
     request.prompt.trim().length === 0 ||
-    request.prompt.length > maxPromptLength
+    request.prompt.length > maxPromptLength || containsCredentialText(request.prompt)
   ) {
     throw new Error("Invalid image generation request.");
+  }
+  if (request.stylePresetId !== undefined && (typeof request.stylePresetId !== "string"
+    || !findStylePreset(config.imageGeneration.stylePresets, request.stylePresetId))) {
+    throw new Error("Invalid image style preset.");
   }
 
   return {
     canvasDataUrl: request.canvasDataUrl,
     model: request.model.trim(),
-    prompt: request.prompt.trim()
+    prompt: request.prompt.trim(),
+    stylePresetId: request.stylePresetId
   };
 }
 
@@ -239,7 +249,7 @@ function isPngDataUrl(value: string): boolean {
 }
 
 function isValidImageModelName(model: string): boolean {
-  return /^[A-Za-z0-9._:-]{2,100}$/.test(model.trim());
+  return /^[A-Za-z0-9._:-]{2,100}$/.test(model.trim()) && !containsCredentialText(model);
 }
 
 function validateProjectSaveRequest(value: unknown, config: AppConfig): ProjectSaveRequest {

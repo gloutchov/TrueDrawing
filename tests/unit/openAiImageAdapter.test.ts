@@ -2,6 +2,8 @@ import { describe, expect, it, vi } from "vitest";
 
 import { generateOpenAiRealisticImage } from "../../src/main/image-generation/openAiImageAdapter";
 import type { AppConfig } from "../../src/shared/config/appConfigSchema";
+import { validateAppConfig } from "../../src/shared/config/appConfigSchema";
+import repositoryConfig from "../../config/app.config.json";
 
 const config: AppConfig = {
   app: { name: "True Drawing", defaultLocale: "it", autosaveIntervalMs: 30000, historyLimit: 100 },
@@ -123,5 +125,40 @@ describe("OpenAI image adapter", () => {
       model: "gpt-image-1.5",
       prompt: "make it realistic"
     }, "test-api-key", config, fetchMock)).rejects.toThrow("OpenAI image generation failed with status 401.");
+  });
+
+  it("uses only quality and size from the selected validated preset", async () => {
+    const trustedConfig = validateAppConfig(repositoryConfig);
+    trustedConfig.imageGeneration.stylePresets[0].parameters = { quality: "medium", size: "1536x1024" };
+    let sent: FormData | undefined;
+    const fetchMock = vi.fn(async (_url: RequestInfo | URL, options?: RequestInit) => {
+      sent = options?.body as FormData;
+      return new Response(JSON.stringify({ data: [{ b64_json: "aW1hZ2U=" }] }), { status: 200 });
+    });
+    await generateOpenAiRealisticImage({
+      canvasDataUrl: "data:image/png;base64,aW1hZ2U=", model: "gpt-image-1.5", prompt: "watercolor", stylePresetId: "acquerello",
+      ...{ quality: "invalid", size: "9999x9999", favoriteStyleId: "private" }
+    }, "test-api-key", trustedConfig, fetchMock);
+    expect(sent?.get("quality")).toBe("medium");
+    expect(sent?.get("size")).toBe("1536x1024");
+    expect(sent?.get("favoriteStyleId")).toBeNull();
+  });
+
+  it("rejects unknown preset ids and credential-like prompts before any network request", async () => {
+    const trustedConfig = validateAppConfig(repositoryConfig);
+    const fetchMock = vi.fn();
+    const request = { canvasDataUrl: "data:image/png;base64,aW1hZ2U=", model: "gpt-image-1.5", prompt: "make realistic" };
+    await expect(generateOpenAiRealisticImage({ ...request, stylePresetId: "missing" }, "test-api-key", trustedConfig, fetchMock)).rejects.toThrow(/Invalid image style preset/);
+    await expect(generateOpenAiRealisticImage({ ...request, prompt: "Bearer " + "x".repeat(32) }, "test-api-key", trustedConfig, fetchMock)).rejects.toThrow(/Invalid image generation request/);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("discards network exception details and provider-revised prompts", async () => {
+    const sensitive = "sk-" + "x".repeat(32);
+    const request = { canvasDataUrl: "data:image/png;base64,aW1hZ2U=", model: "gpt-image-1.5", prompt: "make realistic" };
+    const fail = vi.fn(async () => { throw new Error(sensitive + " /Users/private/project.tdraw"); });
+    await expect(generateOpenAiRealisticImage(request, "test-api-key", config, fail)).rejects.toThrow("Image generation failed.");
+    const success = vi.fn(async () => new Response(JSON.stringify({ data: [{ b64_json: "aW1hZ2U=", revised_prompt: sensitive }] }), { status: 200 }));
+    expect(JSON.stringify(await generateOpenAiRealisticImage(request, "test-api-key", config, success))).not.toContain(sensitive);
   });
 });

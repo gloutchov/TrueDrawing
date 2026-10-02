@@ -1,4 +1,5 @@
 import { validateBrush, type BrushPreset } from "../drawing/brushModel";
+import { validateImageQuality, validateImageSize, validateStylePresets, type StylePreset } from "../image-generation/stylePresets";
 import type { DrawingToolId, DrawingToolPreset, StrokeStyleId } from "../drawing/toolTypes";
 import { isDrawingToolId, isStrokeStyleId, isStrokeToolId } from "../drawing/toolTypes";
 
@@ -78,6 +79,8 @@ export type AppConfig = {
     availableModels: string[];
     defaultStyle: string;
     availableStyles: string[];
+    stylePresets: StylePreset[];
+    maxCustomStyleLength: number;
     autoRedrawDefaultEnabled: boolean;
     autoRedrawDefaultDelaySeconds: number;
     autoRedrawDelayRange: NumberRange;
@@ -144,6 +147,15 @@ export function validateAppConfig(value: unknown): AppConfig {
     imageGeneration.availableStyles,
     "imageGeneration.availableStyles"
   );
+  const stylePresets = validateStylePresets(imageGeneration.stylePresets);
+  const maxCustomStyleLength = expectPositiveInteger(imageGeneration.maxCustomStyleLength, "imageGeneration.maxCustomStyleLength");
+  if (maxCustomStyleLength < 2 || maxCustomStyleLength > 2000) {
+    throw new Error("Invalid app configuration: custom style length must be between 2 and 2000.");
+  }
+  if (availableImageStyles.length !== stylePresets.length
+    || availableImageStyles.some((id, index) => id !== stylePresets[index].id)) {
+    throw new Error("Invalid app configuration: availableStyles must match the ordered style presets.");
+  }
   const autoRedrawDefaultDelaySeconds = expectPositiveNumber(
     imageGeneration.autoRedrawDefaultDelaySeconds,
     "imageGeneration.autoRedrawDefaultDelaySeconds"
@@ -257,14 +269,16 @@ export function validateAppConfig(value: unknown): AppConfig {
       availableModels: availableImageModels,
       defaultStyle: defaultImageStyle,
       availableStyles: availableImageStyles,
+      stylePresets,
+      maxCustomStyleLength,
       autoRedrawDefaultEnabled: expectBoolean(
         imageGeneration.autoRedrawDefaultEnabled,
         "imageGeneration.autoRedrawDefaultEnabled"
       ),
       autoRedrawDefaultDelaySeconds,
       autoRedrawDelayRange,
-      defaultSize: expectString(imageGeneration.defaultSize, "imageGeneration.defaultSize"),
-      defaultQuality: expectString(imageGeneration.defaultQuality, "imageGeneration.defaultQuality"),
+      defaultSize: validateImageSize(imageGeneration.defaultSize),
+      defaultQuality: validateImageQuality(imageGeneration.defaultQuality),
       canvasPaddingRatio: expectUnitNumber(imageGeneration.canvasPaddingRatio, "imageGeneration.canvasPaddingRatio"),
       timeoutMs: expectPositiveNumber(imageGeneration.timeoutMs, "imageGeneration.timeoutMs"),
       maxImageBytes: expectPositiveInteger(imageGeneration.maxImageBytes, "imageGeneration.maxImageBytes"),

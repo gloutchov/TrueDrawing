@@ -54,12 +54,12 @@ _Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. 
 
 ### Verifica checksum SHA-256
 
-La release pubblicata `v1.2.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
+La release pubblicata `v1.8.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
 
 Su Windows, dalla cartella dove si trova l'installer:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.2.0-Windows-x64.exe -Algorithm SHA256
+Get-FileHash .\True-Drawing-1.8.0-Windows-x64.exe -Algorithm SHA256
 ```
 
 Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
@@ -67,7 +67,7 @@ Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.t
 Su macOS, dalla cartella dove si trova il download:
 
 ```bash
-shasum -a 256 True-Drawing-1.2.0-macOS-arm64.dmg
+shasum -a 256 True-Drawing-1.8.0-macOS-arm64.dmg
 ```
 
 Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.
@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.7.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.8.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -197,6 +197,8 @@ Sicurezza 1.3.0: immagini IPC/progetto limitate a 16 MiB; il download AI rifiuta
 
 Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
 
+Nel pannello **Brush avanzati** selezionare grafite, morbido, marker, inchiostro o texture. Pressione dimensione/opacita', velocita', spaziatura e grana/punti/tratteggio regolano i nuovi tratti; quelli gia' disegnati conservano i loro parametri. Selezionare un tool classico per tornare al comportamento precedente. Undo/Redo ripristina i tratti; le impostazioni applicate sono conservate nel progetto. Il comportamento della pressione dipende dal dispositivo Pointer Events.
+
 ## C16 - Import immagini di riferimento (`1.5.0`)
 
 Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
@@ -218,3 +220,15 @@ Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e c
 Il pannello **Versioni documento** crea snapshot con un nome, rinominabili e ripristinabili. Uno snapshot contiene canvas, layer, maschere, riferimenti e immagine realistica; le versioni non contengono altre versioni. Ripristino e cancellazione richiedono conferma; dopo ripristino Undo recupera lo stato precedente. Salvare il progetto per conservare le versioni, che sono incluse anche in autosave/recovery. Undo/Redo resta una cronologia operativa in memoria e non viene ricostruita alla riapertura.
 
 **Versioni automatiche** e' una preferenza locale disattivata per default. Se attiva, registra ogni cinque minuti solo contenuto cambiato rispetto all'ultima versione. Limiti `snapshots` da configurazione: 20 versioni, 8 MiB per contenuto, 32 MiB complessivi e nome di 80 caratteri; vale anche il limite totale progetto. Al raggiungimento dei limiti la creazione si arresta senza eliminare versioni precedenti: rimuovere versioni inutili o modificare la configurazione. Non e' un backup esterno: perdere il file tdraw significa perdere le sue versioni.
+
+## C19 - Preset di stile realistico (`1.8.0`)
+
+Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+
+In **File > Impostazioni > Stile immagine** scegliere un preset e leggerne la descrizione. **Preset preferito** memorizza un solo preset; **Usa preferito** lo richiama anche mentre si usa uno stile personalizzato. La stella identifica il preferito. **Salva** applica insieme stile e preferito; **Annulla** lascia le preferenze precedenti. Per rimuovere il preferito selezionarlo, togliere la spunta e salvare.
+
+**Stile personalizzato** permette una breve descrizione visiva non segreta (80 caratteri per default). Non incollare API key o credenziali: formati comuni vengono rifiutati, ma il controllo non riconosce ogni possibile segreto. Il testo uguale all'identificatore di un preset seleziona quel preset. Stile e preferito persistono nei dati locali dell'app, separati dal progetto e dalla chiave API.
+
+I sei preset seguono l'ordine in `imageGeneration.stylePresets` in `config/app.config.json`: ogni voce contiene ID, nomi/descrizioni italiani e inglesi, `promptFragment` e `parameters`. Sono ammessi solo `quality` (`auto`, `low`, `medium`, `high`) e `size` (`auto`, `1024x1024`, `1536x1024`, `1024x1536`); i valori mancanti usano i default centrali. Anche `availableStyles` deve riportare gli stessi ID nello stesso ordine. Configurazioni invalide vengono rifiutate all'avvio; riavviare dopo una modifica.
+
+La generazione invia a OpenAI il PNG composito del canvas (maschere e clipping applicati, padding configurato), il prompt di composizione e stile, modello e parametri. Non invia riferimenti, versioni salvate, nomi layer/progetto, percorsi, conteggi tratti o il preferito. Il redraw automatico usa lo stesso flusso quando abilitato. L'autenticazione usa la chiave dal backend segreti del main process; gli errori mostrati non includono il messaggio remoto o `revised_prompt`. Qualita' e costo effettivi dipendono dal modello e dal provider.

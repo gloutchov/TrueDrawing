@@ -32,7 +32,7 @@ declare global {
       clearOpenAiApiKey: () => Promise<ApiKeyStatus>;
       getImageGenerationPreferences: () => Promise<ImageGenerationPreferences>;
       setImageGenerationModel: (model: string) => Promise<ImageGenerationPreferences>;
-      setImageGenerationStyle: (style: string) => Promise<ImageGenerationPreferences>;
+      setImageGenerationStyle: (style: string, favoriteStyleId?: string | null) => Promise<ImageGenerationPreferences>;
       setImageGenerationAutoRedraw: (
         enabled: boolean,
         delaySeconds: number
