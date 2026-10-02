@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.8.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.9.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -232,3 +232,7 @@ In **File > Settings > Image style**, select a preset and read its description. 
 The six presets follow `imageGeneration.stylePresets` order in `config/app.config.json`. Each has an ID, Italian/English names and descriptions, a `promptFragment` and `parameters`. Only `quality` (`auto`, `low`, `medium`, `high`) and `size` (`auto`, `1024x1024`, `1536x1024`, `1024x1536`) are supported; omitted values use central defaults. `availableStyles` must list the same IDs in the same order. Invalid configuration is rejected on startup; restart after editing.
 
 Generation sends OpenAI the composited canvas PNG (masks/clipping applied, configured padding), composition/style prompt, model and parameters. It excludes references, saved versions, layer/project names, paths, stroke counts and favorite metadata. Enabled auto redraw uses the same flow. Authentication uses the main-process secret backend; displayed errors omit remote messages and `revised_prompt`. Actual image quality and cost depend on the model and provider.
+
+## C20 - Development toolchain upgrade (`1.9.0`)
+
+Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.

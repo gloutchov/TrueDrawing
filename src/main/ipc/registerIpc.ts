@@ -1,5 +1,6 @@
 import { importReferenceImage } from "../project/referenceImport";
-import { BrowserWindow, clipboard, ipcMain, nativeImage } from "electron";
+import { BrowserWindow, clipboard, ipcMain } from "electron";
+import { readClipboardPng, writeClipboardPng } from "../clipboard/clipboardImages";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
 import type { ImageGenerationPreferencesStore } from "../preferences/imageGenerationPreferencesStore";
@@ -16,7 +17,7 @@ import type {
 } from "../../shared/project/projectTypes";
 
 import { maxImageDataUrlLength, validateImageDataUrl } from "../../shared/security/imagePayload";
-import { sanitizeIpcError, validateIpcSender } from "../security/ipcSecurity";
+import { createSanitizedIpcError, validateIpcSender } from "../security/ipcSecurity";
 import { containsCredentialText } from "../../shared/security/credentialText";
 import { findStylePreset } from "../../shared/image-generation/stylePresets";
 
@@ -25,7 +26,7 @@ const handle: typeof ipcMain.handle = (channel, listener) => {
     try {
       validateIpcSender(event);
       return await listener(event, ...args);
-    } catch (error: unknown) { throw new Error(sanitizeIpcError(error)); }
+    } catch (error: unknown) { throw createSanitizedIpcError(error); }
   });
 };
 const maxPromptLength = 8000;
@@ -170,30 +171,15 @@ export function registerIpc({
       throw new Error("Invalid clipboard image.");
     }
 
-    validateImageDataUrl(dataUrl);
-    clipboard.writeImage(nativeImage.createFromDataURL(dataUrl));
+    return writeClipboardPng(dataUrl);
   });
-  handle("clipboard:read-image", () => {
-    const image = clipboard.readImage();
-
-    if (image.isEmpty()) {
-      return null;
-    }
-
-    const dataUrl = image.toDataURL();
-
-    if (dataUrl.length > maxImageDataUrlLength) {
-      throw new Error("Clipboard image is too large.");
-    }
-
-    return dataUrl;
-  });
+  handle("clipboard:read-image", () => readClipboardPng());
   handle("clipboard:write-text", (_event, text: unknown) => {
     if (typeof text !== "string" || text.length > maxClipboardTextLength) {
       throw new Error("Invalid clipboard text.");
     }
 
-    clipboard.writeText(text);
+    return clipboard.writeText(text);
   });
   handle("clipboard:read-text", () => clipboard.readText());
   handle("window:set-fullscreen", (event, fullscreen: unknown) => {

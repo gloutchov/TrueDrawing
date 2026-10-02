@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.8.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.9.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -232,3 +232,7 @@ In **File > Impostazioni > Stile immagine** scegliere un preset e leggerne la de
 I sei preset seguono l'ordine in `imageGeneration.stylePresets` in `config/app.config.json`: ogni voce contiene ID, nomi/descrizioni italiani e inglesi, `promptFragment` e `parameters`. Sono ammessi solo `quality` (`auto`, `low`, `medium`, `high`) e `size` (`auto`, `1024x1024`, `1536x1024`, `1024x1536`); i valori mancanti usano i default centrali. Anche `availableStyles` deve riportare gli stessi ID nello stesso ordine. Configurazioni invalide vengono rifiutate all'avvio; riavviare dopo una modifica.
 
 La generazione invia a OpenAI il PNG composito del canvas (maschere e clipping applicati, padding configurato), il prompt di composizione e stile, modello e parametri. Non invia riferimenti, versioni salvate, nomi layer/progetto, percorsi, conteggi tratti o il preferito. Il redraw automatico usa lo stesso flusso quando abilitato. L'autenticazione usa la chiave dal backend segreti del main process; gli errori mostrati non includono il messaggio remoto o `revised_prompt`. Qualita' e costo effettivi dipendono dal modello e dal provider.
+
+## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+
+Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private.

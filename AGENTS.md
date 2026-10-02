@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C19 - Preset di stile realistico.
+- Ultima milestone completata: C20 - Aggiornamento toolchain di sviluppo.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.8.0`; release GitHub pubblicata: `v1.8.0`.
-- Branch corrente: `milestone/20-development-toolchain`.
-- Milestone corrente in sviluppo: M20 - Aggiornamento toolchain di sviluppo.
+- Versione corrente: `1.9.0`; release GitHub pubblicata: `v1.8.0`.
+- Branch corrente: `main`.
+- Milestone corrente: nessuna; M21 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/19-realistic-style-presets`.
+- Ultimo branch milestone completato: `milestone/20-development-toolchain`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -150,3 +150,7 @@ Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI va
 ## Manutenzione dipendenze M20-M22
 
 Il progettista autorizza l'esecuzione delle PR #15, #16 e #17 tramite milestone dedicate, senza controllo preventivo su commit, merge, tag, push o rimozione branch. Lavorare sul branch milestone e integrare il branch Dependabot preservandone la cronologia; aggiornare la PR esistente con push fast-forward. Restano obbligatorie verifica identita, CI e checkpoint remoto per ogni milestone. Una sola release cumulativa v1.11.0 a M22; conservare i branch finali fino alla verifica dei pacchetti/checksum.
+
+## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+
+Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. / Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.

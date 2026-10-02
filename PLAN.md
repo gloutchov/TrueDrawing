@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C19 alla versione `1.8.0`. La fase di manutenzione M20-M22 aggiorna le dipendenze proposte nelle PR #15-#17; la release pubblicata resta `v1.8.0` fino alla verifica della release cumulativa finale.
+True Drawing ha completato C20 alla versione `1.9.0`. La fase di manutenzione M20-M22 aggiorna le dipendenze proposte nelle PR #15-#17; la release pubblicata resta `v1.8.0` fino alla verifica della release cumulativa finale.
 
-- Versione corrente su `main`: `1.8.0`.
+- Versione corrente su `main`: `1.9.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C19 - Preset di stile realistico`.
+- Ultima milestone completata: `C20 - Aggiornamento toolchain di sviluppo`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.8.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: M20 - Aggiornamento toolchain di sviluppo.
+- Milestone corrente in sviluppo: nessuna; M21 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -330,14 +330,14 @@ Riepilogo (2026-10-02): Preset di stile bilingui con descrizioni, frammenti prom
 
 
 
-### M20 - Aggiornamento toolchain di sviluppo
+### C20 - Aggiornamento toolchain di sviluppo
 
 - PR di riferimento: [#15](https://github.com/gloutchov/TrueDrawing/pull/15).
-- Versione finale prevista: `1.9.0`.
-- Branch previsto: `milestone/20-development-toolchain`.
-- Tag di checkpoint previsto: `milestone/C20`.
+- Versione finale: `1.9.0`.
+- Branch: `milestone/20-development-toolchain`.
+- Tag di checkpoint: `milestone/C20`.
 - Tipo incremento: `+0.1.0` (migrazione dello stack e compatibilita runtime/UI).
-- Stato: pianificata.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
 - Obiettivo: Integrare i 14 aggiornamenti di sviluppo mantenendo compilazione, test, avvio Electron e packaging compatibili.
 
 Attivita': Aggiornare Electron, electron-builder, Vite/plugin React, TypeScript, ESLint/typescript-eslint, tipi Node e comandi di sviluppo. Adeguare configurazioni e codice solo quando richiesto dalla migrazione; verificare installazione congelata e regression test.
@@ -356,6 +356,8 @@ Test richiesti: installazione `npm ci`, test esistenti e prove dei flussi intere
 Documenti: `README.md`, `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, `MAP.md`, `SECURITY_MODEL.md`; note release finali a M22.
 
 Release: nessuna release intermedia; packaging cumulativo a M22.
+
+Riepilogo (2026-10-02): Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. Verifiche: npm ci, lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.9.0`, checkpoint `milestone/C20`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ### M21 - Migrazione React e React DOM
 
@@ -434,6 +436,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C17 - Maschere e clipping layer | 1.6.0 | `milestone/17-masks-clipping-layers` | Completata | Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence. 93 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C18 - Storia versioni del documento | 1.7.0 | `milestone/18-document-version-history` | Completata | Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules. 99 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C19 - Preset di stile realistico | 1.8.0 | `milestone/19-realistic-style-presets` | Completata | Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads. 117 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-02 | C20 - Aggiornamento toolchain di sviluppo | 1.9.0 | `milestone/20-development-toolchain` | Completata | Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

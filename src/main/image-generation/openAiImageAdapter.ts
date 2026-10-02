@@ -90,15 +90,19 @@ export async function generateOpenAiRealisticImage(
       revisedPrompt: undefined
     };
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      if (/^OpenAI image generation failed with status \d+\.$/.test(error.message)) throw error;
-      throw new Error(error.name === "AbortError" ? "Image generation timed out." : "Image generation failed.");
-    }
-
-    throw new Error("Image generation failed.");
+    throw createGenerationFailure(error);
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function createGenerationFailure(error: unknown): Error {
+  // Provider causes/stacks may hold secret headers; never preserve those chains.
+  const message = error instanceof Error && /^OpenAI image generation failed with status \d+\.$/.test(error.message)
+    ? error.message
+    : error instanceof Error && error.name === "AbortError"
+      ? "Image generation timed out." : "Image generation failed.";
+  return new Error(message);
 }
 
 function dataUrlToBytes(dataUrl: string): Uint8Array {

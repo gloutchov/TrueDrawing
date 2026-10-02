@@ -27,3 +27,9 @@ export function sanitizeIpcError(error: unknown): string {
     && message.length < 200) return message;
   return "The operation could not be completed. Check your settings and try again.";
 }
+
+export function createSanitizedIpcError(error: unknown): Error {
+  // Raw causes can contain credentials, provider responses and private paths.
+  // Create a public error outside the catch block and intentionally omit cause.
+  return new Error(sanitizeIpcError(error));
+}

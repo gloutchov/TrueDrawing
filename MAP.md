@@ -22,7 +22,7 @@ truedrawing/
 +-- tsconfig.renderer.json
 |   Type-check TypeScript/React del renderer.
 |
-+-- vite.config.ts
++-- vite.config.mts
 |   Configurazione Vite per build renderer, con asset relativi per pacchetti Electron caricati da file.
 |
 +-- eslint.config.mjs
@@ -65,6 +65,9 @@ truedrawing/
 +-- src/
 |   |
 |   +-- main/
+|   |   |
+|   |   +-- clipboard/
+|   |   |   `clipboardImages.ts`: appunti Electron 44 asincroni, ClipboardItem PNG e limiti prima dell'allocazione.
 |   |   |
 |   |   +-- appIcon.ts
 |   |   |   Risoluzione dell'icona app per finestre e menu.
@@ -230,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.8.0`; release GitHub pubblicata: `v1.8.0`.
-- Ultima milestone completata: C19 - Preset di stile realistico.
-- Milestone corrente: nessuna; roadmap attiva completata.
-- Stato milestone: roadmap attiva completata con checkpoint `milestone/C19`.
+- Versione corrente su `main`: `1.9.0`; release GitHub pubblicata: `v1.8.0`.
+- Ultima milestone completata: C20 - Aggiornamento toolchain di sviluppo.
+- Milestone corrente: nessuna; M21 e' la prossima pianificata.
+- Stato milestone: C20 completata con checkpoint `milestone/C20`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -319,3 +322,11 @@ Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI va
 - `src/main/preferences/imageGenerationPreferencesStore.ts`: persistenza non segreta e compatibilita' legacy.
 - `tests/unit/stylePresets.test.ts`, `realisticPrompt.test.ts`, `imageGenerationPreferencesStore.test.ts`, `openAiImageAdapter.test.ts`: configurazione, prompt minimo, preferenze e parametri/errori provider.
 - `docs/release-notes/v1.8.0.md`: note bilingui della release cumulativa C14-C19 e patch WebP.
+
+## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+
+Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. / Updated toolchain with Electron 44.4.5, Vite 8, Vitest 5 and ESLint 10. TypeScript 6.0.3 stays below 6.1 within typescript-eslint support; TypeScript 7 is deferred. Explicit ESM Vite config, Node16/CommonJS Electron compilation and bounded asynchronous PNG/text clipboard with sanitized public errors.
+
+- `tests/unit/clipboardImages.test.ts`: scritture asincrone, errori nativi, decodifica PNG e limite Blob prima di arrayBuffer.
+- `src/main/security/ipcSecurity.ts`: costruzione errori pubblici senza cause/stack remoti, compatibile con ESLint 10.
+- `.github/dependabot.yml`: TypeScript >=6.1 escluso finche typescript-eslint non dichiara supporto; rivalutare alla sua migrazione.
