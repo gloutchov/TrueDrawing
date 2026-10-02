@@ -1017,10 +1017,12 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
             try {
               const image = await window.trueDrawing.importReferenceImage();
               if (!image) return;
-              await preloadCanvasImage(image.dataUrl);
+              const decoded = await preloadCanvasImage(image.dataUrl);
+              if (decoded.width !== image.width || decoded.height !== image.height) throw new Error("Invalid reference dimensions.");
+              image.dataUrl = await convertImageDataUrl(image.dataUrl,"image/png");
               const scale = Math.min(1, document.canvas.width / image.width, document.canvas.height / image.height);
               commitDocumentUpdate(current => (current.references?.length ?? 0) >= config.references.maxImages ? current : ({...current,references:[...(current.references ?? []),
-                {...image,id:crypto.randomUUID(),visible:true,opacity:config.references.defaultOpacity,x:0,y:0,width:image.width*scale,height:image.height*scale}]}));
+                validateReference({...image,id:crypto.randomUUID(),visible:true,opacity:config.references.defaultOpacity,x:0,y:0,width:image.width*scale,height:image.height*scale},config)]}));
             } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); }
           })(); }}
           onUpdate={(id,patch) => { try { commitDocumentUpdate(current=>({...current,references:(current.references ?? []).map(image=>image.id===id ? validateReference({...image,...patch},config) : image)})); } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); } }}

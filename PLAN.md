@@ -4,7 +4,7 @@
 
 True Drawing ha completato C16 alla versione `1.5.0`. La release pubblicata precedente resta `v1.2.0` fino alla release cumulativa M19.
 
-- Versione corrente su `main`: `1.5.0`.
+- Versione corrente su `main`: `1.5.1`.
 - Branch stabile: `main`.
 - Ultima milestone completata: `C16 - Import immagini di riferimento`.
 - Ultima patch completata: `v1.0.3 - Dominio canonico e link della landing page`.
@@ -370,3 +370,5 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 - [ ] Branch milestone eliminato dopo release o dopo merge verificato.
 
 Nota C16: lo smoke end-to-end ha identificato window.prompt non supportato nel salvataggio nuovo progetto; sostituito da ProjectNameDialog React bilingue e verificato con salvataggio reale.
+
+Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.

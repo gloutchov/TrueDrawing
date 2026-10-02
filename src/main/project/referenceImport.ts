@@ -1,3 +1,4 @@
+import { webpDimensions } from "../../shared/document/webpDimensions";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { dialog, nativeImage } from "electron";
@@ -26,6 +27,12 @@ export async function readReferenceImage(filePath: string, config: AppConfig,
     bytes = bytes.subarray(0,bytesRead);
   } finally { await file.close(); }
   if (!isSupportedImage(bytes)) throw new Error("Invalid reference image format.");
+  if (bytes.toString("ascii",0,4) === "RIFF") {
+    const {width,height} = webpDimensions(bytes);
+    if (width<1 || height<1 || width*height>config.canvas.dimensions.maxAreaPixels
+      || width>config.canvas.dimensions.maxPixels || height>config.canvas.dimensions.maxPixels) throw new Error("Invalid reference image dimensions.");
+    return {name:path.basename(filePath).slice(0,255),width,height,dataUrl:`data:image/webp;base64,${bytes.toString("base64")}`};
+  }
   const image = decode(bytes); const {width,height} = image.getSize();
   if (image.isEmpty() || width < 1 || height < 1 || width * height > config.canvas.dimensions.maxAreaPixels
     || width > config.canvas.dimensions.maxPixels || height > config.canvas.dimensions.maxPixels) throw new Error("Invalid reference image dimensions.");

@@ -224,7 +224,7 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.5.0`; release GitHub pubblicata: `v1.2.0`.
+- Versione corrente su `main`: `1.5.1`; release GitHub pubblicata: `v1.2.0`.
 - Ultima milestone completata: C13 - Dimensioni canvas in pixel e centimetri.
 - Milestone corrente: nessuna; M17 e' la prossima pianificata.
 - Stato milestone: C13 completata con dimensioni canvas modificabili e checkpoint `milestone/C13`.
@@ -286,3 +286,5 @@ Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e
 - `src/renderer/references/ReferencePanel.tsx`: visibilita, opacita, posizione e scala proporzionale.
 - `tests/unit/referenceImport.test.ts`: formato, limiti, privacy del percorso e persistenza.
 - `src/renderer/project/ProjectNameDialog.tsx`: nome progetto prima del salvataggio, senza window.prompt non supportato in Electron.
+
+Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
