@@ -12,15 +12,17 @@ import { createMainWindow } from "./windows/mainWindow";
 import type { AppConfig } from "../shared/config/appConfigSchema";
 
 let appConfig: AppConfig | null = null;
+let uiLocale: "it" | "en" = "en";
 
 app.whenReady().then(() => {
   appConfig = loadDesktopAppConfig();
+  uiLocale = app.getLocale().toLowerCase().startsWith("it") ? "it" : "en";
 
   if (process.platform === "darwin" && app.dock) {
     app.dock.setIcon(createAppIcon());
   }
 
-  installAppMenu(appConfig);
+  installAppMenu(appConfig, uiLocale);
   installContentSecurityPolicy(appConfig, Boolean(process.env.VITE_DEV_SERVER_URL));
   registerIpc({
     getConfig: () => requireAppConfig(),
@@ -28,7 +30,10 @@ app.whenReady().then(() => {
       appVersion: app.getVersion(),
       platform: process.platform
     }),
-    onUiLocaleChange: (locale) => installAppMenu(requireAppConfig(), locale),
+    onUiLocaleChange: (locale) => {
+      uiLocale = locale;
+      installAppMenu(requireAppConfig(), locale);
+    },
     apiKeyStore: createApiKeyStore(),
     preferencesStore: createImageGenerationPreferencesStore(
       app.getPath("userData"),
@@ -36,11 +41,11 @@ app.whenReady().then(() => {
     ),
     documentStore: createDocumentStore(app.getPath("userData"), () => requireAppConfig())
   });
-  createMainWindow(appConfig);
+  createMainWindow(appConfig, () => uiLocale);
 
   app.on("activate", () => {
     if (appConfig && BrowserWindow.getAllWindows().length === 0) {
-      createMainWindow(appConfig);
+      createMainWindow(appConfig, () => uiLocale);
     }
   });
 }).catch((error: unknown) => {

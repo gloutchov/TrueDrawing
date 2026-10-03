@@ -225,6 +225,14 @@ Keep the `.tdraw` to continue editing: a PNG does not preserve editable layers o
 
 Older projects without explicit dimensions use the initial sheet size. Masks contained in old projects still affect their appearance and are preserved, but there are no commands to create or edit them. For new drawings, use layers and clipping.
 
+### Closing the app
+
+Use **File > Exit** to quit True Drawing. You can also close the window with the system button; on macOS the red button closes the window and leaves the app available in the Dock. To quit completely, choose Quit/Exit from the menu or Dock.
+
+If there are unsaved changes, a system dialog offers **Cancel** and **Close without saving**. Cancel, Escape and dismissing the dialog keep the document open. To keep your changes, cancel, use **File > Save**, wait for it to complete and then close. Close without saving discards changes since your last manual save; the autosave may not contain all of them.
+
+An initial or saved document closes without this warning. A cancelled or failed save does not remove the confirmation; neither does an autosave. If you keep drawing during a save, subsequent edits remain marked as unsaved and require another Save before quitting.
+
 ## Autosave and recovery
 
 With default settings, the app keeps a local autosave of changes every 30 seconds. This does not replace **File > Save**, is not a copy in a folder you selected and is not an external backup.
@@ -261,6 +269,7 @@ Use Ctrl on Windows and ⌘ on macOS for combinations shown as Ctrl/⌘.
 | AI request fails | Check the network, key validity, model/access and account availability or credit. Read the message in Inspector. |
 | Canvas looks cut off | Reset zoom and view; also check the sheet dimensions. |
 | Download will not open | Check architecture, source, checksum and system warnings for unsigned packages. |
+| Closing asks for confirmation | There are unsaved changes: cancel and save, or choose Close without saving. On macOS, use Quit/Exit to also terminate the app in the Dock. |
 
 ## Privacy and limitations
 

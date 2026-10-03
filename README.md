@@ -47,6 +47,8 @@ Scarica il pacchetto per il tuo sistema da [GitHub Releases](https://github.com/
 
 Il `.tdraw` conserva tratti, layer, clipping, riferimenti, versioni e immagine AI presente. Il salvataggio crea anche il PNG del canvas e, quando disponibile, dell'immagine generata. Le immagini di riferimento restano nel progetto ma sono escluse da export e generazione.
 
+Alla chiusura, un dialogo del sistema protegge le modifiche non salvate: annulla e salva il progetto, oppure conferma di chiudere senza salvare. Il [manuale](ISTRUZIONI.md#chiudere-lapp) spiega anche il comportamento della finestra e del Dock su macOS.
+
 ### Come è fatta
 
 - **Electron main** gestisce finestra, menu nativi, file, appunti, segreti e richieste OpenAI. Il **preload** espone al renderer operazioni IPC controllate.
@@ -106,6 +108,8 @@ Download the package for your system from [GitHub Releases](https://github.com/g
 5. Press **Generate image** in Inspector. Save the project or export a result you want to keep before generating another.
 
 The `.tdraw` retains strokes, layers, clipping, references, versions and any AI image. Saving also creates a canvas PNG and, when available, a PNG of the generated image. Reference images remain in the project but are excluded from export and generation.
+
+When closing, a system dialog protects unsaved changes: cancel and save the project, or confirm closing without saving. The [manual](INSTRUCTIONS.md#closing-the-app) also explains window and Dock behaviour on macOS.
 
 ### How it is built
 

@@ -281,7 +281,6 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
       setLastSavedAt(result.savedAt);
       lastSavedDocumentSignatureRef.current = JSON.stringify(document);
       lastAutosavedDocumentSignatureRef.current = JSON.stringify(document);
-      setIsDirty(false);
       setFileStatusMessage(`Saved ${formatTime(result.savedAt)}`);
     } catch (error: unknown) {
       setFileStatusMessage(error instanceof Error ? error.message : "Save failed");
@@ -773,7 +772,7 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
     }
 
     setIsDirty(signature !== lastSavedDocumentSignatureRef.current);
-  }, [document]);
+  }, [document, lastSavedAt]);
 
   useEffect(() => {
     setCanvasSelection(null);

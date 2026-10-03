@@ -79,7 +79,7 @@ truedrawing/
 |   |   |   Caricamento configurazione centrale per il processo desktop.
 |   |   |
 |   |   +-- windows/
-|   |   |   Creazione e gestione finestre.
+|   |   |   mainWindow.ts: creazione finestra isolata; closeConfirmation.ts: conferma nativa IT/EN del veto alla chiusura per modifiche non salvate.
 |   |   |
 |   |   +-- ipc/
 |   |   |   Canali sicuri fra renderer e main process per config, runtime, segreti e generazione immagine.
@@ -183,7 +183,7 @@ truedrawing/
 +-- tests/
 |   |
 |   +-- unit/
-|   |   Test di modello, strumenti, pan e dimensioni canvas, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto e configurazione Vite.
+|   |   Test di modello, strumenti, pan e dimensioni canvas, layer, history, config, adapter, segreti, preferenze, CSP, formato progetto, configurazione Vite e conferma di chiusura.
 |   |
 |   +-- e2e/
 |       Test end-to-end su flussi principali.
@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.1`.
-- Ultima milestone completata: C32 - Funzionalita' illustrate nella landing page.
-- Milestone corrente: nessuna; C29-C32 completate.
-- Stato milestone: C32 completata con checkpoint `milestone/C32`.
+- Versione corrente su `main`: `1.12.2`; release GitHub pubblicata: `v1.12.1`.
+- Ultima milestone completata: C33 - Conferma di chiusura con modifiche non salvate.
+- Milestone corrente: C33 implementata; distribuzione v1.12.2 in chiusura.
+- Stato milestone: C33 implementata; checkpoint `milestone/C33` e release `v1.12.2` in chiusura.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.

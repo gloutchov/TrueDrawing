@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C32 - Funzionalita' illustrate nella landing page.
+- Ultima milestone completata: C33 - Conferma di chiusura con modifiche non salvate.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.1`; release GitHub pubblicata: `v1.12.1`.
+- Versione corrente: `1.12.2`; release GitHub pubblicata: `v1.12.1`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; C29-C32 completate.
+- Milestone corrente: C33 implementata; distribuzione v1.12.2 in chiusura.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/32-landing-features`.
+- Ultimo branch milestone completato: `milestone/33-close-confirmation`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -211,3 +211,9 @@ La pubblicazione esistente e' GitHub Pages `main:/docs` sul dominio canonico `ht
 ## Pubblicazione v1.12.1 (2026-10-03)
 
 Il progettista autorizza esplicitamente la nuova release. Il tag v1.12.1 resta sul commit 8b87cf277f2b4d4cc16114ef6173c8acf4d2d281 (C32): non spostarlo per aggiungere metadati. Packaging Windows/macOS tramite workflow Release dal tag, note bilingui in docs/release-notes/v1.12.1.md applicate alla release dopo il packaging, 10 asset scaricati e 8 checksum verificati, renderer/main/preload identici alla build verificata. Workflow 37136552575 verde. Il branch release/1.12.1-publication aggiorna soltanto note, stato corrente e versione mostrata sul sito; chiuderlo con CI verde e verifica Pages. Restano valide le deroghe autorizzate su commit, merge, push e rimozione branch.
+
+## C33 - Chiusura con modifiche non salvate (1.12.2)
+
+Il progettista autorizza correzione, commit, merge, tag, push e release, con rimozione branch dopo le verifiche. Gestire il veto beforeunload nel main tramite closeConfirmation.ts e will-prevent-unload: solo la rinuncia esplicita puo' ignorare il veto della richiesta corrente, senza flag permanenti. Mantenere Annulla come default/cancel del dialogo nativo sincrono e usare la lingua UI corrente, anche dopo cambi manuali. Non sostituire questo percorso con app.exit o distruzione forzata della finestra.
+
+Il salvataggio deve confrontare il documento corrente con quello effettivamente scritto, includendo il completamento asincrono fra le dipendenze del controllo di modifiche. Annullamento/errori/autosave non rendono pulito un documento modificato. Conservare il comportamento macOS: chiusura della finestra e uscita completa sono distinte. Verifiche locali: 130 test, lint/build; 36 scenari Electron IT/EN chiaro/scuro, quattro limiti di salvataggio/autosave e dialogo nativo con Escape/default. La verifica diretta di Dock/pulsante rosso e installazione native resta da svolgere su Windows/macOS.
