@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.11.2` (release GitHub pubblicata: `v1.11.0`)
+Versione sorgente: `1.11.3` (release GitHub pubblicata: `v1.11.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.11.2` (published GitHub release: `v1.11.0`)
+Source version: `1.11.3` (published GitHub release: `v1.11.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -233,3 +233,9 @@ C21: React 19 cambia il runtime UI e i tipi del renderer; CSP, sandbox, preload,
 Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. / Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
 
 C22: le icone restano componenti SVG locali, senza nuove richieste di rete o privilegi. Audit dipendenze runtime: zero vulnerabilita. Release non firmata; verificare i checksum prima di aprire i pacchetti. / Icons remain local SVG components with no new network requests or privileges. Runtime dependency audit: zero vulnerabilities. Unsigned release: verify checksums before opening packages.
+
+## C25 - Rimozione dei comandi maschera (`1.11.3`)
+
+Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. / Mask creation, toggling, editing and removal commands and stroke routing are removed. Layer clipping and legacy mask rendering/persistence, including snapshots, remain compatible; normal drawing does not change legacy masks.
+
+C25: i vecchi dati maschera continuano a essere validati con gli stessi limiti locali, anche dentro le versioni documento. Rimossi i percorsi UI di mutazione; nessun nuovo permesso, IPC o accesso rete/filesystem. / Legacy mask data keeps existing validation and limits, including document versions. UI mutation paths are removed without new permissions or IPC.

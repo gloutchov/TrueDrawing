@@ -53,8 +53,7 @@ export function updateStrokeInDocument(
       ...layer,
       strokes: layer.strokes.map((stroke) => (
         stroke.id === strokeId ? updater(stroke) : stroke
-      )),
-      mask: layer.mask ? {...layer.mask,strokes:layer.mask.strokes.map(stroke=>stroke.id===strokeId ? updater(stroke) : stroke)} : undefined
+      ))
     }))
   };
 }

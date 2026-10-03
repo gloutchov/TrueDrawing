@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C24 alla versione `1.11.2`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C25 alla versione `1.11.3`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.11.2`.
+- Versione corrente su `main`: `1.11.3`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C24 - Spaziatura del pulsante Crea versione`.
+- Ultima milestone completata: `C25 - Rimozione dei comandi maschera`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M25 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M26 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -463,13 +463,13 @@ Release: nessuna; cumulativa a M28.
 
 Riepilogo (2026-10-03): Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. Verifiche: lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.11.2`, checkpoint `milestone/C24`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-### M25 - Rimozione dei comandi maschera
+### C25 - Rimozione dei comandi maschera
 
-- Versione finale prevista: `1.11.3`.
-- Branch previsto: `milestone/25-remove-mask-editor`.
-- Tag di checkpoint previsto: `milestone/C25`.
+- Versione finale: `1.11.3`.
+- Branch: `milestone/25-remove-mask-editor`.
+- Tag di checkpoint: `milestone/C25`.
 - Tipo incremento: `+0.0.1` per l’intervento mirato.
-- Stato: pianificata.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
 - Obiettivo: Eliminare creazione e modifica delle maschere dall’interfaccia e dai percorsi di editing.
 
 Attivita': Conservare validazione e rendering delle maschere legacy per riaprire i vecchi progetti senza perdita visiva; pannello dedicato al clipping; disegno e Undo verificati.
@@ -481,6 +481,8 @@ Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di co
 Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
 
 Release: nessuna; cumulativa a M28.
+
+Riepilogo (2026-10-03): Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.11.3`, checkpoint `milestone/C25`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ### M26 - Spaziatura Brush Avanzati
 
@@ -569,6 +571,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C22 - Aggiornamento icone Lucide | 1.11.0 | `milestone/22-lucide-icons` | Completata | Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C23 - Spaziatura del pannello Riferimenti | 1.11.1 | `milestone/23-reference-panel-spacing` | Completata | Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C24 - Spaziatura del pulsante Crea versione | 1.11.2 | `milestone/24-snapshot-action-spacing` | Completata | Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C25 - Rimozione dei comandi maschera | 1.11.3 | `milestone/25-remove-mask-editor` | Completata | Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

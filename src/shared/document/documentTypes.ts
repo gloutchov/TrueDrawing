@@ -10,6 +10,7 @@ export type DrawingLayer = {
   visible: boolean;
   opacity: number;
   strokes: DrawingStroke[];
+  // Read-only compatibility data from projects created with the legacy mask editor.
   mask?: {enabled:boolean;strokes:DrawingStroke[]};
   clipToLayerId?: string | null;
 };

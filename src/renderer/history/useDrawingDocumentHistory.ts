@@ -1,4 +1,3 @@
-import { appendStrokeToActiveMask } from "../../shared/document/layerEffects";
 import { useCallback, useMemo, useState } from "react";
 
 import type { AppConfig } from "../../shared/config/appConfigSchema";
@@ -44,10 +43,10 @@ export function useDrawingDocumentHistory(config: AppConfig) {
     document.layers.find((layer) => layer.id === document.activeLayerId)
   ), [document]);
 
-  const appendStroke = useCallback((stroke: DrawingStroke, mask = false) => {
+  const appendStroke = useCallback((stroke: DrawingStroke) => {
     setHistory((currentHistory) => commitHistory(
       currentHistory,
-      mask ? appendStrokeToActiveMask(currentHistory.present, stroke) : appendStrokeToActiveLayer(currentHistory.present, stroke)
+      appendStrokeToActiveLayer(currentHistory.present, stroke)
     ));
   }, []);
 

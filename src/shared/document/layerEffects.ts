@@ -1,5 +1,4 @@
 import type { DrawingDocument, DrawingLayer } from "./documentTypes";
-import type { DrawingStroke } from "../drawing/strokeTypes";
 
 export function validateLayerEffects(layers: DrawingLayer[]): void {
   const byId = new Map(layers.map(layer=>[layer.id,layer]));
@@ -16,13 +15,4 @@ export function validateLayerEffects(layers: DrawingLayer[]): void {
 export function setLayerClip(document: DrawingDocument, layerId:string, targetId:string|null):DrawingDocument {
   const next={...document,layers:document.layers.map(layer=>layer.id===layerId ? {...layer,clipToLayerId:targetId} : layer)};
   validateLayerEffects(next.layers);return next;
-}
-
-export function setLayerMask(document:DrawingDocument,layerId:string,enabled:boolean|null):DrawingDocument {
-  return {...document,layers:document.layers.map(layer=>layer.id===layerId ? {...layer,mask:enabled===null ? undefined : {enabled,strokes:layer.mask?.strokes ?? []}} : layer)};
-}
-
-export function appendStrokeToActiveMask(document:DrawingDocument,stroke:DrawingStroke):DrawingDocument {
-  return {...document,layers:document.layers.map(layer=>layer.id===document.activeLayerId && layer.mask?.enabled
-    ? {...layer,mask:{...layer.mask,strokes:[...layer.mask.strokes,stroke]}} : layer)};
 }
