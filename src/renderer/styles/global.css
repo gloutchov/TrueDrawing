@@ -1064,11 +1064,20 @@ textarea:focus-visible {
   }
 }
 
-.snapshot-create-button {
-  display: block;
-  margin: 8px 10px 12px auto;
-}
 
 .panel-content .field input[type="range"] {
   margin: 0;
+}
+
+.snapshot-version {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.snapshot-version-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
 }
