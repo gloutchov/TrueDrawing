@@ -1,270 +1,271 @@
-# Premessa
+# True Drawing — Manuale utente
 
-Non sono un esperto nella scrittura di codice. Per lo meno così mi vedo. Ma non sono neppure una persona che ha scoperto che chatGPT può fdare APP e subito ha avuto l'ambizione di fargli fare l'applicazione must have che tutti desiderano da una vita.
-True Drawing nasce da un gioco che facevo da piccolo:
-Lo sfidante fa un disegno, uno schizzo impreciso, al volo, in pochi minuti, e gli sfidati devono dire di che si tratta (Lo so, una volta ci divertivamo con poco!).
+True Drawing nasce da un gioco: fare uno schizzo veloce e lasciare che qualcuno lo interpreti. Qui puoi disegnare sul tuo computer e chiedere a OpenAI di trasformare lo schizzo in un'immagine. Non serve un disegno perfetto: anche poche linee possono essere un buon punto di partenza.
 
-True Drawing fa proprio questo. L'utente fa uno schizzo, e l'app chiede alla AI di reinterpretare il disegno e creare una immagine 'bella da vedere'.
-
-L'applicazione è stata interamente realizzata con assistenza AI. L'interfaccia è semplice, ha pochi tool di disegno, la gestione dei layer, undo e redo, e poche altre features. Funziona con mouse, tavolette grafiche, ogni tipo di sistema di puntamento. Più è impreciso, più è divertente il risultato.
-
-
-E' perfetta?
-Diciamo che funziona, e non mi pare abbia bug evidenti. Al momento il progetto viene mantenuto con build verificate localmente su macOS e Windows, così da allineare supporto dichiarato e supporto realmente verificato.
-Un Dev professionista potrebbe trovarci molti difetti, e qualche vulnerabilità che mi è scappata. Lascio a loro l'onere e l'onore di sistemare ciò che i miei occhi imberbi non hanno scovato.
-Rimane comunque, e sempre, una app realizzata in vibe-coding.
-
-# True Drawing - Manuale Utente (IT)
-
-> Questa app è stata realizzata in vibecoding con codex CLI. Attualmente è da intendersi come alpha funzionante. Potrebbe necessitare di ottimizzazione, pulizia di codice orfano, interventi di sicurezza, e molto altro ancora...
+[English manual](INSTRUCTIONS.md) · [Presentazione del progetto](README.md) · [Sito ufficiale](https://truedrawing.glaucosilvestri.it/)
 
 ## Sommario
 
-- Introduzione
-- Come iniziare
-- L'interfaccia
-- Licenza
+- [Installazione e primo avvio](#installazione-e-primo-avvio)
+- [Il primo disegno](#il-primo-disegno)
+- [Interfaccia e preferenze](#interfaccia-e-preferenze)
+- [Strumenti standard](#strumenti-standard)
+- [Selezione, appunti e ritaglio](#selezione-appunti-e-ritaglio)
+- [Zoom e manina](#zoom-e-manina)
+- [Brush avanzati e texture](#brush-avanzati-e-texture)
+- [Riferimenti](#riferimenti)
+- [Dimensioni canvas](#dimensioni-canvas)
+- [Layer](#layer)
+- [Clipping su layer](#clipping-su-layer)
+- [Versioni documento](#versioni-documento)
+- [Inspector e generazione AI](#inspector-e-generazione-ai)
+- [Salvare, aprire ed esportare](#salvare-aprire-ed-esportare)
+- [Salvataggio automatico e recupero](#salvataggio-automatico-e-recupero)
+- [Scorciatoie](#scorciatoie)
+- [Risoluzione dei problemi](#risoluzione-dei-problemi)
+- [Privacy e limiti](#privacy-e-limiti)
 
-## Introduzione
+## Installazione e primo avvio
 
-True Drawing è un progetto sperimentale basato su un vecchio gioco, senza alcuna ambizione particolare.
-Attualmente il progetto viene mantenuto e distribuito con pacchetti verificati localmente su macOS e su Windows.
+Scarica il pacchetto adatto al tuo computer dalla pagina [GitHub Releases](https://github.com/gloutchov/TrueDrawing/releases/latest). Controlla sistema operativo e architettura nelle note e nei nomi degli asset: sono disponibili pacchetti Windows x64 e macOS Apple Silicon (arm64).
 
-### Lingua interfaccia
+Su Windows avvia l'installer `.exe` oppure estrai il pacchetto `.zip` e avvia l'app dalla cartella estratta. Su macOS apri il `.dmg` e copia True Drawing in Applicazioni, oppure estrai il pacchetto `.zip`. Avvia l'app dalla sua icona. Per disegnare basta un mouse, un trackpad o una penna compatibile; per generare immagini servono connessione Internet, una API key OpenAI e accesso a un modello immagini.
 
-L'interfaccia di True Drawing è bilingue italiano/inglese. La lingua viene scelta automaticamente in base alle impostazioni di sistema (nel caso il computer sia impostato su una lingua differente dall'italiano, viene scelta automaticamente la lingua inglese). L'impostazione può essere svolta manualmente dalla finestra impostazioni.
+### Firma e verifica del download
 
-## Come iniziare
+I pacchetti distribuiti non sono firmati o notarizzati: Windows può mostrare SmartScreen o «autore sconosciuto», macOS un avviso Gatekeeper. Verifica provenienza e checksum prima di decidere se aprire il pacchetto. Se il sistema continua a impedirne l'apertura, usa le indicazioni ufficiali del sistema operativo per le app provenienti da sviluppatori non identificati.
 
-Il sito ufficiale di True Drawing e' `https://truedrawing.glaucosilvestri.it/`.
-
-### Download, firma e checksum
-
-True Drawing è nato come programma personale ed e poi stato pubblicato come progetto open source con licenza Apache 2.0. Le build pubblicate non sono firmate con certificati Apple o Windows.
-
-Questo significa che:
-
-- su macOS puo comparire un avviso di Gatekeeper al primo avvio;
-- su Windows puo comparire un avviso SmartScreen o "autore sconosciuto";
-- il codice sorgente resta ispezionabile nel repository, ma i pacchetti scaricati non hanno una firma commerciale del sistema operativo.
-
-E' quindi possibile che all'avvio il Sistema Operativo vi chieda il permesso a procedere nell'apertura dell'app.
-
-_Nota:_ In caso abbiate dubbi, nel repository trovate i checksum dei programmi. Nell'area Tech di questo documento trovate le istruzioni per verificare che i files non siano stati compromessi.
-
-### Verifica checksum SHA-256
-
-La release pubblicata `v1.11.0` include i file `SHA256SUMS-windows.txt` e `SHA256SUMS-macos.txt`. Scaricare il file checksum corrispondente al proprio sistema operativo insieme al pacchetto dell'app.
-
-Su Windows, dalla cartella dove si trova l'installer:
+Scarica anche `SHA256SUMS-windows.txt` o `SHA256SUMS-macos.txt` dalla stessa release. Nella cartella del download, calcola l'hash del file sostituendo il nome di esempio con quello effettivo:
 
 ```powershell
-Get-FileHash .\True-Drawing-1.11.0-Windows-x64.exe -Algorithm SHA256
+# Windows
+Get-FileHash .\nome-del-pacchetto.exe -Algorithm SHA256
 ```
-
-Confrontare il valore `Hash` con la riga corrispondente in `SHA256SUMS-windows.txt`.
-
-Su macOS, dalla cartella dove si trova il download:
 
 ```bash
-shasum -a 256 True-Drawing-1.11.0-macOS-arm64.dmg
+# macOS
+shasum -a 256 nome-del-pacchetto.dmg
 ```
 
-Confrontare il valore prodotto con la riga corrispondente in `SHA256SUMS-macos.txt`.
+Confronta il risultato con la riga di quel file nel documento checksum. Se non coincide, non usare quel download. Il checksum verifica l'integrità rispetto agli asset pubblicati; non sostituisce la firma del produttore.
 
-### Avvio di True Drawing
+Per aggiornare, salva i progetti e una copia di sicurezza, chiudi l'app e installa il nuovo pacchetto da GitHub Releases. Non è presente un aggiornamento automatico firmato. Per disinstallare usa le impostazioni delle app di Windows o rimuovi l'app da Applicazioni su macOS; conserva separatamente i tuoi `.tdraw`, che restano nelle cartelle scelte da te.
 
-Sia su macOS. sia su Windows, è sufficiente fare doppioclick sull'icona del programma.
+## Il primo disegno
 
-### Inserimento credenziali AI
+1. Avvia True Drawing. Non occorre configurare OpenAI per disegnare, salvare o esportare il canvas.
+2. Scrivi un nome nel campo sopra il canvas, per esempio «Paesaggio».
+3. Nella barra sinistra scegli la matita dal gruppo degli strumenti di tratto. Imposta colore e dimensione, poi trascina sul foglio bianco.
+4. Usa **Undo** nella barra sinistra, oppure **Modifica > Annulla**, se vuoi correggere l'ultimo passaggio.
+5. Scegli **File > Salva**. Scegli la cartella nel dialogo del sistema; se il progetto ha ancora il nome predefinito, l'app ti chiede prima di assegnargli un nome.
+6. Per ottenere un'immagine da condividere scegli **File > Esporta canvas PNG**.
 
-Cliccare sul menù File.
-Selezionare API Key.
-Si apre una finestra in cui va inserita la API Key del modello AI (sono accettare API Key di OpenAI) e il modello di generazione di immagini che desiderate.
-Salvate le API Key.
+Se vuoi reinterpretare lo schizzo con AI, segui [Inspector e generazione AI](#inspector-e-generazione-ai). Puoi aggiungere dettagli sullo schizzo e generare di nuovo; conserva un risultato importante salvando il progetto o esportando l'immagine.
 
-### Dare un nome al Disegno
+## Interfaccia e preferenze
 
-Sopra al Canvas di disegno, è presente un campo dove inserire il nome del disegno. Scrivere un nome indicativo prima di iniziare. Quel nome sarà utilizzato per tutti i salvataggi automatici di sicurezza, e per il salvataggio del disegno definitivo.
+Al centro c'è il canvas; a sinistra gli strumenti e i controlli del tratto. In alto trovi il nome del progetto; in basso informazioni sul documento e messaggi delle operazioni.
 
-### Creazione di un Disegno
+La colonna destra contiene, dall'alto verso il basso:
 
-Nella versione sorgente `1.12.1`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+| Pannello | A cosa serve |
+| --- | --- |
+| Inspector | Anteprima dell'immagine AI, generazione e stato delle impostazioni. |
+| Riferimenti | Immagini guida da usare mentre disegni. |
+| Dimensioni canvas | Larghezza, altezza, unità e DPI del foglio. |
+| Versioni documento | Salvare e recuperare stati del disegno. |
+| Brush avanzati | Preset, texture e risposta del pennello. |
+| Layer | Organizzare i tratti su livelli separati. |
+| Clipping su layer | Limitare la visibilità di un livello alla forma di un altro. |
 
-- Manina per spostare la vista del canvas;
-- Tool di selezione;
-- Tool di disegno al tratto (matita, pennarello, pennello, gomma);
-- Tool di disegno figure (quadrato/rettangolo, cerchio/ellisse, triangolo);
-- Tool di riempimento (secchiello)
-- Tipo di tratto (continuo, tratteggio, puntini).
+La freccia a destra del titolo comprime o espande ogni pannello senza alterare il disegno. Scorri la colonna per raggiungere quelli più in basso. I pulsanti e i campi sono raggiungibili con Tab; i pulsanti si attivano anche con Invio o Spazio.
 
-Ognuno di questi tool offre alcuni setup che permettono di personalizzare ulteriormente il tratto. Questi setup sono differenti da tool a tool, e appaiono sotto ai pulsanti dei tool stessi. I più comuni sono:
+In **File > Impostazioni > Interfaccia...** scegli lingua e tema. La modalità di sistema usa l'italiano su sistemi italiani, altrimenti l'inglese, e segue il tema chiaro/scuro del computer. Puoi forzare italiano, inglese, chiaro o scuro; le preferenze vengono conservate. I nomi scritti da te non vengono tradotti. Alcuni tooltip degli strumenti e il dialogo di recupero usano ancora etichette inglesi.
 
-- Colore di riempimento;
-- Spessore tratto;
-- Opacità tratto;
-- Dimensione tratto.
+## Strumenti standard
 
-L'attività di disegno è molto semplice. E' sufficiente selezionare il tool desiderato, e tracciare ciò che si vuole sul canvas bianco.
+Fai clic sui gruppi della barra sinistra per aprire l'elenco e scegliere uno strumento. L'icona del gruppo mostra l'ultimo strumento scelto; i tooltip aiutano a riconoscere le opzioni.
 
-Per spostarsi su un canvas ingrandito, selezionare la manina e trascinare la parte visibile con mouse, penna o touch. Il trascinamento non cambia il disegno e non viene salvato nel progetto. Il reset dello zoom riporta anche la vista al centro.
+| Strumento | Uso |
+| --- | --- |
+| Matita (`Pencil`), pennarello, pennello | Tieni premuto e trascina per disegnare a mano libera. |
+| Gomma (`Eraser`) | Trascina per cancellare sul layer attivo. |
+| Linea retta, linea curva | Trascina dal punto iniziale a quello finale. La curva usa una curvatura predefinita. |
+| Rettangolo, ellisse, triangolo, poligono | Trascina per definire la forma; il poligono è un pentagono regolare. Le forme disegnano il contorno. |
+| Riempimento | Scegli un colore e fai clic nell'area da riempire. |
 
-Per cambiare le dimensioni del canvas, usare **Dimensioni canvas** nel pannello destro oppure `File > Impostazioni > Dimensioni canvas...`. Scegliere `px` o `cm`, indicare larghezza, altezza e risoluzione in DPI, poi premere **Applica**. La conversione usa 2,54 cm per pollice e arrotonda al pixel piu' vicino; il pannello mostra sempre la misura effettiva in pixel e centimetri. In `px`, cambiare DPI conserva i pixel e modifica la misura fisica; in `cm`, conserva i centimetri inseriti e ricalcola i pixel. I limiti configurati sono 64-4096 pixel per lato, 12 megapixel complessivi e 72-600 DPI. L'origine resta in alto a sinistra: i tratti non vengono scalati o cancellati quando il canvas si restringe, e possono riapparire ampliandolo. Undo/redo ripristina anche le dimensioni.
+Sotto gli strumenti trovi il colore e tre slider: **S** per dimensione/spessore, **O** per opacità, **H** per durezza del bordo. Il riepilogo mostra pixel e percentuale di opacità. Il gruppo del tipo di tratto offre continuo, tratteggiato e puntinato; alcuni effetti dipendono dallo strumento scelto. La gomma non usa il selettore colore.
 
-Il lucchetto tra larghezza e altezza e' inizialmente aperto. Cliccarlo per mantenere le proporzioni correnti: cambiando un lato si aggiorna l'altro, in pixel o in centimetri. Cliccarlo di nuovo per modificare i due lati separatamente. A destra si trovano, nell'ordine, **Inspector**, **Riferimenti**, **Dimensioni canvas**, **Versioni documento**, **Brush avanzati**, **Layer** e **Clipping su layer**. Ogni riquadro si comprime o si espande con la freccia all'estrema destra della sua intestazione; comprimere un riquadro non modifica il disegno.
+Il disegno va sempre sul layer attivo. Le nuove regolazioni si applicano ai tratti successivi: non modificano quelli già disegnati. Una penna può trasmettere pressione; con il mouse viene usato un valore predefinito.
 
-Il Menù Edit offre alcune funzionalità aggiuntive utili:
+## Selezione, appunti e ritaglio
 
-- Annulla/Ripeti;
-- Taglia/Copia/Incolla;
-- Ritaglia.
+Scegli lo strumento di selezione e trascina un rettangolo sul canvas. Poi usa **Modifica**:
 
-Una volta disegnato lo schizzo, è sufficiente cliccare sul tastino con le frecce che si rincorrono per attivare la generazione dell'immagine da parte della AI.
+- **Copia** copia l'immagine composita dell'area selezionata, senza i riferimenti.
+- **Taglia** copia la stessa area e la cancella sul layer attivo. Gli altri layer restano nel composito: un'area può quindi continuare a mostrare contenuto.
+- **Incolla** inserisce l'immagine degli appunti sul layer attivo. Se c'è una selezione, l'immagine viene adattata a quel rettangolo; altrimenti viene centrata. Subito dopo puoi trascinare la selezione per spostare l'immagine incollata. La selezione non è un editor generale degli oggetti già disegnati.
+- **Ritaglia**, dopo conferma, pulisce l'esterno della selezione su tutti i layer. Mantiene le dimensioni del canvas; per cambiarle usa Dimensioni canvas. Puoi annullare l'operazione.
 
-Per salvare il disegno, e l'immagine generata dalla AI, è sufficiente andare sul menù File e cliccare su Salva.
+Quando il cursore è in un campo di testo, Taglia/Copia/Incolla lavorano sul testo. Per incollare sul disegno porta prima il focus sul canvas. Una stringa o un percorso di file negli appunti non equivale a un'immagine.
 
-### File di salvataggio
+## Zoom e manina
 
-Per un disegno chiamato `nome`, l'app usera':
+Usa i controlli di zoom della vista o **Vista > Aumenta zoom canvas / Riduci zoom canvas**. Lo zoom modifica solo la visualizzazione, non i pixel del progetto.
 
-- `nome.tdraw` per il progetto True Drawing;
-- `nome_canvas.png` per il canvas composito;
-- `nome_image.png` per l'immagine realistica generata, quando presente.
+Scegli la **manina** e trascina per spostare la vista di un canvas ingrandito. Il movimento non cambia i tratti e non viene salvato nel progetto. **Vista > Reset zoom canvas** ripristina lo zoom e centra di nuovo la vista. **Vista > Schermo intero** lascia più spazio al disegno.
 
-Il progetto `.tdraw` conserva pixel e DPI; i progetti precedenti si aprono con il default 2048 × 2048 px a 300 DPI. Il sidecar canvas e l'export PNG/WebP usano esattamente i pixel correnti del canvas. La risoluzione DPI e' un dato del progetto per le conversioni nell'interfaccia; non aggiunge metadati DPI ai file immagine esportati.
+## Brush avanzati e texture
 
-## L'interfaccia
+1. Espandi **Brush avanzati** e scegli un **Preset brush**: Matita grafite, Pennello morbido, Marker, Inchiostro o Texture.
+2. Scegli la texture: Nessuna, Grana, Punti o Tratteggio.
+3. Prova un tratto e regola gli slider. Per tornare al disegno standard scegli il preset classico.
 
-### Menù principale
+| Controllo | Effetto sui nuovi tratti |
+| --- | --- |
+| Spaziatura | Distanza tra le impronte che compongono il tratto. |
+| Pressione dimensione | Quanto la pressione della penna cambia lo spessore. |
+| Pressione opacità | Quanto la pressione cambia la trasparenza. |
+| Velocità dimensione | Quanto un movimento rapido assottiglia il tratto. |
+| Intensità texture | Evidenza della grana o del motivo. |
+| Scala texture | Dimensione del motivo della texture. |
 
-Il menù principale offre quattro sottomenù:
+Texture e slider compaiono quando è selezionato un preset avanzato. Puoi continuare a regolare colore, S/O/H nella barra sinistra. Il preset applica anche lo strumento e i suoi valori iniziali; i tratti conservano i parametri con cui sono stati creati, anche dopo salvataggio e riapertura.
 
-- File;
-- Modifica;
-- Vista;
-- Aiuto.
+## Riferimenti
 
-#### Menù File
+**Importa riferimento** apre un dialogo per scegliere un'immagine locale PNG, JPEG o WebP. L'immagine viene mostrata sul canvas come guida, separata dai layer del disegno.
 
-Il menù File ha le seguenti opzioni
+Per ogni riferimento puoi cambiare visibilità, opacità, posizione **X/Y** e **Larghezza**, oppure eliminarlo. La larghezza mantiene le proporzioni; X e Y sono coordinate in pixel del canvas. Riduci l'opacità per ricalcare più comodamente. Nasconderlo non lo elimina.
 
-- Nuovo;
-- Apri;
-- Salva;
-- Salva con Nome;
-- Export Canvas (png, webp);
-- Export immagine (png, webp);
-- Impostazioni;
-- Esci.
+Con le impostazioni predefinite puoi usare fino a quattro riferimenti, ciascuno fino a 4 MiB, soggetti anche a controlli sulle dimensioni dell'immagine. Non sono collegamenti al file originale: vengono incorporati nel `.tdraw`, quindi restano disponibili quando riapri il progetto. Non compaiono negli export, nei PNG di salvataggio o nell'immagine inviata all'AI.
 
-Il menù Impostazioni permette di modificare le dimensioni del canvas, la lingua del programma e il suo aspetto, di inserire la chiave API della AI, di scegliere la tipologia di immagine in uscita (realistica, cartoon, etc) e di impostare l'autogenerazione dell'immagine AI durante le pause dal disegno.
+## Dimensioni canvas
 
-#### Menù Modifica
+Usa il pannello **Dimensioni canvas** oppure **File > Impostazioni > Dimensioni canvas...**. Scegli **px** o **cm**, imposta larghezza, altezza e DPI, poi premi **Applica**. Il lucchetto permette di mantenere il rapporto fra i lati; quando è aperto puoi modificarli separatamente.
 
-Il menù Modifica offre le funzionalità già descritte in precedenza, ovvero:
+Il foglio iniziale misura 2048 × 2048 px a 300 DPI. I limiti predefiniti sono 64–4096 px per lato, 12 megapixel complessivi e 72–600 DPI. Il pannello segnala valori non validi.
 
-- Annulla/Ripeti;
-- Taglia/Copia/Incolla;
-- Ritaglia.
+In pixel, cambiare DPI mantiene i pixel e cambia la misura fisica. In centimetri, mantiene le misure inserite e ricalcola i pixel, arrotondando alla dimensione effettiva. La conversione usa 2,54 cm per pollice.
 
-#### Menù Vista
+Ridimensionare il canvas non scala né elimina i tratti: l'origine rimane in alto a sinistra e il contenuto oltre il bordo può riapparire ampliando il foglio. **Annulla/Ripristina** recuperano anche le dimensioni precedenti. Gli export usano i pixel del canvas; il DPI serve alle conversioni nel progetto e non aggiunge metadati DPI ai PNG/WebP esportati.
 
-Il menù vista permette di cambiare il fattore di zoom sul canvas (modificabile anche tramite pulsanti sul canvas stesso, o con la rotella del mouse), e di passare alla modalità a schermo intero.
+## Layer
 
-#### Menù Aiuto
+I layer sono fogli trasparenti sovrapposti. Separa, per esempio, sfondo, contorni e colore per lavorare su una parte senza cancellare le altre.
 
-Il Menù aiuto contiene solamente l'opzione di visualizzare i dati fondamentali dell'applicazione.
+Nel pannello **Layer**, usa il pulsante di aggiunta, poi fai clic sulla riga del livello su cui vuoi disegnare. Modifica il nome nel suo campo, usa l'occhio per mostrarlo/nasconderlo e lo slider per l'opacità. Le frecce cambiano l'ordine di sovrapposizione: i livelli in alto nella lista coprono quelli sotto. Il pulsante di eliminazione rimuove il livello; resta sempre almeno un layer.
 
-### Menù di Disegno
+La gomma agisce sul layer attivo. Un layer nascosto o molto trasparente può far sembrare che non stai disegnando. Riordino, visibilità e opacità si riflettono nel canvas, negli export e nel disegno usato per l'AI. Queste operazioni possono essere annullate.
 
-Sul lato sinistro dello schermo è presente il menù contenente tutti i tool di disegno. Anche questo menù è già stato descritto nel capitolo precedente.
+## Clipping su layer
 
-### Inspector
+Il clipping usa il contenuto di un layer come uno stencil: i tratti del layer attivo restano visibili solo dove il layer scelto contiene pixel visibili. Non cancella le parti esterne, quindi puoi cambiarne il riferimento o disattivarlo in seguito.
 
-La finestra di inspector mostra un anteprima dell'immagine generata dalla AI. Al di sotto di quella immagine sono indicati tutti i parametri di configurazione della AI.
+### Esempio: colorare dentro un cerchio
 
-### Layer
+1. Rinomina un layer **Base**. Disegna il contorno di un cerchio con l'ellisse e riempine l'interno con il secchiello, così che contenga una forma piena.
+2. Aggiungi un altro layer, chiamalo **Colore** e selezionalo.
+3. Disegna tratti colorati anche oltre il bordo del cerchio.
+4. Nel pannello **Clipping su layer** scegli **Base** dal menu del layer Colore. Ora i tratti compaiono solo all'interno della forma piena di Base.
+5. Scegli **Nessuna** per mostrare di nuovo tutti i tratti di Colore.
 
-La finestra Layer permette di costruire l'immagine su più livelli, di nascondere o mostrare ogni singolo livello, di cambiarlo di posizione, e di cambiarne l'opacità.
+Un semplice contorno limita il colore al contorno, non all'intera area interna: riempi Base se vuoi colorare l'interno. Un riferimento vuoto o nascosto rende invisibile il contenuto ritagliato; opacità e trasparenza del riferimento influenzano il risultato. Le opzioni che creerebbero un ciclo sono disabilitate. Rinominare o riordinare Base mantiene il collegamento; eliminarla lo rimuove.
 
-## Licenza
+## Versioni documento
 
-Questo progetto e distribuito sotto licenza Apache 2.0. Vedi [LICENSE](./LICENSE).
+Le versioni sono copie dello stato del documento conservate nel progetto. Usale prima di sperimentare una variante.
 
-Sicurezza 1.3.0: immagini IPC/progetto limitate a 16 MiB; il download AI rifiuta indirizzi locali e redirect. Nelle impostazioni API key un avviso indica il fallback locale cifrato safeStorage, la cui protezione dipende dal sistema operativo.
+1. In **Versioni documento**, inserisci un **Nome versione**, per esempio «Prima del colore».
+2. Premi **Crea versione**. Se lasci il campo vuoto viene proposto un nome automatico.
+3. Continua a lavorare. Le versioni compaiono con data e tipo, dalla più recente.
+4. Per rinominarne una, cambia il suo campo e sposta il focus fuori dal campo.
+5. Premi **Ripristina versione** e conferma per recuperarla. Ripristina canvas, layer, riferimenti e immagine AI di quel momento, mantenendo l'elenco delle versioni. Puoi usare Annulla per recuperare lo stato precedente al ripristino.
+6. **Elimina versione**, dopo conferma, rimuove quella copia. Salva il progetto per conservare tutte queste modifiche su disco.
 
-## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
+**Versioni automatiche** è facoltativo: con le impostazioni predefinite controlla ogni cinque minuti e crea una copia solo quando il contenuto differisce dall'ultima. L'elenco contiene al massimo 20 versioni ed è soggetto anche a limiti di spazio; se la creazione è disabilitata o viene rifiutata, elimina copie non più utili o alleggerisci il documento.
 
-Preset brush bilingui da configurazione: grafite, morbido, marker, inchiostro e texture; controlli pressione, velocita, spaziatura e texture procedurali. Parametri immutabili nei tratti e persistenti nei file tdraw. / Configurable bilingual brush presets, pressure/speed/spacing and procedural texture controls; per-stroke parameters persist in tdraw.
+**Annulla/Ripristina** riguarda la cronologia delle operazioni nella sessione. Le versioni documento sono punti di ritorno espliciti, conservati nei `.tdraw`; il salvataggio automatico di recupero protegge invece dalle interruzioni. Non sono tre nomi per la stessa funzione.
 
-Nel pannello **Brush avanzati** selezionare grafite, morbido, marker, inchiostro o texture. Pressione dimensione/opacita', velocita', spaziatura e grana/punti/tratteggio regolano i nuovi tratti; quelli gia' disegnati conservano i loro parametri. Selezionare un tool classico per tornare al comportamento precedente. Undo/Redo ripristina i tratti; le impostazioni applicate sono conservate nel progetto. Il comportamento della pressione dipende dal dispositivo Pointer Events.
+## Inspector e generazione AI
 
-## C16 - Import immagini di riferimento (`1.5.0`)
+### Configurare OpenAI
 
-Import locale PNG/JPEG/WebP da dialogo nativo controllato, normalizzazione PNG e limiti bytes/pixel. Riferimenti embedded separati con visibilita, opacita, posizione e scala: esclusi da export e AI. Caricamento immagini prima del rendering dopo riapertura. / Local dialog-controlled imports; embedded references with visibility, opacity, position and scale, excluded from exports and AI.
+Apri **File > Impostazioni > API Key...**, oppure il pulsante con la chiave in Inspector. Inserisci la tua API key OpenAI e scegli un modello immagini disponibile per il tuo account, poi salva. Il modello predefinito è `gpt-image-1.5`.
 
-Dal pannello Riferimenti scegliere **Importa riferimento** e un file PNG, JPEG o WebP locale (massimo 4 MiB e limiti pixel della configurazione). I controlli X/Y spostano l'immagine; la larghezza conserva le proporzioni. Visibilita e opacita non cambiano gli strumenti di disegno. Si possono conservare fino a quattro riferimenti embedded nel progetto: il file originale non serve per riaprirli. Undo/redo ripristina le modifiche. I riferimenti restano esclusi da canvas esportato, sidecar e generazione AI, anche con redraw automatico. Rimuovi riferimento richiede conferma.
+La chiave viene conservata dal sistema di gestione dei segreti del computer. Inspector mostra se è configurata e il backend di storage; può essere usato un archivio locale cifrato come fallback, con un avviso se il sistema non offre protezione adeguata. Non inserire la chiave nel nome del progetto o nel testo dello stile.
 
-Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensioni nel main e normalizzato a PNG, perche nativeImage non supporta questo formato. / WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and normalized to PNG, because nativeImage does not support this format. 87 test, lint/build e smoke import WebP chiaro/scuro.
+### Scegliere lo stile e generare
 
-## C17 - Maschere e clipping layer (`1.6.0`)
+In **File > Impostazioni > Stile...** scegli un preset e leggi la sua descrizione, oppure scegli lo stile personalizzato e scrivi una breve indicazione visiva. Puoi contrassegnare un preset come preferito e richiamarlo dalla stessa finestra. Salva la scelta.
 
-Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
+Premi **Genera immagine**, il pulsante con le frecce circolari in Inspector. Durante l'attesa viene mostrato un indicatore; al termine l'anteprima contiene il risultato. La generazione successiva sostituisce l'immagine corrente: salvala, esportala o crea una versione prima di sostituire un risultato da conservare.
 
-I comandi maschera sono rimossi dalla versione 1.11.3. I progetti precedenti mantengono aspetto e dati delle maschere al salvataggio e nel ripristino delle versioni, senza un editor dedicato. Nel pannello **Clipping su layer** scegliere un altro layer come target: il ritaglio usa la sua trasparenza, opacita e visibilita. I target restano associati dopo riordino; i cicli sono disabilitati e cancellare il target rimuove la relazione. Canvas, export e generazione condividono lo stesso rendering; clipping e ripristino supportano Undo/Redo.
+Vengono inviati a OpenAI il canvas composito e le indicazioni di generazione. I riferimenti, le versioni archiviate e il nome del progetto non fanno parte del contenuto di generazione. Le richieste possono avere un costo sul tuo account OpenAI e richiedono Internet; la disponibilità dipende dal modello e dal provider.
 
-## C18 - Storia versioni del documento (`1.7.0`)
+### Redraw automatico
 
-Snapshot persistenti manuali/automatici, consultazione, rinomina, ripristino e cancellazione; capsule senza ricorsione e limiti numero/byte da configurazione. Ripristino completo di canvas, layer, maschere, riferimenti e immagine AI; versioni conservate in tdraw e autosave, Undo ripristina lo stato precedente. / Persistent bounded document versions with complete restoration and non-recursive capsules.
+**File > Impostazioni > Redraw automatico...** permette di attivare la generazione dopo una pausa dal disegno e di scegliere l'attesa. È disattivato per impostazione predefinita. Se lo abiliti con una chiave configurata, le modifiche al canvas possono avviare nuove richieste a pagamento. Disattivalo se vuoi decidere ogni volta con Genera immagine.
 
-Il pannello **Versioni documento** crea snapshot con un nome, rinominabili e ripristinabili. Uno snapshot contiene canvas, layer, maschere, riferimenti e immagine realistica; le versioni non contengono altre versioni. Ripristino e cancellazione richiedono conferma; dopo ripristino Undo recupera lo stato precedente. Salvare il progetto per conservare le versioni, che sono incluse anche in autosave/recovery. Undo/Redo resta una cronologia operativa in memoria e non viene ricostruita alla riapertura.
+## Salvare, aprire ed esportare
 
-**Versioni automatiche** e' una preferenza locale disattivata per default. Se attiva, registra ogni cinque minuti solo contenuto cambiato rispetto all'ultima versione. Limiti `snapshots` da configurazione: 20 versioni, 8 MiB per contenuto, 32 MiB complessivi e nome di 80 caratteri; vale anche il limite totale progetto. Al raggiungimento dei limiti la creazione si arresta senza eliminare versioni precedenti: rimuovere versioni inutili o modificare la configurazione. Non e' un backup esterno: perdere il file tdraw significa perdere le sue versioni.
+**File > Salva** conserva il progetto modificabile; **Salva con nome...** permette di scegliere un altro nome/percorso. **File > Apri** carica un `.tdraw`. Nuovo e Apri chiedono conferma se il progetto corrente ha modifiche non salvate.
 
-## C19 - Preset di stile realistico (`1.8.0`)
+Per un progetto chiamato `nome`, il salvataggio produce:
 
-Preset di stile bilingui con descrizioni, frammenti prompt e parametri OpenAI validati; preferito e stile personalizzato persistenti. Prompt privo di metadati progetto, guardia su credenziali accidentali e messaggi provider sanitizzati. / Configurable bilingual style presets, persistent favorite/custom styles and minimal generation payloads.
+| File | Contenuto |
+| --- | --- |
+| `nome.tdraw` | Canvas, layer e tratti, effetti di clipping, riferimenti, versioni e immagine AI presente. |
+| `nome_canvas.png` | Disegno composito senza riferimenti. |
+| `nome_image.png` | Immagine AI, quando presente. |
 
-In **File > Impostazioni > Stile immagine** scegliere un preset e leggerne la descrizione. **Preset preferito** memorizza un solo preset; **Usa preferito** lo richiama anche mentre si usa uno stile personalizzato. La stella identifica il preferito. **Salva** applica insieme stile e preferito; **Annulla** lascia le preferenze precedenti. Per rimuovere il preferito selezionarlo, togliere la spunta e salvare.
+Tieni il `.tdraw` per continuare a lavorare: un PNG non conserva layer o versioni modificabili. I nomi dei file seguono il percorso scelto nel dialogo di salvataggio.
 
-**Stile personalizzato** permette una breve descrizione visiva non segreta (80 caratteri per default). Non incollare API key o credenziali: formati comuni vengono rifiutati, ma il controllo non riconosce ogni possibile segreto. Il testo uguale all'identificatore di un preset seleziona quel preset. Stile e preferito persistono nei dati locali dell'app, separati dal progetto e dalla chiave API.
+**Esporta canvas PNG/WebP** crea un'immagine del disegno. **Esporta immagine PNG/WebP** esporta invece il risultato AI e richiede che sia già presente. Esportare non sostituisce il salvataggio del progetto. PNG mantiene qualità senza perdita; WebP è utile per una condivisione più compatta.
 
-I sei preset seguono l'ordine in `imageGeneration.stylePresets` in `config/app.config.json`: ogni voce contiene ID, nomi/descrizioni italiani e inglesi, `promptFragment` e `parameters`. Sono ammessi solo `quality` (`auto`, `low`, `medium`, `high`) e `size` (`auto`, `1024x1024`, `1536x1024`, `1024x1536`); i valori mancanti usano i default centrali. Anche `availableStyles` deve riportare gli stessi ID nello stesso ordine. Configurazioni invalide vengono rifiutate all'avvio; riavviare dopo una modifica.
+I progetti precedenti privi di dimensioni esplicite usano il foglio iniziale. Le maschere contenute nei vecchi progetti continuano a influenzare l'aspetto e vengono conservate, ma non sono disponibili comandi per crearle o modificarle. Per i nuovi disegni usa i layer e il clipping.
 
-La generazione invia a OpenAI il PNG composito del canvas (maschere e clipping applicati, padding configurato), il prompt di composizione e stile, modello e parametri. Non invia riferimenti, versioni salvate, nomi layer/progetto, percorsi, conteggi tratti o il preferito. Il redraw automatico usa lo stesso flusso quando abilitato. L'autenticazione usa la chiave dal backend segreti del main process; gli errori mostrati non includono il messaggio remoto o `revised_prompt`. Qualita' e costo effettivi dipendono dal modello e dal provider.
+## Salvataggio automatico e recupero
 
-## C20 - Aggiornamento toolchain di sviluppo (`1.9.0`)
+Con le impostazioni predefinite l'app conserva un autosave locale delle modifiche ogni 30 secondi. Questo non sostituisce **File > Salva**, non è una copia in una cartella scelta da te e non è un backup esterno.
 
-Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private.
+Se al riavvio è disponibile un autosave, compare **Autosave recovery** con nome e orario. **Restore** lo recupera; **Ignore**, dopo conferma, elimina quella copia di recupero. Il documento recuperato non è associato al precedente percorso: usa Salva e scegli dove conservarlo. Se hai più copie, verifica nome, orario e contenuto prima di sovrascrivere un progetto.
 
-## C21 - Migrazione React e React DOM (`1.10.0`)
+## Scorciatoie
 
-React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione.
+Usa Ctrl su Windows e ⌘ su macOS per le combinazioni indicate come Ctrl/⌘.
 
-## C22 - Aggiornamento icone Lucide (`1.11.0`)
+| Operazione | Scorciatoia |
+| --- | --- |
+| Nuovo / Apri / Salva | Ctrl/⌘ + N / O / S |
+| Salva con nome | Ctrl/⌘ + Shift + S |
+| Annulla / Ripristina | Ctrl/⌘ + Z / Ctrl/⌘ + Shift + Z |
+| Taglia / Copia / Incolla | Ctrl/⌘ + X / C / V |
+| Ritaglia | Ctrl/⌘ + Shift + X |
+| Impostazioni API key | Ctrl/⌘ + , |
+| Aumenta / Riduci zoom | Ctrl/⌘ + = / − |
+| Reset zoom e vista | Ctrl/⌘ + 0 |
+| Schermo intero | F11 su Windows; Ctrl + ⌘ + F su macOS |
 
-Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura.
+## Risoluzione dei problemi
 
-## C23 - Spaziatura del pannello Riferimenti (`1.11.1`)
+| Problema | Cosa controllare |
+| --- | --- |
+| Non vedo i nuovi tratti | Layer attivo, sua visibilità/opacità, colore e clipping. Prova Nessuna nel clipping. |
+| Il clipping nasconde tutto | Il riferimento deve contenere pixel visibili; riempi la forma, mostra il riferimento e controllane l'opacità. |
+| Non vedo texture e slider avanzati | Seleziona un preset avanzato al posto del classico. |
+| Incolla non aggiunge un'immagine | Verifica che gli appunti contengano un'immagine e che il focus non sia in un campo di testo. |
+| Importa riferimento fallisce | Controlla formato, dimensioni, limite di 4 MiB e numero di riferimenti; prova un'immagine più piccola. |
+| Non posso creare una versione | Controlla il limite di 20 copie e lo spazio richiesto dal documento. |
+| Genera immagine è disabilitato | Configura la API key oppure attendi la fine della richiesta corrente. |
+| La richiesta AI fallisce | Controlla rete, validità della chiave, modello/accesso e disponibilità o credito dell'account. Consulta il messaggio in Inspector. |
+| Il canvas sembra tagliato | Resetta zoom e vista; controlla anche le dimensioni del foglio. |
+| Il download non si apre | Verifica architettura, provenienza, checksum e avvisi del sistema per pacchetti non firmati. |
 
-Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi.
+## Privacy e limiti
 
-## C24 - Spaziatura del pulsante Crea versione (`1.11.2`)
+Disegni, riferimenti, versioni e autosave vengono conservati localmente. La generazione AI trasmette il canvas e le indicazioni necessarie a OpenAI, secondo le condizioni del provider. Non inviare contenuti riservati senza valutarne l'uso. I progetti non contengono la API key, ma contengono i riferimenti e le immagini che hai inserito: considera questi dati quando condividi un `.tdraw`.
 
-Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px.
+Le funzioni di disegno locale non richiedono AI; la reinterpretazione dell'immagine dipende da OpenAI. La risposta alla pressione dipende dalla penna e dai driver. Alcune etichette rimangono inglesi anche nell'interfaccia italiana. I pacchetti sono non firmati e non è previsto un auto-update firmato.
 
-## C25 - Rimozione dei comandi maschera (`1.11.3`)
-
-Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti.
-
-## C26 - Spaziatura Brush Avanzati (`1.11.4`)
-
-Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow.
-
-## C27 - Spaziatura campi Versioni documento (`1.11.5`)
-
-Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune.
-
-## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.1`)
-
-Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura.
+Per i dettagli sui controlli e sui limiti di protezione consulta il [modello di sicurezza](SECURITY_MODEL.md). Codice e documentazione sono distribuiti con [licenza Apache 2.0](LICENSE).
