@@ -199,7 +199,7 @@ truedrawing/
 |           Release manuale: validazione tag/versione, lint, test, build, creazione note release, package Windows/macOS, checksum SHA-256 e upload diretto degli asset non firmati sulla release GitHub.
 |
 +-- README.md
-|   Presentazione bilingue del prodotto, architettura sintetica e link ai documenti; riscrittura senza cronologia milestone/versioni app pianificata in M31.
+|   Presentazione bilingue del prodotto: funzioni, download, uso rapido, architettura, privacy, sviluppo e documenti collegati; senza numeri di release o cronologie.
 |
 +-- ISTRUZIONI.md
 |   Manuale utente italiano: installazione, primo disegno, strumenti, clipping con esempio, versioni, AI, file, recupero e troubleshooting.
@@ -234,9 +234,9 @@ truedrawing/
 ## Stato attuale
 
 - Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
-- Ultima milestone completata: C30 - Manuali utente italiano e inglese.
-- Milestone corrente: nessuna; M31 e' la prossima pianificata.
-- Stato milestone: C30 completata con checkpoint `milestone/C30`.
+- Ultima milestone completata: C31 - README di presentazione del progetto.
+- Milestone corrente: nessuna; M32 e' la prossima pianificata.
+- Stato milestone: C31 completata con checkpoint `milestone/C31`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.

@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C30 alla versione `1.12.1`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C31 alla versione `1.12.1`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
 - Versione corrente su `main`: `1.12.1`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C30 - Manuali utente italiano e inglese`.
+- Ultima milestone completata: `C31 - README di presentazione del progetto`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M31 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M32 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -627,13 +627,13 @@ Release: nessuna; solo checkpoint C30.
 
 Riepilogo (2026-10-03): Manuali IT/EN riscritti per funzioni con indice navigabile, avvio e file, strumenti, riferimenti, layer, esempio cerchio/clipping, versioni, AI, recupero e troubleshooting. Verificate parita, link e procedure reali in entrambe le lingue e nei due temi; rimossa la cronologia di sviluppo dalle guide. Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C30`.
 
-### M31 - README di presentazione del progetto
+### C31 - README di presentazione del progetto
 
-- Versione finale prevista: `1.12.1`, invariata.
-- Branch previsto: `milestone/31-product-readme`.
-- Tag di checkpoint previsto: `milestone/C31`.
+- Versione finale: `1.12.1`, invariata.
+- Branch: `milestone/31-product-readme`.
+- Tag di checkpoint: `milestone/C31`.
 - Tipo incremento: nessuno, documentazione.
-- Stato: pianificata.
+- Stato: completata; CI e checkpoint remoto verificati nel processo di chiusura.
 - Obiettivo: presentare True Drawing su GitHub e orientare utenti e sviluppatori ai documenti appropriati.
 
 Attivita':
@@ -652,6 +652,8 @@ Test richiesti: revisione del rendering Markdown e dei link/immagini; confronto 
 Documenti: `README.md`, `PLAN.md`, `AGENTS.md`, `MAP.md`; manuali solo per collegamenti incrociati o incongruenze emerse.
 
 Release: nessuna; solo checkpoint C31.
+
+Riepilogo (2026-10-03): README bilingue riscritto come presentazione del prodotto, con funzionalita, uso rapido, download generali, architettura, privacy, comandi e documenti collegati; rimossi badge/versioni app e cronologie. Verificati rendering GFM GitHub e browser, link/immagini e comandi; allineata nei manuali la disponibilita del solo installer Windows. Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C31`.
 
 ### M32 - Funzionalita' illustrate nella landing page
 
@@ -712,6 +714,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C28 - Aggiornamento Electron/Vitest e chiusura PR residua | 1.12.0 | `milestone/28-electron-update` | Completata | Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C29 - Ordine dei pannelli nella sidebar destra | 1.12.1 | `milestone/29-sidebar-panel-order` | Completata | Sidebar nell’ordine Inspector, Riferimenti, Dimensioni canvas, Versioni documento, Brush avanzati, Layer e Clipping su layer; verificate tastiera, compressione/espansione, scroll, margini e regressioni documento in IT/EN e chiaro/scuro. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | C30 - Manuali utente italiano e inglese | 1.12.1 | `milestone/30-user-manuals` | Completata | Manuali IT/EN riscritti per funzioni con indice navigabile, avvio e file, strumenti, riferimenti, layer, esempio cerchio/clipping, versioni, AI, recupero e troubleshooting. Verificate parita, link e procedure reali in entrambe le lingue e nei due temi; rimossa la cronologia di sviluppo dalle guide. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
+| 2026-10-03 | C31 - README di presentazione del progetto | 1.12.1 | `milestone/31-product-readme` | Completata | README bilingue riscritto come presentazione del prodotto, con funzionalita, uso rapido, download generali, architettura, privacy, comandi e documenti collegati; rimossi badge/versioni app e cronologie. Verificati rendering GFM GitHub e browser, link/immagini e comandi; allineata nei manuali la disponibilita del solo installer Windows. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 
 ## Checklist di chiusura milestone
 

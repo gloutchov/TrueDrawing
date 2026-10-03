@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C30 - Manuali utente italiano e inglese.
+- Ultima milestone completata: C31 - README di presentazione del progetto.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
 - Versione corrente: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M31 e' la prossima pianificata.
+- Milestone corrente: nessuna; M32 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/30-user-manuals`.
+- Ultimo branch milestone completato: `milestone/31-product-readme`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
