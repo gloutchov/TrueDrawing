@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C25 alla versione `1.11.3`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C26 alla versione `1.11.4`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.11.3`.
+- Versione corrente su `main`: `1.11.4`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C25 - Rimozione dei comandi maschera`.
+- Ultima milestone completata: `C26 - Spaziatura Brush Avanzati`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M26 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M27 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -484,13 +484,13 @@ Release: nessuna; cumulativa a M28.
 
 Riepilogo (2026-10-03): Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.11.3`, checkpoint `milestone/C25`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-### M26 - Spaziatura Brush Avanzati
+### C26 - Spaziatura Brush Avanzati
 
-- Versione finale prevista: `1.11.4`.
-- Branch previsto: `milestone/26-brush-panel-spacing`.
-- Tag di checkpoint previsto: `milestone/C26`.
+- Versione finale: `1.11.4`.
+- Branch: `milestone/26-brush-panel-spacing`.
+- Tag di checkpoint: `milestone/C26`.
 - Tipo incremento: `+0.0.1` per l’intervento mirato.
-- Stato: pianificata.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
 - Obiettivo: Dare spazio coerente a preset, texture e slider nel pannello Brush Avanzati.
 
 Attivita': Riutilizzare padding e gap del pannello Dimensioni canvas; nessun overflow; valori e selezioni funzionanti.
@@ -502,6 +502,8 @@ Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di co
 Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
 
 Release: nessuna; cumulativa a M28.
+
+Riepilogo (2026-10-03): Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.11.4`, checkpoint `milestone/C26`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ### M27 - Spaziatura campi Versioni documento
 
@@ -572,6 +574,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C23 - Spaziatura del pannello Riferimenti | 1.11.1 | `milestone/23-reference-panel-spacing` | Completata | Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C24 - Spaziatura del pulsante Crea versione | 1.11.2 | `milestone/24-snapshot-action-spacing` | Completata | Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C25 - Rimozione dei comandi maschera | 1.11.3 | `milestone/25-remove-mask-editor` | Completata | Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C26 - Spaziatura Brush Avanzati | 1.11.4 | `milestone/26-brush-panel-spacing` | Completata | Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

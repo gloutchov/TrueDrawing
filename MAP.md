@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.11.3`; release GitHub pubblicata: `v1.11.0`.
-- Ultima milestone completata: C25 - Rimozione dei comandi maschera.
-- Milestone corrente: nessuna; M26 e' la prossima pianificata.
-- Stato milestone: C25 completata con checkpoint `milestone/C25`.
+- Versione corrente su `main`: `1.11.4`; release GitHub pubblicata: `v1.11.0`.
+- Ultima milestone completata: C26 - Spaziatura Brush Avanzati.
+- Milestone corrente: nessuna; M27 e' la prossima pianificata.
+- Stato milestone: C26 completata con checkpoint `milestone/C26`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -354,3 +354,7 @@ Crea versione allineato a destra come Applica, con margine superiore 8 px, infer
 Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. / Mask creation, toggling, editing and removal commands and stroke routing are removed. Layer clipping and legacy mask rendering/persistence, including snapshots, remain compatible; normal drawing does not change legacy masks.
 
 Struttura corrente C25: `src/renderer/layers/LayerClippingPanel.tsx` contiene solo il target clipping; sostituisce il precedente editor maschere. `layerEffects.ts` gestisce relazioni clipping e cicli. Tipi, parser e renderer mantengono le maschere dei progetti precedenti per conservare i dati e l'aspetto; i tratti normali non possono modificarle. / Current C25 structure: LayerClippingPanel replaces the mask editor. Clipping validation remains; legacy mask data stays in types, parser and renderer for compatibility.
+
+## C26 - Spaziatura Brush Avanzati (`1.11.4`)
+
+Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. / Advanced brush preset, texture and sliders share 10 px horizontal padding, 8 px gaps and vertical spacing with other panels; sliders stay inside panel edges without overflow.

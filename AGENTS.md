@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C25 - Rimozione dei comandi maschera.
+- Ultima milestone completata: C26 - Spaziatura Brush Avanzati.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.11.3`; release GitHub pubblicata: `v1.11.0`.
+- Versione corrente: `1.11.4`; release GitHub pubblicata: `v1.11.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M26 e' la prossima pianificata.
+- Milestone corrente: nessuna; M27 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/25-remove-mask-editor`.
+- Ultimo branch milestone completato: `milestone/26-brush-panel-spacing`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -182,3 +182,7 @@ Crea versione allineato a destra come Applica, con margine superiore 8 px, infer
 ## C25 - Rimozione dei comandi maschera (`1.11.3`)
 
 Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. / Mask creation, toggling, editing and removal commands and stroke routing are removed. Layer clipping and legacy mask rendering/persistence, including snapshots, remain compatible; normal drawing does not change legacy masks.
+
+## C26 - Spaziatura Brush Avanzati (`1.11.4`)
+
+Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. / Advanced brush preset, texture and sliders share 10 px horizontal padding, 8 px gaps and vertical spacing with other panels; sliders stay inside panel edges without overflow.

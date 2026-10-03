@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.11.3`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.11.4`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -256,3 +256,7 @@ Crea versione allineato a destra come Applica, con margine superiore 8 px, infer
 ## C25 - Rimozione dei comandi maschera (`1.11.3`)
 
 Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti.
+
+## C26 - Spaziatura Brush Avanzati (`1.11.4`)
+
+Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow.

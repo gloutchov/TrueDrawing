@@ -1068,3 +1068,7 @@ textarea:focus-visible {
   display: block;
   margin: 8px 10px 12px auto;
 }
+
+.panel-content .field input[type="range"] {
+  margin: 0;
+}
