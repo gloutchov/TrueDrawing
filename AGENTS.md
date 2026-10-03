@@ -6,7 +6,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: C32 - Funzionalita' illustrate nella landing page.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
+- Versione corrente: `1.12.1`; release GitHub pubblicata: `v1.12.1`.
 - Branch corrente: `main`.
 - Milestone corrente: nessuna; C29-C32 completate.
 - Patch corrente: nessuna.
@@ -20,7 +20,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.12.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.1` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -45,7 +45,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Alla chiusura delle milestone aggiornare README e manuali per il comportamento effettivo; registrare avanzamento, riepiloghi M/C e verbali CI in `PLAN.md`, con dettagli delle release nelle note release. Non appendere piu' sezioni C<n> ai tre documenti utente; i vecchi helper di chiusura che lo fanno devono essere adattati prima di riusarli.
 - `MAP.md` descrive la struttura; `SECURITY_MODEL.md` approfondisce la sicurezza; `AGENTS.md` mantiene le regole operative. Versione, branch, checkpoint e stato restano nei manifest e nei documenti operativi.
 - C29-C32 completano ordine sidebar, manuali, README e landing, eseguiti uno alla volta su richiesta del progettista. Resta valida la deroga gia autorizzata sul controllo preventivo prima di commit, merge, tag, push e rimozione branch; restano obbligatorie identita', verifiche e checkpoint remoto.
-- C29 porta il sorgente a 1.12.1; C30-C32 mantengono la versione dell'app. Il tag versione cumulativo v1.12.1 identifica il checkpoint finale C32 con tutti i documenti aggiornati. La fase non crea una nuova release binaria: quella distribuita resta v1.12.0.
+- C29 porta il sorgente a 1.12.1; C30-C32 mantengono la versione dell'app. Il tag versione cumulativo v1.12.1 identifica il checkpoint finale C32 con tutti i documenti aggiornati. La fase si e' conclusa con il tag v1.12.1 e senza una nuova release binaria; la successiva richiesta del progettista autorizza ora la pubblicazione Windows/macOS dello stesso tag.
 
 ## Architettura
 
@@ -207,3 +207,7 @@ Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Elect
 ## Landing page e catture
 
 La pubblicazione esistente e' GitHub Pages `main:/docs` sul dominio canonico `https://truedrawing.glaucosilvestri.it/`. Conservare sorgente e CNAME; verificare lo stato Pages sul commit finale. I file `docs/assets/feature-*-it.png` e `feature-*-en.png` sono screenshot reali catturati con profili e disegni di prova senza API key; aggiornarli quando cambiano i controlli mostrati, insieme alle traduzioni e ai testi alternativi. Non ingrandire gli screenshot oltre la dimensione originale nel layout.
+
+## Pubblicazione v1.12.1 (2026-10-03)
+
+Il progettista autorizza esplicitamente la nuova release. Il tag v1.12.1 resta sul commit 8b87cf277f2b4d4cc16114ef6173c8acf4d2d281 (C32): non spostarlo per aggiungere metadati. Packaging Windows/macOS tramite workflow Release dal tag, note bilingui in docs/release-notes/v1.12.1.md applicate alla release dopo il packaging, 10 asset scaricati e 8 checksum verificati, renderer/main/preload identici alla build verificata. Workflow 37136552575 verde. Il branch release/1.12.1-publication aggiorna soltanto note, stato corrente e versione mostrata sul sito; chiuderlo con CI verde e verifica Pages. Restano valide le deroghe autorizzate su commit, merge, push e rimozione branch.

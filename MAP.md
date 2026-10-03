@@ -233,7 +233,7 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
+- Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.1`.
 - Ultima milestone completata: C32 - Funzionalita' illustrate nella landing page.
 - Milestone corrente: nessuna; C29-C32 completate.
 - Stato milestone: C32 completata con checkpoint `milestone/C32`.
@@ -368,3 +368,9 @@ Nome versione e rinomina delle versioni salvate con padding laterale 10 px e cam
 Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. / Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.
 
 - `docs/release-notes/v1.12.0.md`: note bilingui C23-C28, layout pannelli, compatibilita maschere legacy ed Electron/Vitest aggiornati.
+
+## Pubblicazione v1.12.1
+
+- docs/release-notes/v1.12.1.md: note bilingui su ordine sidebar, manuali e presentazione del prodotto, download/checksum e limiti delle verifiche.
+- docs/index.html: versione distribuita v1.12.1; download continua a puntare alle GitHub Releases.
+- Tag v1.12.1 invariato sul checkpoint C32; aggiornamenti documentali di pubblicazione successivi, senza modifiche al codice o ai manifest.
