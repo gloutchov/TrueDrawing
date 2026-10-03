@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C26 alla versione `1.11.4`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C27 alla versione `1.11.5`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.11.4`.
+- Versione corrente su `main`: `1.11.5`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C26 - Spaziatura Brush Avanzati`.
+- Ultima milestone completata: `C27 - Spaziatura campi Versioni documento`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M27 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M28 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -505,13 +505,13 @@ Release: nessuna; cumulativa a M28.
 
 Riepilogo (2026-10-03): Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.11.4`, checkpoint `milestone/C26`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-### M27 - Spaziatura campi Versioni documento
+### C27 - Spaziatura campi Versioni documento
 
-- Versione finale prevista: `1.11.5`.
-- Branch previsto: `milestone/27-snapshot-fields-spacing`.
-- Tag di checkpoint previsto: `milestone/C27`.
+- Versione finale: `1.11.5`.
+- Branch: `milestone/27-snapshot-fields-spacing`.
+- Tag di checkpoint: `milestone/C27`.
 - Tipo incremento: `+0.0.1` per l’intervento mirato.
-- Stato: pianificata.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
 - Obiettivo: Dare margini coerenti alla casella nome versione e ai campi delle versioni salvate.
 
 Attivita': Contenitore uniforme; nomi, rinomina, ripristino e pulsanti leggibili nei due temi.
@@ -523,6 +523,8 @@ Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di co
 Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
 
 Release: nessuna; cumulativa a M28.
+
+Riepilogo (2026-10-03): Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.11.5`, checkpoint `milestone/C27`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ### M28 - Aggiornamento Electron e chiusura PR residua
 
@@ -575,6 +577,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C24 - Spaziatura del pulsante Crea versione | 1.11.2 | `milestone/24-snapshot-action-spacing` | Completata | Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C25 - Rimozione dei comandi maschera | 1.11.3 | `milestone/25-remove-mask-editor` | Completata | Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C26 - Spaziatura Brush Avanzati | 1.11.4 | `milestone/26-brush-panel-spacing` | Completata | Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C27 - Spaziatura campi Versioni documento | 1.11.5 | `milestone/27-snapshot-fields-spacing` | Completata | Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

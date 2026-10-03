@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.11.4`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.11.5`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -260,3 +260,7 @@ Mask creation, toggling, editing and removal commands and stroke routing are rem
 ## C26 - Advanced brush spacing (`1.11.4`)
 
 Advanced brush preset, texture and sliders share 10 px horizontal padding, 8 px gaps and vertical spacing with other panels; sliders stay inside panel edges without overflow.
+
+## C27 - Document version fields spacing (`1.11.5`)
+
+Version name and saved-version rename fields have 10 px horizontal padding and consistent field styling; content/actions are separated by 8 px gaps, and Create version keeps the shared right alignment.
