@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C31 alla versione `1.12.1`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C32 alla versione `1.12.1`: ordine sidebar, manuali utente, README di presentazione e landing con funzioni illustrate aggiornati. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
 - Versione corrente su `main`: `1.12.1`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C31 - README di presentazione del progetto`.
+- Ultima milestone completata: `C32 - Funzionalita' illustrate nella landing page`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M32 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; C29-C32 completate.
 
 ## Obiettivo della fase post release
 
@@ -552,9 +552,9 @@ PR di riferimento: [#30](https://github.com/gloutchov/TrueDrawing/pull/30); sost
 
 Riepilogo (2026-10-03): Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.12.0`, checkpoint `milestone/C28`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-## Riordino interfaccia e documentazione prodotto (M29-M32)
+## Riordino interfaccia e documentazione prodotto (C29-C32)
 
-Richiesta del progettista del 2026-10-03: preparare le milestone per riordinare la sidebar, trasformare i due manuali in guide d'uso, rendere il README una presentazione dell'app e arricchire la landing page. Il progettista ha autorizzato l'esecuzione sequenziale: ogni voce viene chiusa dopo implementazione, verifiche e checkpoint remoto.
+Richiesta del progettista del 2026-10-03: preparare le milestone per riordinare la sidebar, trasformare i due manuali in guide d'uso, rendere il README una presentazione dell'app e arricchire la landing page. Esecuzione sequenziale completata su autorizzazione del progettista, con implementazione, verifiche e checkpoint remoto per ogni voce.
 
 Ordine di esecuzione: M29, M30, M31, M32. Le guide descriveranno l'interfaccia dopo M29; README e landing useranno le spiegazioni verificate nei manuali. Restano valide la deroga gia concessa sul controllo preventivo prima di commit, merge, tag, push e rimozione branch e le verifiche di identita', CI e checkpoint remoto.
 
@@ -565,7 +565,7 @@ Convenzioni da applicare anche alle manutenzioni successive:
 - Milestone, avanzamento e verifiche restano in `PLAN.md`; dettagli di ciascuna release nelle note release. Non aggiungere riepiloghi `C<n>` a README o manuali alla chiusura delle nuove milestone.
 - La richiesta specifica sul README prevale sulle indicazioni generali di `STARTUP_PREFERENCES.md` che vi richiedono una versione. Le versioni canoniche restano in `VERSION`, manifest, lockfile e documenti operativi.
 
-Versionamento previsto: M29 porta il sorgente a `1.12.1` (`+0.0.1`); M30-M32 mantengono quella versione perche' riguardano documentazione e sito. Ogni milestone ha il proprio checkpoint `milestone/C<n>`; il solo tag versione `v1.12.1` e' previsto sul checkpoint finale C32, comprendendo manuali e README aggiornati. Nessuna nuova release GitHub Windows/macOS e' prevista da questa richiesta; la release distribuita resta `v1.12.0`. Le pubblicazioni del sito seguono la configurazione esistente.
+Versionamento della fase: C29 porta il sorgente a `1.12.1` (`+0.0.1`); C30-C32 mantengono quella versione perche' riguardano documentazione e sito. Ogni milestone ha il proprio checkpoint `milestone/C<n>`; il solo tag versione `v1.12.1` identifica il checkpoint finale C32, comprendendo manuali e README aggiornati. Nessuna nuova release GitHub Windows/macOS e' prevista da questa richiesta; la release distribuita resta `v1.12.0`. Le pubblicazioni del sito seguono la configurazione esistente.
 
 ### C29 - Ordine dei pannelli nella sidebar destra
 
@@ -655,13 +655,13 @@ Release: nessuna; solo checkpoint C31.
 
 Riepilogo (2026-10-03): README bilingue riscritto come presentazione del prodotto, con funzionalita, uso rapido, download generali, architettura, privacy, comandi e documenti collegati; rimossi badge/versioni app e cronologie. Verificati rendering GFM GitHub e browser, link/immagini e comandi; allineata nei manuali la disponibilita del solo installer Windows. Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C31`.
 
-### M32 - Funzionalita' illustrate nella landing page
+### C32 - Funzionalita' illustrate nella landing page
 
-- Versione finale prevista: `1.12.1`, invariata perche' cambia il sito di presentazione.
-- Branch previsto: `milestone/32-landing-features`.
-- Tag di checkpoint previsto: `milestone/C32`.
+- Versione finale: `1.12.1`, invariata perche' cambia il sito di presentazione.
+- Branch: `milestone/32-landing-features`.
+- Tag di checkpoint: `milestone/C32`.
 - Tipo incremento: nessuno per l'app; completamento del sito e della documentazione.
-- Stato: pianificata.
+- Stato: completata; CI e checkpoint remoto verificati nel processo di chiusura.
 - Obiettivo: far capire le possibilita' di disegno con una sezione breve e visiva dopo Interfaccia.
 
 Attivita':
@@ -679,6 +679,8 @@ Test richiesti: lint/test/build esistenti; controllo di parita' dei dizionari, a
 Documenti: `docs/index.html`, `docs/landing.css`, `docs/landing.js`, screenshot in `docs/assets/`, `PLAN.md`, `AGENTS.md`, `MAP.md`; aggiornare i collegamenti o le descrizioni pertinenti in README/manuali senza aggiungere cronologia di milestone.
 
 Release: nessuna nuova release binaria; checkpoint C32 e tag versione cumulativo `v1.12.1` sul commit finale verificato, comprensivo dei manuali e del README riscritti.
+
+Riepilogo (2026-10-03): Landing bilingue arricchita dopo Interfaccia con brush standard, brush avanzati, layer e clipping: testi brevi, otto screenshot reali (circa 290 KB), immagini apribili a dimensione originale e link ai manuali. Verificate otto combinazioni browser IT/EN da 360 a 1440 px, proporzioni senza ingrandimenti, contrasto, tastiera, persistenza lingua, link/asset e assenza di overflow/errori. Pubblicazione verificata tramite GitHub Pages sul commit finale; la verifica HTTP diretta del dominio resta impedita dalla policy di rete cloud (403 del proxy). Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C32`.
 
 ## Fuori roadmap attiva
 
@@ -715,6 +717,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C29 - Ordine dei pannelli nella sidebar destra | 1.12.1 | `milestone/29-sidebar-panel-order` | Completata | Sidebar nell’ordine Inspector, Riferimenti, Dimensioni canvas, Versioni documento, Brush avanzati, Layer e Clipping su layer; verificate tastiera, compressione/espansione, scroll, margini e regressioni documento in IT/EN e chiaro/scuro. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | C30 - Manuali utente italiano e inglese | 1.12.1 | `milestone/30-user-manuals` | Completata | Manuali IT/EN riscritti per funzioni con indice navigabile, avvio e file, strumenti, riferimenti, layer, esempio cerchio/clipping, versioni, AI, recupero e troubleshooting. Verificate parita, link e procedure reali in entrambe le lingue e nei due temi; rimossa la cronologia di sviluppo dalle guide. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | C31 - README di presentazione del progetto | 1.12.1 | `milestone/31-product-readme` | Completata | README bilingue riscritto come presentazione del prodotto, con funzionalita, uso rapido, download generali, architettura, privacy, comandi e documenti collegati; rimossi badge/versioni app e cronologie. Verificati rendering GFM GitHub e browser, link/immagini e comandi; allineata nei manuali la disponibilita del solo installer Windows. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
+| 2026-10-03 | C32 - Funzionalita' illustrate nella landing page | 1.12.1 | `milestone/32-landing-features` | Completata | Landing bilingue arricchita dopo Interfaccia con brush standard, brush avanzati, layer e clipping: testi brevi, otto screenshot reali (circa 290 KB), immagini apribili a dimensione originale e link ai manuali. Verificate otto combinazioni browser IT/EN da 360 a 1440 px, proporzioni senza ingrandimenti, contrasto, tastiera, persistenza lingua, link/asset e assenza di overflow/errori. Pubblicazione verificata tramite GitHub Pages sul commit finale; la verifica HTTP diretta del dominio resta impedita dalla policy di rete cloud (403 del proxy). Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 
 ## Checklist di chiusura milestone
 

@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C31 - README di presentazione del progetto.
+- Ultima milestone completata: C32 - Funzionalita' illustrate nella landing page.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
 - Versione corrente: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M32 e' la prossima pianificata.
+- Milestone corrente: nessuna; C29-C32 completate.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/31-product-readme`.
+- Ultimo branch milestone completato: `milestone/32-landing-features`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -44,8 +44,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - `README.md` e' la presentazione bilingue del prodotto su GitHub: funzionalita', uso rapido, architettura sintetica, sviluppo e link ai documenti. Descrive il codice dello stesso commit senza numeri di release dell'app, badge di versione o cronologie di milestone. Questa richiesta specifica prevale sulle prescrizioni generiche di STARTUP_PREFERENCES che richiedono la versione nel README.
 - Alla chiusura delle milestone aggiornare README e manuali per il comportamento effettivo; registrare avanzamento, riepiloghi M/C e verbali CI in `PLAN.md`, con dettagli delle release nelle note release. Non appendere piu' sezioni C<n> ai tre documenti utente; i vecchi helper di chiusura che lo fanno devono essere adattati prima di riusarli.
 - `MAP.md` descrive la struttura; `SECURITY_MODEL.md` approfondisce la sicurezza; `AGENTS.md` mantiene le regole operative. Versione, branch, checkpoint e stato restano nei manifest e nei documenti operativi.
-- M29-M32 sono definite in PLAN: ordine sidebar, manuali, README, landing. Il progettista ne ha autorizzato l'esecuzione una alla volta. Resta valida la deroga gia autorizzata sul controllo preventivo prima di commit, merge, tag, push e rimozione branch; restano obbligatorie identita', verifiche e checkpoint remoto.
-- C29 porta il sorgente a 1.12.1; M30-M32 mantengono la versione dell'app. Il tag versione cumulativo e' previsto alla chiusura di M32, dopo la riscrittura dei documenti. Nessuna nuova release binaria e' prevista dalla sola pianificazione.
+- C29-C32 completano ordine sidebar, manuali, README e landing, eseguiti uno alla volta su richiesta del progettista. Resta valida la deroga gia autorizzata sul controllo preventivo prima di commit, merge, tag, push e rimozione branch; restano obbligatorie identita', verifiche e checkpoint remoto.
+- C29 porta il sorgente a 1.12.1; C30-C32 mantengono la versione dell'app. Il tag versione cumulativo v1.12.1 identifica il checkpoint finale C32 con tutti i documenti aggiornati. La fase non crea una nuova release binaria: quella distribuita resta v1.12.0.
 
 ## Architettura
 
@@ -203,3 +203,7 @@ Nome versione e rinomina delle versioni salvate con padding laterale 10 px e cam
 ## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
 
 Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. / Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.
+
+## Landing page e catture
+
+La pubblicazione esistente e' GitHub Pages `main:/docs` sul dominio canonico `https://truedrawing.glaucosilvestri.it/`. Conservare sorgente e CNAME; verificare lo stato Pages sul commit finale. I file `docs/assets/feature-*-it.png` e `feature-*-en.png` sono screenshot reali catturati con profili e disegni di prova senza API key; aggiornarli quando cambiano i controlli mostrati, insieme alle traduzioni e ai testi alternativi. Non ingrandire gli screenshot oltre la dimensione originale nel layout.
