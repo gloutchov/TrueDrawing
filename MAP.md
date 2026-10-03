@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.11.5`; release GitHub pubblicata: `v1.11.0`.
-- Ultima milestone completata: C27 - Spaziatura campi Versioni documento.
-- Milestone corrente: nessuna; M28 e' la prossima pianificata.
-- Stato milestone: C27 completata con checkpoint `milestone/C27`.
+- Versione corrente su `main`: `1.12.0`; release GitHub pubblicata: `v1.12.0`.
+- Ultima milestone completata: C28 - Aggiornamento Electron/Vitest e chiusura PR residua.
+- Milestone corrente: nessuna; rifiniture M23-M28 completate.
+- Stato milestone: C28 completata con checkpoint `milestone/C28`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -362,3 +362,9 @@ Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px 
 ## C27 - Spaziatura campi Versioni documento (`1.11.5`)
 
 Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. / Version name and saved-version rename fields have 10 px horizontal padding and consistent field styling; content/actions are separated by 8 px gaps, and Create version keeps the shared right alignment.
+
+## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
+
+Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. / Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.
+
+- `docs/release-notes/v1.12.0.md`: note bilingui C23-C28, layout pannelli, compatibilita maschere legacy ed Electron/Vitest aggiornati.

@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C27 - Spaziatura campi Versioni documento.
+- Ultima milestone completata: C28 - Aggiornamento Electron/Vitest e chiusura PR residua.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.11.5`; release GitHub pubblicata: `v1.11.0`.
+- Versione corrente: `1.12.0`; release GitHub pubblicata: `v1.12.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M28 e' la prossima pianificata.
+- Milestone corrente: nessuna; rifiniture M23-M28 completate.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/27-snapshot-fields-spacing`.
+- Ultimo branch milestone completato: `milestone/28-electron-update`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -20,7 +20,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.11.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.0` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -190,3 +190,7 @@ Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px 
 ## C27 - Spaziatura campi Versioni documento (`1.11.5`)
 
 Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. / Version name and saved-version rename fields have 10 px horizontal padding and consistent field styling; content/actions are separated by 8 px gaps, and Create version keeps the shared right alignment.
+
+## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
+
+Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. / Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.

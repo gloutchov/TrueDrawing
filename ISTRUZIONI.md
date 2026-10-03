@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.11.5`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.12.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -264,3 +264,7 @@ Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px 
 ## C27 - Spaziatura campi Versioni documento (`1.11.5`)
 
 Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune.
+
+## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
+
+Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura.

@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.11.5` (release GitHub pubblicata: `v1.11.0`)
+Versione sorgente: `1.12.0` (release GitHub pubblicata: `v1.12.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.11.5` (published GitHub release: `v1.11.0`)
+Source version: `1.12.0` (published GitHub release: `v1.12.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -239,3 +239,9 @@ C22: le icone restano componenti SVG locali, senza nuove richieste di rete o pri
 Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. / Mask creation, toggling, editing and removal commands and stroke routing are removed. Layer clipping and legacy mask rendering/persistence, including snapshots, remain compatible; normal drawing does not change legacy masks.
 
 C25: i vecchi dati maschera continuano a essere validati con gli stessi limiti locali, anche dentro le versioni documento. Rimossi i percorsi UI di mutazione; nessun nuovo permesso, IPC o accesso rete/filesystem. / Legacy mask data keeps existing validation and limits, including document versions. UI mutation paths are removed without new permissions or IPC.
+
+## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
+
+Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. / Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.
+
+C28: Electron 44.5.1 include aggiornamenti upstream Chromium/V8; confermati CSP, isolamento, sandbox/preload e IPC validati. Vitest 5.0.3 resta uno strumento di test. Audit delle dipendenze runtime e controlli appunti/progetti effettuati nel processo di chiusura; pacchetti Windows/macOS non firmati e verificati tramite SHA-256. / Electron 44.5.1 includes upstream Chromium/V8 fixes; CSP, isolation, sandbox/preload and validated IPC remain enabled. Vitest 5.0.3 is a test tool; runtime dependency audit and clipboard/project checks complete closure.

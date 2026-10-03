@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.11.5-blue" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.12.0-blue" />
   <img alt="Electron" src="https://img.shields.io/badge/Electron-44-47848f" />
   <img alt="React" src="https://img.shields.io/badge/React-19-61dafb" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-6-3178c6" />
@@ -21,8 +21,8 @@
 
 | IT | EN |
 | --- | --- |
-| Versione sorgente: `1.11.5` | Source version: `1.11.5` |
-| Stato: C27 completata; release pubblicata `v1.11.0` | Status: C27 complete; published release `v1.11.0` |
+| Versione sorgente: `1.12.0` | Source version: `1.12.0` |
+| Stato: C28 completata; release pubblicata `v1.12.0` | Status: C28 complete; published release `v1.12.0` |
 | Piattaforme: macOS e Windows | Platforms: macOS and Windows |
 | Runtime desktop: Electron | Desktop runtime: Electron |
 | UI: React, TypeScript, Vite | UI: React, TypeScript, Vite |
@@ -69,7 +69,7 @@ npm run dist:mac
 
 True Drawing e' un'app desktop locale per macOS e Windows pensata per disegnare con mouse, tavoletta grafica tipo Wacom o input compatibili con Pointer Events. L'obiettivo e' permettere all'utente di creare un disegno su canvas e generare una versione realistica tramite API configurata dall'utente.
 
-Il progetto e' in fase iniziale. La versione sorgente `1.11.5` contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
+Il progetto e' in fase iniziale. La versione sorgente `1.12.0` contiene lo skeleton desktop Electron/Vite/React, struttura modulare, configurazione centrale validata, canvas interattivo con Pointer Events e manina per navigare, strumenti di tratto/linea/shape/riempimento, layer, inspector realistico con generazione OpenAI, gestione API key tramite keychain/credential manager, preferenze modello/stile immagine e redraw automatico, preferenze lingua/tema interfaccia, hardening Electron con CSP, salvataggio manuale, autosave, recupero, export PNG/WebP, rifiniture UX con status bar, stati vuoti, conferme distruttive, zoom persistente, workflow manuale di release cross-platform, landing page statica bilingue sul dominio personalizzato, caricamento corretto degli asset renderer nei pacchetti installati e correzioni dei dialog impostazioni in tema scuro.
 
 Repository pubblico GitHub: `https://github.com/gloutchov/TrueDrawing`.
 
@@ -77,7 +77,7 @@ Repository pubblico GitHub: `https://github.com/gloutchov/TrueDrawing`.
 
 Le release GitHub per Windows e macOS sono distribuite senza firma codice e senza notarizzazione perche' non sono disponibili certificati o credenziali di firma. Windows SmartScreen e macOS Gatekeeper possono quindi mostrare avvisi di sicurezza all'apertura dell'app scaricata.
 
-La release cumulativa `v1.11.0` include Electron 44, React 19 e Lucide 1.48, oltre a brush avanzati, riferimenti, maschere/clipping, versioni documento e preset AI: `https://github.com/gloutchov/TrueDrawing/releases/tag/v1.11.0`. Il workflow manuale GitHub Actions `Release` valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v1.11.0.md` e file checksum SHA-256.
+La release cumulativa `v1.12.0` include margini e allineamenti dei pannelli, rimozione dei comandi maschera con compatibilita dei vecchi progetti ed Electron 44.5.1; conserva brush avanzati, riferimenti, clipping, versioni documento e preset AI: `https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.0`. Il workflow manuale GitHub Actions `Release` valida documenti, versione, lint, test e build, poi genera artifact Windows/macOS non firmati, note release da `docs/release-notes/v1.12.0.md` e checksum SHA-256.
 
 ### Landing page
 
@@ -145,7 +145,7 @@ Comandi:
 
 True Drawing is a local desktop app for macOS and Windows designed for drawing with a mouse, a graphics tablet such as Wacom, or input devices exposed through Pointer Events. The goal is to let users create a canvas drawing and generate a realistic image from it through a user-configured API.
 
-The project is at its initial stage. Source version `1.11.5` includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
+The project is at its initial stage. Source version `1.12.0` includes the Electron/Vite/React desktop skeleton, modular structure, validated central configuration, interactive canvas with Pointer Events and a hand tool for navigation, stroke/line/shape/fill tools, layers, realistic inspector with OpenAI image generation, API key storage through keychain/credential manager, image model/style and auto-redraw preferences, interface language/theme preferences, Electron hardening with CSP, manual save, autosave, recovery, PNG/WebP export, UX polish with a status bar, empty states, destructive-action confirmations, persistent zoom, a manual cross-platform release workflow, a bilingual static landing page on the custom domain, correct renderer asset loading in installed packages, and dark-theme fixes for settings dialogs.
 
 Public GitHub repository: `https://github.com/gloutchov/TrueDrawing`.
 
@@ -153,7 +153,7 @@ Public GitHub repository: `https://github.com/gloutchov/TrueDrawing`.
 
 GitHub releases for Windows and macOS are distributed without code signing and without notarization because signing certificates or credentials are not available. Windows SmartScreen and macOS Gatekeeper may therefore show security warnings when opening the downloaded app.
 
-Cumulative release `v1.11.0` includes Electron 44, React 19 and Lucide 1.48 alongside advanced brushes, references, masks/clipping, document versions and AI style presets: `https://github.com/gloutchov/TrueDrawing/releases/tag/v1.11.0`. The manual GitHub Actions `Release` workflow validates documents, version, lint, tests, and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v1.11.0.md`, and SHA-256 checksum files.
+Cumulative release `v1.12.0` includes panel spacing/alignment, removal of mask commands with compatibility for earlier projects, and Electron 44.5.1; advanced brushes, references, clipping, document versions and AI style presets remain available: `https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.0`. The manual GitHub Actions `Release` workflow validates documents, version, lint, tests and build, then creates unsigned Windows/macOS artifacts, release notes from `docs/release-notes/v1.12.0.md`, and SHA-256 checksum files.
 
 ### Landing Page
 
@@ -272,3 +272,7 @@ Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px 
 ## C27 - Spaziatura campi Versioni documento (`1.11.5`)
 
 Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. / Version name and saved-version rename fields have 10 px horizontal padding and consistent field styling; content/actions are separated by 8 px gaps, and Create version keeps the shared right alignment.
+
+## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
+
+Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. / Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.
