@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C28 alla versione `1.12.0`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C29 alla versione `1.12.1`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.12.0`.
+- Versione corrente su `main`: `1.12.1`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C28 - Aggiornamento Electron/Vitest e chiusura PR residua`.
+- Ultima milestone completata: `C29 - Ordine dei pannelli nella sidebar destra`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M29-M32 pianificate, M29 e' la prossima.
+- Milestone corrente in sviluppo: nessuna; M30 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -554,7 +554,7 @@ Riepilogo (2026-10-03): Integrate le cronologie delle PR Dependabot #24 e #30, c
 
 ## Riordino interfaccia e documentazione prodotto (M29-M32)
 
-Richiesta del progettista del 2026-10-03: preparare le milestone per riordinare la sidebar, trasformare i due manuali in guide d'uso, rendere il README una presentazione dell'app e arricchire la landing page. Le quattro voci seguenti restano **pianificate**; questa attivita' registra il piano e le convenzioni documentali.
+Richiesta del progettista del 2026-10-03: preparare le milestone per riordinare la sidebar, trasformare i due manuali in guide d'uso, rendere il README una presentazione dell'app e arricchire la landing page. Il progettista ha autorizzato l'esecuzione sequenziale: ogni voce viene chiusa dopo implementazione, verifiche e checkpoint remoto.
 
 Ordine di esecuzione: M29, M30, M31, M32. Le guide descriveranno l'interfaccia dopo M29; README e landing useranno le spiegazioni verificate nei manuali. Restano valide la deroga gia concessa sul controllo preventivo prima di commit, merge, tag, push e rimozione branch e le verifiche di identita', CI e checkpoint remoto.
 
@@ -567,13 +567,13 @@ Convenzioni da applicare anche alle manutenzioni successive:
 
 Versionamento previsto: M29 porta il sorgente a `1.12.1` (`+0.0.1`); M30-M32 mantengono quella versione perche' riguardano documentazione e sito. Ogni milestone ha il proprio checkpoint `milestone/C<n>`; il solo tag versione `v1.12.1` e' previsto sul checkpoint finale C32, comprendendo manuali e README aggiornati. Nessuna nuova release GitHub Windows/macOS e' prevista da questa richiesta; la release distribuita resta `v1.12.0`. Le pubblicazioni del sito seguono la configurazione esistente.
 
-### M29 - Ordine dei pannelli nella sidebar destra
+### C29 - Ordine dei pannelli nella sidebar destra
 
-- Versione finale prevista: `1.12.1`.
-- Branch previsto: `milestone/29-sidebar-panel-order` (preparato per registrare il piano).
-- Tag di checkpoint previsto: `milestone/C29`.
+- Versione finale: `1.12.1`.
+- Branch: `milestone/29-sidebar-panel-order`.
+- Tag di checkpoint: `milestone/C29`.
 - Tipo incremento: `+0.0.1` per il riordino dell'interfaccia.
-- Stato: pianificata.
+- Stato: completata; CI e checkpoint remoto verificati nel processo di chiusura.
 - Obiettivo: mostrare i sette pannelli nell'ordine richiesto dal progettista.
 
 Attivita':
@@ -595,6 +595,8 @@ Test richiesti: lint, suite esistente e build; smoke Electron dell'ordine dei se
 Documenti: `PLAN.md`, `AGENTS.md`, `MAP.md`, passaggi d'uso pertinenti nei due manuali; README aggiornato solo se contiene una descrizione interessata, senza nuovi riepiloghi milestone. Sincronizzare i file canonici della versione e i riferimenti operativi; aggiornare `SECURITY_MODEL.md` solo per riferimenti correnti o cambi effettivi.
 
 Release: nessuna; checkpoint C29, tag versione cumulativo alla chiusura di M32.
+
+Riepilogo (2026-10-03): Sidebar nell’ordine Inspector, Riferimenti, Dimensioni canvas, Versioni documento, Brush avanzati, Layer e Clipping su layer; verificate tastiera, compressione/espansione, scroll, margini e regressioni documento in IT/EN e chiaro/scuro. Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C29`.
 
 ### M30 - Manuali utente italiano e inglese
 
@@ -706,6 +708,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C26 - Spaziatura Brush Avanzati | 1.11.4 | `milestone/26-brush-panel-spacing` | Completata | Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C27 - Spaziatura campi Versioni documento | 1.11.5 | `milestone/27-snapshot-fields-spacing` | Completata | Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C28 - Aggiornamento Electron/Vitest e chiusura PR residua | 1.12.0 | `milestone/28-electron-update` | Completata | Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C29 - Ordine dei pannelli nella sidebar destra | 1.12.1 | `milestone/29-sidebar-panel-order` | Completata | Sidebar nell’ordine Inspector, Riferimenti, Dimensioni canvas, Versioni documento, Brush avanzati, Layer e Clipping su layer; verificate tastiera, compressione/espansione, scroll, margini e regressioni documento in IT/EN e chiaro/scuro. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 
 ## Checklist di chiusura milestone
 

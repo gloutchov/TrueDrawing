@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.12.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.12.1`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -111,7 +111,7 @@ To move around a zoomed canvas, select the hand and drag the visible area with a
 
 To change the canvas size, use **Canvas size** in the right panel or `File > Settings > Canvas size...`. Select `px` or `cm`, enter width, height, and resolution in DPI, then press **Apply**. Conversion uses 2.54 cm per inch and rounds to the nearest pixel; the panel always shows the effective size in pixels and centimeters. In `px`, changing DPI preserves the pixel count and changes the physical size; in `cm`, it preserves the entered centimeters and recalculates pixels. Configured limits are 64-4096 pixels per side, 12 megapixels total, and 72-600 DPI. The origin stays at the top left: shrinking the canvas does not scale or delete strokes, which can reappear when enlarged. Undo/redo also restores dimensions.
 
-The lock between width and height starts open. Click it to keep the current proportions: changing either side updates the other in pixels or centimeters. Click it again to edit the sides separately. The right panel contains **Inspector**, **Canvas size**, and **Layers**, in that order. Use the arrow at the far right of each heading to collapse or expand its section; collapsing a section does not change the drawing.
+The lock between width and height starts open. Click it to keep the current proportions: changing either side updates the other in pixels or centimeters. Click it again to edit the sides separately. The right panel contains **Inspector**, **References**, **Canvas size**, **Document versions**, **Advanced brushes**, **Layers**, and **Clip to layer**, in that order. Use the arrow at the far right of each heading to collapse or expand its section; collapsing a section does not change the drawing.
 
 The Edit menu offers some useful additional features:
 
@@ -265,6 +265,6 @@ Advanced brush preset, texture and sliders share 10 px horizontal padding, 8 px 
 
 Version name and saved-version rename fields have 10 px horizontal padding and consistent field styling; content/actions are separated by 8 px gaps, and Create version keeps the shared right alignment.
 
-## C28 - Electron/Vitest update and cumulative release (`1.12.0`)
+## C28 - Electron/Vitest update and cumulative release (`1.12.1`)
 
 Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.

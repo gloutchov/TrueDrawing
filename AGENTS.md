@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C28 - Aggiornamento Electron/Vitest e chiusura PR residua.
+- Ultima milestone completata: C29 - Ordine dei pannelli nella sidebar destra.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.0`; release GitHub pubblicata: `v1.12.0`.
-- Branch corrente: `milestone/29-sidebar-panel-order` (pianificazione locale M29-M32).
-- Milestone corrente: nessuna in implementazione; M29-M32 pianificate, M29 e' la prossima.
+- Versione corrente: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
+- Branch corrente: `main`.
+- Milestone corrente: nessuna; M30 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/28-electron-update`.
+- Ultimo branch milestone completato: `milestone/29-sidebar-panel-order`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -44,8 +44,8 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - `README.md` e' la presentazione bilingue del prodotto su GitHub: funzionalita', uso rapido, architettura sintetica, sviluppo e link ai documenti. Descrive il codice dello stesso commit senza numeri di release dell'app, badge di versione o cronologie di milestone. Questa richiesta specifica prevale sulle prescrizioni generiche di STARTUP_PREFERENCES che richiedono la versione nel README.
 - Alla chiusura delle milestone aggiornare README e manuali per il comportamento effettivo; registrare avanzamento, riepiloghi M/C e verbali CI in `PLAN.md`, con dettagli delle release nelle note release. Non appendere piu' sezioni C<n> ai tre documenti utente; i vecchi helper di chiusura che lo fanno devono essere adattati prima di riusarli.
 - `MAP.md` descrive la struttura; `SECURITY_MODEL.md` approfondisce la sicurezza; `AGENTS.md` mantiene le regole operative. Versione, branch, checkpoint e stato restano nei manifest e nei documenti operativi.
-- M29-M32 sono pianificate in PLAN: ordine sidebar, manuali, README, landing. La presente attivita' prepara il piano. Per la successiva esecuzione resta valida la deroga gia autorizzata sul controllo preventivo prima di commit, merge, tag, push e rimozione branch; restano obbligatorie identita', verifiche e checkpoint remoto.
-- M29 incrementera' il sorgente a 1.12.1; M30-M32 non cambieranno la versione dell'app. Il tag versione cumulativo e' previsto alla chiusura di M32, dopo la riscrittura dei documenti. Nessuna nuova release binaria e' prevista dalla sola pianificazione.
+- M29-M32 sono definite in PLAN: ordine sidebar, manuali, README, landing. Il progettista ne ha autorizzato l'esecuzione una alla volta. Resta valida la deroga gia autorizzata sul controllo preventivo prima di commit, merge, tag, push e rimozione branch; restano obbligatorie identita', verifiche e checkpoint remoto.
+- C29 porta il sorgente a 1.12.1; M30-M32 mantengono la versione dell'app. Il tag versione cumulativo e' previsto alla chiusura di M32, dopo la riscrittura dei documenti. Nessuna nuova release binaria e' prevista dalla sola pianificazione.
 
 ## Architettura
 

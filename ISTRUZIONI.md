@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.12.0`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.12.1`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -111,7 +111,7 @@ Per spostarsi su un canvas ingrandito, selezionare la manina e trascinare la par
 
 Per cambiare le dimensioni del canvas, usare **Dimensioni canvas** nel pannello destro oppure `File > Impostazioni > Dimensioni canvas...`. Scegliere `px` o `cm`, indicare larghezza, altezza e risoluzione in DPI, poi premere **Applica**. La conversione usa 2,54 cm per pollice e arrotonda al pixel piu' vicino; il pannello mostra sempre la misura effettiva in pixel e centimetri. In `px`, cambiare DPI conserva i pixel e modifica la misura fisica; in `cm`, conserva i centimetri inseriti e ricalcola i pixel. I limiti configurati sono 64-4096 pixel per lato, 12 megapixel complessivi e 72-600 DPI. L'origine resta in alto a sinistra: i tratti non vengono scalati o cancellati quando il canvas si restringe, e possono riapparire ampliandolo. Undo/redo ripristina anche le dimensioni.
 
-Il lucchetto tra larghezza e altezza e' inizialmente aperto. Cliccarlo per mantenere le proporzioni correnti: cambiando un lato si aggiorna l'altro, in pixel o in centimetri. Cliccarlo di nuovo per modificare i due lati separatamente. A destra si trovano, nell'ordine, **Inspector**, **Dimensioni canvas** e **Layer**. Ogni riquadro si comprime o si espande con la freccia all'estrema destra della sua intestazione; comprimere un riquadro non modifica il disegno.
+Il lucchetto tra larghezza e altezza e' inizialmente aperto. Cliccarlo per mantenere le proporzioni correnti: cambiando un lato si aggiorna l'altro, in pixel o in centimetri. Cliccarlo di nuovo per modificare i due lati separatamente. A destra si trovano, nell'ordine, **Inspector**, **Riferimenti**, **Dimensioni canvas**, **Versioni documento**, **Brush avanzati**, **Layer** e **Clipping su layer**. Ogni riquadro si comprime o si espande con la freccia all'estrema destra della sua intestazione; comprimere un riquadro non modifica il disegno.
 
 Il Menù Edit offre alcune funzionalità aggiuntive utili:
 
@@ -265,6 +265,6 @@ Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px 
 
 Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune.
 
-## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.0`)
+## C28 - Aggiornamento Electron/Vitest e chiusura PR residua (`1.12.1`)
 
 Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura.

@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.12.0` (release GitHub pubblicata: `v1.12.0`)
+Versione sorgente: `1.12.1` (release GitHub pubblicata: `v1.12.0`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -91,7 +91,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.12.0` (published GitHub release: `v1.12.0`)
+Source version: `1.12.1` (published GitHub release: `v1.12.0`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
