@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.11.2`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.11.3`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -211,7 +211,7 @@ Patch `1.5.1`: WebP decodificato dal canvas Chromium dopo verifica RIFF/dimensio
 
 Maschere non distruttive con editor, attivazione e rimozione; clipping con identita layer stabili, controllo cicli e pulizia relazioni alla cancellazione. Rendering condiviso per canvas/export/AI, undo/redo e persistenza tdraw. / Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
 
-Nel pannello Maschere e clipping selezionare **Crea maschera**, quindi **Modifica maschera**. La maschera iniziale rivela tutto: la gomma nasconde, matita/pennello ripristinano la visibilita. Disattivare Modifica maschera per tornare ai tratti del layer. La checkbox Maschera attiva applica/disattiva l'effetto senza perdere i tratti; Rimuovi maschera richiede conferma. **Clipping su layer** usa l'alpha di un altro layer, includendone maschera, opacita e visibilita. I target restano associati dopo riordino; target ciclici sono disabilitati e cancellare il target rimuove la relazione. Effetti, export e generazione condividono lo stesso rendering; tutto persiste e si ripristina con undo/redo.
+I comandi maschera sono rimossi dalla versione 1.11.3. I progetti precedenti mantengono aspetto e dati delle maschere al salvataggio e nel ripristino delle versioni, senza un editor dedicato. Nel pannello **Clipping su layer** scegliere un altro layer come target: il ritaglio usa la sua trasparenza, opacita e visibilita. I target restano associati dopo riordino; i cicli sono disabilitati e cancellare il target rimuove la relazione. Canvas, export e generazione condividono lo stesso rendering; clipping e ripristino supportano Undo/Redo.
 
 ## C18 - Storia versioni del documento (`1.7.0`)
 
@@ -252,3 +252,7 @@ Importa riferimento allineato a destra; contenuto del pannello con padding 10/12
 ## C24 - Spaziatura del pulsante Crea versione (`1.11.2`)
 
 Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px.
+
+## C25 - Rimozione dei comandi maschera (`1.11.3`)
+
+Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti.

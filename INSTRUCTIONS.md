@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.11.2`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.11.3`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -211,7 +211,7 @@ WebP is decoded by Chromium Canvas after RIFF/dimension checks in main and norma
 
 Non-destructive editable masks, stable layer clipping with cycle validation, shared rendering, undo/redo and persistence.
 
-In Masks and clipping choose **Create mask**, then **Edit mask**. A new mask reveals everything: eraser hides; pencil/brush restore visibility. Turn off Edit mask to draw on the layer again. Mask enabled toggles the effect without losing strokes; removing a mask requires confirmation. **Clip to layer** uses another layer's alpha, including its mask, opacity and visibility. Targets remain linked after reordering; cyclic targets are disabled and deleting a target clears the relationship. Canvas, export and generation share rendering; effects persist and support undo/redo.
+Mask commands were removed in version 1.11.3. Earlier projects retain mask appearance and data when saved or restored from document versions, without a mask editor. In **Clip to layer**, choose another layer as the target: clipping uses its alpha, opacity and visibility. Targets remain linked after reordering; cyclic targets are disabled and deleting a target clears the relationship. Canvas, export and generation share rendering; clipping and restoration support Undo/Redo.
 
 ## C18 - Document version history (`1.7.0`)
 
@@ -252,3 +252,7 @@ Import reference aligned to the right; panel content uses the Canvas size paddin
 ## C24 - Create version button spacing (`1.11.2`)
 
 Create version is aligned to the right like Apply, with 8 px above, 12 px below and 10 px beside the button.
+
+## C25 - Mask editor removal (`1.11.3`)
+
+Mask creation, toggling, editing and removal commands and stroke routing are removed. Layer clipping and legacy mask rendering/persistence, including snapshots, remain compatible; normal drawing does not change legacy masks.

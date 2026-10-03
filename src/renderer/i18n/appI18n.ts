@@ -23,13 +23,6 @@ const translations = {
     manual: "Manuale",
     automatic: "Automatica",
 
-    layerEffects: "Maschere e clipping",
-    createMask: "Crea maschera",
-    maskEnabled: "Maschera attiva",
-    editMask: "Modifica maschera",
-    maskInstructions: "Gomma nasconde, matita e pennello ripristinano. I tratti originali restano intatti.",
-    removeMask: "Rimuovi maschera",
-    removeMaskConfirm: "Rimuovere la maschera?",
     clipLayer: "Clipping su layer",
 
     projectName: "Nome progetto",
@@ -163,13 +156,6 @@ const translations = {
     manual: "Manual",
     automatic: "Automatic",
 
-    layerEffects: "Masks and clipping",
-    createMask: "Create mask",
-    maskEnabled: "Mask enabled",
-    editMask: "Edit mask",
-    maskInstructions: "Eraser hides; pencil and brush restore. Original strokes remain intact.",
-    removeMask: "Remove mask",
-    removeMaskConfirm: "Remove the mask?",
     clipLayer: "Clip to layer",
 
     projectName: "Project name",
