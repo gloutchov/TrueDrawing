@@ -9,7 +9,7 @@ True Drawing ha completato C32 alla versione `1.12.1`: ordine sidebar, manuali u
 - Ultima milestone completata: `C32 - Funzionalita' illustrate nella landing page`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.1`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Milestone corrente in sviluppo: nessuna; C29-C32 completate.
 
 ## Obiettivo della fase post release
@@ -565,7 +565,7 @@ Convenzioni da applicare anche alle manutenzioni successive:
 - Milestone, avanzamento e verifiche restano in `PLAN.md`; dettagli di ciascuna release nelle note release. Non aggiungere riepiloghi `C<n>` a README o manuali alla chiusura delle nuove milestone.
 - La richiesta specifica sul README prevale sulle indicazioni generali di `STARTUP_PREFERENCES.md` che vi richiedono una versione. Le versioni canoniche restano in `VERSION`, manifest, lockfile e documenti operativi.
 
-Versionamento della fase: C29 porta il sorgente a `1.12.1` (`+0.0.1`); C30-C32 mantengono quella versione perche' riguardano documentazione e sito. Ogni milestone ha il proprio checkpoint `milestone/C<n>`; il solo tag versione `v1.12.1` identifica il checkpoint finale C32, comprendendo manuali e README aggiornati. Nessuna nuova release GitHub Windows/macOS e' prevista da questa richiesta; la release distribuita resta `v1.12.0`. Le pubblicazioni del sito seguono la configurazione esistente.
+Versionamento della fase: C29 porta il sorgente a `1.12.1` (`+0.0.1`); C30-C32 mantengono quella versione perche' riguardano documentazione e sito. Ogni milestone ha il proprio checkpoint `milestone/C<n>`; il solo tag versione `v1.12.1` identifica il checkpoint finale C32, comprendendo manuali e README aggiornati. La richiesta iniziale si e' conclusa senza nuova release binaria, con `v1.12.0` ancora distribuita. Il progettista ha poi autorizzato esplicitamente la pubblicazione della release `v1.12.1`; l'esito e' registrato nella sezione dedicata. Le pubblicazioni del sito seguono la configurazione esistente.
 
 ### C29 - Ordine dei pannelli nella sidebar destra
 
@@ -682,6 +682,20 @@ Release: nessuna nuova release binaria; checkpoint C32 e tag versione cumulativo
 
 Riepilogo (2026-10-03): Landing bilingue arricchita dopo Interfaccia con brush standard, brush avanzati, layer e clipping: testi brevi, otto screenshot reali (circa 290 KB), immagini apribili a dimensione originale e link ai manuali. Verificate otto combinazioni browser IT/EN da 360 a 1440 px, proporzioni senza ingrandimenti, contrasto, tastiera, persistenza lingua, link/asset e assenza di overflow/errori. Pubblicazione verificata tramite GitHub Pages sul commit finale; la verifica HTTP diretta del dominio resta impedita dalla policy di rete cloud (403 del proxy). Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C32`.
 
+## Pubblicazione release v1.12.1 (2026-10-03)
+
+Stato: completata; workflow Release verde, asset/checksum verificati, documentazione e Pages verificati in chiusura. [Release pubblicata](https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.1).
+
+Richiesta successiva del progettista: pubblicare i pacchetti della versione gia taggata e verificata. Nessun nuovo incremento dell'app o spostamento dei tag: `v1.12.1` e `milestone/C32` restano sul commit `8b87cf277f2b4d4cc16114ef6173c8acf4d2d281`.
+
+- Branch documentale: `release/1.12.1-publication`, creato da main dopo C32.
+- Workflow Release: run `37136552575`, eseguito sul tag v1.12.1; lint, 123 test e build prima del packaging.
+- Distribuzione: installer Windows x64 e pacchetti DMG/ZIP macOS arm64, non firmati e non notarizzati.
+- Verifica: download di tutti gli asset, confronto SHA-256 dei file elencati nei due manifest, ispezione di versione e contenuti dell'app macOS. Esito: 10 asset scaricati, 8 file coperti dai manifest SHA-256 verificati; Electron 44.5.1 e dipendenze React 19.3.0/Lucide 1.48.0 confermati. Renderer JS/CSS, main e preload corrispondono byte per byte alla build di produzione verificata. Versione/identificatore app macOS e contenitore DMG validi.
+- Note bilingui: `docs/release-notes/v1.12.1.md`, applicate alla release dopo il packaging dal tag gia pubblicato.
+- Documentazione: stato corrente aggiornato in PLAN/AGENTS/MAP/SECURITY; versione distribuita aggiornata nella landing, con CI e GitHub Pages verificati in chiusura. README e manuali mantengono il ruolo di presentazione e guide d'uso, senza cronologie.
+- App e tag sorgente invariati; nessuna nuova milestone funzionale. Il branch di pubblicazione viene rimosso dopo verifiche e merge.
+
 ## Fuori roadmap attiva
 
 ### Aggiornamenti automatici firmati
@@ -718,6 +732,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C30 - Manuali utente italiano e inglese | 1.12.1 | `milestone/30-user-manuals` | Completata | Manuali IT/EN riscritti per funzioni con indice navigabile, avvio e file, strumenti, riferimenti, layer, esempio cerchio/clipping, versioni, AI, recupero e troubleshooting. Verificate parita, link e procedure reali in entrambe le lingue e nei due temi; rimossa la cronologia di sviluppo dalle guide. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | C31 - README di presentazione del progetto | 1.12.1 | `milestone/31-product-readme` | Completata | README bilingue riscritto come presentazione del prodotto, con funzionalita, uso rapido, download generali, architettura, privacy, comandi e documenti collegati; rimossi badge/versioni app e cronologie. Verificati rendering GFM GitHub e browser, link/immagini e comandi; allineata nei manuali la disponibilita del solo installer Windows. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | C32 - Funzionalita' illustrate nella landing page | 1.12.1 | `milestone/32-landing-features` | Completata | Landing bilingue arricchita dopo Interfaccia con brush standard, brush avanzati, layer e clipping: testi brevi, otto screenshot reali (circa 290 KB), immagini apribili a dimensione originale e link ai manuali. Verificate otto combinazioni browser IT/EN da 360 a 1440 px, proporzioni senza ingrandimenti, contrasto, tastiera, persistenza lingua, link/asset e assenza di overflow/errori. Pubblicazione verificata tramite GitHub Pages sul commit finale; la verifica HTTP diretta del dominio resta impedita dalla policy di rete cloud (403 del proxy). Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
+| 2026-10-03 | Pubblicazione v1.12.1 | 1.12.1 | `release/1.12.1-publication` | Completata | Release dal tag C32 invariato, workflow 37136552575 verde; 10 asset scaricati e 8 checksum verificati; note bilingui e stato/sito allineati. |
 
 ## Checklist di chiusura milestone
 
