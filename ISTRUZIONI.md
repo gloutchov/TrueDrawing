@@ -29,7 +29,7 @@ True Drawing nasce da un gioco: fare uno schizzo veloce e lasciare che qualcuno 
 
 Scarica il pacchetto adatto al tuo computer dalla pagina [GitHub Releases](https://github.com/gloutchov/TrueDrawing/releases/latest). Controlla sistema operativo e architettura nelle note e nei nomi degli asset: sono disponibili pacchetti Windows x64 e macOS Apple Silicon (arm64).
 
-Su Windows avvia l'installer `.exe` oppure estrai il pacchetto `.zip` e avvia l'app dalla cartella estratta. Su macOS apri il `.dmg` e copia True Drawing in Applicazioni, oppure estrai il pacchetto `.zip`. Avvia l'app dalla sua icona. Per disegnare basta un mouse, un trackpad o una penna compatibile; per generare immagini servono connessione Internet, una API key OpenAI e accesso a un modello immagini.
+Su Windows avvia l'installer `.exe` e segui la procedura di installazione. Su macOS apri il `.dmg` e copia True Drawing in Applicazioni, oppure estrai il pacchetto `.zip`. Avvia l'app dalla sua icona. Per disegnare basta un mouse, un trackpad o una penna compatibile; per generare immagini servono connessione Internet, una API key OpenAI e accesso a un modello immagini.
 
 ### Firma e verifica del download
 
