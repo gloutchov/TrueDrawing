@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.11.1`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.11.2`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -248,3 +248,7 @@ Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and acc
 ## C23 - Reference panel spacing (`1.11.1`)
 
 Import reference aligned to the right; panel content uses the Canvas size padding (10/12 px) and 8 px gap. Controls and text have consistent space from panel edges.
+
+## C24 - Create version button spacing (`1.11.2`)
+
+Create version is aligned to the right like Apply, with 8 px above, 12 px below and 10 px beside the button.

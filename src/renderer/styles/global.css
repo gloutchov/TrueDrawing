@@ -1063,3 +1063,8 @@ textarea:focus-visible {
     gap: 10px;
   }
 }
+
+.snapshot-create-button {
+  display: block;
+  margin: 8px 10px 12px auto;
+}

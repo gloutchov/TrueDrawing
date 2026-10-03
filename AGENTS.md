@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C23 - Spaziatura del pannello Riferimenti.
+- Ultima milestone completata: C24 - Spaziatura del pulsante Crea versione.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.11.1`; release GitHub pubblicata: `v1.11.0`.
+- Versione corrente: `1.11.2`; release GitHub pubblicata: `v1.11.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; M24 e' la prossima pianificata.
+- Milestone corrente: nessuna; M25 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/23-reference-panel-spacing`.
+- Ultimo branch milestone completato: `milestone/24-snapshot-action-spacing`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -174,3 +174,7 @@ Il progettista richiede cinque rifiniture UI e la risoluzione/rimozione del bran
 ## C23 - Spaziatura del pannello Riferimenti (`1.11.1`)
 
 Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. / Import reference aligned to the right; panel content uses the Canvas size padding (10/12 px) and 8 px gap. Controls and text have consistent space from panel edges.
+
+## C24 - Spaziatura del pulsante Crea versione (`1.11.2`)
+
+Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. / Create version is aligned to the right like Apply, with 8 px above, 12 px below and 10 px beside the button.

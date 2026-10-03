@@ -89,7 +89,7 @@ Sopra al Canvas di disegno, è presente un campo dove inserire il nome del diseg
 
 ### Creazione di un Disegno
 
-Nella versione sorgente `1.11.1`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
+Nella versione sorgente `1.11.2`, sul lato sinistro dello schermo sono presenti i tool principali. Dall'alto verso il basso:
 
 - Manina per spostare la vista del canvas;
 - Tool di selezione;
@@ -248,3 +248,7 @@ Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone
 ## C23 - Spaziatura del pannello Riferimenti (`1.11.1`)
 
 Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi.
+
+## C24 - Spaziatura del pulsante Crea versione (`1.11.2`)
+
+Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px.
