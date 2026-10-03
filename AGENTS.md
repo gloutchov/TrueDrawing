@@ -8,7 +8,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
 - Versione corrente: `1.11.0`; release GitHub pubblicata: `v1.11.0`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; manutenzione M20-M22 completata.
+- Milestone corrente: M23; M23-M28 registrate per la nuova richiesta.
 - Patch corrente: nessuna.
 - Ultimo branch milestone completato: `milestone/22-lucide-icons`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
@@ -166,3 +166,7 @@ React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al
 Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. / Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
 
 - Verifica C21: PR #16 CI `37061482002`, main CI `37061575541`, checkpoint `milestone/C21` e versione `v1.10.0` verificati; branch milestone e Dependabot rimossi.
+
+## Esecuzione M23-M28 (2026-10-03)
+
+Il progettista richiede cinque rifiniture UI e la risoluzione/rimozione del branch della PR #24, proseguendo con la deroga gia autorizzata prima di commit, merge, tag, push e rimozione branch. Eseguire M23-M28 in ordine e verificare ogni checkpoint remoto. Una sola release cumulativa v1.12.0 a M28. Rimuovere i comandi delle maschere preservando il rendering e la validazione dei dati legacy; aggiornare la documentazione corrente.
