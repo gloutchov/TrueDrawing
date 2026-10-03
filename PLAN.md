@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C27 alla versione `1.11.5`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C28 alla versione `1.12.0`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.11.5`.
+- Versione corrente su `main`: `1.12.0`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C27 - Spaziatura campi Versioni documento`.
+- Ultima milestone completata: `C28 - Aggiornamento Electron/Vitest e chiusura PR residua`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M28 e' la prossima pianificata.
+- Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Milestone corrente in sviluppo: nessuna; rifiniture M23-M28 completate.
 
 ## Obiettivo della fase post release
 
@@ -526,14 +526,14 @@ Release: nessuna; cumulativa a M28.
 
 Riepilogo (2026-10-03): Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.11.5`, checkpoint `milestone/C27`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-### M28 - Aggiornamento Electron e chiusura PR residua
+### C28 - Aggiornamento Electron/Vitest e chiusura PR residua
 
-- Versione finale prevista: `1.12.0`.
-- Branch previsto: `milestone/28-electron-update`.
-- Tag di checkpoint previsto: `milestone/C28`.
+- Versione finale: `1.12.0`.
+- Branch: `milestone/28-electron-update`.
+- Tag di checkpoint: `milestone/C28`.
 - Tipo incremento: `+0.1.0` per la versione cumulativa funzionale finale.
-- Stato: pianificata.
-- Obiettivo: Integrare PR #24 (Electron 44.5.0), completare le regressioni e distribuire i miglioramenti UI cumulativi.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
+- Obiettivo: Integrare la PR corrente #30 (Electron 44.5.1 e Vitest 5.0.3), che sostituisce la PR #24 chiusa da Dependabot, preservare entrambe le cronologie, completare le regressioni e distribuire i miglioramenti UI cumulativi.
 
 Attivita': Preservare cronologia Dependabot; installazione congelata, IPC/appunti, compatibilità progetti, layout e packaging; rimuovere branch dopo merge/checkpoint e verifica release.
 
@@ -545,7 +545,9 @@ Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md
 
 Release: v1.12.0 Windows/macOS non firmata, pacchetti e SHA-256 verificati; branch finale conservato fino al controllo asset.
 
-PR di riferimento: [#24](https://github.com/gloutchov/TrueDrawing/pull/24).
+PR di riferimento: [#30](https://github.com/gloutchov/TrueDrawing/pull/30); sostituisce [#24](https://github.com/gloutchov/TrueDrawing/pull/24), chiusa da Dependabot durante M23-M27.
+
+Riepilogo (2026-10-03): Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.12.0`, checkpoint `milestone/C28`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ## Fuori roadmap attiva
 
@@ -578,6 +580,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C25 - Rimozione dei comandi maschera | 1.11.3 | `milestone/25-remove-mask-editor` | Completata | Rimossi creazione, attivazione, modifica e rimozione maschere e il relativo instradamento dei tratti. Conservati clipping e compatibilita di rendering/persistenza delle maschere legacy, anche in snapshot; i normali tratti non modificano le maschere precedenti. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C26 - Spaziatura Brush Avanzati | 1.11.4 | `milestone/26-brush-panel-spacing` | Completata | Preset, texture e slider di Brush avanzati con padding laterale 10 px, gap 8 px e spazio verticale condivisi con gli altri pannelli; slider entro i bordi senza overflow. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C27 - Spaziatura campi Versioni documento | 1.11.5 | `milestone/27-snapshot-fields-spacing` | Completata | Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C28 - Aggiornamento Electron/Vitest e chiusura PR residua | 1.12.0 | `milestone/28-electron-update` | Completata | Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

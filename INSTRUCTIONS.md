@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.11.5`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.12.0`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -264,3 +264,7 @@ Advanced brush preset, texture and sliders share 10 px horizontal padding, 8 px 
 ## C27 - Document version fields spacing (`1.11.5`)
 
 Version name and saved-version rename fields have 10 px horizontal padding and consistent field styling; content/actions are separated by 8 px gaps, and Create version keeps the shared right alignment.
+
+## C28 - Electron/Vitest update and cumulative release (`1.12.0`)
+
+Dependabot PR #24 and its replacement #30 histories integrated: Electron 44.5.1 and Vitest 5.0.3. M23-M27 panel refinements and mask editor removal ship in one cumulative Windows/macOS release, with package/checksum verification during closure.
