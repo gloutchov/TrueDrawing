@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C23 alla versione `1.11.1`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C24 alla versione `1.11.2`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.11.1`.
+- Versione corrente su `main`: `1.11.2`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C23 - Spaziatura del pannello Riferimenti`.
+- Ultima milestone completata: `C24 - Spaziatura del pulsante Crea versione`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M24 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M25 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -442,13 +442,13 @@ Release: nessuna; cumulativa a M28.
 
 Riepilogo (2026-10-03): Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. Verifiche: lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.11.1`, checkpoint `milestone/C23`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
-### M24 - Spaziatura del pulsante Crea versione
+### C24 - Spaziatura del pulsante Crea versione
 
-- Versione finale prevista: `1.11.2`.
-- Branch previsto: `milestone/24-snapshot-action-spacing`.
-- Tag di checkpoint previsto: `milestone/C24`.
+- Versione finale: `1.11.2`.
+- Branch: `milestone/24-snapshot-action-spacing`.
+- Tag di checkpoint: `milestone/C24`.
 - Tipo incremento: `+0.0.1` per l’intervento mirato.
-- Stato: pianificata.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
 - Obiettivo: Allineare Crea versione a destra con margini coerenti con Applica.
 
 Attivita': Pulsante distanziato dai campi e dai bordi; creazione snapshot invariata.
@@ -460,6 +460,8 @@ Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di co
 Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
 
 Release: nessuna; cumulativa a M28.
+
+Riepilogo (2026-10-03): Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. Verifiche: lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.11.2`, checkpoint `milestone/C24`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
 ### M25 - Rimozione dei comandi maschera
 
@@ -566,6 +568,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C21 - Migrazione React e React DOM | 1.10.0 | `milestone/21-react-runtime` | Completata | React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C22 - Aggiornamento icone Lucide | 1.11.0 | `milestone/22-lucide-icons` | Completata | Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C23 - Spaziatura del pannello Riferimenti | 1.11.1 | `milestone/23-reference-panel-spacing` | Completata | Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C24 - Spaziatura del pulsante Crea versione | 1.11.2 | `milestone/24-snapshot-action-spacing` | Completata | Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 

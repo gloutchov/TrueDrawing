@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.11.1`; release GitHub pubblicata: `v1.11.0`.
-- Ultima milestone completata: C23 - Spaziatura del pannello Riferimenti.
-- Milestone corrente: nessuna; M24 e' la prossima pianificata.
-- Stato milestone: C23 completata con checkpoint `milestone/C23`.
+- Versione corrente su `main`: `1.11.2`; release GitHub pubblicata: `v1.11.0`.
+- Ultima milestone completata: C24 - Spaziatura del pulsante Crea versione.
+- Milestone corrente: nessuna; M25 e' la prossima pianificata.
+- Stato milestone: C24 completata con checkpoint `milestone/C24`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -344,3 +344,7 @@ Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone
 ## C23 - Spaziatura del pannello Riferimenti (`1.11.1`)
 
 Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. / Import reference aligned to the right; panel content uses the Canvas size padding (10/12 px) and 8 px gap. Controls and text have consistent space from panel edges.
+
+## C24 - Spaziatura del pulsante Crea versione (`1.11.2`)
+
+Crea versione allineato a destra come Applica, con margine superiore 8 px, inferiore 12 px e laterale 10 px. / Create version is aligned to the right like Apply, with 8 px above, 12 px below and 10 px beside the button.

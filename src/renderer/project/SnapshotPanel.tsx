@@ -14,7 +14,7 @@ export function SnapshotPanel({config,locale,snapshots,automatic,onAutomatic,onC
   const [name,setName]=useState("");
   return <CollapsiblePanel title={t(locale,"documentVersions")} locale={locale} icon={<History size={16}/>}>
     <label className="field"><span>{t(locale,"versionName")}</span><input aria-label={t(locale,"versionName")} maxLength={config.snapshots.maxNameLength} value={name} onChange={event=>setName(event.target.value)}/></label>
-    <button className="text-button" disabled={snapshots.length>=config.snapshots.maxCount} onClick={()=>onCreate(name || `${t(locale,"versionName")} ${snapshots.length+1}`)}>{t(locale,"createVersion")}</button>
+    <button className="text-button snapshot-create-button" disabled={snapshots.length>=config.snapshots.maxCount} onClick={()=>onCreate(name || `${t(locale,"versionName")} ${snapshots.length+1}`)}>{t(locale,"createVersion")}</button>
     <label className="field"><span>{t(locale,"automaticVersions")}</span><input aria-label={t(locale,"automaticVersions")} type="checkbox" checked={automatic} onChange={event=>onAutomatic(event.target.checked)}/></label>
     <p className="form-message">{t(locale,"versionInstructions")} {snapshots.length}/{config.snapshots.maxCount}</p>
     {[...snapshots].reverse().map(snapshot=><div key={`${snapshot.id}:${snapshot.name}`}>
