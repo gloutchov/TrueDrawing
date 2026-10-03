@@ -10,7 +10,7 @@ True Drawing ha completato C28 alla versione `1.12.0`. Le milestone C23-C28 rifi
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; rifiniture M23-M28 completate.
+- Milestone corrente in sviluppo: nessuna; M29-M32 pianificate, M29 e' la prossima.
 
 ## Obiettivo della fase post release
 
@@ -18,6 +18,9 @@ La fase post release serve a far evolvere True Drawing da app stabile con flusso
 
 Le priorita' sono:
 
+- disporre i pannelli laterali secondo il flusso di lavoro richiesto;
+- fornire manuali utente pratici e una presentazione GitHub orientata al prodotto;
+- mostrare sul sito le funzioni di disegno con testi brevi e screenshot;
 - migliorare qualita' e flessibilita' degli strumenti di disegno;
 - permettere l'uso di immagini di riferimento;
 - aggiungere funzioni avanzate sui layer;
@@ -548,6 +551,128 @@ Release: v1.12.0 Windows/macOS non firmata, pacchetti e SHA-256 verificati; bran
 PR di riferimento: [#30](https://github.com/gloutchov/TrueDrawing/pull/30); sostituisce [#24](https://github.com/gloutchov/TrueDrawing/pull/24), chiusa da Dependabot durante M23-M27.
 
 Riepilogo (2026-10-03): Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. Verifiche: lint, 123 test, build e smoke Electron chiaro/scuro. Versione `1.12.0`, checkpoint `milestone/C28`. Generazione AI a pagamento e dispositivi fisici non verificati.
+
+## Riordino interfaccia e documentazione prodotto (M29-M32)
+
+Richiesta del progettista del 2026-10-03: preparare le milestone per riordinare la sidebar, trasformare i due manuali in guide d'uso, rendere il README una presentazione dell'app e arricchire la landing page. Le quattro voci seguenti restano **pianificate**; questa attivita' registra il piano e le convenzioni documentali.
+
+Ordine di esecuzione: M29, M30, M31, M32. Le guide descriveranno l'interfaccia dopo M29; README e landing useranno le spiegazioni verificate nei manuali. Restano valide la deroga gia concessa sul controllo preventivo prima di commit, merge, tag, push e rimozione branch e le verifiche di identita', CI e checkpoint remoto.
+
+Convenzioni da applicare anche alle manutenzioni successive:
+
+- `ISTRUZIONI.md` e `INSTRUCTIONS.md` sono manuali utente equivalenti IT/EN, organizzati per funzioni e operazioni, con esempi pratici.
+- `README.md` presenta il prodotto e la sua architettura, con uso rapido e collegamenti ai documenti; descrive il comportamento del codice nello stesso commit senza riportare numeri di release dell'app o cronologie di milestone.
+- Milestone, avanzamento e verifiche restano in `PLAN.md`; dettagli di ciascuna release nelle note release. Non aggiungere riepiloghi `C<n>` a README o manuali alla chiusura delle nuove milestone.
+- La richiesta specifica sul README prevale sulle indicazioni generali di `STARTUP_PREFERENCES.md` che vi richiedono una versione. Le versioni canoniche restano in `VERSION`, manifest, lockfile e documenti operativi.
+
+Versionamento previsto: M29 porta il sorgente a `1.12.1` (`+0.0.1`); M30-M32 mantengono quella versione perche' riguardano documentazione e sito. Ogni milestone ha il proprio checkpoint `milestone/C<n>`; il solo tag versione `v1.12.1` e' previsto sul checkpoint finale C32, comprendendo manuali e README aggiornati. Nessuna nuova release GitHub Windows/macOS e' prevista da questa richiesta; la release distribuita resta `v1.12.0`. Le pubblicazioni del sito seguono la configurazione esistente.
+
+### M29 - Ordine dei pannelli nella sidebar destra
+
+- Versione finale prevista: `1.12.1`.
+- Branch previsto: `milestone/29-sidebar-panel-order` (preparato per registrare il piano).
+- Tag di checkpoint previsto: `milestone/C29`.
+- Tipo incremento: `+0.0.1` per il riordino dell'interfaccia.
+- Stato: pianificata.
+- Obiettivo: mostrare i sette pannelli nell'ordine richiesto dal progettista.
+
+Attivita':
+
+1. Inspector.
+2. Riferimenti.
+3. Dimensioni Canvas.
+4. Versioni Documento.
+5. Brush Avanzati.
+6. Layer.
+7. Clipping su layer.
+
+Riordinare i componenti della sidebar in `src/renderer/app/AppShell.tsx`, conservando le traduzioni dei titoli, i margini, i controlli e il comportamento dei singoli pannelli. Adeguare le descrizioni correnti dell'ordine nei manuali; la loro riorganizzazione completa segue in M30.
+
+Criteri di accettazione: ordine visivo e DOM corrispondenti alla lista; navigazione da tastiera coerente; pannelli comprimibili e raggiungibili tramite scroll; riferimenti, dimensioni, versioni, brush, layer e clipping funzionanti, in italiano/inglese e nei temi chiaro/scuro.
+
+Test richiesti: lint, suite esistente e build; smoke Electron dell'ordine dei sette pannelli, compressione/espansione, scroll e azioni principali. Non introdurre test unitari che replichino soltanto l'ordine del JSX.
+
+Documenti: `PLAN.md`, `AGENTS.md`, `MAP.md`, passaggi d'uso pertinenti nei due manuali; README aggiornato solo se contiene una descrizione interessata, senza nuovi riepiloghi milestone. Sincronizzare i file canonici della versione e i riferimenti operativi; aggiornare `SECURITY_MODEL.md` solo per riferimenti correnti o cambi effettivi.
+
+Release: nessuna; checkpoint C29, tag versione cumulativo alla chiusura di M32.
+
+### M30 - Manuali utente italiano e inglese
+
+- Versione finale prevista: `1.12.1`, invariata rispetto a M29.
+- Branch previsto: `milestone/30-user-manuals`.
+- Tag di checkpoint previsto: `milestone/C30`.
+- Tipo incremento: nessuno, documentazione senza modifiche al comportamento dell'app.
+- Stato: pianificata.
+- Obiettivo: consentire a un nuovo utente di imparare il programma attraverso `ISTRUZIONI.md` e `INSTRUCTIONS.md`.
+
+Attivita':
+
+- Riscrivere sommario e capitoli per requisiti, installazione, primo avvio, interfaccia, operazioni quotidiane e risoluzione dei problemi; verificare le istruzioni contro l'app corrente.
+- Descrivere strumenti standard, selezione/appunti, zoom/manina, brush avanzati e texture, riferimenti, dimensioni/DPI, layer, clipping, versioni documento, Inspector e preferenze AI, lingua/tema.
+- Spiegare salvataggio/apertura `.tdraw`, export, autosave/recupero e la differenza tra Undo/Redo e versioni persistenti del documento.
+- Aggiungere esempi brevi passo per passo, compreso il clipping: disegnare una forma su Base, colorare su un altro layer, scegliere Base come riferimento e usare Nessuno per mostrare tutti i tratti. Spiegare anche il caso del riferimento vuoto o nascosto.
+- Integrare nei capitoli le informazioni d'uso oggi disperse nelle sezioni storiche. La cronologia resta in PLAN e nelle note release; toolchain, migrazioni e verbali CI non diventano capitoli del manuale.
+- Descrivere le funzioni presenti, con etichette e percorsi menu reali. Trattare la compatibilita' dei vecchi progetti nella sezione pertinente, senza presentare i comandi maschera rimossi come disponibili.
+- Mantenere privacy, uso della API key, costi delle chiamate AI, avvisi di firma/checksum e limiti noti in termini utili all'utente. Usare link alle release senza fissare la guida a una release dell'app.
+
+Criteri di accettazione: manuali equivalenti nelle due lingue, indice navigabile, capitoli per tutte le funzioni attive e procedura iniziale completa; esempio clipping comprensibile; ordine sidebar coerente con M29; nessuna sezione o nota di avanzamento basata su M/C o PR; collegamenti e immagini presenti.
+
+Test richiesti: revisione incrociata IT/EN; controllo di link relativi, ancore, etichette e copertura delle funzioni; esecuzione dei passaggi rappresentativi nell'app con profili/disegni di prova, senza chiamate AI a pagamento. Lint, test e build secondo la checklist del repository, senza nuovi test applicativi per soli cambi di prosa.
+
+Documenti: `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, `MAP.md`; correggere gli eventuali link interessati in README e landing. Rimandi a `SECURITY_MODEL.md` per i dettagli tecnici di sicurezza.
+
+Release: nessuna; solo checkpoint C30.
+
+### M31 - README di presentazione del progetto
+
+- Versione finale prevista: `1.12.1`, invariata.
+- Branch previsto: `milestone/31-product-readme`.
+- Tag di checkpoint previsto: `milestone/C31`.
+- Tipo incremento: nessuno, documentazione.
+- Stato: pianificata.
+- Obiettivo: presentare True Drawing su GitHub e orientare utenti e sviluppatori ai documenti appropriati.
+
+Attivita':
+
+- Riscrivere il README bilingue con descrizione dell'app, piattaforme, funzionalita', download/installazione, esempio di uso rapido, sicurezza/privacy essenziali e licenza.
+- Spiegare in breve come e' fatta l'app: Electron main/preload, renderer React, canvas, moduli di documento/persistenza e configurazione centrale; rimandare a MAP per l'approfondimento.
+- Conservare istruzioni essenziali per sviluppo locale, verifiche e packaging, coerenti con i manifest e i workflow reali.
+- Inserire collegamenti navigabili ai manuali IT/EN, `SECURITY_MODEL.md`, `MAP.md`, `PLAN.md`, licenza, sito e pagina release; usare URL generali delle release.
+- Rimuovere badge e numeri di versione dell'app, cronologie di milestone, verbali di migrazione/CI e riferimenti a una release specifica. Conservare i requisiti tecnici necessari per installare o sviluppare il programma.
+- Descrivere cio' che e' implementato nello stesso snapshot del codice: ogni futura release eredita il README adeguato senza un aggiornamento cosmetico del numero versione.
+
+Criteri di accettazione: presentazione leggibile su GitHub, sezioni IT/EN equivalenti e uso rapido chiaro; architettura corretta; collegamenti funzionanti; nessun numero di release dell'app, titolo M/C o riepilogo milestone. Roadmap e storia sono consultabili attraverso il link a PLAN.
+
+Test richiesti: revisione del rendering Markdown e dei link/immagini; confronto delle affermazioni con codice, configurazione e manuali; verifica dei comandi documentati pertinenti, lint/test/build previsti dalla checklist. Nessun test applicativo aggiuntivo per soli cambi di prosa.
+
+Documenti: `README.md`, `PLAN.md`, `AGENTS.md`, `MAP.md`; manuali solo per collegamenti incrociati o incongruenze emerse.
+
+Release: nessuna; solo checkpoint C31.
+
+### M32 - Funzionalita' illustrate nella landing page
+
+- Versione finale prevista: `1.12.1`, invariata perche' cambia il sito di presentazione.
+- Branch previsto: `milestone/32-landing-features`.
+- Tag di checkpoint previsto: `milestone/C32`.
+- Tipo incremento: nessuno per l'app; completamento del sito e della documentazione.
+- Stato: pianificata.
+- Obiettivo: far capire le possibilita' di disegno con una sezione breve e visiva dopo Interfaccia.
+
+Attivita':
+
+- Aggiungere tra Interfaccia e Download una sezione dedicata a brush standard, brush avanzati, layer e clipping.
+- Per ogni funzione usare un titolo e una o due frasi semplici, nelle due lingue, coerenti con i manuali. Mostrare gli strumenti standard, preset/texture, organizzazione dei layer e colorazione entro una forma tramite clipping.
+- Corredare le descrizioni con piccoli screenshot reali dei controlli o di un disegno dimostrativo nell'app aggiornata; catturare esempi privi di dati personali e API key. Rendere le immagini leggibili, ottimizzate e dotate di testi alternativi IT/EN.
+- Riprendere tipografia, colori, spazi e ritmo della pagina esistente; adattare la sezione a desktop e mobile, con traduzioni integrate in `docs/landing.js` e asset locali in `docs/assets/`.
+- Conservare il dominio canonico e i collegamenti esistenti a download, repository, manuali e sito principale. Usare la configurazione di pubblicazione gia presente.
+
+Criteri di accettazione: sezione dopo Interfaccia e prima di Download; quattro funzioni riconoscibili senza termini tecnici superflui; screenshot corrispondenti all'app corrente; IT/EN completi; layout senza overflow o immagini deformate su mobile/tablet/desktop; navigazione da tastiera, contrasto e testi alternativi verificati.
+
+Test richiesti: lint/test/build esistenti; controllo di parita' dei dizionari, asset/link e dominio canonico; verifica browser in entrambe le lingue a larghezze rappresentative, incluso mobile, con screenshot e controllo della leggibilita'. Verificare il sito pubblico quando la pubblicazione esistente ha applicato le modifiche; non aggiungere dipendenze o workflow per questa sola sezione.
+
+Documenti: `docs/index.html`, `docs/landing.css`, `docs/landing.js`, screenshot in `docs/assets/`, `PLAN.md`, `AGENTS.md`, `MAP.md`; aggiornare i collegamenti o le descrizioni pertinenti in README/manuali senza aggiungere cronologia di milestone.
+
+Release: nessuna nuova release binaria; checkpoint C32 e tag versione cumulativo `v1.12.1` sul commit finale verificato, comprensivo dei manuali e del README riscritti.
 
 ## Fuori roadmap attiva
 
