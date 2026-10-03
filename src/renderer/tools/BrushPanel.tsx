@@ -12,6 +12,7 @@ export function BrushPanel({config, locale, settings, onChange}: {
 }) {
   const brush = settings.brush;
   return <CollapsiblePanel title={t(locale, "advancedBrush")} icon={<Paintbrush size={16}/>} locale={locale}>
+    <div className="panel-content brush-panel-body">
     <label className="field"><span>{t(locale, "brushPreset")}</span>
       <select aria-label={t(locale, "brushPreset")} value={brush?.presetId ?? ""} onChange={event => {
         const preset = config.tools.brushPresets.find(item => item.presetId === event.target.value);
@@ -31,5 +32,6 @@ export function BrushPanel({config, locale, settings, onChange}: {
             max={key === "textureScale" ? 64 : 1} step={key === "textureScale" ? 1 : 0.05} value={brush[key]}
             onChange={event => onChange({brush: {...brush, [key]: event.currentTarget.valueAsNumber}})}/></label>)}
     </>}
+    </div>
   </CollapsiblePanel>;
 }

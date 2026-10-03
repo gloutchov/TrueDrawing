@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.11.3`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.11.4`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -256,3 +256,7 @@ Create version is aligned to the right like Apply, with 8 px above, 12 px below 
 ## C25 - Mask editor removal (`1.11.3`)
 
 Mask creation, toggling, editing and removal commands and stroke routing are removed. Layer clipping and legacy mask rendering/persistence, including snapshots, remain compatible; normal drawing does not change legacy masks.
+
+## C26 - Advanced brush spacing (`1.11.4`)
+
+Advanced brush preset, texture and sliders share 10 px horizontal padding, 8 px gaps and vertical spacing with other panels; sliders stay inside panel edges without overflow.
