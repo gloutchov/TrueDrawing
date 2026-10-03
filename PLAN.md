@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C32 alla versione `1.12.1`: ordine sidebar, manuali utente, README di presentazione e landing con funzioni illustrate aggiornati. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C33 alla versione `1.12.2`: chiusura con conferma nativa per modifiche non salvate e stato corretto quando il disegno cambia durante un salvataggio. C29-C32 hanno riordinato sidebar, manuali, README e landing; la release `v1.12.2` distribuisce le correzioni con pacchetti Windows/macOS e checksum verificati.
 
 - Versione corrente su `main`: `1.12.2`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C33 - Conferma di chiusura con modifiche non salvate` (implementazione; distribuzione in chiusura).
+- Ultima milestone completata: `C33 - Conferma di chiusura con modifiche non salvate`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.12.1`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: C33 implementata; distribuzione v1.12.2 in chiusura.
+- Release GitHub corrente: `v1.12.2`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Milestone corrente in sviluppo: nessuna; C33 completata.
 
 ## Obiettivo della fase post release
 
@@ -714,8 +714,8 @@ Il progettista segnala la chiusura bloccata da menu, pulsante finestra e icona e
 - Branch: `milestone/33-close-confirmation`.
 - Tag di checkpoint: `milestone/C33`.
 - Incremento versione: `+0.0.1`, da `1.12.1` a `1.12.2`.
-- Release prevista: `v1.12.2`, Windows x64 e macOS arm64, artifact non firmati e checksum SHA-256.
-- Stato: implementazione completata; CI, checkpoint remoto e release da verificare in chiusura.
+- Release: `v1.12.2`, Windows x64 e macOS arm64, artifact non firmati e checksum SHA-256.
+- Stato: completata; CI, checkpoint remoto, release e checksum verificati.
 
 Attivita: riprodurre il veto `beforeunload` senza conferma, gestirlo nel processo main con un dialogo nativo IT/EN e annullamento predefinito; preservare il salvataggio e l'autosave. Verificare tutti i percorsi di chiusura, tentativi ripetuti, documento pulito, annullamento, rinuncia esplicita alle modifiche, salvataggio riuscito/cancellato/fallito e cambio lingua.
 
@@ -728,9 +728,11 @@ Criteri di accettazione:
 - [x] Menu e chiusura finestra verificati con Electron reale; limiti del test Linux per Dock/pulsante rosso macOS dichiarati.
 - [x] Test di regressione, lint, build e smoke IT/EN chiaro/scuro superati.
 - [x] README, manuali, SECURITY_MODEL, MAP, AGENTS, PLAN e note release aggiornati secondo il loro ruolo.
-- [ ] CI su PR/main, checkpoint e tag versione remoto verificati; release e checksum controllati prima di eliminare il branch.
+- [x] CI su PR/main, checkpoint e tag versione remoto verificati; release e checksum controllati prima di eliminare il branch.
 
-Riepilogo locale (2026-10-03): veto silenzioso riprodotto sulla precedente build per finestra, menu e app.quit. Aggiunta conferma nativa sincrona IT/EN; conservato il veto per annullamento/default, evitati dialoghi duplicati e autorizzazione persistente, finestra mostrata/ripristinata. Corretto lo stato pulito dopo un salvataggio concorrente a nuove modifiche. Lint, 130 test e build superati; 36 combinazioni Electron IT/EN chiaro/scuro con documento pulito/salvato/modificato e tentativi ripetuti; quattro scenari salvataggio annullato/fallito/concorrente e autosave reale; dialogo nativo con Escape e pulsante predefinito nelle due lingue. Dock/pulsante rosso e installazione/avvio nativi richiedono verifica su Mac/Windows. Versione 1.12.2, checkpoint milestone/C33 e release previsti in chiusura.
+Riepilogo locale (2026-10-03): veto silenzioso riprodotto sulla precedente build per finestra, menu e app.quit. Aggiunta conferma nativa sincrona IT/EN; conservato il veto per annullamento/default, evitati dialoghi duplicati e autorizzazione persistente, finestra mostrata/ripristinata. Corretto lo stato pulito dopo un salvataggio concorrente a nuove modifiche. Lint, 130 test e build superati; 36 combinazioni Electron IT/EN chiaro/scuro con documento pulito/salvato/modificato e tentativi ripetuti; quattro scenari salvataggio annullato/fallito/concorrente e autosave reale; dialogo nativo con Escape e pulsante predefinito nelle due lingue. Dock/pulsante rosso e installazione/avvio nativi richiedono verifica su Mac/Windows. Versione 1.12.2, checkpoint milestone/C33 e release v1.12.2 verificati in chiusura.
+
+Chiusura remota: PR #36 CI `37139643531` e main CI `37139735583` verdi. Tag annotati `milestone/C33` e `v1.12.2` sul commit `b2db4875e343eceab3f020c1a3b221fd8b768cef`, pubblicati e verificati senza spostare tag precedenti. Workflow Release `37139813245` dal tag verde; 10 asset scaricati e 8 file coperti dai manifest SHA-256 verificati. Il pacchetto macOS contiene main, gestore di chiusura, preload e renderer identici byte per byte alla build testata; versione/identificatore app, Electron 44.5.1 e contenitore DMG verificati. Note pubblicate identiche al documento versionato. Il branch documentale `release/1.12.2-publication` registra la chiusura e aggiorna la versione mostrata sul sito, con CI e Pages verificati sul commit finale; tag e codice della release restano invariati. I branch sono eliminati dopo la verifica di release, checksum e merge.
 
 ## Registro avanzamento
 
@@ -761,6 +763,7 @@ Riepilogo locale (2026-10-03): veto silenzioso riprodotto sulla precedente build
 | 2026-10-03 | C31 - README di presentazione del progetto | 1.12.1 | `milestone/31-product-readme` | Completata | README bilingue riscritto come presentazione del prodotto, con funzionalita, uso rapido, download generali, architettura, privacy, comandi e documenti collegati; rimossi badge/versioni app e cronologie. Verificati rendering GFM GitHub e browser, link/immagini e comandi; allineata nei manuali la disponibilita del solo installer Windows. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | C32 - Funzionalita' illustrate nella landing page | 1.12.1 | `milestone/32-landing-features` | Completata | Landing bilingue arricchita dopo Interfaccia con brush standard, brush avanzati, layer e clipping: testi brevi, otto screenshot reali (circa 290 KB), immagini apribili a dimensione originale e link ai manuali. Verificate otto combinazioni browser IT/EN da 360 a 1440 px, proporzioni senza ingrandimenti, contrasto, tastiera, persistenza lingua, link/asset e assenza di overflow/errori. Pubblicazione verificata tramite GitHub Pages sul commit finale; la verifica HTTP diretta del dominio resta impedita dalla policy di rete cloud (403 del proxy). Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | Pubblicazione v1.12.1 | 1.12.1 | `release/1.12.1-publication` | Completata | Release dal tag C32 invariato, workflow 37136552575 verde; 10 asset scaricati e 8 checksum verificati; note bilingui e stato/sito allineati. |
+| 2026-10-03 | C33 - Conferma di chiusura con modifiche non salvate | 1.12.2 | `milestone/33-close-confirmation` | Completata | Veto silenzioso risolto con dialogo nativo IT/EN; nuove modifiche durante un salvataggio restano protette. Lint, 130 test, build, 36 scenari Electron e dialogo nativo; CI/checkpoint e release Windows/macOS con checksum verificati. |
 
 ## Checklist di chiusura milestone
 

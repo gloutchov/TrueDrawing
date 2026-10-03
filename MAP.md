@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.2`; release GitHub pubblicata: `v1.12.1`.
+- Versione corrente su `main`: `1.12.2`; release GitHub pubblicata: `v1.12.2`.
 - Ultima milestone completata: C33 - Conferma di chiusura con modifiche non salvate.
-- Milestone corrente: C33 implementata; distribuzione v1.12.2 in chiusura.
-- Stato milestone: C33 implementata; checkpoint `milestone/C33` e release `v1.12.2` in chiusura.
+- Milestone corrente: nessuna; C33 completata.
+- Stato milestone: C33 completata con checkpoint `milestone/C33` e release `v1.12.2`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -374,3 +374,11 @@ Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Elect
 - docs/release-notes/v1.12.1.md: note bilingui su ordine sidebar, manuali e presentazione del prodotto, download/checksum e limiti delle verifiche.
 - docs/index.html: versione distribuita v1.12.1; download continua a puntare alle GitHub Releases.
 - Tag v1.12.1 invariato sul checkpoint C32; aggiornamenti documentali di pubblicazione successivi, senza modifiche al codice o ai manifest.
+
+## C33 - Chiusura e stato delle modifiche (1.12.2)
+
+- src/main/windows/closeConfirmation.ts: dialogo nativo IT/EN che gestisce will-prevent-unload; annullamento/default conservativi e autorizzazione limitata alla singola richiesta.
+- src/main/appMain.ts e windows/mainWindow.ts: lingua corrente del menu condivisa con la conferma; installazione del gestore sulla finestra principale.
+- src/renderer/app/AppShell.tsx: controllo del documento effettivamente salvato al completamento asincrono.
+- tests/unit/closeConfirmation.test.ts: sette regressioni per annullamento, rinuncia esplicita, richieste ripetute, dialoghi duplicati, lingua e finestra minimizzata.
+- docs/release-notes/v1.12.2.md: correzioni, procedura di uscita, piattaforme, checksum e limiti dei test nativi.
