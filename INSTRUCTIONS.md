@@ -89,7 +89,7 @@ Above the drawing canvas there is a field where you can enter the drawing name. 
 
 ### Creating a Drawing
 
-In source version `1.11.0`, the main tools on the left side of the screen appear from top to bottom as follows:
+In source version `1.11.1`, the main tools on the left side of the screen appear from top to bottom as follows:
 
 - Hand tool to move the canvas view;
 - Selection tool;
@@ -244,3 +244,7 @@ React and React DOM aligned at 19.3.0 with matching types; components use React-
 ## C22 - Lucide icon update (`1.11.0`)
 
 Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
+
+## C23 - Reference panel spacing (`1.11.1`)
+
+Import reference aligned to the right; panel content uses the Canvas size padding (10/12 px) and 8 px gap. Controls and text have consistent space from panel edges.

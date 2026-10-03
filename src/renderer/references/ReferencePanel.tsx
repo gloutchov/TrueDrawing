@@ -10,7 +10,8 @@ export function ReferencePanel({config,locale,images,onImport,onUpdate,onRemove}
   onUpdate:(id:string,patch:Partial<ReferenceImage>)=>void;onRemove:(id:string)=>void;
 }) {
   return <CollapsiblePanel title={t(locale,"references")} locale={locale} icon={<ImagePlus size={16}/>}>
-    <button className="text-button" disabled={images.length >= config.references.maxImages} onClick={onImport}>{t(locale,"importReference")}</button>
+    <div className="panel-content reference-panel-body">
+    <button className="text-button panel-action" disabled={images.length >= config.references.maxImages} onClick={onImport}>{t(locale,"importReference")}</button>
     <p className="form-message">{t(locale,"referenceLocalOnly")}</p>
     {images.map(image=><div key={image.id}>
       <strong>{image.name}</strong>
@@ -24,5 +25,6 @@ export function ReferencePanel({config,locale,images,onImport,onUpdate,onRemove}
         }}/></label>)}
       <button className="text-button" onClick={()=>onRemove(image.id)}>{t(locale,"removeReference")}</button>
     </div>)}
+    </div>
   </CollapsiblePanel>;
 }

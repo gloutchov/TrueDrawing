@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C22 - Aggiornamento icone Lucide.
+- Ultima milestone completata: C23 - Spaziatura del pannello Riferimenti.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.11.0`; release GitHub pubblicata: `v1.11.0`.
+- Versione corrente: `1.11.1`; release GitHub pubblicata: `v1.11.0`.
 - Branch corrente: `main`.
-- Milestone corrente: M23; M23-M28 registrate per la nuova richiesta.
+- Milestone corrente: nessuna; M24 e' la prossima pianificata.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/22-lucide-icons`.
+- Ultimo branch milestone completato: `milestone/23-reference-panel-spacing`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -170,3 +170,7 @@ Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone
 ## Esecuzione M23-M28 (2026-10-03)
 
 Il progettista richiede cinque rifiniture UI e la risoluzione/rimozione del branch della PR #24, proseguendo con la deroga gia autorizzata prima di commit, merge, tag, push e rimozione branch. Eseguire M23-M28 in ordine e verificare ogni checkpoint remoto. Una sola release cumulativa v1.12.0 a M28. Rimuovere i comandi delle maschere preservando il rendering e la validazione dei dati legacy; aggiornare la documentazione corrente.
+
+## C23 - Spaziatura del pannello Riferimenti (`1.11.1`)
+
+Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. / Import reference aligned to the right; panel content uses the Canvas size padding (10/12 px) and 8 px gap. Controls and text have consistent space from panel edges.
