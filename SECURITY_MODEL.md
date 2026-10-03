@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.12.1` (release GitHub pubblicata: `v1.12.1`)
+Versione sorgente: `1.12.2` (release GitHub pubblicata: `v1.12.1`; `v1.12.2` prevista in chiusura)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -48,6 +48,12 @@ La Content Security Policy limita script, immagini, form, frame e connessioni re
 
 Le chiamate di rete devono essere limitate alla generazione dell'immagine realistica e devono inviare solo i dati necessari. Errori e log devono essere sanitizzati prima di essere mostrati o salvati.
 
+### Chiusura e protezione delle modifiche
+
+Il veto `beforeunload` del renderer per documenti modificati e' gestito nel main con `will-prevent-unload` e un dialogo nativo sincrono. Annulla e la chiusura del dialogo sono la scelta predefinita; soltanto Chiudi senza salvare permette di ignorare il veto per quella richiesta. Non e' memorizzata un'autorizzazione persistente a scartare modifiche. Il dialogo non espone contenuti, percorsi o segreti e non introduce IPC o rete. La lingua segue quella dell'interfaccia usando il canale gia validato.
+
+Il completamento del salvataggio confronta il documento corrente con quello realmente salvato: modifiche eseguite durante l'attesa restano non salvate. Annullamento, errori e autosave non autorizzano la perdita di dati. La rinuncia esplicita puo' comunque perdere modifiche non incluse nell'ultimo salvataggio; l'autosave non garantisce il recupero di quelle piu' recenti.
+
 ### Distribuzione
 
 Il progetto non dispone attualmente di certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Gli artifact pubblicati via GitHub devono quindi essere considerati non firmati e la documentazione utente deve indicare che i sistemi operativi possono mostrare avvisi di sicurezza. Il workflow release manuale crea note di release dedicate e file checksum SHA-256 per gli artifact Windows/macOS. Questa scelta non modifica la gestione dei segreti nell'app, ma resta un rischio di distribuzione da rivalutare se in futuro saranno disponibili credenziali ufficiali.
@@ -91,7 +97,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.12.1` (published GitHub release: `v1.12.1`)
+Source version: `1.12.2` (published GitHub release: `v1.12.1`; `v1.12.2` planned for closure)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -136,6 +142,12 @@ The Content Security Policy limits scripts, images, forms, frames, and remote co
 ### Network
 
 Network calls must be limited to realistic image generation and must send only the required data. Errors and logs must be sanitized before display or storage.
+
+### Closing and protecting changes
+
+The renderer's `beforeunload` veto for modified documents is handled in the main process through `will-prevent-unload` and a synchronous native dialog. Cancel and dismissing the dialog are the default; only Close without saving bypasses the veto for that request. No persistent permission to discard changes is retained. The dialog reveals no content, paths or secrets and adds no IPC or network access. Its language follows the interface through the existing validated channel.
+
+Save completion compares the current document with the one actually saved: edits made while waiting remain unsaved. Cancellation, errors and autosave do not authorize data loss. Explicit discard can still lose changes since the last save; autosave does not guarantee recovery of the most recent edits.
 
 ### Distribution
 

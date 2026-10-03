@@ -4,13 +4,13 @@
 
 True Drawing ha completato C32 alla versione `1.12.1`: ordine sidebar, manuali utente, README di presentazione e landing con funzioni illustrate aggiornati. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.12.1`.
+- Versione corrente su `main`: `1.12.2`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C32 - Funzionalita' illustrate nella landing page`.
+- Ultima milestone completata: `C33 - Conferma di chiusura con modifiche non salvate` (implementazione; distribuzione in chiusura).
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.1`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; C29-C32 completate.
+- Milestone corrente in sviluppo: C33 implementata; distribuzione v1.12.2 in chiusura.
 
 ## Obiettivo della fase post release
 
@@ -703,6 +703,34 @@ Richiesta successiva del progettista: pubblicare i pacchetti della versione gia 
 Gli aggiornamenti automatici firmati non sono inclusi nella roadmap attiva.
 
 Motivo: al momento non sono disponibili credenziali o certificati per firma codice Windows, firma macOS e notarizzazione Apple. Finche' questa condizione non cambia, le release restano distribuite come artifact GitHub non firmati con checksum SHA-256 e documentazione sugli avvisi SmartScreen/Gatekeeper.
+
+## Correzione della chiusura dell'app
+
+Il progettista segnala la chiusura bloccata da menu, pulsante finestra e icona e autorizza correzione, commit, merge, tag, push, release e rimozione del branch senza controllo preventivo. Non spostare i tag esistenti.
+
+### C33 - Conferma di chiusura con modifiche non salvate
+
+- Obiettivo: chiusura e uscita affidabili, con una scelta esplicita prima di perdere modifiche non salvate.
+- Branch: `milestone/33-close-confirmation`.
+- Tag di checkpoint: `milestone/C33`.
+- Incremento versione: `+0.0.1`, da `1.12.1` a `1.12.2`.
+- Release prevista: `v1.12.2`, Windows x64 e macOS arm64, artifact non firmati e checksum SHA-256.
+- Stato: implementazione completata; CI, checkpoint remoto e release da verificare in chiusura.
+
+Attivita: riprodurre il veto `beforeunload` senza conferma, gestirlo nel processo main con un dialogo nativo IT/EN e annullamento predefinito; preservare il salvataggio e l'autosave. Verificare tutti i percorsi di chiusura, tentativi ripetuti, documento pulito, annullamento, rinuncia esplicita alle modifiche, salvataggio riuscito/cancellato/fallito e cambio lingua.
+
+Criteri di accettazione:
+
+- [x] Riproduzione del blocco sulla versione precedente documentata.
+- [x] Nessun veto silenzioso quando il documento ha modifiche non salvate.
+- [x] Annulla, Escape e chiusura del dialogo mantengono aperto il documento; solo la rinuncia esplicita consente l'uscita.
+- [x] Documento salvato o iniziale chiuso senza conferma; autosave non considerato un salvataggio manuale.
+- [x] Menu e chiusura finestra verificati con Electron reale; limiti del test Linux per Dock/pulsante rosso macOS dichiarati.
+- [x] Test di regressione, lint, build e smoke IT/EN chiaro/scuro superati.
+- [x] README, manuali, SECURITY_MODEL, MAP, AGENTS, PLAN e note release aggiornati secondo il loro ruolo.
+- [ ] CI su PR/main, checkpoint e tag versione remoto verificati; release e checksum controllati prima di eliminare il branch.
+
+Riepilogo locale (2026-10-03): veto silenzioso riprodotto sulla precedente build per finestra, menu e app.quit. Aggiunta conferma nativa sincrona IT/EN; conservato il veto per annullamento/default, evitati dialoghi duplicati e autorizzazione persistente, finestra mostrata/ripristinata. Corretto lo stato pulito dopo un salvataggio concorrente a nuove modifiche. Lint, 130 test e build superati; 36 combinazioni Electron IT/EN chiaro/scuro con documento pulito/salvato/modificato e tentativi ripetuti; quattro scenari salvataggio annullato/fallito/concorrente e autosave reale; dialogo nativo con Escape e pulsante predefinito nelle due lingue. Dock/pulsante rosso e installazione/avvio nativi richiedono verifica su Mac/Windows. Versione 1.12.2, checkpoint milestone/C33 e release previsti in chiusura.
 
 ## Registro avanzamento
 

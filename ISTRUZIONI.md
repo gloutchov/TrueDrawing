@@ -225,6 +225,14 @@ Tieni il `.tdraw` per continuare a lavorare: un PNG non conserva layer o version
 
 I progetti precedenti privi di dimensioni esplicite usano il foglio iniziale. Le maschere contenute nei vecchi progetti continuano a influenzare l'aspetto e vengono conservate, ma non sono disponibili comandi per crearle o modificarle. Per i nuovi disegni usa i layer e il clipping.
 
+### Chiudere l'app
+
+Usa **File > Esci** per terminare True Drawing. Puoi anche chiudere la finestra con il pulsante del sistema; su macOS il pulsante rosso chiude la finestra e lascia l'app disponibile nel Dock. Per terminarla completamente scegli Esci dal menu o dal Dock.
+
+Se ci sono modifiche non salvate, un dialogo del sistema offre **Annulla** e **Chiudi senza salvare**. Annulla, Escape e la chiusura del dialogo mantengono aperto il documento. Per conservare le modifiche, annulla, usa **File > Salva**, attendi il completamento e poi chiudi. Chiudi senza salvare rinuncia alle modifiche successive all'ultimo salvataggio manuale; l'autosave potrebbe non contenerle tutte.
+
+Un documento iniziale o salvato si chiude senza questo avviso. Un salvataggio annullato o fallito non elimina la conferma; neppure un autosave la elimina. Se continui a disegnare durante il salvataggio, le modifiche successive restano indicate come non salvate e richiedono un altro Salva prima di uscire.
+
 ## Salvataggio automatico e recupero
 
 Con le impostazioni predefinite l'app conserva un autosave locale delle modifiche ogni 30 secondi. Questo non sostituisce **File > Salva**, non è una copia in una cartella scelta da te e non è un backup esterno.
@@ -261,6 +269,7 @@ Usa Ctrl su Windows e ⌘ su macOS per le combinazioni indicate come Ctrl/⌘.
 | La richiesta AI fallisce | Controlla rete, validità della chiave, modello/accesso e disponibilità o credito dell'account. Consulta il messaggio in Inspector. |
 | Il canvas sembra tagliato | Resetta zoom e vista; controlla anche le dimensioni del foglio. |
 | Il download non si apre | Verifica architettura, provenienza, checksum e avvisi del sistema per pacchetti non firmati. |
+| La chiusura chiede conferma | Ci sono modifiche non salvate: annulla e salva, oppure scegli Chiudi senza salvare. Su macOS usa Esci per terminare anche l'app nel Dock. |
 
 ## Privacy e limiti
 
