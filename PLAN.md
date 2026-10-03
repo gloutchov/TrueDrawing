@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C29 alla versione `1.12.1`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C30 alla versione `1.12.1`. Le milestone C23-C28 rifiniscono i pannelli, rimuovono i comandi maschera e aggiornano Electron/Vitest; la release cumulativa `v1.12.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
 - Versione corrente su `main`: `1.12.1`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C29 - Ordine dei pannelli nella sidebar destra`.
+- Ultima milestone completata: `C30 - Manuali utente italiano e inglese`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; M30 e' la prossima pianificata.
+- Milestone corrente in sviluppo: nessuna; M31 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -598,13 +598,13 @@ Release: nessuna; checkpoint C29, tag versione cumulativo alla chiusura di M32.
 
 Riepilogo (2026-10-03): Sidebar nell’ordine Inspector, Riferimenti, Dimensioni canvas, Versioni documento, Brush avanzati, Layer e Clipping su layer; verificate tastiera, compressione/espansione, scroll, margini e regressioni documento in IT/EN e chiaro/scuro. Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C29`.
 
-### M30 - Manuali utente italiano e inglese
+### C30 - Manuali utente italiano e inglese
 
-- Versione finale prevista: `1.12.1`, invariata rispetto a M29.
-- Branch previsto: `milestone/30-user-manuals`.
-- Tag di checkpoint previsto: `milestone/C30`.
+- Versione finale: `1.12.1`, invariata rispetto a M29.
+- Branch: `milestone/30-user-manuals`.
+- Tag di checkpoint: `milestone/C30`.
 - Tipo incremento: nessuno, documentazione senza modifiche al comportamento dell'app.
-- Stato: pianificata.
+- Stato: completata; CI e checkpoint remoto verificati nel processo di chiusura.
 - Obiettivo: consentire a un nuovo utente di imparare il programma attraverso `ISTRUZIONI.md` e `INSTRUCTIONS.md`.
 
 Attivita':
@@ -612,7 +612,7 @@ Attivita':
 - Riscrivere sommario e capitoli per requisiti, installazione, primo avvio, interfaccia, operazioni quotidiane e risoluzione dei problemi; verificare le istruzioni contro l'app corrente.
 - Descrivere strumenti standard, selezione/appunti, zoom/manina, brush avanzati e texture, riferimenti, dimensioni/DPI, layer, clipping, versioni documento, Inspector e preferenze AI, lingua/tema.
 - Spiegare salvataggio/apertura `.tdraw`, export, autosave/recupero e la differenza tra Undo/Redo e versioni persistenti del documento.
-- Aggiungere esempi brevi passo per passo, compreso il clipping: disegnare una forma su Base, colorare su un altro layer, scegliere Base come riferimento e usare Nessuno per mostrare tutti i tratti. Spiegare anche il caso del riferimento vuoto o nascosto.
+- Aggiungere esempi brevi passo per passo, compreso il clipping: disegnare una forma su Base, colorare su un altro layer, scegliere Base come riferimento e usare Nessuna per mostrare tutti i tratti. Spiegare anche il caso del riferimento vuoto o nascosto.
 - Integrare nei capitoli le informazioni d'uso oggi disperse nelle sezioni storiche. La cronologia resta in PLAN e nelle note release; toolchain, migrazioni e verbali CI non diventano capitoli del manuale.
 - Descrivere le funzioni presenti, con etichette e percorsi menu reali. Trattare la compatibilita' dei vecchi progetti nella sezione pertinente, senza presentare i comandi maschera rimossi come disponibili.
 - Mantenere privacy, uso della API key, costi delle chiamate AI, avvisi di firma/checksum e limiti noti in termini utili all'utente. Usare link alle release senza fissare la guida a una release dell'app.
@@ -624,6 +624,8 @@ Test richiesti: revisione incrociata IT/EN; controllo di link relativi, ancore, 
 Documenti: `ISTRUZIONI.md`, `INSTRUCTIONS.md`, `PLAN.md`, `AGENTS.md`, `MAP.md`; correggere gli eventuali link interessati in README e landing. Rimandi a `SECURITY_MODEL.md` per i dettagli tecnici di sicurezza.
 
 Release: nessuna; solo checkpoint C30.
+
+Riepilogo (2026-10-03): Manuali IT/EN riscritti per funzioni con indice navigabile, avvio e file, strumenti, riferimenti, layer, esempio cerchio/clipping, versioni, AI, recupero e troubleshooting. Verificate parita, link e procedure reali in entrambe le lingue e nei due temi; rimossa la cronologia di sviluppo dalle guide. Verifiche: lint, 123 test, build e controlli mirati descritti sopra. Versione `1.12.1`, checkpoint `milestone/C30`.
 
 ### M31 - README di presentazione del progetto
 
@@ -709,6 +711,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-03 | C27 - Spaziatura campi Versioni documento | 1.11.5 | `milestone/27-snapshot-fields-spacing` | Completata | Nome versione e rinomina delle versioni salvate con padding laterale 10 px e campi coerenti; contenuto e azioni separati da gap 8 px, Crea versione mantiene allineamento destro comune. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C28 - Aggiornamento Electron/Vitest e chiusura PR residua | 1.12.0 | `milestone/28-electron-update` | Completata | Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Electron 44.5.1 e Vitest 5.0.3. Rifiniture M23-M27 e rimozione editor maschere distribuite in una release cumulativa Windows/macOS, con pacchetti e checksum verificati nel processo di chiusura. 123 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-03 | C29 - Ordine dei pannelli nella sidebar destra | 1.12.1 | `milestone/29-sidebar-panel-order` | Completata | Sidebar nell’ordine Inspector, Riferimenti, Dimensioni canvas, Versioni documento, Brush avanzati, Layer e Clipping su layer; verificate tastiera, compressione/espansione, scroll, margini e regressioni documento in IT/EN e chiaro/scuro. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
+| 2026-10-03 | C30 - Manuali utente italiano e inglese | 1.12.1 | `milestone/30-user-manuals` | Completata | Manuali IT/EN riscritti per funzioni con indice navigabile, avvio e file, strumenti, riferimenti, layer, esempio cerchio/clipping, versioni, AI, recupero e troubleshooting. Verificate parita, link e procedure reali in entrambe le lingue e nei due temi; rimossa la cronologia di sviluppo dalle guide. Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 
 ## Checklist di chiusura milestone
 

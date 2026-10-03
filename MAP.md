@@ -202,10 +202,10 @@ truedrawing/
 |   Presentazione bilingue del prodotto, architettura sintetica e link ai documenti; riscrittura senza cronologia milestone/versioni app pianificata in M31.
 |
 +-- ISTRUZIONI.md
-|   Manuale utente italiano per funzioni, procedure ed esempi; riorganizzazione per argomento pianificata in M30.
+|   Manuale utente italiano: installazione, primo disegno, strumenti, clipping con esempio, versioni, AI, file, recupero e troubleshooting.
 |
 +-- INSTRUCTIONS.md
-|   Manuale utente inglese equivalente alla guida italiana; riorganizzazione per argomento pianificata in M30.
+|   Manuale utente inglese equivalente alla guida italiana, organizzato per funzione con indice navigabile.
 |
 +-- SECURITY_MODEL.md
 |   Modello di sicurezza in italiano e inglese.
@@ -234,9 +234,9 @@ truedrawing/
 ## Stato attuale
 
 - Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
-- Ultima milestone completata: C29 - Ordine dei pannelli nella sidebar destra.
-- Milestone corrente: nessuna; M30 e' la prossima pianificata.
-- Stato milestone: C29 completata con checkpoint `milestone/C29`.
+- Ultima milestone completata: C30 - Manuali utente italiano e inglese.
+- Milestone corrente: nessuna; M31 e' la prossima pianificata.
+- Stato milestone: C30 completata con checkpoint `milestone/C30`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
