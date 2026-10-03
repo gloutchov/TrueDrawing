@@ -6,9 +6,9 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: C33 - Conferma di chiusura con modifiche non salvate.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.2`; release GitHub pubblicata: `v1.12.1`.
+- Versione corrente: `1.12.2`; release GitHub pubblicata: `v1.12.2`.
 - Branch corrente: `main`.
-- Milestone corrente: C33 implementata; distribuzione v1.12.2 in chiusura.
+- Milestone corrente: nessuna; C33 completata.
 - Patch corrente: nessuna.
 - Ultimo branch milestone completato: `milestone/33-close-confirmation`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
@@ -20,7 +20,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.12.1` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.2` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -217,3 +217,5 @@ Il progettista autorizza esplicitamente la nuova release. Il tag v1.12.1 resta s
 Il progettista autorizza correzione, commit, merge, tag, push e release, con rimozione branch dopo le verifiche. Gestire il veto beforeunload nel main tramite closeConfirmation.ts e will-prevent-unload: solo la rinuncia esplicita puo' ignorare il veto della richiesta corrente, senza flag permanenti. Mantenere Annulla come default/cancel del dialogo nativo sincrono e usare la lingua UI corrente, anche dopo cambi manuali. Non sostituire questo percorso con app.exit o distruzione forzata della finestra.
 
 Il salvataggio deve confrontare il documento corrente con quello effettivamente scritto, includendo il completamento asincrono fra le dipendenze del controllo di modifiche. Annullamento/errori/autosave non rendono pulito un documento modificato. Conservare il comportamento macOS: chiusura della finestra e uscita completa sono distinte. Verifiche locali: 130 test, lint/build; 36 scenari Electron IT/EN chiaro/scuro, quattro limiti di salvataggio/autosave e dialogo nativo con Escape/default. La verifica diretta di Dock/pulsante rosso e installazione native resta da svolgere su Windows/macOS.
+
+Chiusura: PR #36 CI 37139643531 e main CI 37139735583 verdi; tag milestone/C33 e v1.12.2 invariati su b2db4875e343eceab3f020c1a3b221fd8b768cef. Workflow Release 37139813245 verde, 10 asset scaricati e 8 checksum verificati; main, conferma di chiusura, preload e renderer nel pacchetto macOS corrispondono byte per byte alla build verificata. La pubblicazione documentale release/1.12.2-publication aggiorna stato e landing, con CI e Pages verificati in chiusura, senza modificare sorgente/tag della release.
