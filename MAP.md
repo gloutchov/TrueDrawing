@@ -45,10 +45,10 @@ truedrawing/
 +-- docs/
 |   |
 |   +-- assets/
-|   |   Screenshot e GIF usati dalla documentazione e dalla landing page pianificata.
+|   |   Screenshot e GIF della landing: interfaccia e disegno IT/EN chiaro/scuro; feature-standard, feature-brushes, feature-layers e feature-clipping IT/EN catturati nell’app.
 |   |
 |   +-- index.html
-|   |   Landing page statica bilingue del programma.
+|   |   Landing page statica bilingue: presentazione, Interfaccia, quattro funzioni illustrate e Download; pubblicazione GitHub Pages main:/docs.
 |   |
 |   +-- landing.css
 |   |   Stili responsive della landing page.
@@ -234,9 +234,9 @@ truedrawing/
 ## Stato attuale
 
 - Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
-- Ultima milestone completata: C31 - README di presentazione del progetto.
-- Milestone corrente: nessuna; M32 e' la prossima pianificata.
-- Stato milestone: C31 completata con checkpoint `milestone/C31`.
+- Ultima milestone completata: C32 - Funzionalita' illustrate nella landing page.
+- Milestone corrente: nessuna; C29-C32 completate.
+- Stato milestone: C32 completata con checkpoint `milestone/C32`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
