@@ -396,10 +396,17 @@ button {
   flex-shrink: 0;
 }
 
-.canvas-size-body {
+.canvas-size-body,
+.panel-content {
   display: grid;
   gap: 8px;
   padding: 10px 10px 12px;
+}
+
+.panel-content .field input,
+.panel-content .field select {
+  width: 100%;
+  min-width: 0;
 }
 
 .canvas-size-fields {
@@ -449,7 +456,8 @@ button {
   font-weight: 600;
 }
 
-.canvas-size-body > .text-button {
+.canvas-size-body > .text-button,
+.panel-action {
   justify-self: end;
 }
 

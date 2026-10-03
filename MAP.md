@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.11.0`; release GitHub pubblicata: `v1.11.0`.
-- Ultima milestone completata: C22 - Aggiornamento icone Lucide.
-- Milestone corrente: nessuna; manutenzione M20-M22 completata.
-- Stato milestone: C22 completata con checkpoint `milestone/C22`.
+- Versione corrente su `main`: `1.11.1`; release GitHub pubblicata: `v1.11.0`.
+- Ultima milestone completata: C23 - Spaziatura del pannello Riferimenti.
+- Milestone corrente: nessuna; M24 e' la prossima pianificata.
+- Stato milestone: C23 completata con checkpoint `milestone/C23`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
@@ -340,3 +340,7 @@ React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al
 Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. / Lucide React upgraded to 1.48.0 with React 19; exports, toolbars, panels and accessible SVG icons verified in light/dark themes. C20-C22 migrations preserve Dependabot commits; cumulative unsigned Windows/macOS release and SHA-256 verification complete the closing process.
 
 - `docs/release-notes/v1.11.0.md`: note bilingui della release cumulativa C20-C22, migrazioni runtime/toolchain e limiti di compatibilita.
+
+## C23 - Spaziatura del pannello Riferimenti (`1.11.1`)
+
+Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. / Import reference aligned to the right; panel content uses the Canvas size padding (10/12 px) and 8 px gap. Controls and text have consistent space from panel edges.

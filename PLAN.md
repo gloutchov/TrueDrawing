@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C22 alla versione `1.11.0`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C23 alla versione `1.11.1`. La manutenzione C20-C22 delle PR #15-#17 aggiorna le dipendenze; la release cumulativa `v1.11.0` completa il processo con pacchetti Windows/macOS e checksum verificati.
 
-- Versione corrente su `main`: `1.11.0`.
+- Versione corrente su `main`: `1.11.1`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C22 - Aggiornamento icone Lucide`.
+- Ultima milestone completata: `C23 - Spaziatura del pannello Riferimenti`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.11.0`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; manutenzione M20-M22 completata.
+- Milestone corrente in sviluppo: nessuna; M24 e' la prossima pianificata.
 
 ## Obiettivo della fase post release
 
@@ -417,6 +417,128 @@ Release: release cumulativa v1.11.0, artifact Windows/macOS non firmati e checks
 
 Riepilogo (2026-10-02): Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. Verifiche: npm ci, lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.11.0`, checkpoint `milestone/C22`. Generazione AI a pagamento e dispositivi fisici non verificati.
 
+## Rifiniture interfaccia e PR residua (2026-10-03)
+
+Sei milestone in ordine. Deroga al controllo preventivo su commit, merge, tag, push e rimozione branch confermata dalla prosecuzione della richiesta del progettista; identita, verifiche e checkpoint remoti restano obbligatori. Nessuna release intermedia; una release cumulativa minore `v1.12.0` a M28 per le rifiniture UI, la semplificazione dei layer e il runtime aggiornato.
+
+### C23 - Spaziatura del pannello Riferimenti
+
+- Versione finale: `1.11.1`.
+- Branch: `milestone/23-reference-panel-spacing`.
+- Tag di checkpoint: `milestone/C23`.
+- Tipo incremento: `+0.0.1` per l’intervento mirato.
+- Stato: completata; verifiche locali, CI e checkpoint controllati nel processo di chiusura.
+- Obiettivo: Allineare Importa riferimento a destra e distanziarlo da bordi e testo come Applica.
+
+Attivita': Contenitore con padding condiviso; azione allineata a destra; import e controlli riferimenti funzionanti.
+
+Criteri di accettazione: flusso interessato funzionante; margini e allineamento verificati in Electron, italiano/inglese e chiaro/scuro; lint, test e build verdi; documenti/versioni sincronizzati; CI PR e main verde; tag annotati verificati prima della milestone successiva.
+
+Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di compatibilita legacy a M25; npm ci e regressioni complete a M28. Nessun test unitario che replichi semplici regole CSS.
+
+Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
+
+Release: nessuna; cumulativa a M28.
+
+Riepilogo (2026-10-03): Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. Verifiche: lint, 121 test, build e smoke Electron chiaro/scuro. Versione `1.11.1`, checkpoint `milestone/C23`. Generazione AI a pagamento e dispositivi fisici non verificati.
+
+### M24 - Spaziatura del pulsante Crea versione
+
+- Versione finale prevista: `1.11.2`.
+- Branch previsto: `milestone/24-snapshot-action-spacing`.
+- Tag di checkpoint previsto: `milestone/C24`.
+- Tipo incremento: `+0.0.1` per l’intervento mirato.
+- Stato: pianificata.
+- Obiettivo: Allineare Crea versione a destra con margini coerenti con Applica.
+
+Attivita': Pulsante distanziato dai campi e dai bordi; creazione snapshot invariata.
+
+Criteri di accettazione: flusso interessato funzionante; margini e allineamento verificati in Electron, italiano/inglese e chiaro/scuro; lint, test e build verdi; documenti/versioni sincronizzati; CI PR e main verde; tag annotati verificati prima della milestone successiva.
+
+Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di compatibilita legacy a M25; npm ci e regressioni complete a M28. Nessun test unitario che replichi semplici regole CSS.
+
+Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
+
+Release: nessuna; cumulativa a M28.
+
+### M25 - Rimozione dei comandi maschera
+
+- Versione finale prevista: `1.11.3`.
+- Branch previsto: `milestone/25-remove-mask-editor`.
+- Tag di checkpoint previsto: `milestone/C25`.
+- Tipo incremento: `+0.0.1` per l’intervento mirato.
+- Stato: pianificata.
+- Obiettivo: Eliminare creazione e modifica delle maschere dall’interfaccia e dai percorsi di editing.
+
+Attivita': Conservare validazione e rendering delle maschere legacy per riaprire i vecchi progetti senza perdita visiva; pannello dedicato al clipping; disegno e Undo verificati.
+
+Criteri di accettazione: flusso interessato funzionante; margini e allineamento verificati in Electron, italiano/inglese e chiaro/scuro; lint, test e build verdi; documenti/versioni sincronizzati; CI PR e main verde; tag annotati verificati prima della milestone successiva.
+
+Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di compatibilita legacy a M25; npm ci e regressioni complete a M28. Nessun test unitario che replichi semplici regole CSS.
+
+Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
+
+Release: nessuna; cumulativa a M28.
+
+### M26 - Spaziatura Brush Avanzati
+
+- Versione finale prevista: `1.11.4`.
+- Branch previsto: `milestone/26-brush-panel-spacing`.
+- Tag di checkpoint previsto: `milestone/C26`.
+- Tipo incremento: `+0.0.1` per l’intervento mirato.
+- Stato: pianificata.
+- Obiettivo: Dare spazio coerente a preset, texture e slider nel pannello Brush Avanzati.
+
+Attivita': Riutilizzare padding e gap del pannello Dimensioni canvas; nessun overflow; valori e selezioni funzionanti.
+
+Criteri di accettazione: flusso interessato funzionante; margini e allineamento verificati in Electron, italiano/inglese e chiaro/scuro; lint, test e build verdi; documenti/versioni sincronizzati; CI PR e main verde; tag annotati verificati prima della milestone successiva.
+
+Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di compatibilita legacy a M25; npm ci e regressioni complete a M28. Nessun test unitario che replichi semplici regole CSS.
+
+Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
+
+Release: nessuna; cumulativa a M28.
+
+### M27 - Spaziatura campi Versioni documento
+
+- Versione finale prevista: `1.11.5`.
+- Branch previsto: `milestone/27-snapshot-fields-spacing`.
+- Tag di checkpoint previsto: `milestone/C27`.
+- Tipo incremento: `+0.0.1` per l’intervento mirato.
+- Stato: pianificata.
+- Obiettivo: Dare margini coerenti alla casella nome versione e ai campi delle versioni salvate.
+
+Attivita': Contenitore uniforme; nomi, rinomina, ripristino e pulsanti leggibili nei due temi.
+
+Criteri di accettazione: flusso interessato funzionante; margini e allineamento verificati in Electron, italiano/inglese e chiaro/scuro; lint, test e build verdi; documenti/versioni sincronizzati; CI PR e main verde; tag annotati verificati prima della milestone successiva.
+
+Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di compatibilita legacy a M25; npm ci e regressioni complete a M28. Nessun test unitario che replichi semplici regole CSS.
+
+Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
+
+Release: nessuna; cumulativa a M28.
+
+### M28 - Aggiornamento Electron e chiusura PR residua
+
+- Versione finale prevista: `1.12.0`.
+- Branch previsto: `milestone/28-electron-update`.
+- Tag di checkpoint previsto: `milestone/C28`.
+- Tipo incremento: `+0.1.0` per la versione cumulativa funzionale finale.
+- Stato: pianificata.
+- Obiettivo: Integrare PR #24 (Electron 44.5.0), completare le regressioni e distribuire i miglioramenti UI cumulativi.
+
+Attivita': Preservare cronologia Dependabot; installazione congelata, IPC/appunti, compatibilità progetti, layout e packaging; rimuovere branch dopo merge/checkpoint e verifica release.
+
+Criteri di accettazione: flusso interessato funzionante; margini e allineamento verificati in Electron, italiano/inglese e chiaro/scuro; lint, test e build verdi; documenti/versioni sincronizzati; CI PR e main verde; tag annotati verificati prima della milestone successiva.
+
+Test richiesti: suite esistente e smoke mirato al comportamento; verifiche di compatibilita legacy a M25; npm ci e regressioni complete a M28. Nessun test unitario che replichi semplici regole CSS.
+
+Documenti: README.md, ISTRUZIONI.md, INSTRUCTIONS.md, PLAN.md, AGENTS.md; MAP.md quando cambia la struttura; SECURITY_MODEL.md per compatibilita dei progetti/runtime e riferimenti di versione.
+
+Release: v1.12.0 Windows/macOS non firmata, pacchetti e SHA-256 verificati; branch finale conservato fino al controllo asset.
+
+PR di riferimento: [#24](https://github.com/gloutchov/TrueDrawing/pull/24).
+
 ## Fuori roadmap attiva
 
 ### Aggiornamenti automatici firmati
@@ -443,6 +565,7 @@ Motivo: al momento non sono disponibili credenziali o certificati per firma codi
 | 2026-10-02 | C20 - Aggiornamento toolchain di sviluppo | 1.9.0 | `milestone/20-development-toolchain` | Completata | Toolchain aggiornata con Electron 44.4.5, Vite 8, Vitest 5 ed ESLint 10. TypeScript 6.0.3 e trattenuto sotto 6.1 per il supporto dichiarato di typescript-eslint; proposta TypeScript 7 rinviata. Config Vite ESM esplicita, compilazione Electron Node16/CommonJS, appunti PNG/testo asincroni con limiti e sanitizzazione senza cause private. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C21 - Migrazione React e React DOM | 1.10.0 | `milestone/21-react-runtime` | Completata | React e React DOM allineati a 19.3.0 con tipi compatibili; componenti migrati al namespace JSX di React. La toolchain C20 resta preservata durante la risoluzione dei conflitti del lockfile; interazioni canvas, dialoghi e persistenza verificate nel renderer di produzione. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 | 2026-10-02 | C22 - Aggiornamento icone Lucide | 1.11.0 | `milestone/22-lucide-icons` | Completata | Lucide React aggiornato a 1.48.0 con React 19; export, toolbar, pannelli e icone SVG accessibili verificati nei temi chiaro/scuro. Migrazioni C20-C22 integrate preservando i commit Dependabot; release cumulativa Windows/macOS con pacchetti non firmati e verifica SHA-256 prevista nella chiusura. npm ci, 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
+| 2026-10-03 | C23 - Spaziatura del pannello Riferimenti | 1.11.1 | `milestone/23-reference-panel-spacing` | Completata | Importa riferimento allineato a destra; contenuto del pannello con padding 10/12 px e gap 8 px condivisi con Dimensioni canvas. Controlli e testo separati dai bordi. 121 test, lint/build e smoke; CI/checkpoint verificati nel processo di chiusura. |
 
 ## Checklist di chiusura milestone
 
