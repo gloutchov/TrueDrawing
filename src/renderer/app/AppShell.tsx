@@ -1029,13 +1029,6 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onGenerateImage={generateRealisticImage}
           onOpenApiKeySettings={openApiKeyDialog}
         />
-        <CanvasDimensionsEditor
-          config={config}
-          locale={effectiveLocale}
-          canvas={document.canvas}
-          onApply={applyCanvasDimensions}
-        />
-        <BrushPanel config={config} locale={effectiveLocale} settings={toolSettings} onChange={changeToolSettings} />
         <ReferencePanel config={config} locale={effectiveLocale} images={document.references ?? []}
           onImport={() => { void (async () => {
             try {
@@ -1051,6 +1044,19 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           })(); }}
           onUpdate={(id,patch) => { try { const image=document.references?.find(item=>item.id===id);if(!image)return;const next=validateReference({...image,...patch},config);commitDocumentUpdate(current=>({...current,references:(current.references ?? []).map(image=>image.id===id ? next : image)})); } catch { setFileStatusMessage(t(effectiveLocale,"referenceImportFailed")); } }}
           onRemove={id=>{ if (window.confirm(t(effectiveLocale,"removeReferenceConfirm"))) commitDocumentUpdate(current=>({...current,references:(current.references ?? []).filter(image=>image.id!==id)})); }} />
+        <CanvasDimensionsEditor
+          config={config}
+          locale={effectiveLocale}
+          canvas={document.canvas}
+          onApply={applyCanvasDimensions}
+        />
+        <SnapshotPanel config={config} locale={effectiveLocale} snapshots={document.snapshots ?? []}
+          automatic={Boolean(uiPreferences.autoSnapshots)} onAutomatic={value=>setUiPreferences(current=>({...current,autoSnapshots:value}))}
+          onCreate={name=>{try{const next=createDocumentSnapshot(document,config,{id:crypto.randomUUID(),name,createdAt:new Date().toISOString(),source:"manual"});commitDocumentUpdate(()=>next);}catch{setFileStatusMessage(t(effectiveLocale,"versionLimitReached"));}}}
+          onRename={(id,name)=>{try{const next=renameDocumentSnapshot(document,id,name,config);commitDocumentUpdate(()=>next);}catch{setFileStatusMessage(t(effectiveLocale,"versionLimitReached"));}}}
+          onRestore={id=>{const next=restoreDocumentSnapshot(document,id);commitDocumentUpdate(()=>next);setCanvasSelection(null);setMovablePastedStrokeId(null);setCanvasPan({x:0,y:0});}}
+          onDelete={id=>commitDocumentUpdate(current=>deleteDocumentSnapshot(current,id))} />
+        <BrushPanel config={config} locale={effectiveLocale} settings={toolSettings} onChange={changeToolSettings} />
         <LayerPanel
           config={config}
           locale={effectiveLocale}
@@ -1063,12 +1069,6 @@ export function AppShell({ config, runtime }: AppShellProps): JSX.Element {
           onSetLayerOpacity={setLayerOpacity}
           onMoveLayer={moveLayer}
         />
-        <SnapshotPanel config={config} locale={effectiveLocale} snapshots={document.snapshots ?? []}
-          automatic={Boolean(uiPreferences.autoSnapshots)} onAutomatic={value=>setUiPreferences(current=>({...current,autoSnapshots:value}))}
-          onCreate={name=>{try{const next=createDocumentSnapshot(document,config,{id:crypto.randomUUID(),name,createdAt:new Date().toISOString(),source:"manual"});commitDocumentUpdate(()=>next);}catch{setFileStatusMessage(t(effectiveLocale,"versionLimitReached"));}}}
-          onRename={(id,name)=>{try{const next=renameDocumentSnapshot(document,id,name,config);commitDocumentUpdate(()=>next);}catch{setFileStatusMessage(t(effectiveLocale,"versionLimitReached"));}}}
-          onRestore={id=>{const next=restoreDocumentSnapshot(document,id);commitDocumentUpdate(()=>next);setCanvasSelection(null);setMovablePastedStrokeId(null);setCanvasPan({x:0,y:0});}}
-          onDelete={id=>commitDocumentUpdate(current=>deleteDocumentSnapshot(current,id))} />
         <LayerClippingPanel locale={effectiveLocale} layer={activeLayer} layers={document.layers}
           onClip={id=>commitDocumentUpdate(current=>setLayerClip(current,current.activeLayerId,id))} />
       </aside>

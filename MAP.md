@@ -199,13 +199,13 @@ truedrawing/
 |           Release manuale: validazione tag/versione, lint, test, build, creazione note release, package Windows/macOS, checksum SHA-256 e upload diretto degli asset non firmati sulla release GitHub.
 |
 +-- README.md
-|   Descrizione progetto in italiano e inglese.
+|   Presentazione bilingue del prodotto, architettura sintetica e link ai documenti; riscrittura senza cronologia milestone/versioni app pianificata in M31.
 |
 +-- ISTRUZIONI.md
-|   Istruzioni utente in italiano.
+|   Manuale utente italiano per funzioni, procedure ed esempi; riorganizzazione per argomento pianificata in M30.
 |
 +-- INSTRUCTIONS.md
-|   Istruzioni utente in inglese.
+|   Manuale utente inglese equivalente alla guida italiana; riorganizzazione per argomento pianificata in M30.
 |
 +-- SECURITY_MODEL.md
 |   Modello di sicurezza in italiano e inglese.
@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.0`; release GitHub pubblicata: `v1.12.0`.
-- Ultima milestone completata: C28 - Aggiornamento Electron/Vitest e chiusura PR residua.
-- Milestone corrente: nessuna; rifiniture M23-M28 completate.
-- Stato milestone: C28 completata con checkpoint `milestone/C28`.
+- Versione corrente su `main`: `1.12.1`; release GitHub pubblicata: `v1.12.0`.
+- Ultima milestone completata: C29 - Ordine dei pannelli nella sidebar destra.
+- Milestone corrente: nessuna; M30 e' la prossima pianificata.
+- Stato milestone: C29 completata con checkpoint `milestone/C29`.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
