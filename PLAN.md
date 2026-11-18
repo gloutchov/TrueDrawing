@@ -2,14 +2,14 @@
 
 ## Stato attuale
 
-True Drawing ha completato C34 alla versione sorgente `1.12.3`: aggiornamento Electron e allineamento React/React DOM dalle tre PR Dependabot. La release pubblicata resta `v1.12.2`, che include la conferma nativa di chiusura C33. C29-C32 hanno riordinato sidebar, manuali, README e landing.
+True Drawing ha completato C34 alla versione `1.12.3`: aggiornamento Electron e allineamento React/React DOM dalle tre PR Dependabot, distribuiti nella release Windows/macOS `v1.12.3`. Il progettista ha confermato l'avvio su Windows; la sua verifica nativa Mac resta in attesa. C33 ha introdotto la conferma nativa di chiusura; C29-C32 hanno riordinato sidebar, manuali, README e landing.
 
 - Versione corrente su `main`: `1.12.3`.
 - Branch stabile: `main`.
 - Ultima milestone completata: `C34 - Aggiornamento Electron e allineamento React`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
-- Release GitHub corrente: `v1.12.2`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.3`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Milestone corrente in sviluppo: nessuna; C34 completata.
 
 ## Obiettivo della fase post release
@@ -757,6 +757,19 @@ Smoke Windows: quattro combinazioni IT/EN e chiaro/scuro nella build di produzio
 
 Limiti residui: nessuna verifica nativa macOS su questo host Windows; nessuna verifica visiva dei dialoghi di sistema o dell'installer. Le catture delle finestre nascoste non completano in questo ambiente; i controlli funzionali usano stato UI, eventi Electron e file effettivamente scritti. Nessuna nuova release pubblicata; sito e download continuano a indicare `v1.12.2`.
 
+## Pubblicazione release v1.12.3 (2026-11-18)
+
+Stato: completata, [release pubblicata](https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.3). Il progettista ha confermato l'avvio su Windows e autorizzato la pubblicazione di entrambe le piattaforme. Il suo test nativo Mac resta in attesa della verifica successiva.
+
+- Branch documentale: `release/1.12.3-publication`.
+- Tag `v1.12.3` e checkpoint `milestone/C34` invariati sul commit `9f9c2cc7fa2915593e13103c0c87458b23e813c0`.
+- Workflow Release: `44270853702`, verde, avviato dal tag esistente tramite il workflow manuale di main.
+- Note bilingui: `docs/release-notes/v1.12.3.md`, applicate alla release dopo il packaging.
+- Verifica: 10 asset scaricati, 8 file coperti dai manifest SHA-256 verificati; installer Windows x64 e DMG/ZIP macOS arm64 non firmati e non notarizzati. Ispezionati archivio applicazione Windows, ZIP/app macOS e firma di formato del contenitore DMG.
+- Contenuto: app `1.12.3`, identificatore `com.truedrawing.app`, architettura Mac arm64, Electron `45.1.0`, React/React DOM `19.3.1`. Confrontati 46 file eseguibili/renderer/configurazione: tutti identici byte per byte su Windows; 42 identici sul Mac e 4 con sole differenze nei terminatori di riga. Main di avvio, preload e asset JavaScript/CSS del renderer sono identici nei due pacchetti alla build gia' verificata.
+- Documentazione: stato e versione distribuita della landing allineati a `v1.12.3`; README/manuali conservano presentazione e guide d'uso senza cronologie. CI e Pages verificati sul commit finale nel processo di chiusura; branch di pubblicazione rimosso dopo merge e controlli.
+- Limiti: avvio Windows confermato dal progettista; test nativo Mac in attesa della sua prova. Firma/notarizzazione e verifica visiva di dialoghi/installer restano non disponibili/non completate come indicato nelle note. Nessuna modifica al codice o ai tag della release.
+
 ## Registro avanzamento
 
 | Data | Milestone | Versione | Branch | Stato | Note |
@@ -788,6 +801,7 @@ Limiti residui: nessuna verifica nativa macOS su questo host Windows; nessuna ve
 | 2026-10-03 | Pubblicazione v1.12.1 | 1.12.1 | `release/1.12.1-publication` | Completata | Release dal tag C32 invariato, workflow 37136552575 verde; 10 asset scaricati e 8 checksum verificati; note bilingui e stato/sito allineati. |
 | 2026-10-03 | C33 - Conferma di chiusura con modifiche non salvate | 1.12.2 | `milestone/33-close-confirmation` | Completata | Veto silenzioso risolto con dialogo nativo IT/EN; nuove modifiche durante un salvataggio restano protette. Lint, 130 test, build, 36 scenari Electron e dialogo nativo; CI/checkpoint e release Windows/macOS con checksum verificati. |
 | 2026-11-18 | C34 - Aggiornamento Electron e allineamento React | 1.12.3 | `milestone/34-dependency-maintenance` | Completata | PR #38/#39/#40 integrate conservandone la cronologia; lint, 130 test, build, audit runtime e smoke Windows verdi. CI PR/main, checkpoint `milestone/C34` e tag sorgente `v1.12.3` verificati in chiusura; nessuna nuova release binaria. |
+| 2026-11-18 | Pubblicazione v1.12.3 | 1.12.3 | `release/1.12.3-publication` | Completata | Workflow Release 44270853702 verde; 10 asset scaricati e 8 checksum verificati. Note, stato e landing aggiornati; avvio Windows confermato, test nativo Mac in attesa del progettista. |
 
 ## Checklist di chiusura milestone
 

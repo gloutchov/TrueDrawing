@@ -6,7 +6,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.3`; release GitHub pubblicata: `v1.12.2`.
+- Versione corrente: `1.12.3`; release GitHub pubblicata: `v1.12.3`.
 - Branch corrente: `main`.
 - Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
 - Patch corrente: nessuna.
@@ -20,7 +20,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.12.2` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.3` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -52,6 +52,12 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 La richiesta del progettista di risolvere le tre PR aperte autorizza l'integrazione delle PR #38, #39 e #40 secondo la deroga gia' registrata per commit, merge, tag, push e rimozione branch. Conservare le cronologie Dependabot nel branch milestone e aggiornare la PR #38 con push fast-forward soltanto dopo le verifiche locali. React e React DOM devono essere entrambi `19.3.1` nel lockfile; la PR #40 isolata fallisce per il disallineamento. Restano obbligatori CI e checkpoint remoto. Patch sorgente `1.12.3`, nessuna nuova release binaria richiesta; la release distribuita resta `v1.12.2`. La configurazione Dependabot e' stata rimossa da main: non ripristinarla per integrare le PR esistenti.
 
 Verifica locale: installazione da lockfile, lint, 130 test e build verdi; smoke Electron 45.1.0 nelle quattro combinazioni IT/EN e chiaro/scuro, piu' avvio e flussi del pacchetto Windows x64 non firmato. Verificati disegno, Undo/Redo, pan senza tratti, layer, salvataggio/riapertura e conferma di chiusura, con selezioni dei dialoghi simulate e profili isolati senza API key. Main, preload e asset renderer del pacchetto sono identici byte per byte alla build verificata; audit runtime senza vulnerabilita' note. La verifica nativa macOS e quella visiva dei dialoghi di sistema restano da eseguire. Checkpoint `milestone/C34` e tag sorgente `v1.12.3`; nessuna pubblicazione binaria.
+
+## Pubblicazione v1.12.3 (2026-11-18)
+
+Il progettista conferma l'avvio corretto su Windows e autorizza esplicitamente commit, merge, tag, push, release e rimozione branch. Il test nativo Mac sara' eseguito successivamente dal progettista: indicarlo ancora in attesa, senza bloccare la pubblicazione autorizzata. Non spostare `v1.12.3` o `milestone/C34`, entrambi sul commit `9f9c2cc7fa2915593e13103c0c87458b23e813c0`. Il workflow Release `44270853702` costruisce i pacchetti dal tag esistente; il branch `release/1.12.3-publication` contiene note, stato e landing. Applicare alla release le note bilingui `docs/release-notes/v1.12.3.md` dopo il packaging dal tag, scaricare e verificare asset/checksum prima di eliminare il branch.
+
+Chiusura pubblicazione: workflow Release `44270853702` verde; 10 asset scaricati e 8 file coperti dai manifest SHA-256 verificati. Installer Windows x64 e DMG/ZIP macOS arm64 non firmati. Nel pacchetto Windows tutti i 46 file di codice eseguibile, renderer e configurazione confrontati sono identici alla build locale verificata; sul Mac 42 sono identici e 4 differiscono solo per terminatori di riga. Versione app `1.12.3`, identificatore `com.truedrawing.app`, Electron `45.1.0` e React/React DOM `19.3.1` verificati. Avvio Windows confermato dal progettista; test nativo Mac ancora in attesa della sua prova. Note release applicate, landing/stato aggiornati e CI/Pages verificati nel processo di chiusura; tag della release invariato.
 
 ## Architettura
 
