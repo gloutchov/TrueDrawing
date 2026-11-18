@@ -4,13 +4,13 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Stato corrente
 
-- Ultima milestone completata: C33 - Conferma di chiusura con modifiche non salvate.
+- Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.2`; release GitHub pubblicata: `v1.12.2`.
+- Versione corrente: `1.12.3`; release GitHub pubblicata: `v1.12.2`.
 - Branch corrente: `main`.
-- Milestone corrente: nessuna; C33 completata.
+- Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
 - Patch corrente: nessuna.
-- Ultimo branch milestone completato: `milestone/33-close-confirmation`.
+- Ultimo branch milestone completato: `milestone/34-dependency-maintenance`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
@@ -46,6 +46,12 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - `MAP.md` descrive la struttura; `SECURITY_MODEL.md` approfondisce la sicurezza; `AGENTS.md` mantiene le regole operative. Versione, branch, checkpoint e stato restano nei manifest e nei documenti operativi.
 - C29-C32 completano ordine sidebar, manuali, README e landing, eseguiti uno alla volta su richiesta del progettista. Resta valida la deroga gia autorizzata sul controllo preventivo prima di commit, merge, tag, push e rimozione branch; restano obbligatorie identita', verifiche e checkpoint remoto.
 - C29 porta il sorgente a 1.12.1; C30-C32 mantengono la versione dell'app. Il tag versione cumulativo v1.12.1 identifica il checkpoint finale C32 con tutti i documenti aggiornati. La fase si e' conclusa con il tag v1.12.1 e senza una nuova release binaria; la successiva richiesta del progettista autorizza ora la pubblicazione Windows/macOS dello stesso tag.
+
+## Manutenzione dipendenze C34 (2026-11-18)
+
+La richiesta del progettista di risolvere le tre PR aperte autorizza l'integrazione delle PR #38, #39 e #40 secondo la deroga gia' registrata per commit, merge, tag, push e rimozione branch. Conservare le cronologie Dependabot nel branch milestone e aggiornare la PR #38 con push fast-forward soltanto dopo le verifiche locali. React e React DOM devono essere entrambi `19.3.1` nel lockfile; la PR #40 isolata fallisce per il disallineamento. Restano obbligatori CI e checkpoint remoto. Patch sorgente `1.12.3`, nessuna nuova release binaria richiesta; la release distribuita resta `v1.12.2`. La configurazione Dependabot e' stata rimossa da main: non ripristinarla per integrare le PR esistenti.
+
+Verifica locale: installazione da lockfile, lint, 130 test e build verdi; smoke Electron 45.1.0 nelle quattro combinazioni IT/EN e chiaro/scuro, piu' avvio e flussi del pacchetto Windows x64 non firmato. Verificati disegno, Undo/Redo, pan senza tratti, layer, salvataggio/riapertura e conferma di chiusura, con selezioni dei dialoghi simulate e profili isolati senza API key. Main, preload e asset renderer del pacchetto sono identici byte per byte alla build verificata; audit runtime senza vulnerabilita' note. La verifica nativa macOS e quella visiva dei dialoghi di sistema restano da eseguire. Checkpoint `milestone/C34` e tag sorgente `v1.12.3`; nessuna pubblicazione binaria.
 
 ## Architettura
 

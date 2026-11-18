@@ -67,7 +67,7 @@ truedrawing/
 |   +-- main/
 |   |   |
 |   |   +-- clipboard/
-|   |   |   `clipboardImages.ts`: appunti Electron 44 asincroni, ClipboardItem PNG e limiti prima dell'allocazione.
+|   |   |   `clipboardImages.ts`: appunti Electron asincroni, ClipboardItem PNG e limiti prima dell'allocazione.
 |   |   |
 |   |   +-- appIcon.ts
 |   |   |   Risoluzione dell'icona app per finestre e menu.
@@ -233,10 +233,11 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.2`; release GitHub pubblicata: `v1.12.2`.
-- Ultima milestone completata: C33 - Conferma di chiusura con modifiche non salvate.
-- Milestone corrente: nessuna; C33 completata.
-- Stato milestone: C33 completata con checkpoint `milestone/C33` e release `v1.12.2`.
+- Versione corrente su `main`: `1.12.3`; release GitHub pubblicata: `v1.12.2`.
+- Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
+- Milestone corrente: nessuna; C34 completata.
+- Stato milestone: checkpoint `milestone/C34` e tag sorgente `v1.12.3` verificati nel processo di chiusura; nessuna nuova release binaria.
+- Toolchain corrente: Electron `45.1.0`, React/React DOM `19.3.1`, Vite `8.3.5`, Vitest `5.0.5`, electron-builder `26.18.0`; struttura e responsabilita' dei moduli invariate.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
