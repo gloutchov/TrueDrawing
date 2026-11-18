@@ -2,15 +2,15 @@
 
 ## Stato attuale
 
-True Drawing ha completato C33 alla versione `1.12.2`: chiusura con conferma nativa per modifiche non salvate e stato corretto quando il disegno cambia durante un salvataggio. C29-C32 hanno riordinato sidebar, manuali, README e landing; la release `v1.12.2` distribuisce le correzioni con pacchetti Windows/macOS e checksum verificati.
+True Drawing ha completato C34 alla versione sorgente `1.12.3`: aggiornamento Electron e allineamento React/React DOM dalle tre PR Dependabot. La release pubblicata resta `v1.12.2`, che include la conferma nativa di chiusura C33. C29-C32 hanno riordinato sidebar, manuali, README e landing.
 
-- Versione corrente su `main`: `1.12.2`.
+- Versione corrente su `main`: `1.12.3`.
 - Branch stabile: `main`.
-- Ultima milestone completata: `C33 - Conferma di chiusura con modifiche non salvate`.
+- Ultima milestone completata: `C34 - Aggiornamento Electron e allineamento React`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
 - Patch corrente: nessuna.
 - Release GitHub corrente: `v1.12.2`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
-- Milestone corrente in sviluppo: nessuna; C33 completata.
+- Milestone corrente in sviluppo: nessuna; C34 completata.
 
 ## Obiettivo della fase post release
 
@@ -734,6 +734,29 @@ Riepilogo locale (2026-10-03): veto silenzioso riprodotto sulla precedente build
 
 Chiusura remota: PR #36 CI `37139643531` e main CI `37139735583` verdi. Tag annotati `milestone/C33` e `v1.12.2` sul commit `b2db4875e343eceab3f020c1a3b221fd8b768cef`, pubblicati e verificati senza spostare tag precedenti. Workflow Release `37139813245` dal tag verde; 10 asset scaricati e 8 file coperti dai manifest SHA-256 verificati. Il pacchetto macOS contiene main, gestore di chiusura, preload e renderer identici byte per byte alla build testata; versione/identificatore app, Electron 44.5.1 e contenitore DMG verificati. Note pubblicate identiche al documento versionato. Il branch documentale `release/1.12.2-publication` registra la chiusura e aggiorna la versione mostrata sul sito, con CI e Pages verificati sul commit finale; tag e codice della release restano invariati. I branch sono eliminati dopo la verifica di release, checksum e merge.
 
+## Manutenzione dipendenze del 2026-11-18
+
+### C34 - Aggiornamento Electron e allineamento React
+
+- Obiettivo: risolvere le PR Dependabot #38, #39 e #40 conservandone i commit e mantenendo React/React DOM alla stessa versione.
+- Branch: `milestone/34-dependency-maintenance`.
+- Tag di checkpoint: `milestone/C34`; tag sorgente `v1.12.3`.
+- Incremento versione: `+0.0.1`, da `1.12.2` a `1.12.3`.
+- Release binaria: nessuna prevista; la release pubblicata resta `v1.12.2`.
+- Stato: completata con CI e checkpoint remoto verificati nel processo di chiusura.
+
+Attivita': integrare le cronologie delle tre PR nel branch dedicato; risolvere i conflitti dei manifest con React e React DOM `19.3.1`, preservando Electron `45.1.0` e gli altri aggiornamenti della PR #38. Verificare avvio, disegno, layer, undo/redo, salvataggio e conferma di chiusura con un profilo di prova senza API key; controllare il packaging Windows locale e dichiarare il limite della verifica macOS. Aggiornare i documenti operativi senza introdurre cronologia nei manuali. Aggiornare la PR #38 con un push fast-forward e usarla per integrare anche le cronologie delle PR #39/#40, evitando push e CI intermedi non necessari.
+
+Criteri di accettazione: React/React DOM allineati in manifest e lockfile, installazione riproducibile, lint/test/build superati, smoke Electron e pacchetto Windows verificati, controlli di isolamento/preload/CSP preservati, CI della PR e di main verdi. Dopo il merge pubblicare e verificare i tag annotati `milestone/C34` e `v1.12.3`; verificare la chiusura delle tre PR prima di rimuovere i branch integrati. Nessun nuovo workflow o pubblicazione binaria.
+
+Documenti: `PLAN.md`, `AGENTS.md`, `MAP.md`, `SECURITY_MODEL.md`; README e manuali verificati per coerenza con il comportamento corrente.
+
+Riepilogo locale (2026-11-18): integrate le cronologie originali di tutte e tre le PR e risolti i conflitti dei manifest senza ripristinare la configurazione Dependabot rimossa su main. Electron `45.1.0`, electron-builder `26.18.0`, React/React DOM `19.3.1`, Vite `8.3.5`, Vitest `5.0.5`; gli altri aggiornamenti restano quelli della PR #38. Installazione riproducibile, lint, 130 test e build verdi; audit delle dipendenze runtime con zero vulnerabilita' note.
+
+Smoke Windows: quattro combinazioni IT/EN e chiaro/scuro nella build di produzione, piu' avvio e flussi del pacchetto Windows x64 non firmato. Controllati isolamento/sandbox/preload, disegno, Undo/Redo, pan senza nuovi tratti, aggiunta layer, salvataggio e riapertura `.tdraw`, annullamento/default e rinuncia esplicita nella conferma di chiusura. Selezioni dei dialoghi simulate, profili separati e nessuna API key/chiamata AI. Main, preload e asset renderer nel pacchetto corrispondono byte per byte alla build verificata; SHA-256 di `app.asar`: `f00d8b852755858915b65c095aa520de7872315bad1d883f24479864165d9fd5`.
+
+Limiti residui: nessuna verifica nativa macOS su questo host Windows; nessuna verifica visiva dei dialoghi di sistema o dell'installer. Le catture delle finestre nascoste non completano in questo ambiente; i controlli funzionali usano stato UI, eventi Electron e file effettivamente scritti. Nessuna nuova release pubblicata; sito e download continuano a indicare `v1.12.2`.
+
 ## Registro avanzamento
 
 | Data | Milestone | Versione | Branch | Stato | Note |
@@ -764,6 +787,7 @@ Chiusura remota: PR #36 CI `37139643531` e main CI `37139735583` verdi. Tag anno
 | 2026-10-03 | C32 - Funzionalita' illustrate nella landing page | 1.12.1 | `milestone/32-landing-features` | Completata | Landing bilingue arricchita dopo Interfaccia con brush standard, brush avanzati, layer e clipping: testi brevi, otto screenshot reali (circa 290 KB), immagini apribili a dimensione originale e link ai manuali. Verificate otto combinazioni browser IT/EN da 360 a 1440 px, proporzioni senza ingrandimenti, contrasto, tastiera, persistenza lingua, link/asset e assenza di overflow/errori. Pubblicazione verificata tramite GitHub Pages sul commit finale; la verifica HTTP diretta del dominio resta impedita dalla policy di rete cloud (403 del proxy). Lint, 123 test, build e verifiche mirate; CI/checkpoint verificati in chiusura. |
 | 2026-10-03 | Pubblicazione v1.12.1 | 1.12.1 | `release/1.12.1-publication` | Completata | Release dal tag C32 invariato, workflow 37136552575 verde; 10 asset scaricati e 8 checksum verificati; note bilingui e stato/sito allineati. |
 | 2026-10-03 | C33 - Conferma di chiusura con modifiche non salvate | 1.12.2 | `milestone/33-close-confirmation` | Completata | Veto silenzioso risolto con dialogo nativo IT/EN; nuove modifiche durante un salvataggio restano protette. Lint, 130 test, build, 36 scenari Electron e dialogo nativo; CI/checkpoint e release Windows/macOS con checksum verificati. |
+| 2026-11-18 | C34 - Aggiornamento Electron e allineamento React | 1.12.3 | `milestone/34-dependency-maintenance` | Completata | PR #38/#39/#40 integrate conservandone la cronologia; lint, 130 test, build, audit runtime e smoke Windows verdi. CI PR/main, checkpoint `milestone/C34` e tag sorgente `v1.12.3` verificati in chiusura; nessuna nuova release binaria. |
 
 ## Checklist di chiusura milestone
 

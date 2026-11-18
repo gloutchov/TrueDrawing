@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.12.2` (release GitHub pubblicata: `v1.12.2`)
+Versione sorgente: `1.12.3` (release GitHub pubblicata: `v1.12.2`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -56,6 +56,8 @@ Il completamento del salvataggio confronta il documento corrente con quello real
 
 ### Distribuzione
 
+Il sorgente usa Electron `45.1.0` e React/React DOM `19.3.1`. Isolamento del contesto, sandbox e preload controllato sono verificati anche sul pacchetto Windows x64. Le selezioni dei dialoghi sono simulate nei controlli funzionali; verifica nativa macOS e verifica visiva dei dialoghi/installer restano da eseguire prima di una nuova distribuzione. La patch sorgente non pubblica nuovi pacchetti.
+
 Il progetto non dispone attualmente di certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Gli artifact pubblicati via GitHub devono quindi essere considerati non firmati e la documentazione utente deve indicare che i sistemi operativi possono mostrare avvisi di sicurezza. Il workflow release manuale crea note di release dedicate e file checksum SHA-256 per gli artifact Windows/macOS. Questa scelta non modifica la gestione dei segreti nell'app, ma resta un rischio di distribuzione da rivalutare se in futuro saranno disponibili credenziali ufficiali.
 
 ### Stato attuale
@@ -93,11 +95,11 @@ I download accettano HTTPS senza credenziali o porte alternative, rifiutano host
 
 Tutti i canali IPC verificano il frame principale e l'URL della UI prevista. Errori provider e filesystem sono sostituiti da messaggi controllati; revised_prompt remoto non viene esposto. La CSP di produzione imposta connect-src, frame-src e worker-src a none; il renderer usa IPC per la rete. Popup, navigazioni e webview sono bloccati.
 
-La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende dal servizio segreti disponibile; lo sviluppo cloud richiede --no-sandbox per il limite del container e non verifica la protezione della sandbox di produzione. Test automatici controllano limiti, DNS, redirect, timeout, mittenti ed errori; la scansione credenziali di configurazione e fixture e' euristica, non una garanzia assoluta. Dependabot mensile propone aggiornamenti; audit runtime eseguito senza vulnerabilita'.
+La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende dal servizio segreti disponibile; lo sviluppo cloud richiede --no-sandbox per il limite del container e non verifica la protezione della sandbox di produzione. Test automatici controllano limiti, DNS, redirect, timeout, mittenti ed errori; la scansione credenziali di configurazione e fixture e' euristica, non una garanzia assoluta. La configurazione degli aggiornamenti mensili Dependabot e' stata rimossa; le tre proposte precedenti sono integrate nella manutenzione C34. L'audit delle dipendenze runtime del 2026-11-18 non segnala vulnerabilita' note.
 
 ## English
 
-Source version: `1.12.2` (published GitHub release: `v1.12.2`)
+Source version: `1.12.3` (published GitHub release: `v1.12.2`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -151,6 +153,8 @@ Save completion compares the current document with the one actually saved: edits
 
 ### Distribution
 
+The source uses Electron `45.1.0` and React/React DOM `19.3.1`. Context isolation, sandboxing and the controlled preload are also verified in the Windows x64 package. Dialog selections are simulated in functional checks; native macOS and visual dialog/installer verification remain pending before a new distribution. This source patch publishes no new packages.
+
 The project currently has no certificates or credentials for Windows code signing, macOS signing, or Apple notarization. Artifacts published through GitHub must therefore be treated as unsigned, and user documentation must state that operating systems may show security warnings. The manual release workflow creates dedicated release notes and SHA-256 checksum files for Windows/macOS artifacts. This does not change in-app secret handling, but it remains a distribution risk to reassess if official credentials become available.
 
 ### Current Status
@@ -188,7 +192,7 @@ Downloads accept HTTPS without credentials or alternative ports, reject local/pr
 
 Every IPC channel checks the main frame and expected UI URL. Raw provider/filesystem errors are replaced by controlled messages; remote revised_prompt is omitted. Production CSP denies renderer connections, frames and workers. Network operations use main-process IPC. Popups, navigation and webviews are blocked.
 
-The UI explicitly warns when using safeStorage fallback. Linux protection depends on the available secret service. Cloud development needs --no-sandbox due to container limitations and does not validate production sandbox protection. Tests cover image limits, DNS, redirects, timeouts, senders and errors. Credential scanning of config/fixtures is heuristic, not an absolute guarantee. Monthly Dependabot updates are limited; the runtime dependency audit reported no vulnerabilities.
+The UI explicitly warns when using safeStorage fallback. Linux protection depends on the available secret service. Cloud development needs --no-sandbox due to container limitations and does not validate production sandbox protection. Tests cover image limits, DNS, redirects, timeouts, senders and errors. Credential scanning of config/fixtures is heuristic, not an absolute guarantee. Monthly Dependabot configuration has been removed; the three existing proposals are integrated in C34 maintenance. The runtime dependency audit on 2026-11-18 reported no known vulnerabilities.
 
 ## C15 - Brush avanzati e texture personalizzate (`1.4.0`)
 

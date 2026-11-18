@@ -63,7 +63,7 @@ Il renderer è isolato dalle API Node e usa un preload ristretto; file, payload 
 
 ### Sviluppo e distribuzione
 
-Servono **Node.js 22, almeno 22.13**, npm e un ambiente grafico compatibile con Electron. Dalla cartella del repository:
+Servono **Node.js 22, almeno 22.13**, npm e un ambiente grafico compatibile con Electron. React e React DOM devono avere la stessa versione risolta nel lockfile: aggiornarli insieme. Dalla cartella del repository:
 
 ```bash
 npm ci --no-audit --no-fund
@@ -125,7 +125,7 @@ The renderer is isolated from Node APIs and uses a restricted preload; files, pa
 
 ### Development and distribution
 
-You need **Node.js 22, at least 22.13**, npm and a graphical environment compatible with Electron. From the repository folder:
+You need **Node.js 22, at least 22.13**, npm and a graphical environment compatible with Electron. React and React DOM must resolve to the same version in the lockfile: update them together. From the repository folder:
 
 ```bash
 npm ci --no-audit --no-fund
