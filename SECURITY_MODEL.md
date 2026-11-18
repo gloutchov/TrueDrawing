@@ -2,7 +2,7 @@
 
 ## Italiano
 
-Versione sorgente: `1.12.3` (release GitHub pubblicata: `v1.12.2`)
+Versione sorgente: `1.12.3` (release GitHub pubblicata: `v1.12.3`)
 
 Questo documento descrive il modello di sicurezza previsto per True Drawing. Nella versione corrente Electron usa `contextIsolation`, `nodeIntegration` disattivata nel renderer, preload dedicato per esporre solo API IPC controllate, sandbox renderer attiva, Content Security Policy, generazione immagine e salvataggi eseguiti dal main process senza accesso diretto del renderer a filesystem o storage segreti.
 
@@ -56,7 +56,7 @@ Il completamento del salvataggio confronta il documento corrente con quello real
 
 ### Distribuzione
 
-Il sorgente usa Electron `45.1.0` e React/React DOM `19.3.1`. Isolamento del contesto, sandbox e preload controllato sono verificati anche sul pacchetto Windows x64. Le selezioni dei dialoghi sono simulate nei controlli funzionali; verifica nativa macOS e verifica visiva dei dialoghi/installer restano da eseguire prima di una nuova distribuzione. La patch sorgente non pubblica nuovi pacchetti.
+Il sorgente usa Electron `45.1.0` e React/React DOM `19.3.1`. Isolamento del contesto, sandbox e preload controllato sono verificati anche sul pacchetto Windows x64. Il progettista ha confermato l'avvio corretto su Windows il 2026-11-18 e ha autorizzato la release Windows/macOS. Le selezioni dei dialoghi sono simulate nei controlli funzionali; il test nativo Mac resta in attesa della sua prova successiva, mentre packaging e verifica dei file non equivalgono a un test di avvio. La verifica visiva dei dialoghi e dell'installer resta da completare.
 
 Il progetto non dispone attualmente di certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Gli artifact pubblicati via GitHub devono quindi essere considerati non firmati e la documentazione utente deve indicare che i sistemi operativi possono mostrare avvisi di sicurezza. Il workflow release manuale crea note di release dedicate e file checksum SHA-256 per gli artifact Windows/macOS. Questa scelta non modifica la gestione dei segreti nell'app, ma resta un rischio di distribuzione da rivalutare se in futuro saranno disponibili credenziali ufficiali.
 
@@ -99,7 +99,7 @@ La UI esplicita l'uso del fallback safeStorage. In Linux la protezione dipende d
 
 ## English
 
-Source version: `1.12.3` (published GitHub release: `v1.12.2`)
+Source version: `1.12.3` (published GitHub release: `v1.12.3`)
 
 This document describes the planned security model for True Drawing. The current version uses Electron with `contextIsolation`, disabled renderer `nodeIntegration`, a dedicated preload exposing only controlled IPC APIs, renderer sandboxing, Content Security Policy, and image generation and saves handled by the main process with no direct renderer access to filesystem or secret storage.
 
@@ -153,7 +153,7 @@ Save completion compares the current document with the one actually saved: edits
 
 ### Distribution
 
-The source uses Electron `45.1.0` and React/React DOM `19.3.1`. Context isolation, sandboxing and the controlled preload are also verified in the Windows x64 package. Dialog selections are simulated in functional checks; native macOS and visual dialog/installer verification remain pending before a new distribution. This source patch publishes no new packages.
+The source uses Electron `45.1.0` and React/React DOM `19.3.1`. Context isolation, sandboxing and the controlled preload are also verified in the Windows x64 package. The maintainer confirmed successful Windows launch on 2026-11-18 and authorized the Windows/macOS release. Functional checks simulate dialog selections; native Mac testing is still pending their later check, while packaging and file inspection do not constitute a launch test. Visual system-dialog and installer checks remain pending.
 
 The project currently has no certificates or credentials for Windows code signing, macOS signing, or Apple notarization. Artifacts published through GitHub must therefore be treated as unsigned, and user documentation must state that operating systems may show security warnings. The manual release workflow creates dedicated release notes and SHA-256 checksum files for Windows/macOS artifacts. This does not change in-app secret handling, but it remains a distribution risk to reassess if official credentials become available.
 

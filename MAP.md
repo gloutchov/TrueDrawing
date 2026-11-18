@@ -233,10 +233,10 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.3`; release GitHub pubblicata: `v1.12.2`.
+- Versione corrente su `main`: `1.12.3`; release GitHub pubblicata: `v1.12.3`.
 - Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
 - Milestone corrente: nessuna; C34 completata.
-- Stato milestone: checkpoint `milestone/C34` e tag sorgente `v1.12.3` verificati nel processo di chiusura; nessuna nuova release binaria.
+- Stato milestone: checkpoint `milestone/C34` e tag `v1.12.3` verificati e invariati; pubblicazione binaria autorizzata successivamente dal progettista il 2026-11-18.
 - Toolchain corrente: Electron `45.1.0`, React/React DOM `19.3.1`, Vite `8.3.5`, Vitest `5.0.5`, electron-builder `26.18.0`; struttura e responsabilita' dei moduli invariate.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
@@ -383,3 +383,9 @@ Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Elect
 - src/renderer/app/AppShell.tsx: controllo del documento effettivamente salvato al completamento asincrono.
 - tests/unit/closeConfirmation.test.ts: sette regressioni per annullamento, rinuncia esplicita, richieste ripetute, dialoghi duplicati, lingua e finestra minimizzata.
 - docs/release-notes/v1.12.2.md: correzioni, procedura di uscita, piattaforme, checksum e limiti dei test nativi.
+
+## Pubblicazione v1.12.3 (2026-11-18)
+
+- `docs/release-notes/v1.12.3.md`: note bilingui della manutenzione Electron/React, download/checksum e limiti; avvio Windows confermato, test nativo Mac ancora in attesa del progettista.
+- `docs/index.html`: versione distribuita aggiornata a `1.12.3`, con gli stessi collegamenti GitHub Releases e dominio canonico.
+- `release/1.12.3-publication`: aggiornamento solo documentale; il tag `v1.12.3` e il codice distribuito restano sul checkpoint C34 originale.
