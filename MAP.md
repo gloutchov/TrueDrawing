@@ -386,6 +386,6 @@ Integrate le cronologie delle PR Dependabot #24 e #30, che la sostituisce: Elect
 
 ## Pubblicazione v1.12.3 (2026-11-18)
 
-- `docs/release-notes/v1.12.3.md`: note bilingui della manutenzione Electron/React, download/checksum e limiti; avvio Windows confermato, test nativo Mac ancora in attesa del progettista.
+- `docs/release-notes/v1.12.3.md`: note bilingui della manutenzione Electron/React, download/checksum e limiti; avvio Windows confermato e smoke test nativo macOS di avvio, disegno e generazione immagine confermato dal progettista il 2026-11-20.
 - `docs/index.html`: versione distribuita aggiornata a `1.12.3`, con gli stessi collegamenti GitHub Releases e dominio canonico.
 - `release/1.12.3-publication`: aggiornamento solo documentale; il tag `v1.12.3` e il codice distribuito restano sul checkpoint C34 originale.
