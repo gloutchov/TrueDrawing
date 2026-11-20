@@ -2,7 +2,7 @@
 
 ## Stato attuale
 
-True Drawing ha completato C34 alla versione `1.12.3`: aggiornamento Electron e allineamento React/React DOM dalle tre PR Dependabot, distribuiti nella release Windows/macOS `v1.12.3`. Il progettista ha confermato l'avvio su Windows e, il 2026-11-20, lo smoke test nativo macOS della release scaricata: avvio, disegno e generazione immagine riusciti. C33 ha introdotto la conferma nativa di chiusura; C29-C32 hanno riordinato sidebar, manuali, README e landing.
+True Drawing ha completato C34 alla versione `1.12.3`: aggiornamento Electron e allineamento React/React DOM dalle tre PR Dependabot, distribuiti nella release Windows/macOS `v1.12.3`. Il progettista ha confermato l'avvio su Windows e, il 2026-11-20, lo smoke test nativo macOS della release scaricata: avvio, disegno, generazione immagine e tutti i test manuali 1-5 descritti sotto superati. La prova con tavoletta resta non eseguita per mancanza del dispositivo. C33 ha introdotto la conferma nativa di chiusura; C29-C32 hanno riordinato sidebar, manuali, README e landing.
 
 - Versione corrente su `main`: `1.12.3`.
 - Branch stabile: `main`.
@@ -755,11 +755,11 @@ Riepilogo locale (2026-11-18): integrate le cronologie originali di tutte e tre 
 
 Smoke Windows: quattro combinazioni IT/EN e chiaro/scuro nella build di produzione, piu' avvio e flussi del pacchetto Windows x64 non firmato. Controllati isolamento/sandbox/preload, disegno, Undo/Redo, pan senza nuovi tratti, aggiunta layer, salvataggio e riapertura `.tdraw`, annullamento/default e rinuncia esplicita nella conferma di chiusura. Selezioni dei dialoghi simulate, profili separati e nessuna API key/chiamata AI. Main, preload e asset renderer nel pacchetto corrispondono byte per byte alla build verificata; SHA-256 di `app.asar`: `f00d8b852755858915b65c095aa520de7872315bad1d883f24479864165d9fd5`.
 
-Limiti residui: nessuna verifica nativa macOS su questo host Windows; nessuna verifica visiva dei dialoghi di sistema o dell'installer. Le catture delle finestre nascoste non completano in questo ambiente; i controlli funzionali usano stato UI, eventi Electron e file effettivamente scritti. Nessuna nuova release pubblicata; sito e download continuano a indicare `v1.12.2`.
+Limiti della verifica iniziale (2026-11-18): nessuna verifica nativa macOS su questo host Windows; nessuna verifica visiva dei dialoghi di sistema o dell'installer. Le catture delle finestre nascoste non completano in questo ambiente; i controlli funzionali usano stato UI, eventi Electron e file effettivamente scritti. In questa fase non era pubblicata una nuova release e sito/download indicavano `v1.12.2`. La successiva prova manuale macOS di `v1.12.3` e' registrata sotto.
 
 ## Pubblicazione release v1.12.3 (2026-11-18)
 
-Stato: completata, [release pubblicata](https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.3). Il progettista ha confermato l'avvio su Windows e autorizzato la pubblicazione di entrambe le piattaforme. Il successivo smoke test nativo macOS e' stato confermato il 2026-11-20: avvio della release scaricata, disegno e generazione immagine riusciti.
+Stato: completata, [release pubblicata](https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.3). Il progettista ha confermato l'avvio su Windows e autorizzato la pubblicazione di entrambe le piattaforme. Il successivo smoke test nativo macOS e' stato confermato il 2026-11-20: avvio della release scaricata, disegno, generazione immagine e test manuali 1-5 superati.
 
 - Branch documentale: `release/1.12.3-publication`.
 - Tag `v1.12.3` e checkpoint `milestone/C34` invariati sul commit `9f9c2cc7fa2915593e13103c0c87458b23e813c0`.
@@ -768,9 +768,17 @@ Stato: completata, [release pubblicata](https://github.com/gloutchov/TrueDrawing
 - Verifica: 10 asset scaricati, 8 file coperti dai manifest SHA-256 verificati; installer Windows x64 e DMG/ZIP macOS arm64 non firmati e non notarizzati. Ispezionati archivio applicazione Windows, ZIP/app macOS e firma di formato del contenitore DMG.
 - Contenuto: app `1.12.3`, identificatore `com.truedrawing.app`, architettura Mac arm64, Electron `45.1.0`, React/React DOM `19.3.1`. Confrontati 46 file eseguibili/renderer/configurazione: tutti identici byte per byte su Windows; 42 identici sul Mac e 4 con sole differenze nei terminatori di riga. Main di avvio, preload e asset JavaScript/CSS del renderer sono identici nei due pacchetti alla build gia' verificata.
 - Documentazione: stato e versione distribuita della landing allineati a `v1.12.3`; README/manuali conservano presentazione e guide d'uso senza cronologie. CI e Pages verificati sul commit finale nel processo di chiusura; branch di pubblicazione rimosso dopo merge e controlli.
-- Limiti: avvio Windows e smoke test macOS del flusso avvio/disegno/generazione confermati dal progettista. Firma/notarizzazione restano non disponibili; verifica visiva di dialoghi/installer e penne/touch fisici non attestati dal riscontro, come indicato nelle note. Nessuna modifica al codice o ai tag della release.
+- Limiti: avvio Windows e test manuali macOS descritti sotto confermati dal progettista. Firma/notarizzazione restano non disponibili; prova con tavoletta/penna e pressione non eseguita per mancanza del dispositivo. Nessuna modifica al codice o ai tag della release.
 
-Verifica manuale macOS (2026-11-20): il progettista riferisce di aver scaricato l'ultima release `v1.12.3`, avviato l'app sul Mac, realizzato un disegno e generato l'immagine senza problemi osservati. Il riscontro completa lo smoke test nativo del flusso principale; non attesta gli altri flussi o dispositivi non descritti. Aggiornamento solo documentale sul branch `docs/1.12.3-macos-smoke`, versione invariata `1.12.3`.
+Verifica manuale macOS (2026-11-20): il progettista riferisce di aver scaricato l'ultima release `v1.12.3`, avviato l'app sul Mac, realizzato un disegno e generato l'immagine senza problemi osservati. Conferma inoltre l'esito positivo di tutti i test manuali proposti:
+
+1. Chiusura con modifiche non salvate tramite pulsante rosso, Cmd+Q ed Esci dal Dock; Annulla/Escape mantengono aperto il documento, rinuncia esplicita sul disegno di prova e chiusura dopo salvataggio funzionano. Distinzione tra chiusura finestra e uscita dall'app verificata.
+2. Salvataggio `.tdraw`, uscita completa e riapertura con disegno, layer e immagine AI conservati.
+3. Export canvas e immagine AI in PNG/WebP, aperti in Anteprima con contenuto e dimensioni corretti.
+4. Avvio da Applicazioni, indipendente dal DMG.
+5. Leggibilita' di impostazioni e conferma di chiusura in italiano/inglese e tema chiaro/scuro, senza contenuti tagliati.
+
+Prova con tavoletta/penna e pressione: non eseguita perche' il progettista non dispone del dispositivo; nessun fallimento rilevato. Aggiornamento solo documentale sul branch `docs/1.12.3-macos-smoke`, versione invariata `1.12.3`.
 
 ## Registro avanzamento
 
@@ -804,7 +812,7 @@ Verifica manuale macOS (2026-11-20): il progettista riferisce di aver scaricato 
 | 2026-10-03 | C33 - Conferma di chiusura con modifiche non salvate | 1.12.2 | `milestone/33-close-confirmation` | Completata | Veto silenzioso risolto con dialogo nativo IT/EN; nuove modifiche durante un salvataggio restano protette. Lint, 130 test, build, 36 scenari Electron e dialogo nativo; CI/checkpoint e release Windows/macOS con checksum verificati. |
 | 2026-11-18 | C34 - Aggiornamento Electron e allineamento React | 1.12.3 | `milestone/34-dependency-maintenance` | Completata | PR #38/#39/#40 integrate conservandone la cronologia; lint, 130 test, build, audit runtime e smoke Windows verdi. CI PR/main, checkpoint `milestone/C34` e tag sorgente `v1.12.3` verificati in chiusura; nessuna nuova release binaria. |
 | 2026-11-18 | Pubblicazione v1.12.3 | 1.12.3 | `release/1.12.3-publication` | Completata | Workflow Release 44270853702 verde; 10 asset scaricati e 8 checksum verificati. Note, stato e landing aggiornati; avvio Windows confermato, prova nativa Mac allora programmata per una verifica successiva. |
-| 2026-11-20 | Smoke test nativo macOS v1.12.3 | 1.12.3 | `docs/1.12.3-macos-smoke` | Confermato dal progettista | Release scaricata e avviata sul Mac; disegno e generazione immagine riusciti senza problemi osservati. Riscontro registrato nei documenti operativi e nelle note bilingui; nessuna modifica al codice, alla versione o ai tag. |
+| 2026-11-20 | Smoke test nativo macOS v1.12.3 | 1.12.3 | `docs/1.12.3-macos-smoke` | Confermato dal progettista | Avvio, disegno, generazione immagine e test 1-5 superati: chiusura, salvataggio/riapertura, export PNG/WebP, Applicazioni e dialoghi IT/EN chiaro/scuro. Tavoletta/pressione non verificate per assenza del dispositivo. Riscontro nei documenti operativi e nelle note bilingui; codice, versione e tag invariati. |
 
 ## Checklist di chiusura milestone
 
