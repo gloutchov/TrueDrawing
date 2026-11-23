@@ -1,0 +1,53 @@
+# .github/dependabot.yml — standard gloutchov (proposta 22/11/2026)
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"          # il giorno 1 di ogni mese
+      time: "08:00"
+      timezone: "Europe/Rome"
+    open-pull-requests-limit: 5    # solo version updates
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
+    commit-message:
+      prefix: "chore"
+      include: "scope"             # -> chore(deps): / chore(deps-dev):
+    groups:
+      electron:                    # primo gruppo: Electron in PR propria (release + smoke di packaging)
+        patterns: ["electron"]
+        update-types: ["minor", "patch"]
+      runtime-minor-patch:         # dependencies -> release secondo la regola unica
+        dependency-type: "production"
+        update-types: ["minor", "patch"]
+      dev-minor-patch:             # devDependencies -> nessuna release
+        dependency-type: "development"
+        update-types: ["minor", "patch"]
+      security:                    # raggruppa anche le security update dell'ecosistema
+        applies-to: "security-updates"
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "electron"           # major in milestone dedicate (come M27/M49)
+        update-types: ["version-update:semver-major"]
+      # typescript-eslint 8.72.1 (in uso) e 8.73.0 (ultima su npm, 2026-11-21) dichiarano peer typescript >=4.8.4 <6.1.0. TypeScript 7.0.2 e' gia' pubblicato e rientra in >=6.1.0. Rivalutare quando il peer include 6.1+.
+      - dependency-name: "typescript"
+        versions: [">=6.1.0"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "08:00"
+      timezone: "Europe/Rome"
+    open-pull-requests-limit: 2
+    cooldown:
+      default-days: 7              # per le actions sono supportati solo i default-days
+    commit-message:
+      prefix: "ci"
+      include: "scope"             # -> ci(deps):
+    groups:
+      github-actions:
+        patterns: ["*"]

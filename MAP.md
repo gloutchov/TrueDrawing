@@ -190,6 +190,9 @@ truedrawing/
 |
 +-- .github/
 |   |
+|   +-- dependabot.yml
+|   |   Aggiornamenti mensili npm e GitHub Actions. TypeScript >=6.1 resta escluso finche' typescript-eslint non dichiara supporto.
+|   |
 |   +-- workflows/
 |       |
 |       +-- ci.yml
