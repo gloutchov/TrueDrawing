@@ -9,7 +9,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Versione corrente: `1.12.4` proposta su questo branch; release GitHub pubblicata: `v1.12.3`.
 - Branch corrente: `main`.
 - Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
-- Patch corrente: `patch/1.12.4-electron-45-4-1`, locale, in attesa di approvazione. / Local, awaiting approval.
+- Patch corrente: pubblicata come PR #48; merge approvato da Glauco il 23/11/2026; PR Dependabot #44 chiusa come superata. / Published as PR #48; merge approved by Glauco on 23/11/2026; Dependabot PR #44 closed as superseded.
 - Ultimo branch milestone completato: `milestone/34-dependency-maintenance`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
@@ -65,7 +65,7 @@ Il progettista riferisce di aver scaricato l'ultima release `v1.12.3`, avviato l
 
 ## Patch Electron 45.4.1 (2026-11-23)
 
-Branch locale `patch/1.12.4-electron-45-4-1`. Electron e' fissato a `45.4.1`, senza `^` o `~`. Versione proposta `1.12.4`: e' il runtime distribuito, quindi la release e' probabile, ma tag e release restano al progettista. La PR Dependabot #44 arriva solo a `^45.3.3` e va chiusa come superata dopo il merge, non in questa patch. Nel lockfile sono assorbiti gli aggiornamenti di sicurezza della PR #47 che restano nella catena di sviluppo e installazione: follow-redirects `1.16.3`, undici `7.30.2` e brace-expansion `5.0.13`.
+Pubblicata come PR #48. Merge approvato da Glauco il 23/11/2026; la release `v1.12.4` e' autorizzata. Electron resta fissato a `45.4.1`, senza `^` o `~`. La PR Dependabot #44, che arrivava solo a `^45.3.3`, e' chiusa come superata. Nel lockfile restano assorbiti gli aggiornamenti della PR #47, nella catena di sviluppo e installazione: follow-redirects `1.16.3`, undici `7.30.2` e brace-expansion `5.0.13`. L'alert #40 su minimatch (moderate, solo sviluppo) resta aperto: la correzione esiste solo in `11.0.1`.
 
 ## Architettura
 
