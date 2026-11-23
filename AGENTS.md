@@ -9,7 +9,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Versione corrente: `1.12.3`; release GitHub pubblicata: `v1.12.3`.
 - Branch corrente: `main`.
 - Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
-- Patch corrente: nessuna.
+- Patch corrente: `patch/dependabot-standard`, configurazione Dependabot, non pubblicata.
 - Ultimo branch milestone completato: `milestone/34-dependency-maintenance`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
@@ -49,7 +49,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Manutenzione dipendenze C34 (2026-11-18)
 
-La richiesta del progettista di risolvere le tre PR aperte autorizza l'integrazione delle PR #38, #39 e #40 secondo la deroga gia' registrata per commit, merge, tag, push e rimozione branch. Conservare le cronologie Dependabot nel branch milestone e aggiornare la PR #38 con push fast-forward soltanto dopo le verifiche locali. React e React DOM devono essere entrambi `19.3.1` nel lockfile; la PR #40 isolata fallisce per il disallineamento. Restano obbligatori CI e checkpoint remoto. Patch sorgente `1.12.3`, nessuna nuova release binaria richiesta; la release distribuita resta `v1.12.2`. La configurazione Dependabot e' stata rimossa da main: non ripristinarla per integrare le PR esistenti.
+La richiesta del progettista di risolvere le tre PR aperte autorizza l'integrazione delle PR #38, #39 e #40 secondo la deroga gia' registrata per commit, merge, tag, push e rimozione branch. Conservare le cronologie Dependabot nel branch milestone e aggiornare la PR #38 con push fast-forward soltanto dopo le verifiche locali. React e React DOM devono essere entrambi `19.3.1` nel lockfile; la PR #40 isolata fallisce per il disallineamento. Restano obbligatori CI e checkpoint remoto. Patch sorgente `1.12.3`, nessuna nuova release binaria richiesta; la release distribuita resta `v1.12.2`. La configurazione Dependabot e' stata rimossa da main durante C34: non ripristinarla per integrare le PR #38, #39 e #40. Dal 2026-11-23 il progettista autorizza di nuovo il file standard `.github/dependabot.yml` (npm e github-actions) su `patch/dependabot-standard`, senza cambio di versione ne' release. L'ignore `typescript >=6.1.0` resta finche' typescript-eslint non dichiara il supporto: 8.72.1 (in uso) e 8.73.0 (ultima su npm) hanno ancora il peer `<6.1.0`.
 
 Verifica locale: installazione da lockfile, lint, 130 test e build verdi; smoke Electron 45.1.0 nelle quattro combinazioni IT/EN e chiaro/scuro, piu' avvio e flussi del pacchetto Windows x64 non firmato. Verificati disegno, Undo/Redo, pan senza tratti, layer, salvataggio/riapertura e conferma di chiusura, con selezioni dei dialoghi simulate e profili isolati senza API key. Main, preload e asset renderer del pacchetto sono identici byte per byte alla build verificata; audit runtime senza vulnerabilita' note. Questa verifica automatizzata non comprendeva la prova nativa macOS, confermata successivamente dal progettista come registrato sotto, o la verifica visiva dei dialoghi di sistema. Checkpoint `milestone/C34` e tag sorgente `v1.12.3`; nessuna pubblicazione binaria in questa fase.
 
