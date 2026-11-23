@@ -8,7 +8,7 @@ True Drawing ha completato C34 alla versione `1.12.3`: aggiornamento Electron e 
 - Branch stabile: `main`.
 - Ultima milestone completata: `C34 - Aggiornamento Electron e allineamento React`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
-- Patch corrente: completata, PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release.
+- Patch corrente: `patch/1.12.4-electron-45-4-1`, Electron `45.4.1` esatto, versione proposta `1.12.4`, locale e in attesa di approvazione. Release probabile, non creata. / Exact Electron `45.4.1`, proposed version `1.12.4`, local and awaiting approval. A release is likely and has not been created.
 - Release GitHub corrente: `v1.12.3`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Milestone corrente in sviluppo: nessuna; C34 completata.
 
@@ -790,6 +790,20 @@ Configuration only: application version `1.12.3` unchanged, no tag and no releas
 
 Restores `.github/dependabot.yml` from the standard model: npm at `/` (the only `package.json`) and github-actions for `.github/workflows/ci.yml` and `release.yml`. The monthly schedule, groups, cooldown and Electron major ignore follow the model. The `typescript >=6.1.0` ignore stays: typescript-eslint `8.72.1` (in use) and `8.73.0` (latest on npm, 2026-11-21) declare peer `typescript >=4.8.4 <6.1.0`; TypeScript `7.0.2` is already published and falls in that range. Repository settings, alerts and security updates are unchanged.
 
+## Patch Electron 45.4.1 (2026-11-23)
+
+Versione proposta `1.12.4` (`+0.0.1`). Electron e' una dipendenza di runtime anche se dichiarata fra i devDependencies, quindi la release e' probabile. Tag, merge e release restano al progettista. Branch `patch/1.12.4-electron-45-4-1`, commit locale, nessuna pubblicazione.
+
+`electron` passa da `^45.1.0` a `45.4.1` esatto, con lockfile allineato. electron-builder resta `26.18.0`: non dichiara un peer che escluda Electron 45, e l'app non ha moduli nativi da ricompilare. Le note Electron 45.2.0, 45.3.0 e 45.4.1 non rimuovono le API usate (`app`, `BrowserWindow`, `dialog`, `safeStorage`, `session`, `clipboard`, `nativeImage`, `Menu`, `ipcMain`, `contextBridge`, `ipcRenderer`). La PR Dependabot #44 aggiorna solo a `^45.3.3` e resta aperta, da chiudere come superata dopo il merge.
+
+Nello stesso lockfile entrano le correzioni della PR di sicurezza #47, tutte di sviluppo o installazione: follow-redirects `1.16.0` → `1.16.3` (axios di `wait-on`), undici `7.27.1` → `7.30.2` (dipendenza opzionale di `@electron/get`) e brace-expansion `5.0.6` → `5.0.13` piu' gli allineamenti `1.1.22` e `2.1.8` gia' presenti in quella PR. Non modificano il pacchetto dell'app.
+
+Proposed version `1.12.4` (`+0.0.1`). Electron is a distributed runtime even though it is declared in devDependencies, so a release is likely. Tag, merge and release stay with the designer. Branch `patch/1.12.4-electron-45-4-1`, local commit, not published.
+
+`electron` moves from `^45.1.0` to exact `45.4.1`, with the lockfile updated. electron-builder stays at `26.18.0`: it has no peer range that excludes Electron 45, and the app has no native modules to rebuild. The Electron 45.2.0, 45.3.0 and 45.4.1 notes do not remove the APIs in use (`app`, `BrowserWindow`, `dialog`, `safeStorage`, `session`, `clipboard`, `nativeImage`, `Menu`, `ipcMain`, `contextBridge`, `ipcRenderer`). Dependabot PR #44 only reaches `^45.3.3` and stays open, to be closed as superseded after the merge.
+
+The same lockfile absorbs security PR #47. Those fixes stay in development or install tooling: follow-redirects `1.16.0` → `1.16.3` (`wait-on`'s axios), undici `7.27.1` → `7.30.2` (optional dependency of `@electron/get`) and brace-expansion `5.0.6` → `5.0.13`, plus the `1.1.22` and `2.1.8` alignments already in that PR. They do not change the packaged app.
+
 ## Registro avanzamento
 
 | Data | Milestone | Versione | Branch | Stato | Note |
@@ -824,6 +838,7 @@ Restores `.github/dependabot.yml` from the standard model: npm at `/` (the only 
 | 2026-11-18 | Pubblicazione v1.12.3 | 1.12.3 | `release/1.12.3-publication` | Completata | Workflow Release 44270853702 verde; 10 asset scaricati e 8 checksum verificati. Note, stato e landing aggiornati; avvio Windows confermato, prova nativa Mac allora programmata per una verifica successiva. |
 | 2026-11-20 | Smoke test nativo macOS v1.12.3 | 1.12.3 | `docs/1.12.3-macos-smoke` | Confermato dal progettista | Avvio, disegno, generazione immagine e test 1-5 superati: chiusura, salvataggio/riapertura, export PNG/WebP, Applicazioni e dialoghi IT/EN chiaro/scuro. Tavoletta/pressione non verificate per assenza del dispositivo. Riscontro nei documenti operativi e nelle note bilingui; codice, versione e tag invariati. |
 | 2026-11-23 | Patch configurazione Dependabot | 1.12.3 | `patch/dependabot-standard` | Completata: PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release. | File standard npm e github-actions; ignore TypeScript `>=6.1.0` conservato perche' typescript-eslint 8.72.1 e 8.73.0 dichiarano ancora il peer `<6.1.0`. Nessun tag e nessuna release. / Standard npm and github-actions file; TypeScript `>=6.1.0` ignore kept because typescript-eslint 8.72.1 and 8.73.0 still declare the `<6.1.0` peer. No tag and no release. |
+| 2026-11-23 | Patch Electron 45.4.1 | 1.12.4 | `patch/1.12.4-electron-45-4-1` | Locale, in attesa di approvazione | Electron fissato a `45.4.1`; lockfile con le correzioni dev/installazione della PR #47. Release probabile, non creata. Supera la PR #44 (`^45.3.3`), che resta aperta. / Electron pinned at `45.4.1`; lockfile includes PR #47's dev/install fixes. A release is likely and has not been created. Supersedes open PR #44 (`^45.3.3`). |
 
 ## Checklist di chiusura milestone
 
