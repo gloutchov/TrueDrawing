@@ -8,7 +8,7 @@ True Drawing ha completato C34 alla versione `1.12.3`: aggiornamento Electron e 
 - Branch stabile: `main`.
 - Ultima milestone completata: `C34 - Aggiornamento Electron e allineamento React`.
 - Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
-- Patch corrente: `patch/dependabot-standard`, configurazione Dependabot, versione invariata, nessuna release.
+- Patch corrente: completata, PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release.
 - Release GitHub corrente: `v1.12.3`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
 - Milestone corrente in sviluppo: nessuna; C34 completata.
 
@@ -823,7 +823,7 @@ Restores `.github/dependabot.yml` from the standard model: npm at `/` (the only 
 | 2026-11-18 | C34 - Aggiornamento Electron e allineamento React | 1.12.3 | `milestone/34-dependency-maintenance` | Completata | PR #38/#39/#40 integrate conservandone la cronologia; lint, 130 test, build, audit runtime e smoke Windows verdi. CI PR/main, checkpoint `milestone/C34` e tag sorgente `v1.12.3` verificati in chiusura; nessuna nuova release binaria. |
 | 2026-11-18 | Pubblicazione v1.12.3 | 1.12.3 | `release/1.12.3-publication` | Completata | Workflow Release 44270853702 verde; 10 asset scaricati e 8 checksum verificati. Note, stato e landing aggiornati; avvio Windows confermato, prova nativa Mac allora programmata per una verifica successiva. |
 | 2026-11-20 | Smoke test nativo macOS v1.12.3 | 1.12.3 | `docs/1.12.3-macos-smoke` | Confermato dal progettista | Avvio, disegno, generazione immagine e test 1-5 superati: chiusura, salvataggio/riapertura, export PNG/WebP, Applicazioni e dialoghi IT/EN chiaro/scuro. Tavoletta/pressione non verificate per assenza del dispositivo. Riscontro nei documenti operativi e nelle note bilingui; codice, versione e tag invariati. |
-| 2026-11-23 | Patch configurazione Dependabot | 1.12.3 | `patch/dependabot-standard` | Locale, in attesa di approvazione | File standard npm e github-actions; ignore TypeScript `>=6.1.0` conservato perche' typescript-eslint 8.72.1 e 8.73.0 dichiarano ancora il peer `<6.1.0`. Nessun tag e nessuna release. / Standard npm and github-actions file; TypeScript `>=6.1.0` ignore kept because typescript-eslint 8.72.1 and 8.73.0 still declare the `<6.1.0` peer. No tag and no release. |
+| 2026-11-23 | Patch configurazione Dependabot | 1.12.3 | `patch/dependabot-standard` | Completata: PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release. | File standard npm e github-actions; ignore TypeScript `>=6.1.0` conservato perche' typescript-eslint 8.72.1 e 8.73.0 dichiarano ancora il peer `<6.1.0`. Nessun tag e nessuna release. / Standard npm and github-actions file; TypeScript `>=6.1.0` ignore kept because typescript-eslint 8.72.1 and 8.73.0 still declare the `<6.1.0` peer. No tag and no release. |
 
 ## Checklist di chiusura milestone
 

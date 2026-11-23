@@ -9,7 +9,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Versione corrente: `1.12.3`; release GitHub pubblicata: `v1.12.3`.
 - Branch corrente: `main`.
 - Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
-- Patch corrente: `patch/dependabot-standard`, configurazione Dependabot, non pubblicata.
+- Patch corrente: completata, PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release.
 - Ultimo branch milestone completato: `milestone/34-dependency-maintenance`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
