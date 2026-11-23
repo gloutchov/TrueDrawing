@@ -6,10 +6,10 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 - Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
 - Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.3`; release GitHub pubblicata: `v1.12.3`.
+- Versione corrente: `1.12.4` proposta su questo branch; release GitHub pubblicata: `v1.12.3`.
 - Branch corrente: `main`.
 - Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
-- Patch corrente: completata, PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release.
+- Patch corrente: pubblicata come PR #48; merge approvato da Glauco il 23/11/2026; PR Dependabot #44 chiusa come superata. / Published as PR #48; merge approved by Glauco on 23/11/2026; Dependabot PR #44 closed as superseded.
 - Ultimo branch milestone completato: `milestone/34-dependency-maintenance`.
 - Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
 - CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
@@ -62,6 +62,10 @@ Chiusura pubblicazione: workflow Release `44270853702` verde; 10 asset scaricati
 ## Verifica funzionale macOS (2026-11-20)
 
 Il progettista riferisce di aver scaricato l'ultima release `v1.12.3`, avviato l'app su Mac, realizzato un disegno e generato l'immagine con esito positivo, senza problemi osservati. Conferma inoltre tutti i test manuali 1-5: chiusura con modifiche non salvate tramite pulsante rosso, Cmd+Q e Dock, annullamento/Escape e rinuncia esplicita, chiusura dopo salvataggio, salvataggio/riapertura `.tdraw` con layer e immagine AI, export canvas/immagine PNG e WebP aperti in Anteprima, avvio da Applicazioni e leggibilita' dei dialoghi in italiano/inglese e chiaro/scuro. La prova con tavoletta/penna e pressione resta non eseguita per mancanza del dispositivo; non e' un test fallito. Registrare questo ambito nei documenti operativi e nelle note release, mantenendo versione, codice, artifact e tag esistenti.
+
+## Patch Electron 45.4.1 (2026-11-23)
+
+Pubblicata come PR #48. Merge approvato da Glauco il 23/11/2026; la release `v1.12.4` e' autorizzata. Electron resta fissato a `45.4.1`, senza `^` o `~`. La PR Dependabot #44, che arrivava solo a `^45.3.3`, e' chiusa come superata. Nel lockfile restano assorbiti gli aggiornamenti della PR #47, nella catena di sviluppo e installazione: follow-redirects `1.16.3`, undici `7.30.2` e brace-expansion `5.0.13`. L'alert #40 su minimatch (moderate, solo sviluppo) resta aperto: la correzione esiste solo in `11.0.1`.
 
 ## Architettura
 

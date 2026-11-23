@@ -236,11 +236,11 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione corrente su `main`: `1.12.3`; release GitHub pubblicata: `v1.12.3`.
+- Versione sorgente proposta: `1.12.4`; release GitHub pubblicata: `v1.12.3`.
 - Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
 - Milestone corrente: nessuna; C34 completata.
 - Stato milestone: checkpoint `milestone/C34` e tag `v1.12.3` verificati e invariati; pubblicazione binaria autorizzata successivamente dal progettista il 2026-11-18.
-- Toolchain corrente: Electron `45.1.0`, React/React DOM `19.3.1`, Vite `8.3.5`, Vitest `5.0.5`, electron-builder `26.18.0`; struttura e responsabilita' dei moduli invariate.
+- Toolchain corrente: Electron `45.4.1` esatto, React/React DOM `19.3.1`, Vite `8.3.5`, Vitest `5.0.5`, electron-builder `26.18.0`; struttura e responsabilita' dei moduli invariate. Nessun modulo nativo dell'app.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.
