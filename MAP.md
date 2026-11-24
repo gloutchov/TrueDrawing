@@ -57,7 +57,7 @@ truedrawing/
 |   |   Selezione lingua automatica/manuale della landing page.
 |   |
 |   +-- release-notes/
-|       Note release versionate usate dal workflow GitHub manuale.
+|       Note release versionate usate dal workflow GitHub manuale; v1.12.4.md conserva le note bilingui gia' pubblicate con i checksum.
 |
 +-- index.html
 |   Entry HTML del renderer Vite.
@@ -236,11 +236,12 @@ truedrawing/
 
 ## Stato attuale
 
-- Versione sorgente proposta: `1.12.4`; release GitHub pubblicata: `v1.12.3`.
+- Versione sorgente: `1.12.4`; release GitHub pubblicata: `v1.12.4` dal 23/11/2026, sul commit `f797e01e8a1c2888bca51b2d12e7e1bf3c1ea4a3`.
 - Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
 - Milestone corrente: nessuna; C34 completata.
-- Stato milestone: checkpoint `milestone/C34` e tag `v1.12.3` verificati e invariati; pubblicazione binaria autorizzata successivamente dal progettista il 2026-11-18.
-- Toolchain corrente: Electron `45.4.1` esatto, React/React DOM `19.3.1`, Vite `8.3.5`, Vitest `5.0.5`, electron-builder `26.18.0`; struttura e responsabilita' dei moduli invariate. Nessun modulo nativo dell'app.
+- Stato milestone: checkpoint `milestone/C34` e tag `v1.12.3` invariati sul commit `9f9c2cc7fa2915593e13103c0c87458b23e813c0`; la successiva patch Electron e' distribuita con `v1.12.4`.
+- Dipendenze correnti su `main`: Electron `45.4.1` esatto, React/React DOM `19.3.1`, Lucide `1.73.0`, Vite `8.3.8`, Vitest `5.1.0`, typescript-eslint `8.72.2`, electron-builder `26.18.0`; struttura e responsabilita' dei moduli invariate. Nessun modulo nativo dell'app.
+- Differenze dalla release: `v1.12.4` contiene Lucide `1.48.0`, Vite `8.3.5` e Vitest `5.0.5`; le PR #45/#46 (dipendenze), #43 (workflow) e #49 (landing) sono successive al tag. Il 24/11/2026 il progettista ha deciso di attendere ulteriori fix prima di una nuova release.
 - Release Windows/macOS: distribuzione via GitHub senza firma codice o notarizzazione finche' non saranno disponibili credenziali dedicate; la documentazione utente segnala gli avvisi SmartScreen/Gatekeeper attesi.
 - Skeleton Electron/Vite/React implementato.
 - Configurazione centrale validata e caricata dal processo main.

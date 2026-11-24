@@ -2,14 +2,17 @@
 
 ## Stato attuale
 
-True Drawing ha completato C34 alla versione `1.12.3`: aggiornamento Electron e allineamento React/React DOM dalle tre PR Dependabot, distribuiti nella release Windows/macOS `v1.12.3`. Il progettista ha confermato l'avvio su Windows e, il 2026-11-20, lo smoke test nativo macOS della release scaricata: avvio, disegno, generazione immagine e tutti i test manuali 1-5 descritti sotto superati. La prova con tavoletta resta non eseguita per mancanza del dispositivo. C33 ha introdotto la conferma nativa di chiusura; C29-C32 hanno riordinato sidebar, manuali, README e landing.
+True Drawing ha completato C34 alla versione `1.12.3`; la successiva patch Electron `45.4.1` e' distribuita nella release Windows/macOS `v1.12.4`, pubblicata il 2026-11-23. Le PR #45/#46 (dipendenze), #43 (GitHub Actions) e #49 (landing) sono integrate su `main` dopo il tag e non sono ancora distribuite. Il 2026-11-24 il progettista ha deciso di attendere ulteriori fix prima della prossima release; la versione sorgente resta `1.12.4`.
 
-- Versione corrente su `main`: `1.12.3`.
+Le prove confermate dal progettista su Windows e macOS restano riferite a `v1.12.3`: sul Mac il 2026-11-20 risultano superati avvio, disegno, generazione immagine e tutti i test manuali 1-5 descritti sotto. Gli installer Windows/macOS di `v1.12.4` sono stati costruiti dal workflow, ma le note pubblicate non riportano prove manuali su quelle piattaforme. La prova con tavoletta resta non eseguita per mancanza del dispositivo. C33 ha introdotto la conferma nativa di chiusura; C29-C32 hanno riordinato sidebar, manuali, README e landing.
+
+- Versione sorgente su `main`: `1.12.4`, con aggiornamenti successivi alla release ancora non distribuiti.
 - Branch stabile: `main`.
 - Ultima milestone completata: `C34 - Aggiornamento Electron e allineamento React`.
-- Ultima patch completata: `v1.5.1 - Import WebP normalizzato via Chromium Canvas`.
-- Patch corrente: pubblicata come PR #48; merge approvato da Glauco il 23/11/2026; PR Dependabot #44 chiusa come superata. Alert #40 minimatch (moderate, solo sviluppo) resta aperto: la correzione esiste solo in `11.0.1`. / Published as PR #48; merge approved by Glauco on 23/11/2026; Dependabot PR #44 closed as superseded. Alert #40 for minimatch (moderate, development only) stays open: the fix exists only in `11.0.1`.
-- Release GitHub corrente: `v1.12.3`, pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Ultima patch applicativa completata: `v1.12.4 - Electron 45.4.1`, PR #48 integrata; PR Dependabot #44 chiusa come superata.
+- Ultima manutenzione documentale: allineamento alla release pubblicata e alle PR integrate, senza modifica della versione o nuova pubblicazione binaria.
+- Release GitHub corrente: [`v1.12.4`](https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.4), pubblicata con 10 asset Windows x64/macOS arm64 non firmati, note bilingui e manifest SHA-256.
+- Prossima release: rinviata in attesa di ulteriori fix, su decisione del progettista del 2026-11-24.
 - Milestone corrente in sviluppo: nessuna; C34 completata.
 
 ## Obiettivo della fase post release
@@ -792,17 +795,46 @@ Restores `.github/dependabot.yml` from the standard model: npm at `/` (the only 
 
 ## Patch Electron 45.4.1 (2026-11-23)
 
-Versione `1.12.4` (`+0.0.1`). Pubblicata come PR #48; merge approvato da Glauco il 23/11/2026. La release `v1.12.4` e' autorizzata.
+Versione `1.12.4` (`+0.0.1`). PR #48 integrata il 23/11/2026 e release `v1.12.4` pubblicata lo stesso giorno. CI della PR `45171501223` e di `main` `45171579681` verdi.
 
 `electron` passa da `^45.1.0` a `45.4.1` esatto, con lockfile allineato. electron-builder resta `26.18.0`: non dichiara un peer che escluda Electron 45, e l'app non ha moduli nativi da ricompilare. Le note Electron 45.2.0, 45.3.0 e 45.4.1 non rimuovono le API usate (`app`, `BrowserWindow`, `dialog`, `safeStorage`, `session`, `clipboard`, `nativeImage`, `Menu`, `ipcMain`, `contextBridge`, `ipcRenderer`). La PR Dependabot #44, che aggiornava solo a `^45.3.3`, e' chiusa come superata.
 
 Nello stesso lockfile entrano le correzioni della PR di sicurezza #47, tutte di sviluppo o installazione: follow-redirects `1.16.0` → `1.16.3` (axios di `wait-on`), undici `7.27.1` → `7.30.2` (dipendenza opzionale di `@electron/get`) e brace-expansion `5.0.6` → `5.0.13` piu' gli allineamenti `1.1.22` e `2.1.8` gia' presenti in quella PR. Non modificano il pacchetto dell'app. L'alert #40 su minimatch resta aperto (moderate, solo sviluppo): la correzione esiste solo in `11.0.1` e non e' dichiarata chiusa.
 
-Version `1.12.4` (`+0.0.1`). Published as PR #48; merge approved by Glauco on 23/11/2026. Release `v1.12.4` is authorized.
+Version `1.12.4` (`+0.0.1`). PR #48 was merged on 2026-11-23 and release `v1.12.4` was published the same day. PR CI `45171501223` and main CI `45171579681` succeeded.
 
 `electron` moves from `^45.1.0` to exact `45.4.1`, with the lockfile updated. electron-builder stays at `26.18.0`: it has no peer range that excludes Electron 45, and the app has no native modules to rebuild. The Electron 45.2.0, 45.3.0 and 45.4.1 notes do not remove the APIs in use (`app`, `BrowserWindow`, `dialog`, `safeStorage`, `session`, `clipboard`, `nativeImage`, `Menu`, `ipcMain`, `contextBridge`, `ipcRenderer`). Dependabot PR #44, which only reached `^45.3.3`, is closed as superseded.
 
 The same lockfile absorbs security PR #47. Those fixes stay in development or install tooling: follow-redirects `1.16.0` → `1.16.3` (`wait-on`'s axios), undici `7.27.1` → `7.30.2` (optional dependency of `@electron/get`) and brace-expansion `5.0.6` → `5.0.13`, plus the `1.1.22` and `2.1.8` alignments already in that PR. They do not change the packaged app. Alert #40 for minimatch stays open (moderate, development only): the fix exists only in `11.0.1` and is not declared closed.
+
+## Pubblicazione v1.12.4 (2026-11-23)
+
+La [release `v1.12.4`](https://github.com/gloutchov/TrueDrawing/releases/tag/v1.12.4) e' pubblicata dal tag esistente sul commit `f797e01e8a1c2888bca51b2d12e7e1bf3c1ea4a3`. Il [workflow Release `45171851524`](https://github.com/gloutchov/TrueDrawing/actions/runs/45171851524) e' verde. Sono presenti 10 asset: installer Windows x64, DMG/ZIP macOS arm64, relativi blockmap, metadati latest e due manifest SHA-256. I pacchetti sono non firmati e non notarizzati.
+
+Le note bilingui pubblicate sono conservate in [`docs/release-notes/v1.12.4.md`](docs/release-notes/v1.12.4.md). Riportano lint, 130 test, build e avvio/chiusura del pacchetto Linux non firmato; non riportano prove manuali degli installer Windows/macOS. Il riscontro del progettista su `v1.12.3` non si estende automaticamente alla nuova versione. L'alert #40 su minimatch (moderate, solo sviluppo) e' indicato aperto nelle note della pubblicazione.
+
+Verifica documentale del 2026-11-24: stato release, tag, workflow e inventario asset confrontati con GitHub; gli otto hash nelle note coincidono con i digest degli asset esposti dall'API. I pacchetti non sono stati scaricati o eseguiti in questa attivita'. Il tag `v1.12.4`, il checkpoint `milestone/C34` e gli artifact pubblicati restano invariati.
+
+Release `v1.12.4` is published from the existing tag at `f797e01e8a1c2888bca51b2d12e7e1bf3c1ea4a3`; Release workflow `45171851524` succeeded and all 10 unsigned Windows x64/macOS arm64 assets are present. The archived bilingual notes retain the original checks and limitations. All eight note hashes match GitHub asset digests; this documentation check does not include downloading or running packages. Earlier native tests remain specific to `v1.12.3`.
+
+## Dipendenze successive alla release - PR #45 e #46 (2026-11-23)
+
+Le PR [#45](https://github.com/gloutchov/TrueDrawing/pull/45) e [#46](https://github.com/gloutchov/TrueDrawing/pull/46) sono integrate su `main` dopo il tag `v1.12.4`. Il [confronto con la release](https://github.com/gloutchov/TrueDrawing/compare/v1.12.4...main) comprende gli aggiornamenti seguenti, assenti dai pacchetti gia' pubblicati:
+
+| Dipendenza | Nel tag v1.12.4 | Su main |
+| --- | --- | --- |
+| lucide-react | 1.48.0 | 1.73.0 |
+| @vitejs/plugin-react | 6.1.2 | 6.3.0 |
+| concurrently | 10.0.6 | 10.0.7 |
+| eslint | 10.13.0 | 10.15.0 |
+| globals | 17.13.0 | 17.14.0 |
+| typescript-eslint | 8.72.1 | 8.72.2 |
+| vite | 8.3.5 | 8.3.8 |
+| vitest | 5.0.5 | 5.1.0 |
+
+Electron resta `45.4.1`, React/React DOM `19.3.1`, TypeScript `6.0.3` ed electron-builder `26.18.0`. typescript-eslint `8.72.2` richiede ancora `typescript >=4.8.4 <6.1.0`: l'ignore Dependabot per TypeScript `>=6.1.0` resta valido. La versione dell'app resta `1.12.4`; non e' stata pubblicata una nuova release per questi aggiornamenti. CI PR #45 `45171969642` e `main` `45172463592`, PR #46 `45172106882` e `main` `45175011483` verdi.
+
+PRs #45/#46 update Lucide and development/build/test dependencies after the release tag. Electron and React versions stay unchanged; typescript-eslint `8.72.2` still excludes TypeScript `>=6.1.0`. PR and main CI succeeded. These changes are present in source only, with application manifests still at `1.12.4`.
 
 ## Patch GitHub Actions - PR #43 (2026-11-24)
 
@@ -810,11 +842,11 @@ Manutenzione dei soli workflow sul branch `patch/github-actions-pr43`, con la cr
 
 `actions/checkout` e `actions/setup-node` passano da `v4` a `v7`: cinque checkout e quattro setup-node fra `ci.yml` e `release.yml`. Verificati manifest e note ufficiali delle Actions: runtime interno Node 24 e runner minimo 2.327.1; i workflow usano i runner GitHub `ubuntu-latest`, `windows-latest` e `macos-latest`. Node della build resta `22`, con cache npm; non sono usati gli input rimossi `always-auth` o configurazioni `registry-url`, ne' i trigger privilegiati interessati dalla nuova protezione di checkout.
 
-Verifica locale: `npm ci --no-audit --no-fund`, `npm run lint`, `npm run test` (130 test) e `npm run build` verdi. Parsing YAML e confronto strutturale con `main` confermano che le sole modifiche funzionali sono i nove riferimenti alle Actions: eventi, permessi, job, input, comandi, validazione del tag, checksum e avvio manuale della release restano invariati. README e manuali non richiedono modifiche: il comportamento utente dell'app non cambia. Aggiornati mappa, modello di sicurezza bilingue e regole operative. La [CI della PR](https://github.com/gloutchov/TrueDrawing/pull/43/checks) e la [CI di main](https://github.com/gloutchov/TrueDrawing/actions/workflows/ci.yml?query=branch%3Amain) costituiscono i controlli di chiusura prima della rimozione del branch; il packaging Windows/macOS non viene avviato per questa manutenzione.
+Verifica locale: `npm ci --no-audit --no-fund`, `npm run lint`, `npm run test` (130 test) e `npm run build` verdi. Parsing YAML e confronto strutturale con `main` confermano che le sole modifiche funzionali sono i nove riferimenti alle Actions: eventi, permessi, job, input, comandi, validazione del tag, checksum e avvio manuale della release restano invariati. README e manuali non richiedono modifiche: il comportamento utente dell'app non cambia. Aggiornati mappa, modello di sicurezza bilingue e regole operative. Chiusura verificata: PR #43 integrata sul commit `cec85e9127f203a52d5bf8b5535b13ef28fea03c`, [CI PR `45373066242`](https://github.com/gloutchov/TrueDrawing/actions/runs/45373066242) e [CI main `45373252991`](https://github.com/gloutchov/TrueDrawing/actions/runs/45373252991) verdi; nessun packaging Windows/macOS avviato per questa manutenzione.
 
 Confermata dal progettista la rimozione del branch remoto `dependabot/npm_and_yarn/electron-e8c6cf0dc4` della PR #44, chiusa come superata dalla PR #48 gia' integrata con Electron `45.4.1`. Assenza del branch verificata sul remoto; la cronologia della PR resta consultabile. Il branch della #48 era gia' stato eliminato.
 
-Workflow-only maintenance: checkout/setup-node v7, build Node 22 and npm caching preserved, Dependabot history retained, source version `1.12.4` and existing tags unchanged. Lockfile install, lint, all 130 tests, build and structural YAML comparison pass locally. PR and main CI are the closing checks; no Windows/macOS packaging is started for this maintenance. The maintainer confirmed deletion of the superseded PR #44 Electron branch; its remote absence was verified, and the merged PR #48 branch was already absent.
+Workflow-only maintenance: checkout/setup-node v7, build Node 22 and npm caching preserved, Dependabot history retained, source version `1.12.4` and existing tags unchanged. Lockfile install, lint, all 130 tests, build and structural YAML comparison pass locally. PR #43 is merged; PR CI `45373066242` and main CI `45373252991` succeeded, with no Windows/macOS packaging. The maintainer confirmed deletion of the superseded PR #44 Electron branch; its remote absence was verified, and the merged PR #48 branch was already absent.
 
 ## Patch landing - Prezzo gratuito e testi senza release (2026-11-24)
 
@@ -824,7 +856,19 @@ Vicino al pulsante Download compare in IT/EN: l'app e' gratuita, mentre la gener
 
 Verifiche locali: `node --check docs/landing.js`, `npm run lint`, `npm run test` (130 test), `npm run build` e controllo diff verdi. Browser integrato indisponibile nella sessione; verifica con Edge headless e profili temporanei isolati nelle sei combinazioni IT/EN a 360, 768 e 1440 px, con screenshot e controllo visivo desktop/mobile. Verificati prezzo, nota AI, link latest, assenza di numeri di release, immagini caricate, assenza di overflow ed errori JavaScript, cambio lingua e persistenza dopo ricaricamento. Verificato anche l'HTML con JavaScript disabilitato. Esiti e catture locali in `tmp/verification-landing-price/`, esclusi dal repository. CI PR/main e pubblicazione GitHub Pages sul commit finale costituiscono i controlli di chiusura.
 
-The bilingual landing replaces the release number with `Price: Free`, uses release-independent introductory and download text, and keeps its primary download pointed at `/releases/latest`. A visible note distinguishes the free app from possible OpenAI generation charges. Source version, existing tags, domain and screenshots are unchanged. Syntax, lint, all 130 tests, build and six isolated Edge browser scenarios pass; no-JavaScript content is also verified. Closing checks cover PR/main CI and GitHub Pages publication; no binary release is started.
+Chiusura verificata: PR #49 integrata sul commit `3b26a0b6933a13293776b532c488edabf9cb9b8b`; CI PR `45375962759`, CI `main` `45376139865` e Pages `45376138854` verdi.
+
+The bilingual landing replaces the release number with `Price: Free`, uses release-independent introductory and download text, and keeps its primary download pointed at `/releases/latest`. A visible note distinguishes the free app from possible OpenAI generation charges. Source version, existing tags, domain and screenshots are unchanged. Syntax, lint, all 130 tests, build and six isolated Edge browser scenarios pass; no-JavaScript content is also verified. PR #49 is merged, with successful PR/main CI and GitHub Pages publication; no binary release was started.
+
+## Allineamento documentale e rinvio della prossima release (2026-11-24)
+
+Su richiesta del progettista, registrato lo stato effettivo della release `v1.12.4` e delle PR #45/#46/#43/#49 integrate successivamente. La prossima release attende ulteriori fix. Branch documentale `patch/docs-release-status`, senza incremento di versione, nuovo tag o avvio del workflow Release.
+
+AGENTS, PLAN, MAP e modello di sicurezza IT/EN distinguono versione sorgente, pacchetti pubblicati e verifiche delle diverse versioni. Aggiunta la copia delle note bilingui `v1.12.4` gia' pubblicate. README e manuali utente restano coerenti con il comportamento attuale e non richiedono cronologie o numeri di release; la landing mantiene prezzo gratuito e link latest. Verifiche documentali: riferimenti locali, coerenza con manifest/lockfile, note e metadati GitHub, diff limitato ai documenti.
+
+Verifiche locali aggiuntive: `npm run lint`, `npm run test` (130 test) e `npm run build` verdi. Controllati link locali e blocchi Markdown, tutte le otto righe della tabella dipendenze contro i lockfile del tag e di main, identita' delle note archiviate rispetto a quelle pubblicate e `git diff --check`. Nessuno smoke desktop aggiuntivo per questa modifica esclusivamente documentale.
+
+The maintainer decided to wait for further fixes before another release. Operational documents and the bilingual security model now distinguish published `v1.12.4` packages from subsequent source updates and retain the limits of version-specific testing. Existing published notes are archived in the repository; application version, tags, release assets and user-facing behaviour are unchanged. Local lint, all 130 tests, build and documentation consistency checks pass; no additional desktop smoke test is required for this documentation-only change.
 
 ## Registro avanzamento
 
@@ -860,7 +904,11 @@ The bilingual landing replaces the release number with `Price: Free`, uses relea
 | 2026-11-18 | Pubblicazione v1.12.3 | 1.12.3 | `release/1.12.3-publication` | Completata | Workflow Release 44270853702 verde; 10 asset scaricati e 8 checksum verificati. Note, stato e landing aggiornati; avvio Windows confermato, prova nativa Mac allora programmata per una verifica successiva. |
 | 2026-11-20 | Smoke test nativo macOS v1.12.3 | 1.12.3 | `docs/1.12.3-macos-smoke` | Confermato dal progettista | Avvio, disegno, generazione immagine e test 1-5 superati: chiusura, salvataggio/riapertura, export PNG/WebP, Applicazioni e dialoghi IT/EN chiaro/scuro. Tavoletta/pressione non verificate per assenza del dispositivo. Riscontro nei documenti operativi e nelle note bilingui; codice, versione e tag invariati. |
 | 2026-11-23 | Patch configurazione Dependabot | 1.12.3 | `patch/dependabot-standard` | Completata: PR #42 integrata su main, nessun tag e nessuna release. / Completed: PR #42 integrated into main, no tag and no release. | File standard npm e github-actions; ignore TypeScript `>=6.1.0` conservato perche' typescript-eslint 8.72.1 e 8.73.0 dichiarano ancora il peer `<6.1.0`. Nessun tag e nessuna release. / Standard npm and github-actions file; TypeScript `>=6.1.0` ignore kept because typescript-eslint 8.72.1 and 8.73.0 still declare the `<6.1.0` peer. No tag and no release. |
-| 2026-11-23 | Patch Electron 45.4.1 | 1.12.4 | `patch/1.12.4-electron-45-4-1` | PR #48; merge approvato da Glauco il 23/11/2026; PR #44 chiusa come superata. / PR #48; merge approved by Glauco on 23/11/2026; PR #44 closed as superseded. | Electron fissato a `45.4.1`; lockfile con le correzioni dev/installazione della PR #47. Release `v1.12.4` autorizzata. Alert #40 minimatch (moderate, solo sviluppo) resta aperto: la correzione esiste solo in `11.0.1`. / Electron pinned at `45.4.1`; lockfile includes PR #47's dev/install fixes. Release `v1.12.4` is authorized. Alert #40 for minimatch (moderate, development only) stays open: the fix exists only in `11.0.1`. |
+| 2026-11-23 | Patch Electron 45.4.1 e pubblicazione v1.12.4 | 1.12.4 | `patch/1.12.4-electron-45-4-1` | Completata: PR #48 integrata e release pubblicata. / Completed: PR #48 merged and release published. | CI PR/main e workflow Release `45171851524` verdi; 10 asset non firmati Windows x64/macOS arm64. Note bilingui con checksum e limiti delle prove; alert #40 indicato aperto alla pubblicazione. Tag invariato su `f797e01e8a1c2888bca51b2d12e7e1bf3c1ea4a3`. |
+| 2026-11-23 | Dipendenze successive alla release | 1.12.4 | Branch Dependabot PR #45/#46 | Integrate, CI PR/main verdi | Lucide `1.73.0` e toolchain aggiornata, fra cui Vite `8.3.8` e Vitest `5.1.0`; modifiche non incluse nella release esistente. |
+| 2026-11-24 | Manutenzione GitHub Actions | 1.12.4 | `patch/github-actions-pr43` | Completata: PR #43 integrata | Checkout/setup-node v7, build Node 22; CI PR `45373066242` e main `45373252991` verdi. Nessuna nuova release. |
+| 2026-11-24 | Prezzo gratuito sulla landing | 1.12.4 | `patch/landing-free-price` | Completata: PR #49 integrata | Prezzo Gratis/Free, nota costi AI e link latest; CI PR/main e Pages verdi sul commit `3b26a0b6933a13293776b532c488edabf9cb9b8b`. |
+| 2026-11-24 | Allineamento documentale e rinvio release | 1.12.4 | `patch/docs-release-status` | Decisione del progettista registrata | Stato release, PR successive, note bilingui e limiti delle verifiche allineati. Attendere ulteriori fix prima della prossima pubblicazione; versione e tag invariati. |
 
 ## Checklist di chiusura milestone
 
