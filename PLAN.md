@@ -816,6 +816,16 @@ Confermata dal progettista la rimozione del branch remoto `dependabot/npm_and_ya
 
 Workflow-only maintenance: checkout/setup-node v7, build Node 22 and npm caching preserved, Dependabot history retained, source version `1.12.4` and existing tags unchanged. Lockfile install, lint, all 130 tests, build and structural YAML comparison pass locally. PR and main CI are the closing checks; no Windows/macOS packaging is started for this maintenance. The maintainer confirmed deletion of the superseded PR #44 Electron branch; its remote absence was verified, and the merged PR #48 branch was already absent.
 
+## Patch landing - Prezzo gratuito e testi senza release (2026-11-24)
+
+Branch `patch/landing-free-price`. Su richiesta del progettista, il riquadro `Versione / Version` diventa `Prezzo: Gratis / Price: Free`. Rimossi i numeri di release dal sottotitolo iniziale, dal pulsante principale e dal titolo Download, anche nei testi HTML disponibili senza JavaScript. Il download principale conserva `/releases/latest`; la versione esatta e le note restano consultabili su GitHub.
+
+Vicino al pulsante Download compare in IT/EN: l'app e' gratuita, mentre la generazione AI puo' comportare costi sul proprio account OpenAI. Traduzioni ed HTML allineati, nota con dimensioni e spaziatura dedicate nel CSS. Aggiornati AGENTS e MAP per mantenere la landing indipendente dalle future release. Versione sorgente `1.12.4`, tag, CNAME e asset delle catture invariati; nessuna nuova release binaria. README, manuali e modello di sicurezza non richiedono modifiche: le funzioni dell'app, la gestione dei segreti e i flussi di rete non cambiano.
+
+Verifiche locali: `node --check docs/landing.js`, `npm run lint`, `npm run test` (130 test), `npm run build` e controllo diff verdi. Browser integrato indisponibile nella sessione; verifica con Edge headless e profili temporanei isolati nelle sei combinazioni IT/EN a 360, 768 e 1440 px, con screenshot e controllo visivo desktop/mobile. Verificati prezzo, nota AI, link latest, assenza di numeri di release, immagini caricate, assenza di overflow ed errori JavaScript, cambio lingua e persistenza dopo ricaricamento. Verificato anche l'HTML con JavaScript disabilitato. Esiti e catture locali in `tmp/verification-landing-price/`, esclusi dal repository. CI PR/main e pubblicazione GitHub Pages sul commit finale costituiscono i controlli di chiusura.
+
+The bilingual landing replaces the release number with `Price: Free`, uses release-independent introductory and download text, and keeps its primary download pointed at `/releases/latest`. A visible note distinguishes the free app from possible OpenAI generation charges. Source version, existing tags, domain and screenshots are unchanged. Syntax, lint, all 130 tests, build and six isolated Edge browser scenarios pass; no-JavaScript content is also verified. Closing checks cover PR/main CI and GitHub Pages publication; no binary release is started.
+
 ## Registro avanzamento
 
 | Data | Milestone | Versione | Branch | Stato | Note |

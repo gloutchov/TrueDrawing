@@ -48,7 +48,7 @@ truedrawing/
 |   |   Screenshot e GIF della landing: interfaccia e disegno IT/EN chiaro/scuro; feature-standard, feature-brushes, feature-layers e feature-clipping IT/EN catturati nell’app.
 |   |
 |   +-- index.html
-|   |   Landing page statica bilingue: presentazione, Interfaccia, quattro funzioni illustrate e Download; pubblicazione GitHub Pages main:/docs.
+|   |   Landing page statica bilingue senza numeri di release: prezzo Gratis/Free, nota costi AI, Interfaccia, quattro funzioni illustrate e Download latest; pubblicazione GitHub Pages main:/docs.
 |   |
 |   +-- landing.css
 |   |   Stili responsive della landing page.
