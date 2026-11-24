@@ -60,6 +60,8 @@ Il sorgente di questa patch usa Electron `45.4.1`, fissato senza intervallo, e R
 
 Il progetto non dispone attualmente di certificati o credenziali per firma codice Windows, firma macOS o notarizzazione Apple. Gli artifact pubblicati via GitHub devono quindi essere considerati non firmati e la documentazione utente deve indicare che i sistemi operativi possono mostrare avvisi di sicurezza. Il workflow release manuale crea note di release dedicate e file checksum SHA-256 per gli artifact Windows/macOS. Questa scelta non modifica la gestione dei segreti nell'app, ma resta un rischio di distribuzione da rivalutare se in futuro saranno disponibili credenziali ufficiali.
 
+Nei workflow CI e release, `actions/checkout@v7` e `actions/setup-node@v7` usano il runtime interno Node 24; la build del progetto resta su Node 22. Checkout conserva le credenziali temporanee del runner in un file separato sotto `RUNNER_TEMP` e le rimuove a fine job. Resta attiva la protezione predefinita contro il checkout di codice da fork nei contesti privilegiati `pull_request_target` e `workflow_run`, che il progetto non usa. Trigger, permessi, cache npm e release esclusivamente manuale restano invariati; nessuna API key dell'app e' necessaria per questi workflow.
+
 ### Stato attuale
 
 - Documentazione sicurezza iniziale: completata.
@@ -156,6 +158,8 @@ Save completion compares the current document with the one actually saved: edits
 This patch's source uses Electron `45.4.1`, pinned without a range, and React/React DOM `19.3.1`. The published `v1.12.3` release remains on Electron `45.1.0`. Context isolation, sandboxing and the controlled preload are also verified in that release's Windows x64 package. The maintainer confirmed successful Windows launch on 2026-11-18 and authorized the Windows/macOS release. On 2026-11-20 they also confirmed launch, drawing, image generation and all five manual checks on the downloaded `v1.12.3` release on Mac: closing with unsaved-change protection through the window/menu/Dock, save and reopen, PNG/WebP export, launch from Applications and readable Italian/English dialogs in light/dark themes. Automated checks simulate dialog selections; the manual macOS report covers Cancel/Escape, explicit discard and closing after saving. Tablet/pen and pressure input were not tested because the device is unavailable.
 
 The project currently has no certificates or credentials for Windows code signing, macOS signing, or Apple notarization. Artifacts published through GitHub must therefore be treated as unsigned, and user documentation must state that operating systems may show security warnings. The manual release workflow creates dedicated release notes and SHA-256 checksum files for Windows/macOS artifacts. This does not change in-app secret handling, but it remains a distribution risk to reassess if official credentials become available.
+
+In CI and release workflows, `actions/checkout@v7` and `actions/setup-node@v7` use the internal Node 24 runtime; project builds remain on Node 22. Checkout stores temporary runner credentials in a separate file under `RUNNER_TEMP` and removes them after the job. The default protection against checking out fork code in privileged `pull_request_target` and `workflow_run` contexts remains enabled; this project uses neither trigger. Triggers, permissions, npm caching and manual-only release execution are preserved; these workflows need no application API key.
 
 ### Current Status
 

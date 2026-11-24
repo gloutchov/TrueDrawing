@@ -804,6 +804,18 @@ Version `1.12.4` (`+0.0.1`). Published as PR #48; merge approved by Glauco on 23
 
 The same lockfile absorbs security PR #47. Those fixes stay in development or install tooling: follow-redirects `1.16.0` → `1.16.3` (`wait-on`'s axios), undici `7.27.1` → `7.30.2` (optional dependency of `@electron/get`) and brace-expansion `5.0.6` → `5.0.13`, plus the `1.1.22` and `2.1.8` alignments already in that PR. They do not change the packaged app. Alert #40 for minimatch stays open (moderate, development only): the fix exists only in `11.0.1` and is not declared closed.
 
+## Patch GitHub Actions - PR #43 (2026-11-24)
+
+Manutenzione dei soli workflow sul branch `patch/github-actions-pr43`, con la cronologia Dependabot preservata e aggiornamento fast-forward del branch della [PR #43](https://github.com/gloutchov/TrueDrawing/pull/43). Versione sorgente `1.12.4` e tag esistenti invariati; nessuna nuova release binaria richiesta da questa manutenzione.
+
+`actions/checkout` e `actions/setup-node` passano da `v4` a `v7`: cinque checkout e quattro setup-node fra `ci.yml` e `release.yml`. Verificati manifest e note ufficiali delle Actions: runtime interno Node 24 e runner minimo 2.327.1; i workflow usano i runner GitHub `ubuntu-latest`, `windows-latest` e `macos-latest`. Node della build resta `22`, con cache npm; non sono usati gli input rimossi `always-auth` o configurazioni `registry-url`, ne' i trigger privilegiati interessati dalla nuova protezione di checkout.
+
+Verifica locale: `npm ci --no-audit --no-fund`, `npm run lint`, `npm run test` (130 test) e `npm run build` verdi. Parsing YAML e confronto strutturale con `main` confermano che le sole modifiche funzionali sono i nove riferimenti alle Actions: eventi, permessi, job, input, comandi, validazione del tag, checksum e avvio manuale della release restano invariati. README e manuali non richiedono modifiche: il comportamento utente dell'app non cambia. Aggiornati mappa, modello di sicurezza bilingue e regole operative. La [CI della PR](https://github.com/gloutchov/TrueDrawing/pull/43/checks) e la [CI di main](https://github.com/gloutchov/TrueDrawing/actions/workflows/ci.yml?query=branch%3Amain) costituiscono i controlli di chiusura prima della rimozione del branch; il packaging Windows/macOS non viene avviato per questa manutenzione.
+
+Confermata dal progettista la rimozione del branch remoto `dependabot/npm_and_yarn/electron-e8c6cf0dc4` della PR #44, chiusa come superata dalla PR #48 gia' integrata con Electron `45.4.1`. Assenza del branch verificata sul remoto; la cronologia della PR resta consultabile. Il branch della #48 era gia' stato eliminato.
+
+Workflow-only maintenance: checkout/setup-node v7, build Node 22 and npm caching preserved, Dependabot history retained, source version `1.12.4` and existing tags unchanged. Lockfile install, lint, all 130 tests, build and structural YAML comparison pass locally. PR and main CI are the closing checks; no Windows/macOS packaging is started for this maintenance. The maintainer confirmed deletion of the superseded PR #44 Electron branch; its remote absence was verified, and the merged PR #48 branch was already absent.
+
 ## Registro avanzamento
 
 | Data | Milestone | Versione | Branch | Stato | Note |
