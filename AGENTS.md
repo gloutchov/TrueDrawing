@@ -5,14 +5,17 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 ## Stato corrente
 
 - Ultima milestone completata: C34 - Aggiornamento Electron e allineamento React.
-- Ultima patch completata: `1.5.1` - import WebP normalizzato tramite Chromium Canvas.
-- Versione corrente: `1.12.4` proposta su questo branch; release GitHub pubblicata: `v1.12.3`.
-- Branch corrente: `main`.
+- Ultima patch applicativa completata: `1.12.4` - Electron fissato a `45.4.1`.
+- Versione sorgente: `1.12.4`; release GitHub pubblicata: `v1.12.4` dal 23/11/2026. Gli aggiornamenti successivi su `main` non sono ancora distribuiti.
+- Branch stabile: `main`.
 - Milestone corrente: nessuna; C34 completata con CI e checkpoint verificati nel processo di chiusura.
-- Patch corrente: pubblicata come PR #48; merge approvato da Glauco il 23/11/2026; PR Dependabot #44 chiusa come superata. / Published as PR #48; merge approved by Glauco on 23/11/2026; Dependabot PR #44 closed as superseded.
+- Patch Electron: PR #48 integrata e release `v1.12.4` pubblicata; PR Dependabot #44 chiusa come superata.
+- Manutenzione successiva: PR #45 (Lucide), #46 (toolchain), #43 (GitHub Actions) e #49 (landing) integrate su `main`; nessuna nuova release binaria.
+- Prossima release: il progettista ha deciso il 24/11/2026 di attendere ulteriori fix prima di pianificare una nuova pubblicazione. Questo allineamento documentale non cambia versione o tag.
 - Ultimo branch milestone completato: `milestone/34-dependency-maintenance`.
-- Ultimo branch patch completato: `patch/1.5.1-webp-reference-import`.
-- CI ultima patch: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
+- Ultimo branch patch applicativa completato: `patch/1.12.4-electron-45-4-1`.
+- Verifica patch `v1.12.4`: CI PR #48 `45171501223`, CI `main` `45171579681` e workflow Release `45171851524` verdi. Le note pubblicate riportano lint, 130 test, build e smoke Linux; gli installer Windows/macOS non sono stati provati manualmente.
+- CI patch `v1.5.1`: PR #7 verde con GitHub Actions run `27283184712`; `main` verde con run `27283321985`; verifica locale `npm run lint`, `npm run test` e `npm run build` verde.
 - CI M9: PR #8 verde con GitHub Actions run `27339171091`; `main` verde con run `27339232172`; release workflow `27340285563` verde.
 - CI M10: PR #9 verde con GitHub Actions run `27345974695`; `main` verde con run `27346032900`; release workflow `27346106628` verde.
 - CI patch `v1.0.1`: verifica locale `npm run lint`, `npm run test` e `npm run build` verde; workflow release `27353682972` verde.
@@ -20,7 +23,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 - Verifica patch `v1.0.3`: `npm run lint`, `npm run test` (39 test) e `npm run build` verdi; verifica manuale completata.
 - Verifica C12: PR #12 con CI run `36323912210` e `main` con run `36325069504` verdi; `npm run lint`, `npm run test` (41 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C12` e tag `v1.1.0` verificati sul commit finale remoto di `main`.
 - Verifica C13: PR #13 con CI run `36333336031` verde; `npm run lint`, `npm run test` (49 test), `npm run build` e smoke test Electron chiaro/scuro verdi. Checkpoint `milestone/C13`, tag `v1.2.0`, CI `main` e workflow release verificati in chiusura.
-- Release GitHub corrente: `v1.12.3` pubblicata con artifact Windows/macOS non firmati, note release e checksum SHA-256.
+- Release GitHub corrente: `v1.12.4`, 10 asset Windows x64/macOS arm64 non firmati, note bilingui e manifest SHA-256. Tag sul commit `f797e01e8a1c2888bca51b2d12e7e1bf3c1ea4a3`: non spostarlo.
 - Firma release: non sono disponibili credenziali o certificati per firmare Windows o macOS; le release saranno distribuite non firmate via GitHub e la documentazione deve indicare gli avvisi di sicurezza attesi dei sistemi operativi.
 
 ## Regole generali
@@ -49,7 +52,7 @@ Questo file definisce le regole operative da seguire durante lo sviluppo di True
 
 ## Manutenzione dipendenze C34 (2026-11-18)
 
-La richiesta del progettista di risolvere le tre PR aperte autorizza l'integrazione delle PR #38, #39 e #40 secondo la deroga gia' registrata per commit, merge, tag, push e rimozione branch. Conservare le cronologie Dependabot nel branch milestone e aggiornare la PR #38 con push fast-forward soltanto dopo le verifiche locali. React e React DOM devono essere entrambi `19.3.1` nel lockfile; la PR #40 isolata fallisce per il disallineamento. Restano obbligatori CI e checkpoint remoto. Patch sorgente `1.12.3`, nessuna nuova release binaria richiesta; la release distribuita resta `v1.12.2`. La configurazione Dependabot e' stata rimossa da main durante C34: non ripristinarla per integrare le PR #38, #39 e #40. Dal 2026-11-23 il progettista autorizza di nuovo il file standard `.github/dependabot.yml` (npm e github-actions) su `patch/dependabot-standard`, senza cambio di versione ne' release. L'ignore `typescript >=6.1.0` resta finche' typescript-eslint non dichiara il supporto: 8.72.1 (in uso) e 8.73.0 (ultima su npm) hanno ancora il peer `<6.1.0`.
+La richiesta del progettista di risolvere le tre PR aperte autorizza l'integrazione delle PR #38, #39 e #40 secondo la deroga gia' registrata per commit, merge, tag, push e rimozione branch. Conservare le cronologie Dependabot nel branch milestone e aggiornare la PR #38 con push fast-forward soltanto dopo le verifiche locali. React e React DOM devono essere entrambi `19.3.1` nel lockfile; la PR #40 isolata fallisce per il disallineamento. Restano obbligatori CI e checkpoint remoto. Patch sorgente `1.12.3`, nessuna nuova release binaria richiesta; la release distribuita in quella fase era `v1.12.2`. La configurazione Dependabot e' stata rimossa da main durante C34: non ripristinarla per integrare le PR #38, #39 e #40. Dal 2026-11-23 il progettista autorizza di nuovo il file standard `.github/dependabot.yml` (npm e github-actions) su `patch/dependabot-standard`, senza cambio di versione ne' release. L'ignore `typescript >=6.1.0` resta finche' typescript-eslint non dichiara il supporto: la versione `8.72.2` ora nel lockfile richiede ancora `typescript >=4.8.4 <6.1.0`.
 
 Verifica locale: installazione da lockfile, lint, 130 test e build verdi; smoke Electron 45.1.0 nelle quattro combinazioni IT/EN e chiaro/scuro, piu' avvio e flussi del pacchetto Windows x64 non firmato. Verificati disegno, Undo/Redo, pan senza tratti, layer, salvataggio/riapertura e conferma di chiusura, con selezioni dei dialoghi simulate e profili isolati senza API key. Main, preload e asset renderer del pacchetto sono identici byte per byte alla build verificata; audit runtime senza vulnerabilita' note. Questa verifica automatizzata non comprendeva la prova nativa macOS, confermata successivamente dal progettista come registrato sotto, o la verifica visiva dei dialoghi di sistema. Checkpoint `milestone/C34` e tag sorgente `v1.12.3`; nessuna pubblicazione binaria in questa fase.
 
@@ -65,7 +68,13 @@ Il progettista riferisce di aver scaricato l'ultima release `v1.12.3`, avviato l
 
 ## Patch Electron 45.4.1 (2026-11-23)
 
-Pubblicata come PR #48. Merge approvato da Glauco il 23/11/2026; la release `v1.12.4` e' autorizzata. Electron resta fissato a `45.4.1`, senza `^` o `~`. La PR Dependabot #44, che arrivava solo a `^45.3.3`, e' chiusa come superata. Nel lockfile restano assorbiti gli aggiornamenti della PR #47, nella catena di sviluppo e installazione: follow-redirects `1.16.3`, undici `7.30.2` e brace-expansion `5.0.13`. L'alert #40 su minimatch (moderate, solo sviluppo) resta aperto: la correzione esiste solo in `11.0.1`.
+PR #48 integrata il 23/11/2026 e release `v1.12.4` pubblicata lo stesso giorno, con workflow Release `45171851524` verde. Electron resta fissato a `45.4.1`, senza `^` o `~`. La PR Dependabot #44, che arrivava solo a `^45.3.3`, e' chiusa come superata. Nel lockfile restano assorbiti gli aggiornamenti della PR #47, nella catena di sviluppo e installazione: follow-redirects `1.16.3`, undici `7.30.2` e brace-expansion `5.0.13`. Alla pubblicazione l'alert #40 su minimatch (moderate, solo sviluppo) restava aperto: la correzione esisteva solo in `11.0.1`.
+
+## Stato release e aggiornamenti successivi (2026-11-24)
+
+Le note bilingui pubblicate di `v1.12.4` sono conservate in `docs/release-notes/v1.12.4.md`. La verifica documentale ha confrontato gli otto hash delle note con i digest degli asset esposti da GitHub; non equivale a scaricare o provare i pacchetti. Le prove manuali Windows/macOS e il riscontro del progettista registrati per `v1.12.3` restano riferiti a quella versione.
+
+Le PR #45 e #46, integrate dopo il tag `v1.12.4`, aggiornano Lucide a `1.73.0` e gli strumenti di sviluppo/build/test (fra cui Vite `8.3.8` e Vitest `5.1.0`). Le PR #43 e #49 aggiornano workflow e landing. Sono modifiche presenti su `main`, con manifest ancora a `1.12.4`, ma assenti dai pacchetti gia' pubblicati. Il progettista richiede di attendere ulteriori fix prima della prossima release; mantenere invariati artifact e tag esistenti.
 
 ## Manutenzione GitHub Actions (2026-11-24)
 
