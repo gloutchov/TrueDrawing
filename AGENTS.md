@@ -67,6 +67,12 @@ Il progettista riferisce di aver scaricato l'ultima release `v1.12.3`, avviato l
 
 Pubblicata come PR #48. Merge approvato da Glauco il 23/11/2026; la release `v1.12.4` e' autorizzata. Electron resta fissato a `45.4.1`, senza `^` o `~`. La PR Dependabot #44, che arrivava solo a `^45.3.3`, e' chiusa come superata. Nel lockfile restano assorbiti gli aggiornamenti della PR #47, nella catena di sviluppo e installazione: follow-redirects `1.16.3`, undici `7.30.2` e brace-expansion `5.0.13`. L'alert #40 su minimatch (moderate, solo sviluppo) resta aperto: la correzione esiste solo in `11.0.1`.
 
+## Manutenzione GitHub Actions (2026-11-24)
+
+La richiesta del progettista riguarda la sistemazione della PR #43; e' inoltre confermata la rimozione del branch Electron della PR #44, gia' chiusa e superata dalla PR #48 integrata. Il branch della #48 era gia' assente. Lavorare su `patch/github-actions-pr43`, conservare il commit Dependabot e aggiornare il branch della PR #43 soltanto con push fast-forward. Restano valide la deroga sul controllo preventivo, la verifica dell'identita' e la verifica remota dopo il merge.
+
+`actions/checkout` e `actions/setup-node` passano da `v4` a `v7` in CI e release. Le Actions usano internamente Node 24 sui runner GitHub; la build resta su Node 22 con cache npm. Conservare eventi, permessi, comandi e avvio esclusivamente manuale della release. Versione sorgente `1.12.4` e tag esistenti invariati; questa manutenzione non richiede una nuova release binaria. Verifiche locali: installazione da lockfile, lint, 130 test, build e confronto strutturale dei due workflow. Prima di eliminare il branch della #43 verificare CI della PR, CI di `main` e commit finale remoto.
+
 ## Architettura
 
 - Il programma non deve diventare monolitico.

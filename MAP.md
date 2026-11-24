@@ -196,10 +196,10 @@ truedrawing/
 |   +-- workflows/
 |       |
 |       +-- ci.yml
-|       |   CI: installazione dipendenze, documenti obbligatori, lint, test e build.
+|       |   CI: checkout/setup-node v7, Node 22 e cache npm; installazione dipendenze, documenti obbligatori, lint, test e build.
 |       |
 |       +-- release.yml
-|           Release manuale: validazione tag/versione, lint, test, build, creazione note release, package Windows/macOS, checksum SHA-256 e upload diretto degli asset non firmati sulla release GitHub.
+|           Release manuale con checkout/setup-node v7 e Node 22: validazione tag/versione, lint, test, build, creazione note release, package Windows/macOS, checksum SHA-256 e upload diretto degli asset non firmati sulla release GitHub.
 |
 +-- README.md
 |   Presentazione bilingue del prodotto: funzioni, download, uso rapido, architettura, privacy, sviluppo e documenti collegati; senza numeri di release o cronologie.
